@@ -1,0 +1,54 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – Linux笔记</title>
+    <link>https://bwangelme.github.io/647/docs/linux/</link>
+    <description>Recent content in Linux笔记 on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Tue, 01 Aug 2023 11:50:58 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangelme.github.io/647/docs/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: curl</title>
+      <link>https://bwangelme.github.io/647/docs/linux/curl/</link>
+      <pubDate>Tue, 01 Aug 2023 11:50:58 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/linux/curl/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;curl-post-json-数据&#34;&gt;curl POST JSON 数据&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -X PUT -H &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;@/tmp/demo.json&amp;#39;&lt;/span&gt; :9200/demo
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; cat /tmp/demo.json
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;settings&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;number_of_shards&amp;#34;&lt;/span&gt;: 1,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;number_of_replicas&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;使用---resolve-选项替换域名&#34;&gt;使用 &lt;code&gt;--resolve&lt;/code&gt; 选项替换域名&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;将 &lt;a href=&#34;https://www.google.com&#34;&gt;www.google.com&lt;/a&gt; 替换成 127.0.0.1，并访问 8000 端口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;curl -v --resolve www.google.com:8000:127.0.0.1 http://www.google.com:8000/ping&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;将 &lt;a href=&#34;https://www.google.com&#34;&gt;https://www.google.com&lt;/a&gt; 替换成 127.0.0.1，此时 curl 会忽略证书和域名不匹配的问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;curl -v --resolve www.google.com:443:127.0.0.1 https://www.google.com/ping&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;将 &lt;a href=&#34;http://www.google.com&#34;&gt;http://www.google.com&lt;/a&gt; 替换成 127.0.0.1，http 默认访问 80 端口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;curl -v --resolve www.google.com:80:127.0.0.1 http://www.google.com/ping&lt;/code&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
