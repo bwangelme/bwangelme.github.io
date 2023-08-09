@@ -1,5 +1,5 @@
 ---
-title: Linux笔记
+title: Linux
 author: "bwangel"
 ---
 
