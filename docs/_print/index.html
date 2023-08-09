@@ -100,7 +100,7 @@
     
     
 	
-<li>1: <a href="#pg-546aa9afbb590e86cfb9df263df9d01c">编辑器</a></li>
+<li>1: <a href="#pg-e3393de7e8466911640490b15485a33d">规范</a></li>
 
 
     
@@ -115,7 +115,7 @@
     
     
 	
-<li>1.1: <a href="#pg-e9fb0115d808edb36ba1a3f492e95c4d">Pycharm</a></li>
+<li>1.1: <a href="#pg-e0e47e08b609b222268e029cf0817880">日期和时间格式说明</a></li>
 
 
     
@@ -127,7 +127,7 @@
     
     
 	
-<li>2: <a href="#pg-5990d373ac824b52e97a76c2b3e2ff2c">Linux</a></li>
+<li>2: <a href="#pg-546aa9afbb590e86cfb9df263df9d01c">编辑器</a></li>
 
 
     
@@ -142,7 +142,34 @@
     
     
 	
-<li>2.1: <a href="#pg-1c2b211e34ea807b66d53c40bac236f2">curl</a></li>
+<li>2.1: <a href="#pg-e9fb0115d808edb36ba1a3f492e95c4d">Pycharm</a></li>
+
+
+    
+  
+
+    </ul>
+    
+  
+    
+    
+	
+<li>3: <a href="#pg-5990d373ac824b52e97a76c2b3e2ff2c">Linux</a></li>
+
+
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+    
+    
+	
+<li>3.1: <a href="#pg-1c2b211e34ea807b66d53c40bac236f2">curl</a></li>
 
 
     
@@ -150,7 +177,7 @@
     
     
 	
-<li>2.2: <a href="#pg-a5f545a950366d730141f62b977f5c24">lsof</a></li>
+<li>3.2: <a href="#pg-a5f545a950366d730141f62b977f5c24">lsof</a></li>
 
 
     
@@ -193,7 +220,7 @@
 
 <div class="td-content" style="">
     
-	<h1 id="pg-546aa9afbb590e86cfb9df263df9d01c">1 - 编辑器</h1>
+	<h1 id="pg-e3393de7e8466911640490b15485a33d">1 - 规范</h1>
     
 	
 </div>
@@ -218,7 +245,82 @@
 
 <div class="td-content" style="">
     
-	<h1 id="pg-e9fb0115d808edb36ba1a3f492e95c4d">1.1 - Pycharm</h1>
+	<h1 id="pg-e0e47e08b609b222268e029cf0817880">1.1 - 日期和时间格式说明</h1>
+    
+	<h2 id="w3-时间规范">w3 时间规范</h2>
+<ul>
+<li>ISO 8601 定义了大量的日期/时间格式，为了简化开发 &amp; 减少 bug, <a href="https://www.w3.org/TR/NOTE-datetime">w3 规范</a>定义了一个通用的时间格式
+<ul>
+<li><code>YYYY-MM-DDThh:mm:ss.STZD</code>
+<ul>
+<li>YYYY/MM/DD 四位数年份/月/日</li>
+<li>T 表示后面跟了一个时间</li>
+<li>hh:mm:ss 两位数的时分秒</li>
+<li>S 一位或多位小数表示秒的一部分，最小是1, 最大不限制</li>
+<li>TZD 时区指示符</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>W3 规范规定 TZD 可以有两种形式
+<ol>
+<li>表示一个 UTC 时间，TZD 可以写成一个 <code>Z</code>, 例如 <code>1994-11-05T13:15:30Z</code> 表示 utc 时间</li>
+<li>表示本地时间, TZD 写成 <code>+HH:MM</code> 或 <code>-HH:MM</code>，表示当地时间相对 utc 时间的偏移量, 例如 <code>1994-11-05T13:15:30+08:00</code> 表示东八区时间，即北京时间</li>
+</ol>
+</li>
+<li>协调世界时的缩写为UTC。国际电信联盟希望协调世界时能够在所有语言有单一的缩写。英语和法语区的人同时希望各自的语言缩写－CUT (Coordinated Universal Time) 和 TUC (Temps Universel Coordonné) 能够成为国际标准，最后妥协使用UTC。</li>
+</ul>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://www.w3.org/TR/NOTE-datetime">Date and Time Formats</a></li>
+<li><a href="https://blog.csdn.net/hsany330/article/details/70332483">关于时间格式 2016-08-9T10:01:54.123Z 20160809100154.123Z 处理方法</a></li>
+<li><a href="https://zh.m.wikipedia.org/zh-hans/%E5%8D%8F%E8%B0%83%E4%B8%96%E7%95%8C%E6%97%B6#cite_ref-29">协调世界时</a></li>
+</ul>
+
+</div>
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-546aa9afbb590e86cfb9df263df9d01c">2 - 编辑器</h1>
+    
+	
+</div>
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+<div class="td-content" style="">
+    
+	<h1 id="pg-e9fb0115d808edb36ba1a3f492e95c4d">2.1 - Pycharm</h1>
     
 	<h2 id="tabs---open-in-opposite-group">Tabs -&gt; Open in Opposite Group</h2>
 <p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-07-122300.png" alt=""></p>
@@ -244,7 +346,7 @@
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-5990d373ac824b52e97a76c2b3e2ff2c">2 - Linux</h1>
+	<h1 id="pg-5990d373ac824b52e97a76c2b3e2ff2c">3 - Linux</h1>
     
 	
 </div>
@@ -269,7 +371,7 @@
 
 <div class="td-content" style="">
     
-	<h1 id="pg-1c2b211e34ea807b66d53c40bac236f2">2.1 - curl</h1>
+	<h1 id="pg-1c2b211e34ea807b66d53c40bac236f2">3.1 - curl</h1>
     
 	<h2 id="curl-post-json-数据">curl POST JSON 数据</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl -X PUT -H <span style="color:#4e9a06">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#4e9a06">&#39;@/tmp/demo.json&#39;</span> :9200/demo
@@ -308,7 +410,7 @@
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-a5f545a950366d730141f62b977f5c24">2.2 - lsof</h1>
+	<h1 id="pg-a5f545a950366d730141f62b977f5c24">3.2 - lsof</h1>
     
 	<h2 id="按照网络状态筛选进程的-fd">按照网络状态筛选进程的 fd</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo lsof -i -sTCP:LISTEN -a -p &lt;pid&gt;
