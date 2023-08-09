@@ -223,7 +223,21 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
     </item>
     
     <item>
-      <title>Docs: 日期和时间格式说明</title>
+      <title>Docs: Thrft</title>
+      <link>https://bwangelme.github.io/647/docs/thrift/thrft-concept/</link>
+      <pubDate>Tue, 15 Nov 2022 12:40:19 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/thrift/thrft-concept/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2018-05-27-060022.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 日期和时间格式</title>
       <link>https://bwangelme.github.io/647/docs/spec/datetime/</link>
       <pubDate>Wed, 26 Oct 2022 11:32:14 +0800</pubDate>
       

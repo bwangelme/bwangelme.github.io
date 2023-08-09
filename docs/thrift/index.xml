@@ -1,0 +1,33 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – Thrift</title>
+    <link>https://bwangelme.github.io/647/docs/thrift/</link>
+    <description>Recent content in Thrift on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Wed, 09 Aug 2023 19:09:36 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangelme.github.io/647/docs/thrift/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Thrft</title>
+      <link>https://bwangelme.github.io/647/docs/thrift/thrft-concept/</link>
+      <pubDate>Tue, 15 Nov 2022 12:40:19 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/thrift/thrft-concept/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2018-05-27-060022.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
