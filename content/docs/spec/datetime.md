@@ -1,11 +1,10 @@
 ---
-title: "日期和时间格式说明"
+title: "日期和时间格式"
 date: 2022-10-26T11:32:14+08:00
 lastmod: 2022-10-26T11:32:14+08:00
 draft: false
 tags: [tips, datetime]
 author: "bwangel"
-comment: true
 ---
 
 ## w3 时间规范
