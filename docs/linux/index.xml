@@ -45,7 +45,58 @@
 &lt;li&gt;将 &lt;a href=&#34;http://www.google.com&#34;&gt;http://www.google.com&lt;/a&gt; 替换成 127.0.0.1，http 默认访问 80 端口&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;code&gt;curl -v --resolve www.google.com:80:127.0.0.1 http://www.google.com/ping&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;--fail-和---fail-with-body&#34;&gt;&lt;code&gt;--fail&lt;/code&gt; 和 &lt;code&gt;--fail-with-body&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;这两个选项都可以让 curl 在接收到 400 及以上的 HTTP 响应码的时候，将退出码设置为 22&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;--fail-with-body&lt;/code&gt; 会输出服务端返回的内容到 stdout 或文件中&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;--fail&lt;/code&gt; 不会有任何输出，当服务端返回的是认证相关的状态码时(401/407), 可能会让使用者误以为出错了&lt;/p&gt;
+&lt;h3 id=&#34;使用场景&#34;&gt;使用场景&lt;/h3&gt;
+&lt;p&gt;在一个 dockerfile 中，我期望下载项目的 &lt;code&gt;go.mod&lt;/code&gt; 和 &lt;code&gt;go.sum&lt;/code&gt; 文件，然后再执行 &lt;code&gt;go mod download&lt;/code&gt;。
+这样可以在 clone 代码之前，先下载 go module 文件。&lt;/p&gt;
+&lt;p&gt;如果项目的代码变了，但是依赖并没有变，因为 docker build 的缓存原理，可以省去下载 go module 的步骤。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
+ARG app_repo
+ARG app_commit
 
+RUN [[ ! -d /tmp/app ]] &amp;amp;&amp;amp; mkdir /tmp/app &amp;amp;&amp;amp; \
+    curl -s https://raw.githubusercontent.com/${app_repo}/${app_commit}/go.mod -o /tmp/app/go.mod &amp;amp;&amp;amp; \
+    curl -s https://raw.githubusercontent.com/${app_repo}/${app_commit}/go.sum -o /tmp/app/go.sum
+
+RUN cd /tmp/app &amp;amp;&amp;amp; go mod download
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;当 app_repo 和 app_commit 参数错误，导致对应的 go.mod 文件不存在，curl 会得到 404 的 HTTP 响应码，此时我期望 docker build 出错。&lt;/p&gt;
+&lt;p&gt;但实际上并不会出错，docker build 会继续执行，直到 go mod download 文件无法识别 go.mod 文件，docker build 才会异常退出。&lt;/p&gt;
+&lt;p&gt;显示的错误内容如下:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;0.467 go: errors parsing go.mod:
+0.467 /tmp/app/go.mod:1: unknown directive: 404:
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;当我给 &lt;code&gt;curl&lt;/code&gt; 加上了 &lt;code&gt;--fail&lt;/code&gt; 选项之后，程序就会在下载 go.mod 出错时直接退出。显示的错误如下:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ERROR: failed to solve: 
+	process &amp;#34;
+		/bin/bash -c [[ ! -d /tmp/app ]] &amp;amp;&amp;amp; mkdir /tmp/app &amp;amp;&amp;amp;
+		curl --fail -s https://raw.githubusercontent.com/${app_repo}/${app_commit}/go.mod -o /tmp/app/go.mod &amp;amp;&amp;amp;
+		curl -s https://raw.githubusercontent.com/${app_repo}/${app_commit}/go.sum -o /tmp/app/go.sum
+	&amp;#34; did not complete successfully: exit code: 22
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最终的 dockerfile 代码及复现命令&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FROM golang:1.19
+SHELL [&amp;#34;/bin/bash&amp;#34;, &amp;#34;-c&amp;#34;]
+
+ARG app_repo
+ARG app_commit
+
+RUN go env -w GOPROXY=https://goproxy.cn,direct
+
+RUN [[ ! -d /tmp/app ]] &amp;amp;&amp;amp; mkdir /tmp/app &amp;amp;&amp;amp; \
+    curl --fail -s https://raw.githubusercontent.com/${app_repo}/${app_commit}/go.mod -o /tmp/app/go.mod &amp;amp;&amp;amp; \
+    curl -s https://raw.githubusercontent.com/${app_repo}/${app_commit}/go.sum -o /tmp/app/go.sum
+
+RUN cd /tmp/app &amp;amp;&amp;amp; go mod download
+RUN HTTP_PROXY=&amp;#39;http://改成你自己的代理&amp;#39; HTTPS_PROXY=&amp;#39;http://改成你自己的代理&amp;#39; git clone https://github.com/${app_repo}.git ~/app
+RUN cd ~/app &amp;amp;&amp;amp; git reset --hard ${app_commit} &amp;amp;&amp;amp; go build .
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;复现命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 注意这个 app_commit 是一个不存在的 commit
+docker build -t curl_test --build-arg app_repo=bwangelme/rdcdemo --build-arg app_commit=2f24a0658d7feb0205e7d75b7ae218ff6495e8f3 .
+&lt;/code&gt;&lt;/pre&gt;
       </description>
     </item>
     
