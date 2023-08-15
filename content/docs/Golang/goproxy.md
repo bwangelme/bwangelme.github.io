@@ -10,11 +10,9 @@ author: "bwangel"
 
 ---
 
-## Tips
+## 查看 Go Proxy 中包的信息
 
-查看 Go Proxy 中包的信息:
-
-+ 查看包的版本列表
+### 查看包的版本列表
 
 ```
 ø> curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/list
@@ -32,13 +30,15 @@ v3.5.0-rc.1
 v3.5.0-beta.3
 ```
 
-+ 查看包的版本信息:
+### 查看包的版本信息
 
 ```
 curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/v3.0.0-20201116001935-06e48f04865f.info
 ```
 
-+ 查看包的依赖 (即获取 go.mod 文件)
+### 查看包的依赖
+
+即获取 go.mod 文件
 
 ```
 curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/v3.0.0-20201116001935-06e48f04865f.mod
@@ -75,7 +75,7 @@ replace (
 )
 ```
 
-+ 下载包
+### 下载包
 
 ```
 curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/v3.0.0-20201116001935-06e48f04865f.zip
