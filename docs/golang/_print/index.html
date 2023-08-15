@@ -105,6 +105,22 @@
 
     
   
+    
+    
+	
+<li>2: <a href="#pg-434a02cf1a3ee72f31be04b770f0fabb">Golang 的版本发布计划</a></li>
+
+
+    
+  
+    
+    
+	
+<li>3: <a href="#pg-411c7d44b39c2c01f271102f90652135">Go proxy 的说明</a></li>
+
+
+    
+  
 
     </ul>
 
@@ -133,7 +149,7 @@
     
 	<h1 id="pg-8aa7d3f7c05390359a87acf37c95a33b">1 - YAML</h1>
     
-	<h2 id="gopkginyamlv3-如何在-unmarshal-时设置默认值">gopkg.in/yaml.v3 如何在 Unmarshal 时设置默认值</h2>
+	<h2 id="gopkginyamlv3-在-unmarshal-时设置默认值">gopkg.in/yaml.v3 在 Unmarshal 时设置默认值</h2>
 <p>使用 <a href="https://github.com/go-yaml/yaml/tree/v3.0.1">gopkg.in/yaml.v3</a> 解析 yaml 文件时，我们可以实现结构体的 UnmarshalYAML 接口</p>
 <p>在 <code>UnmarshalYAML</code> 方法中，既可以在结构体创建的时候指定默认值，也可以在结构体 Decode 完成之后，设置更复杂的默认值</p>
 <ul>
@@ -198,7 +214,10 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// UnmarshalYAML
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">//
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">//	此程序演示了更复杂的情况, Name 字段的默认值是根据 Interface 的值来设置的
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">//	此函数演示了更复杂的情况, Name 字段的默认值是根据 Interface 的值来设置的
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">//
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// Name 是 Interface 中 `.` 分割的最后一段
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 如果 Interface 中没有 `.` , 则 Name == Interface
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">s</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">Service</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">UnmarshalYAML</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">yaml</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Node</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">error</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">type</span> <span style="color:#000">tmp</span> <span style="color:#000">Service</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000">rs</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">tmp</span><span style="color:#000;font-weight:bold">{}</span>
@@ -207,12 +226,11 @@
 </span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">errors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Wrap</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;Service: failed to unmarshal&#34;</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">!</span><span style="color:#000">strings</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Contains</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rs</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Interface</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;.&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">errors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">New</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Service: invalid Interface value&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">rs</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Name</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;&#34;</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#000">rs</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Name</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">strings</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Split</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rs</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Interface</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;.&#34;</span><span style="color:#000;font-weight:bold">)[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 注意这里，无论 rs.Interface 的值是什么， tokens 的长度一定 &gt;= 1,
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#8f5902;font-style:italic">// 所以 tokens[len(tokens)-1] 不会 Panic
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#000">tokens</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">strings</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Split</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rs</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Interface</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;.&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">rs</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Name</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">tokens</span><span style="color:#000;font-weight:bold">[</span><span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">tokens</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">s</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">Service</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rs</span><span style="color:#000;font-weight:bold">)</span>
@@ -253,6 +271,236 @@
 <li><a href="https://github.com/go-yaml/yaml/issues/165#issuecomment-727092641">https://github.com/go-yaml/yaml/issues/165#issuecomment-727092641</a></li>
 </ul>
 
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-434a02cf1a3ee72f31be04b770f0fabb">2 - Golang 的版本发布计划</h1>
+    
+	<blockquote>
+<p>Golang 的版本发布计划</p>
+</blockquote>
+<hr>
+<h2 id="golang-的版本发布计划">Golang 的版本发布计划</h2>
+<p>在 <a href="https://github.com/golang/go/wiki/Go-Release-Cycle">Go Release Cycle</a> 中写明了</p>
+<p>每半年发布一个版本，每年的02月和08月发布一个 Major 版本。但是 Go 官方好像一直没有严格遵守过这个时间。</p>
+<p>在 <a href="https://go.dev/doc/devel/release">Release History</a> 中可以看到最近的版本发布日期</p>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>发布日期</th>
+<th>是否还在维护</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>go1.19</td>
+<td><a href="https://groups.google.com/g/golang-dev/c/4xsD_D5oflI">2022-11-01?</a></td>
+<td>开发中</td>
+</tr>
+<tr>
+<td>go1.18</td>
+<td>2022-03-15</td>
+<td>是</td>
+</tr>
+<tr>
+<td>go1.17</td>
+<td>2021-08-16</td>
+<td>是</td>
+</tr>
+<tr>
+<td>go1.16</td>
+<td>2021-02-16</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.15</td>
+<td>2020-08-11</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.14</td>
+<td>2020-02-25</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go.1.13</td>
+<td>2019-09-03</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.12</td>
+<td>2019-02-25</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.11</td>
+<td>2018-08-24</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.10</td>
+<td>2018-02-16</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.9</td>
+<td>2017-08-24</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.8</td>
+<td>2017-02-16</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.7</td>
+<td>2016-08-15</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.6</td>
+<td>2016-02-17</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.5</td>
+<td>2015-08-19</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.4</td>
+<td>2014-12-10</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.3</td>
+<td>2014-06-18</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.2</td>
+<td>2013-12-01</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1.1</td>
+<td>2013-05-13</td>
+<td>否</td>
+</tr>
+<tr>
+<td>go1</td>
+<td>2012-03-28</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<h2 id="每个版本的维护计划">每个版本的维护计划</h2>
+<blockquote>
+<p>Each major Go release is supported until there are two newer major releases. For example, Go 1.5 was supported until the Go 1.7 release, and Go 1.6 was supported until the Go 1.8 release. We fix critical problems, including critical security problems, in supported releases as needed by issuing minor revisions (for example, Go 1.6.1, Go 1.6.2, and so on).</p>
+</blockquote>
+<p>每个 Major 版本会维护到下两个 Major 版本 release 的时候，例如 Go1.18 release 的，Go1.16 就放弃维护了。所以每个 Major 版本大致的支持时间是1年</p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://dev.golang.org/release">Golang Release dashboard</a></li>
+<li><a href="https://github.com/golang/go/wiki/Go-Release-Cycle">Go Release Cycle</a></li>
+<li><a href="https://go.dev/doc/devel/release">Release History</a></li>
+<li><a href="https://groups.google.com/g/golang-dev/c/4xsD_D5oflI">Go 1.19 release status</a></li>
+</ul>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-411c7d44b39c2c01f271102f90652135">3 - Go proxy 的说明</h1>
+    
+	<hr>
+<h2 id="查看-go-proxy-中包的信息">查看 Go Proxy 中包的信息</h2>
+<h3 id="查看包的版本列表">查看包的版本列表</h3>
+<pre tabindex="0"><code>ø&gt; curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/list
+v3.5.0-beta.4
+v3.5.4
+v3.5.2
+v3.5.0-alpha.0
+v3.5.0-rc.0
+v3.5.3
+v3.5.0
+v3.5.1
+v3.5.0-beta.2
+v3.6.0-alpha.0
+v3.5.0-rc.1
+v3.5.0-beta.3
+</code></pre><h3 id="查看包的版本信息">查看包的版本信息</h3>
+<pre tabindex="0"><code>curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/v3.0.0-20201116001935-06e48f04865f.info
+</code></pre><h3 id="查看包的依赖">查看包的依赖</h3>
+<p>即获取 go.mod 文件</p>
+<pre tabindex="0"><code>curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/v3.0.0-20201116001935-06e48f04865f.mod
+</code></pre><pre tabindex="0"><code>module go.etcd.io/etcd/client/v3
+
+go 1.15
+
+require (
+        github.com/dustin/go-humanize v1.0.0
+        github.com/google/uuid v1.1.2
+        github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
+        github.com/prometheus/client_golang v1.5.1
+        go.etcd.io/etcd/api/v3 v3.5.0-pre
+        go.etcd.io/etcd/pkg/v3 v3.5.0-pre
+        go.uber.org/zap v1.16.0
+        google.golang.org/grpc v1.29.1
+        sigs.k8s.io/yaml v1.2.0
+)
+
+replace (
+        go.etcd.io/etcd/api/v3 =&gt; ../../api
+        go.etcd.io/etcd/pkg/v3 =&gt; ../../pkg
+)
+
+// Bad imports are sometimes causing attempts to pull that code.
+// This makes the error more explicit.
+replace (
+        go.etcd.io/etcd =&gt; ./FORBIDDEN_DEPENDENCY
+        go.etcd.io/etcd/v3 =&gt; ./FORBIDDEN_DEPENDENCY
+        go.etcd.io/tests/v3 =&gt; ./FORBIDDEN_DEPENDENCY
+)
+</code></pre><h3 id="下载包">下载包</h3>
+<pre tabindex="0"><code>curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/v3.0.0-20201116001935-06e48f04865f.zip
+</code></pre><h2 id="proxy-测速">Proxy 测速</h2>
+<p>2021-12-13 日晚安装包 <code>go-git/go-git-fixtures</code> 的时候卡着不动，测了一下两个 proxy 的速度</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ø&gt; curl https://goproxy.io/github.com/go-git/go-git-fixtures/v4/@v/v4.2.1.zip -o /tmp/pkg.zip
+</span></span><span style="display:flex;"><span>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+</span></span><span style="display:flex;"><span>                                 Dload  Upload   Total   Spent    Left  Speed
+</span></span><span style="display:flex;"><span>  <span style="color:#0000cf;font-weight:bold">2</span> 93.4M    <span style="color:#0000cf;font-weight:bold">2</span> 2623k    <span style="color:#0000cf;font-weight:bold">0</span>     <span style="color:#0000cf;font-weight:bold">0</span>   181k      <span style="color:#0000cf;font-weight:bold">0</span>  0:08:48  0:00:14  0:08:34  147k
+</span></span><span style="display:flex;"><span>ø&gt; curl https://goproxy.cn/github.com/go-git/go-git-fixtures/v4/@v/v4.2.1.zip -o /tmp/pkg.zip
+</span></span><span style="display:flex;"><span>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+</span></span><span style="display:flex;"><span>                                 Dload  Upload   Total   Spent    Left  Speed
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">10</span> 93.4M   <span style="color:#0000cf;font-weight:bold">10</span>  9.7M    <span style="color:#0000cf;font-weight:bold">0</span>     <span style="color:#0000cf;font-weight:bold">0</span>  3712k      <span style="color:#0000cf;font-weight:bold">0</span>  0:00:25  0:00:02  0:00:23 3711k
+</span></span><span style="display:flex;"><span> <span style="color:#0000cf;font-weight:bold">21</span> 93.4M   <span style="color:#0000cf;font-weight:bold">21</span> 20.2M    <span style="color:#0000cf;font-weight:bold">0</span>     <span style="color:#0000cf;font-weight:bold">0</span>  5605k      <span style="color:#0000cf;font-weight:bold">0</span>  0:00:17  0:00:03  0:00:14 5603k
+</span></span></code></pre></div><p>goproxy.io 的下载速度竟然只有 147k，怪不得安装时会卡住</p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://go.dev/ref/mod">https://go.dev/ref/mod</a></li>
+</ul>
 </div>
 
 
