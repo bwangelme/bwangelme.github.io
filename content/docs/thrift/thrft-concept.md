@@ -2,7 +2,6 @@
 title: "Thrft"
 date: 2022-11-15T12:40:19+08:00
 lastmod: 2022-11-15T12:40:19+08:00
-draft: false
 tags: [tips, thrift]
 author: "bwangel"
 ---
