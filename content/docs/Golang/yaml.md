@@ -114,7 +114,7 @@ func main() {
 	}
 
 	// 输出
-	//linaewen linaewen.fdoulist
+	//fdoulist linaewen.fdoulist
 	for _, svc := range config.Services {
 		fmt.Println(svc.Name, svc.Interface)
 	}
