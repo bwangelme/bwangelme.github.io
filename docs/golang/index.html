@@ -4,6 +4,8 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.115.2">
+<link rel="alternate" type="text/html" href="https://bwangelme.github.io/647/docs/golang/_print/">
+<link rel="alternate" type="application/rss&#43;xml" href="https://bwangelme.github.io/647/docs/golang/index.xml">
 <meta name="robots" content="index, follow">
 
 
@@ -18,41 +20,16 @@
 <link rel="icon" type="image/png" href="/647/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/647/favicons/android-192x192.png" sizes="192x192">
 
-<title>QPS 和 RT 的关系 | 647 Universe</title>
-<meta name="description" content="术语说明 QPS: Query Per Second RT: Response Time RT_CPU: 单个请求中的 CPU 时间 RT_WAIT: 单个请求中除了 CPU 时间外的其他时间(等待时间) 结论 单线程情况下, QPS = 1000 / RT
-多线程情况下，最好的情况(最佳线程数)是
-QPS = 1000 / RT_CPU
-最佳线程数 = (RT_CPU&#43;RT_WAIT) / RT_CPU * CPU核心
-线程数超过 最佳线程数 后, 系统的 QPS 不会再增加了，如果进一步增多，因为多个线程抢夺 CPU 资源导致的时间浪费，QPS 还会下降。 说明 一个请求我们除了有 CPU 执行时间外，还有等待时间(等待IO/等待锁资源)。
-如果单个请求的等待时间占比很高，我们可以增加线程数，提升 CPU 的利用率，这样 QPS 也会随之增加。(CPU 利用率达到 85% 以上才比较正常) 线程本身也会消耗资源，它消耗的是 OS 级别的内存，不是进程内存，如果线程数小于 1000, 那么对于系统性能的影响可以忽略不计。 如果单个请求的 CPU 时间占比很高，此时 CPU 成为系统瓶颈，那么系统整体的 QPS 已经没有提升空间了，要么优化程序，减少 CPU 指令数，要么增加 CPU 资源。 我们提升系统 QPS 的目的就是提升 CPU 的利用率，使 CPU 成为系统瓶颈。 ">
-<meta property="og:title" content="QPS 和 RT 的关系" />
-<meta property="og:description" content="术语说明 QPS: Query Per Second RT: Response Time RT_CPU: 单个请求中的 CPU 时间 RT_WAIT: 单个请求中除了 CPU 时间外的其他时间(等待时间) 结论 单线程情况下, QPS = 1000 / RT
-多线程情况下，最好的情况(最佳线程数)是
-QPS = 1000 / RT_CPU
-最佳线程数 = (RT_CPU&#43;RT_WAIT) / RT_CPU * CPU核心
-线程数超过 最佳线程数 后, 系统的 QPS 不会再增加了，如果进一步增多，因为多个线程抢夺 CPU 资源导致的时间浪费，QPS 还会下降。 说明 一个请求我们除了有 CPU 执行时间外，还有等待时间(等待IO/等待锁资源)。
-如果单个请求的等待时间占比很高，我们可以增加线程数，提升 CPU 的利用率，这样 QPS 也会随之增加。(CPU 利用率达到 85% 以上才比较正常) 线程本身也会消耗资源，它消耗的是 OS 级别的内存，不是进程内存，如果线程数小于 1000, 那么对于系统性能的影响可以忽略不计。 如果单个请求的 CPU 时间占比很高，此时 CPU 成为系统瓶颈，那么系统整体的 QPS 已经没有提升空间了，要么优化程序，减少 CPU 指令数，要么增加 CPU 资源。 我们提升系统 QPS 的目的就是提升 CPU 的利用率，使 CPU 成为系统瓶颈。 " />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://bwangelme.github.io/647/docs/performance/qps_rt/" /><meta property="article:section" content="docs" />
-<meta property="article:published_time" content="2023-08-13T16:17:52+08:00" />
-<meta property="article:modified_time" content="2023-08-13T17:21:24+08:00" /><meta property="og:site_name" content="647号宇宙" />
-<meta itemprop="name" content="QPS 和 RT 的关系">
-<meta itemprop="description" content="术语说明 QPS: Query Per Second RT: Response Time RT_CPU: 单个请求中的 CPU 时间 RT_WAIT: 单个请求中除了 CPU 时间外的其他时间(等待时间) 结论 单线程情况下, QPS = 1000 / RT
-多线程情况下，最好的情况(最佳线程数)是
-QPS = 1000 / RT_CPU
-最佳线程数 = (RT_CPU&#43;RT_WAIT) / RT_CPU * CPU核心
-线程数超过 最佳线程数 后, 系统的 QPS 不会再增加了，如果进一步增多，因为多个线程抢夺 CPU 资源导致的时间浪费，QPS 还会下降。 说明 一个请求我们除了有 CPU 执行时间外，还有等待时间(等待IO/等待锁资源)。
-如果单个请求的等待时间占比很高，我们可以增加线程数，提升 CPU 的利用率，这样 QPS 也会随之增加。(CPU 利用率达到 85% 以上才比较正常) 线程本身也会消耗资源，它消耗的是 OS 级别的内存，不是进程内存，如果线程数小于 1000, 那么对于系统性能的影响可以忽略不计。 如果单个请求的 CPU 时间占比很高，此时 CPU 成为系统瓶颈，那么系统整体的 QPS 已经没有提升空间了，要么优化程序，减少 CPU 指令数，要么增加 CPU 资源。 我们提升系统 QPS 的目的就是提升 CPU 的利用率，使 CPU 成为系统瓶颈。 "><meta itemprop="datePublished" content="2023-08-13T16:17:52+08:00" />
-<meta itemprop="dateModified" content="2023-08-13T17:21:24+08:00" />
-<meta itemprop="wordCount" content="80">
-<meta itemprop="keywords" content="tips,thrift," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="QPS 和 RT 的关系"/>
-<meta name="twitter:description" content="术语说明 QPS: Query Per Second RT: Response Time RT_CPU: 单个请求中的 CPU 时间 RT_WAIT: 单个请求中除了 CPU 时间外的其他时间(等待时间) 结论 单线程情况下, QPS = 1000 / RT
-多线程情况下，最好的情况(最佳线程数)是
-QPS = 1000 / RT_CPU
-最佳线程数 = (RT_CPU&#43;RT_WAIT) / RT_CPU * CPU核心
-线程数超过 最佳线程数 后, 系统的 QPS 不会再增加了，如果进一步增多，因为多个线程抢夺 CPU 资源导致的时间浪费，QPS 还会下降。 说明 一个请求我们除了有 CPU 执行时间外，还有等待时间(等待IO/等待锁资源)。
-如果单个请求的等待时间占比很高，我们可以增加线程数，提升 CPU 的利用率，这样 QPS 也会随之增加。(CPU 利用率达到 85% 以上才比较正常) 线程本身也会消耗资源，它消耗的是 OS 级别的内存，不是进程内存，如果线程数小于 1000, 那么对于系统性能的影响可以忽略不计。 如果单个请求的 CPU 时间占比很高，此时 CPU 成为系统瓶颈，那么系统整体的 QPS 已经没有提升空间了，要么优化程序，减少 CPU 指令数，要么增加 CPU 资源。 我们提升系统 QPS 的目的就是提升 CPU 的利用率，使 CPU 成为系统瓶颈。 "/>
+<title>Golang | 647 Universe</title>
+<meta name="description" content="宇宙很大，生活更大，也许以后还有缘相见">
+<meta property="og:title" content="Golang" />
+<meta property="og:description" content="宇宙很大，生活更大，也许以后还有缘相见" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bwangelme.github.io/647/docs/golang/" /><meta property="og:site_name" content="647号宇宙" />
+<meta itemprop="name" content="Golang">
+<meta itemprop="description" content="宇宙很大，生活更大，也许以后还有缘相见"><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang"/>
+<meta name="twitter:description" content="宇宙很大，生活更大，也许以后还有缘相见"/>
 
 
 
@@ -67,7 +44,7 @@ QPS = 1000 / RT_CPU
 <link rel="stylesheet" href="/647/css/prism.css"/>
 
   </head>
-  <body class="td-page">
+  <body class="td-section">
     <header>
       <nav class="td-navbar navbar-dark js-navbar-scroll">
 <div class="container-fluid flex-column flex-md-row">
@@ -100,18 +77,18 @@ QPS = 1000 / RT_CPU
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-647docs-li">
   <a href="/647/docs/" title="Documentation" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-647docs"><span class="">Docs</span></a>
   <ul class="ul-1">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsgolang-li">
-  <a href="/647/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsgolang"><span class="">Golang</span></a>
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-647docsgolang-li">
+  <a href="/647/docs/golang/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__section" id="m-647docsgolang"><span class="td-sidebar-nav-active-item">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolangyaml-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docsgolangyaml-li">
   <a href="/647/docs/golang/yaml/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolangyaml"><span class="">YAML</span></a>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-647docsperformance-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsperformance-li">
   <a href="/647/docs/performance/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsperformance"><span class="">性能分析</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-647docsperformanceqps_rt-li">
-  <a href="/647/docs/performance/qps_rt/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-647docsperformanceqps_rt"><span class="td-sidebar-nav-active-item">QPS 和 RT 的关系</span></a>
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsperformanceqps_rt-li">
+  <a href="/647/docs/performance/qps_rt/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsperformanceqps_rt"><span class="">QPS 和 RT 的关系</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsthrift-li">
@@ -155,25 +132,16 @@ QPS = 1000 / RT_CPU
           <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
             
 <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
-<a href="https://github.com/bwangelme/647/tree/master/content/cn/docs/performance/qps_rt.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines fa-fw"></i> </a>
-  <a href="https://github.com/bwangelme/647/edit/master/content/cn/docs/performance/qps_rt.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> </a>
-  <a href="https://github.com/bwangelme/647/new/master/content/cn/docs/performance/qps_rt.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> </a>
-  <a href="https://github.com/bwangelme/647/issues/new?title=QPS%20%e5%92%8c%20RT%20%e7%9a%84%e5%85%b3%e7%b3%bb" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> </a>
+<a href="https://github.com/bwangelme/647/tree/master/content/cn/docs/Golang/_index.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines fa-fw"></i> </a>
+  <a href="https://github.com/bwangelme/647/edit/master/content/cn/docs/Golang/_index.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> </a>
+  <a href="https://github.com/bwangelme/647/new/master/content/cn/docs/Golang/_index.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> </a>
+  <a href="https://github.com/bwangelme/647/issues/new?title=Golang" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> </a>
   <a href="https://github.com/bwangelme/647/issues/new" class="td-page-meta--project-issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> </a>
-  <a id="print" href="https://bwangelme.github.io/647/docs/performance/_print/"><i class="fa-solid fa-print fa-fw"></i> </a>
+  <a id="print" href="https://bwangelme.github.io/647/docs/golang/_print/"><i class="fa-solid fa-print fa-fw"></i> </a>
 
 </div>
 
-            <div class="td-toc">
-        <nav id="TableOfContents">
-  <ul>
-    <li><a href="#术语说明">术语说明</a></li>
-    <li><a href="#结论">结论</a></li>
-    <li><a href="#说明">说明</a></li>
-  </ul>
-</nav>
-      </div>
-    
+            
             <div class="taxonomy taxonomy-terms-cloud taxo-tags">
       <h5 class="taxonomy-title">Tag Cloud</h5>
       <ul class="taxonomy-terms">
@@ -195,63 +163,43 @@ QPS = 1000 / RT_CPU
   <ol class="breadcrumb">
   <li class="breadcrumb-item">
     <a href="https://bwangelme.github.io/647/docs/">Docs</a></li>
-  <li class="breadcrumb-item">
-    <a href="https://bwangelme.github.io/647/docs/performance/">性能分析</a></li>
   <li class="breadcrumb-item active" aria-current="page">
-    QPS 和 RT 的关系</li>
+    Golang</li>
   </ol>
 </nav>
             
 <div class="td-content">
-	<h1>QPS 和 RT 的关系</h1>
-	
+	<h1>Golang</h1>
+  
 	<header class="article-meta">
-		<div class="taxonomy taxonomy-terms-article taxo-tags">
-  <h5 class="taxonomy-title">Tags:</h5>
-  <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span></a></li>
-    </ul>
-</div>
-
+		
   </header>
-	<h2 id="术语说明">术语说明</h2>
-<ul>
-<li>QPS: Query Per Second</li>
-<li>RT: Response Time</li>
-<li>RT_CPU: 单个请求中的 CPU 时间</li>
-<li>RT_WAIT: 单个请求中除了 CPU 时间外的其他时间(等待时间)</li>
-</ul>
-<h2 id="结论">结论</h2>
-<p>单线程情况下, <code>QPS = 1000 / RT</code></p>
-<p>多线程情况下，最好的情况(最佳线程数)是</p>
-<blockquote>
-<p>QPS = 1000 / RT_CPU</p>
-</blockquote>
-<blockquote>
-<p>最佳线程数 = (RT_CPU+RT_WAIT) / RT_CPU * CPU核心</p>
-<ul>
-<li>线程数超过 最佳线程数 后, 系统的 QPS 不会再增加了，如果进一步增多，因为多个线程抢夺 CPU 资源导致的时间浪费，QPS 还会下降。</li>
-</ul>
-</blockquote>
-<h2 id="说明">说明</h2>
-<p>一个请求我们除了有 CPU 执行时间外，还有等待时间(等待IO/等待锁资源)。</p>
-<ul>
-<li>如果单个请求的等待时间占比很高，我们可以增加线程数，提升 CPU 的利用率，这样 QPS 也会随之增加。(CPU 利用率达到 85% 以上才比较正常)
-<ul>
-<li>线程本身也会消耗资源，它消耗的是 OS 级别的内存，不是进程内存，如果线程数小于 1000, 那么对于系统性能的影响可以忽略不计。</li>
-</ul>
-</li>
-<li>如果单个请求的 CPU 时间占比很高，此时 CPU 成为系统瓶颈，那么系统整体的 QPS 已经没有提升空间了，要么优化程序，减少 CPU 指令数，要么增加 CPU 资源。</li>
-<li>我们提升系统 QPS 的目的就是提升 CPU 的利用率，使 CPU 成为系统瓶颈。</li>
-</ul>
-
-	<div class="text-muted mt-5 pt-3 border-top">
-   August 13, 2023: <a href="https://github.com/bwangelme/647/commit/85f6fadddae3a59c3d015ba244689b4f57b7c07c">add curl &amp;&amp; performance (85f6fad)</a>
+	
+  <div class="section-index">
+    
+    
+    
+    
+    
+    
+    
+    
+    <hr class="panel-line">
+        
+            
+            <div class="entry">
+                <h5>
+                    <a href="/647/docs/golang/yaml/">YAML</a>
+                </h5>
+                <p></p>
+            </div>
+        
+    
 </div>
-
+<div class="text-muted mt-5 pt-3 border-top">
+   August 15, 2023: <a href="https://github.com/bwangelme/647/commit/12fbe5186fed02d4dfc7a49048a6ff4a139d600e">add golang tips (12fbe51)</a>
 </div>
-
+</div>
 
           </main>
         </div>
