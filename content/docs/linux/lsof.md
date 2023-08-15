@@ -2,7 +2,7 @@
 title: "lsof"
 date: 2023-03-02T12:43:09+08:00
 lastmod: 2023-03-02T12:43:09+08:00
-tags: [lsof, linux]
+tags: [lsof, linux, blog]
 author: "bwangel"
 weight: 4
 ---
