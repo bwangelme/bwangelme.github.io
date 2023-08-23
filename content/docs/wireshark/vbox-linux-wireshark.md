@@ -42,7 +42,7 @@ HostB:
 
 ## 开始实验
 
-读完这个实验后，感觉这个测试挺好玩，就尝试在本地复现了一下。
+读完以后，感觉这个测试挺好玩，就尝试在本地复现了一下。
 
 我的环境如下，3台安装了 Ubuntu 22.04 Vitualbox 虚拟机, 它们分别充当 HostA, HostB 和 网关
 
@@ -62,3 +62,4 @@ HostB:
 
 - [How to clear the ARP cache on Linux?](https://linux-audit.com/how-to-clear-the-arp-cache-on-linux/)
 - [6.4. Network Address Translation Service](https://www.virtualbox.org/manual/ch06.html#network_nat_service)
+- [Linux IP forwarding – How to Disable/Enable using net.ipv4.ip_forward](https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux)
