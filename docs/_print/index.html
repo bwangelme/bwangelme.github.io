@@ -642,7 +642,7 @@ listening on enp0s8, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 01:52:10.616571 08:00:27:69:22:ae &gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &gt; 192.168.26.129: ICMP echo reply, id 27, seq 1, length 64
 01:52:11.965582 08:00:27:69:22:ae &gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &gt; 192.168.26.129: ICMP echo reply, id 27, seq 2, length 64
 01:52:12.992503 08:00:27:69:22:ae &gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &gt; 192.168.26.129: ICMP echo reply, id 27, seq 3, length 64
-</code></pre><p>vbox3 收到了 vbox2 转发来的包，但它没有进一步的发送动作，此时我拍脑袋一想，Linux 可能默认有限制，不转发包，于是我用 <strong>ubuntu 开启路由转发</strong> 作为关键字搜了一下，找到了配置项 <code>net.ipv4.ip_forward</code>, 我又用 <strong>ubuntu ipv4_forward</strong> 作为关键字搜索了一下，找到了 ubuntu 开启 IP Forward 的文章。</p>
+</code></pre><p>vbox3 收到了 vbox2 转发来的包，但它没有进一步的发送动作，此时我拍脑袋一想，Linux 可能默认有限制，不转发包，于是我用 <strong>ubuntu 开启路由转发</strong> 作为关键字搜了一下，找到了配置项 <code>net.ipv4.ip_forward</code>, 我又用 <strong>ubuntu ipv4_forward</strong> 作为关键字搜索了一下，找到了 <a href="https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux">ubuntu 开启 IP Forward 的文章</a>。</p>
 <p>我执行以下命令，在 vbox3 上临时开启了 ip 转发的功能</p>
 <pre tabindex="0"><code>sysctl -w net.ipv4.ip_forward=1
 </code></pre><p>改完上述配置后，在 vbox1 上 ping <code>192.168.26.122</code> 就能 ping 通了。</p>

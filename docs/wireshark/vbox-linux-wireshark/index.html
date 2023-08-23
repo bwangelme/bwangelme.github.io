@@ -33,14 +33,14 @@ HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bwangelme.github.io/647/docs/wireshark/vbox-linux-wireshark/" /><meta property="article:section" content="docs" />
 <meta property="article:published_time" content="2023-08-23T10:07:25+08:00" />
-<meta property="article:modified_time" content="2023-08-23T23:54:42+08:00" /><meta property="og:site_name" content="647号宇宙" />
+<meta property="article:modified_time" content="2023-08-24T00:03:23+08:00" /><meta property="og:site_name" content="647号宇宙" />
 <meta itemprop="name" content="利用 VirtualBox 和 Ubuntu 22 重现抓包实验">
 <meta itemprop="description" content="实验介绍 在 《Wireshark网络分析就这么简单》 第一章，讲述了一道面试题。
 HostA 和 HostB 在同一个局域网中，它们的 IP 配置如下，请问这两台机器能否 ping 通?
 HostA: IP: 192.168.26.129/24 Gateway: 192.168.26.2 HostB: IP: 192.168.26.3/27 Gateway: 192.168.26.2 答案是能够 ping 通，HostA 和 HostB 连同网关最终会形成一个奇怪的网络
 具体通信过程如下:
 HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 的 IP 和自己的掩码计算，发现 192.168.26.3 和自己是处于同一子网 HostA 通过 ARP 协议广播寻找 192.168.26.3 的 MAC 地址，由于 192.168.26.3 和它在同一局域网中，192.168.26.3 会应答自己的 MAC 地址 HostA 将 ping 请求直接发送给 192.168.26.3, 目的 MAC 地址使用的就是 192.168.26.3 的地址 HostB(192.168.26.3) 收到 ping 请求，给 HostA 发送 ping 响应 HostB 将 HostA 的 IP 和自己的掩码计算，发现 192."><meta itemprop="datePublished" content="2023-08-23T10:07:25+08:00" />
-<meta itemprop="dateModified" content="2023-08-23T23:54:42+08:00" />
+<meta itemprop="dateModified" content="2023-08-24T00:03:23+08:00" />
 <meta itemprop="wordCount" content="1301">
 <meta itemprop="keywords" content="wireshark,blog," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="利用 VirtualBox 和 Ubuntu 22 重现抓包实验"/>
@@ -501,7 +501,7 @@ listening on enp0s8, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 01:52:10.616571 08:00:27:69:22:ae &gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &gt; 192.168.26.129: ICMP echo reply, id 27, seq 1, length 64
 01:52:11.965582 08:00:27:69:22:ae &gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &gt; 192.168.26.129: ICMP echo reply, id 27, seq 2, length 64
 01:52:12.992503 08:00:27:69:22:ae &gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &gt; 192.168.26.129: ICMP echo reply, id 27, seq 3, length 64
-</code></pre><p>vbox3 收到了 vbox2 转发来的包，但它没有进一步的发送动作，此时我拍脑袋一想，Linux 可能默认有限制，不转发包，于是我用 <strong>ubuntu 开启路由转发</strong> 作为关键字搜了一下，找到了配置项 <code>net.ipv4.ip_forward</code>, 我又用 <strong>ubuntu ipv4_forward</strong> 作为关键字搜索了一下，找到了 ubuntu 开启 IP Forward 的文章。</p>
+</code></pre><p>vbox3 收到了 vbox2 转发来的包，但它没有进一步的发送动作，此时我拍脑袋一想，Linux 可能默认有限制，不转发包，于是我用 <strong>ubuntu 开启路由转发</strong> 作为关键字搜了一下，找到了配置项 <code>net.ipv4.ip_forward</code>, 我又用 <strong>ubuntu ipv4_forward</strong> 作为关键字搜索了一下，找到了 <a href="https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux">ubuntu 开启 IP Forward 的文章</a>。</p>
 <p>我执行以下命令，在 vbox3 上临时开启了 ip 转发的功能</p>
 <pre tabindex="0"><code>sysctl -w net.ipv4.ip_forward=1
 </code></pre><p>改完上述配置后，在 vbox1 上 ping <code>192.168.26.122</code> 就能 ping 通了。</p>
@@ -523,7 +523,7 @@ sudo ip -s -s neigh flush all
 route -n
 </code></pre>
 	<div class="text-muted mt-5 pt-3 border-top">
-   August 23, 2023: <a href="https://github.com/bwangelme/647/commit/c6d75c677493b853e407331fc22a393fac25383a">add wireshark ping (c6d75c6)</a>
+   August 24, 2023: <a href="https://github.com/bwangelme/647/commit/c89deb2fd82e09e7d65a49c1072b7f4f36c14f2b">z 20230824-000323 (c89deb2)</a>
 </div>
 
 </div>
