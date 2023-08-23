@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.115.2">
+<meta name="generator" content="Hugo 0.117.0">
 <link rel="canonical" type="text/html" href="https://bwangelme.github.io/647/docs/golang/">
 <link rel="alternate" type="application/rss&#43;xml" href="https://bwangelme.github.io/647/docs/golang/index.xml">
 <meta name="robots" content="noindex, nofollow">
@@ -100,7 +100,7 @@
     
     
 	
-<li>1: <a href="#pg-8aa7d3f7c05390359a87acf37c95a33b">YAML</a></li>
+<li>1: <a href="#pg-c374734838a7da2e3834d1091952177f">泛型</a></li>
 
 
     
@@ -108,7 +108,7 @@
     
     
 	
-<li>2: <a href="#pg-434a02cf1a3ee72f31be04b770f0fabb">Golang 的版本发布计划</a></li>
+<li>2: <a href="#pg-8aa7d3f7c05390359a87acf37c95a33b">YAML</a></li>
 
 
     
@@ -116,7 +116,15 @@
     
     
 	
-<li>3: <a href="#pg-411c7d44b39c2c01f271102f90652135">Go proxy 的说明</a></li>
+<li>3: <a href="#pg-434a02cf1a3ee72f31be04b770f0fabb">Golang 的版本发布计划</a></li>
+
+
+    
+  
+    
+    
+	
+<li>4: <a href="#pg-411c7d44b39c2c01f271102f90652135">Go proxy 的说明</a></li>
 
 
     
@@ -147,7 +155,63 @@
 
 <div class="td-content" style="">
     
-	<h1 id="pg-8aa7d3f7c05390359a87acf37c95a33b">1 - YAML</h1>
+	<h1 id="pg-c374734838a7da2e3834d1091952177f">1 - 泛型</h1>
+    
+	<h2 id="利用泛型实现的语法糖">利用泛型实现的语法糖</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// Cond
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 条件表达式的简单实现，支持任意类型
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">Cond</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span> <span style="color:#000">any</span><span style="color:#000;font-weight:bold">](</span><span style="color:#000">val</span> <span style="color:#204a87;font-weight:bold">bool</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">a</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">b</span> <span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">T</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">val</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">a</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">b</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// Or
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 返回 vals 中第一个不是对应类型0值的参数，如果没有，则返回对应类型的0值
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span> <span style="color:#000">comparable</span><span style="color:#000;font-weight:bold">](</span><span style="color:#000">vals</span> <span style="color:#ce5c00;font-weight:bold">...</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">T</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">_</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">val</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87;font-weight:bold">range</span> <span style="color:#000">vals</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">val</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#204a87">new</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">val</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#204a87">new</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><ul>
+<li>用法</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">TestCond</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">testing</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Cond</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Cond</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">req</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Request</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">MethodGet</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Cond</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">req</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">MethodGet</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">MethodPost</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">TestOr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">testing</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 范型函数可以不传类型参数
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// 我在 1.18, 1.19, 1.20 上测试均可以工作
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">[</span><span style="color:#204a87;font-weight:bold">int</span><span style="color:#000;font-weight:bold">]())</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-8aa7d3f7c05390359a87acf37c95a33b">2 - YAML</h1>
     
 	<h2 id="gopkginyamlv3-在-unmarshal-时设置默认值">gopkg.in/yaml.v3 在 Unmarshal 时设置默认值</h2>
 <p>使用 <a href="https://github.com/go-yaml/yaml/tree/v3.0.1">gopkg.in/yaml.v3</a> 解析 yaml 文件时，我们可以实现结构体的 UnmarshalYAML 接口</p>
@@ -285,7 +349,7 @@
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-434a02cf1a3ee72f31be04b770f0fabb">2 - Golang 的版本发布计划</h1>
+	<h1 id="pg-434a02cf1a3ee72f31be04b770f0fabb">3 - Golang 的版本发布计划</h1>
     
 	<blockquote>
 <p>Golang 的版本发布计划</p>
@@ -432,7 +496,7 @@
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-411c7d44b39c2c01f271102f90652135">3 - Go proxy 的说明</h1>
+	<h1 id="pg-411c7d44b39c2c01f271102f90652135">4 - Go proxy 的说明</h1>
     
 	<hr>
 <h2 id="查看-go-proxy-中包的信息">查看 Go Proxy 中包的信息</h2>
