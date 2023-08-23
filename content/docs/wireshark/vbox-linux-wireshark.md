@@ -227,7 +227,7 @@ tcpdump: listening on enp0s8, link-type EN10MB (Ethernet), snapshot length 26214
 
 这个困扰了我好久，我反复检查三台 vbox 的所有网卡和我宿主机所有网卡的 MAC 地址，没有一个是符合 `08:00:27:ae:84:b6` 的。
 
-后来我突发奇想，这是不是 virtualbox NetNetwork 默认创建的地址，于是我将 vbox2 和 vbox3 的地址全部换掉，发现
+后来我突发奇想，这是不是 virtualbox Nat Network 默认创建的地址，于是我将 vbox2 和 vbox3 的地址全部换掉，发现
 
 - 192.168.26.1
 - 192.168.26.2
