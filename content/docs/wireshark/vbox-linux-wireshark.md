@@ -284,7 +284,7 @@ listening on enp0s8, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 01:52:12.992503 08:00:27:69:22:ae > 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 > 192.168.26.129: ICMP echo reply, id 27, seq 3, length 64
 ```
 
-vbox3 收到了 vbox2 转发来的包，但它没有进一步的发送动作，此时我拍脑袋一想，Linux 可能默认有限制，不转发包，于是我用 __ubuntu 开启路由转发__ 作为关键字搜了一下，找到了配置项 `net.ipv4.ip_forward`, 我又用 __ubuntu ipv4_forward__ 作为关键字搜索了一下，找到了 ubuntu 开启 IP Forward 的文章。
+vbox3 收到了 vbox2 转发来的包，但它没有进一步的发送动作，此时我拍脑袋一想，Linux 可能默认有限制，不转发包，于是我用 __ubuntu 开启路由转发__ 作为关键字搜了一下，找到了配置项 `net.ipv4.ip_forward`, 我又用 __ubuntu ipv4_forward__ 作为关键字搜索了一下，找到了 [ubuntu 开启 IP Forward 的文章](https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux)。
 
 我执行以下命令，在 vbox3 上临时开启了 ip 转发的功能
 
