@@ -713,7 +713,7 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;NewTProtocolException&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;它的 if 条件有四个子条件&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;ctx 设置了 deadline, 及 ctx 用 &lt;code&gt;WithTimeout&lt;/code&gt;, &lt;code&gt;WithDeadline&lt;/code&gt; 包裹了&lt;/li&gt;
+&lt;li&gt;ctx 设置了 deadline, 即 ctx 用 &lt;code&gt;WithTimeout&lt;/code&gt;, &lt;code&gt;WithDeadline&lt;/code&gt; 包裹了&lt;/li&gt;
 &lt;li&gt;protocol 底层的 transport 中读取的数据为0&lt;/li&gt;
 &lt;li&gt;protocol 底层的 transport 读取时返回的 err 是 timeout error&lt;/li&gt;
 &lt;li&gt;ctx 的 cancel 函数没有被调用(这也表示 WithTimeout ctx 没有超时)，&lt;code&gt;ctx.Err() == nil&lt;/code&gt;&lt;/li&gt;
@@ -723,8 +723,8 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
 &lt;p&gt;我们可以用下面这张图来表示&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-09-05-222326.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;step1 表示从 client 开始调用到 socket fd 返回第一个字节经过的时间&lt;/li&gt;
-&lt;li&gt;step2 表示从 client 开始接受第一个字节，到接受整个请求所花费的时间&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;step1&lt;/strong&gt; 表示从 client 开始调用到 socket fd 返回第一个字节经过的时间&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;step2&lt;/strong&gt; 表示从 client 开始接受第一个字节，到接受整个请求所花费的时间&lt;/li&gt;
 &lt;/ul&gt;
 &lt;ol&gt;
 &lt;li&gt;在 &lt;strong&gt;step1&lt;/strong&gt; 中，client 遇到 socket timeout 会进行重试，直到到达了 ctx 设置的时间上限&lt;/li&gt;

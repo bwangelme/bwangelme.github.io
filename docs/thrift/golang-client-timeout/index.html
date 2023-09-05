@@ -35,7 +35,7 @@ ctx, cancel := context." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bwangelme.github.io/647/docs/thrift/golang-client-timeout/" /><meta property="article:section" content="docs" />
 <meta property="article:published_time" content="2023-09-05T21:41:25+08:00" />
-<meta property="article:modified_time" content="2023-09-05T23:09:53+08:00" /><meta property="og:site_name" content="647号宇宙" />
+<meta property="article:modified_time" content="2023-09-05T23:18:01+08:00" /><meta property="og:site_name" content="647号宇宙" />
 <meta itemprop="name" content="Thrift golang client 如何设置超时时间">
 <meta itemprop="description" content="简介 本文以 golang thrift binary 协议为例，讲述 thrift golang client 如何设置超时时间
 如何设置超时时间 golang thrift client 有两个超时时间
@@ -43,7 +43,7 @@ socket timeout 在创建 TSocket 的时候，我们可以传入 ConnectTimeout �
 ConnectTimeout 表示建立 TCP 连接的超时时间 SocketTimeout 表示读写 Socket fd 时的超时时间 当这两个超时触发时，thrift 会返回一个 err.Timeout() == true 的 error, 表示超时错误，thrift 会将其包装成 TTransportException，其 typeId == thrift.TIMED_OUT
 rawTransport := thrift.NewTSocketConf(net.JoinHostPort(&#34;localhost&#34;, &#34;7303&#34;), &amp;thrift.TConfiguration{ SocketTimeout: 5 * time.Second, ConnectTimeout: 5 * time.Second, }) context timeout 在调用 thrift 函数时，需要传入 context 参数，我们可以在 ctx 参数中加上超时
 ctx, cancel := context."><meta itemprop="datePublished" content="2023-09-05T21:41:25+08:00" />
-<meta itemprop="dateModified" content="2023-09-05T23:09:53+08:00" />
+<meta itemprop="dateModified" content="2023-09-05T23:18:01+08:00" />
 <meta itemprop="wordCount" content="641">
 <meta itemprop="keywords" content="blog,thrift,Golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Thrift golang client 如何设置超时时间"/>
@@ -335,7 +335,7 @@ ctx, cancel := context."/>
 </span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">NewTProtocolException</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
 </span></span></code></pre></div><p>它的 if 条件有四个子条件</p>
 <ol>
-<li>ctx 设置了 deadline, 及 ctx 用 <code>WithTimeout</code>, <code>WithDeadline</code> 包裹了</li>
+<li>ctx 设置了 deadline, 即 ctx 用 <code>WithTimeout</code>, <code>WithDeadline</code> 包裹了</li>
 <li>protocol 底层的 transport 中读取的数据为0</li>
 <li>protocol 底层的 transport 读取时返回的 err 是 timeout error</li>
 <li>ctx 的 cancel 函数没有被调用(这也表示 WithTimeout ctx 没有超时)，<code>ctx.Err() == nil</code></li>
@@ -345,8 +345,8 @@ ctx, cancel := context."/>
 <p>我们可以用下面这张图来表示</p>
 <p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-09-05-222326.png" alt=""></p>
 <ul>
-<li>step1 表示从 client 开始调用到 socket fd 返回第一个字节经过的时间</li>
-<li>step2 表示从 client 开始接受第一个字节，到接受整个请求所花费的时间</li>
+<li><strong>step1</strong> 表示从 client 开始调用到 socket fd 返回第一个字节经过的时间</li>
+<li><strong>step2</strong> 表示从 client 开始接受第一个字节，到接受整个请求所花费的时间</li>
 </ul>
 <ol>
 <li>在 <strong>step1</strong> 中，client 遇到 socket timeout 会进行重试，直到到达了 ctx 设置的时间上限</li>
@@ -392,7 +392,7 @@ ctx, cancel := context."/>
 </span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">...</span>
 </span></span></code></pre></div>
 	<div class="text-muted mt-5 pt-3 border-top">
-   September 5, 2023: <a href="https://github.com/bwangelme/647/commit/7419323f05bc7c991a33115d41b137595e80fd1a">z 20230905-230953 (7419323)</a>
+   September 5, 2023: <a href="https://github.com/bwangelme/647/commit/c8c1fc163014d6512c7c7036077729cbc07b0a81">fix (c8c1fc1)</a>
 </div>
 
 </div>

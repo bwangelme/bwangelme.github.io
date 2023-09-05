@@ -233,7 +233,7 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">NewTProtocolException</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
 </span></span></code></pre></div><p>它的 if 条件有四个子条件</p>
 <ol>
-<li>ctx 设置了 deadline, 及 ctx 用 <code>WithTimeout</code>, <code>WithDeadline</code> 包裹了</li>
+<li>ctx 设置了 deadline, 即 ctx 用 <code>WithTimeout</code>, <code>WithDeadline</code> 包裹了</li>
 <li>protocol 底层的 transport 中读取的数据为0</li>
 <li>protocol 底层的 transport 读取时返回的 err 是 timeout error</li>
 <li>ctx 的 cancel 函数没有被调用(这也表示 WithTimeout ctx 没有超时)，<code>ctx.Err() == nil</code></li>
@@ -243,8 +243,8 @@
 <p>我们可以用下面这张图来表示</p>
 <p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-09-05-222326.png" alt=""></p>
 <ul>
-<li>step1 表示从 client 开始调用到 socket fd 返回第一个字节经过的时间</li>
-<li>step2 表示从 client 开始接受第一个字节，到接受整个请求所花费的时间</li>
+<li><strong>step1</strong> 表示从 client 开始调用到 socket fd 返回第一个字节经过的时间</li>
+<li><strong>step2</strong> 表示从 client 开始接受第一个字节，到接受整个请求所花费的时间</li>
 </ul>
 <ol>
 <li>在 <strong>step1</strong> 中，client 遇到 socket timeout 会进行重试，直到到达了 ctx 设置的时间上限</li>
