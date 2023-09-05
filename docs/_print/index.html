@@ -220,7 +220,15 @@
     
     
 	
-<li>4.1: <a href="#pg-627b44310e536ffc3394a1aa2f824a8c">Thrft</a></li>
+<li>4.1: <a href="#pg-1af692bb57d127b768eb69b3abc8a667">Thrift golang client 如何设置超时时间</a></li>
+
+
+    
+  
+    
+    
+	
+<li>4.2: <a href="#pg-627b44310e536ffc3394a1aa2f824a8c">Thrft</a></li>
 
 
     
@@ -1235,7 +1243,171 @@ replace (
 
 <div class="td-content" style="">
     
-	<h1 id="pg-627b44310e536ffc3394a1aa2f824a8c">4.1 - Thrft</h1>
+	<h1 id="pg-1af692bb57d127b768eb69b3abc8a667">4.1 - Thrift golang client 如何设置超时时间</h1>
+    
+	<h2 id="简介">简介</h2>
+<p>本文以 golang thrift binary 协议为例，讲述 thrift golang client 如何设置超时时间</p>
+<h2 id="如何设置超时时间">如何设置超时时间</h2>
+<p>golang thrift client 有两个超时时间</p>
+<ol>
+<li>socket timeout</li>
+</ol>
+<p>在创建 TSocket 的时候，我们可以传入 <code>ConnectTimeout</code> 和 <code>SocketTimeout</code> 两个配置。</p>
+<ul>
+<li><code>ConnectTimeout</code> 表示建立 TCP 连接的超时时间</li>
+<li><code>SocketTimeout</code> 表示读写 Socket fd 时的超时时间</li>
+</ul>
+<p>当这两个超时触发时，thrift 会返回一个 <code>err.Timeout() == true</code> 的 error, 表示超时错误，thrift 会将其包装成 <code>TTransportException</code>，其 <code>typeId == thrift.TIMED_OUT</code></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#000">rawTransport</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">thrift</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">NewTSocketConf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">JoinHostPort</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;localhost&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;7303&#34;</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">thrift</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TConfiguration</span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">SocketTimeout</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#0000cf;font-weight:bold">5</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">time</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Second</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">ConnectTimeout</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">5</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">time</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Second</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">})</span>
+</span></span></code></pre></div><ol start="2">
+<li>context timeout</li>
+</ol>
+<p>在调用 thrift 函数时，需要传入 context 参数，我们可以在 ctx 参数中加上超时</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>		<span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">cancel</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">WithTimeout</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Background</span><span style="color:#000;font-weight:bold">(),</span> <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">time</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Second</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">res</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">client</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Triple</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">27</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#8f5902;font-style:italic">// thrift 调用
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#000">cancel</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><p>根据 context 的工作原理，</p>
+<ol>
+<li><code>cancel</code> 函数被调用</li>
+<li>到了设置的超时时间，golang context 内部的的 goroutine 会调用 cancel 函数</li>
+<li>遇到超时错误后应该将连接关闭</li>
+</ol>
+<p>当上述两个条件满足其一时，会触发两个函数</p>
+<ol>
+<li><code>ctx.Done()</code> 返回的 channel 会 close</li>
+<li><code>ctx.Error() != nil</code></li>
+</ol>
+<h2 id="设置超时时间的注意事项">设置超时时间的注意事项</h2>
+<ol>
+<li>socket timeout 必须比 context timeout 小</li>
+<li>在弱网环境下，不能将 socket timeout 设置的非常小, context timeout 设置的特别大</li>
+</ol>
+<p>为什么要遵循这两个规则，我们先了解 timeout 工作原理，最后再来解答。</p>
+<h2 id="超时时间是如何工作的">超时时间是如何工作的</h2>
+<p>为了了解这两个超时时间是如何工作的，我们首先需要理清楚 binary protocol 中函数的调用关系</p>
+<h3 id="binary-protocol-中的函数调用关系">binary protocol 中的函数调用关系</h3>
+<p>在 <code>lib/go/thrift/protocol.go</code> 函数中，实现了 <code>TProtocol</code> 接口，此接口中定义了若干 ReadXXX 函数，这些函数负责从 Transport 中读取 thrift 请求体和响应体。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">type</span> <span style="color:#000">TProtocol</span> <span style="color:#204a87;font-weight:bold">interface</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 若干 Write 函数
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#000">ReadMessageBegin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span> <span style="color:#204a87;font-weight:bold">string</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">typeId</span> <span style="color:#000">TMessageType</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">seqid</span> <span style="color:#204a87;font-weight:bold">int32</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadMessageEnd</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadStructBegin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span> <span style="color:#204a87;font-weight:bold">string</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadStructEnd</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadFieldBegin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span> <span style="color:#204a87;font-weight:bold">string</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">typeId</span> <span style="color:#000">TType</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">id</span> <span style="color:#204a87;font-weight:bold">int16</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadFieldEnd</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadMapBegin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">keyType</span> <span style="color:#000">TType</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">valueType</span> <span style="color:#000">TType</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">size</span> <span style="color:#204a87;font-weight:bold">int</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadMapEnd</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadListBegin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">elemType</span> <span style="color:#000">TType</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">size</span> <span style="color:#204a87;font-weight:bold">int</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadListEnd</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadSetBegin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">elemType</span> <span style="color:#000">TType</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">size</span> <span style="color:#204a87;font-weight:bold">int</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadSetEnd</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadBool</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#204a87;font-weight:bold">bool</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadByte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#204a87;font-weight:bold">int8</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadI16</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#204a87;font-weight:bold">int16</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadI32</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#204a87;font-weight:bold">int32</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadI64</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#204a87;font-weight:bold">int64</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadDouble</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#204a87;font-weight:bold">float64</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadString</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#204a87;font-weight:bold">string</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadBinary</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#204a87;font-weight:bold">byte</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ReadUUID</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#000">Tuuid</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#204a87;font-weight:bold">error</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p><code>lib/go/thrift/binary_protocol.go</code> 文件提供了 <code>TProtocol</code> 的一种实现，它用于读取 <a href="https://github.com/apache/thrift/blob/master/doc/specs/thrift-binary-protocol.md">binary 协议格式</a>的 thrift 请求/响应。</p>
+<p>其中, ReadXXX 函数的调用关系如下:</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-09-05-215706.png" alt=""></p>
+<p>可以看到，除了若干以 <code>End</code> 结尾的函数，和 <code>ReadByte</code>, <code>ReadBool</code> 之外，所有的 Read 函数都调用了 <code>readAll</code> 函数。</p>
+<p>而关于 thrift 超时时间的玄机就隐藏在 <code>readAll</code> 函数中</p>
+<h3 id="readall-函数中如何检查超时">readAll 函数中如何检查超时</h3>
+<p>这是 <code>readAll</code> 函数的代码,</p>
+<p><code>read, err = io.ReadFull(p.trans, buf)</code> 表示从 protocol 底层的 transport 读取数据，读完之后进行一个复杂的 if 条件判断，决定重试还是返回错误。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#000">_</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">deadlineSet</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Deadline</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">read</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">io</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">ReadFull</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">p</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">trans</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">buf</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">deadlineSet</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#000">read</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#000">isTimeoutError</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Err</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#8f5902;font-style:italic">// This is I/O timeout without anything read,
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>			<span style="color:#8f5902;font-style:italic">// and we still have time left, keep retrying.
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>			<span style="color:#204a87;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// For anything else, don&#39;t retry
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#204a87;font-weight:bold">break</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">NewTProtocolException</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>它的 if 条件有四个子条件</p>
+<ol>
+<li>ctx 设置了 deadline, 及 ctx 用 <code>WithTimeout</code>, <code>WithDeadline</code> 包裹了</li>
+<li>protocol 底层的 transport 中读取的数据为0</li>
+<li>protocol 底层的 transport 读取时返回的 err 是 timeout error</li>
+<li>ctx 的 cancel 函数没有被调用(这也表示 WithTimeout ctx 没有超时)，<code>ctx.Err() == nil</code></li>
+</ol>
+<p>当四个条件都满足时，它会重新重试，重新从 tranport 中读取数据，否则会将错误返回。</p>
+<p>至此，我们可以将 thrift 客户端的超时逻辑梳理清楚了，protocol 通过 transport 去读取数据，当它遇到了 timeout error，但没有读到数据且 ctx 设置的超时时间未到，会重试继续读数据。否则就会返回超时错误。</p>
+<p>我们可以用下面这张图来表示</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-09-05-222326.png" alt=""></p>
+<ul>
+<li>step1 表示从 client 开始调用到 socket fd 返回第一个字节经过的时间</li>
+<li>step2 表示从 client 开始接受第一个字节，到接受整个请求所花费的时间</li>
+</ul>
+<ol>
+<li>在 <strong>step1</strong> 中，client 遇到 socket timeout 会进行重试，直到到达了 ctx 设置的时间上限</li>
+<li>在 <strong>step2</strong> 中，client 遇到 socket timeout ，大多数时候都是直接返回 timeout error, 只有 <strong>特别极端的案例</strong> ，才会进行重试。</li>
+</ol>
+<p><strong>特别极端的案例是什么:</strong></p>
+<p>假设有这样的响应，</p>
+<ol>
+<li>socket fd 首先发会了 thrift message header,</li>
+<li>正好发完 message header 之后, 网络阻塞了</li>
+<li>此时 client 正在调用 <code>ReadFieldBegin</code> 函数读取参数结构体，此时它就会进行重试</li>
+</ol>
+<p>在 golang server 中，响应是一起发送的，所以不存在 server 主动卡住的请求，TCP 发送字节的情况特别随机，几乎不可能存在正好发送完 message header 就卡住的情况(而且 message header 长度还是可变的)，所以可以认为这种特别极端的情况不存在。</p>
+<h2 id="回到注意事项">回到注意事项</h2>
+<p>了解完实现细节后，我们再来看文章开头提到的两个注意事项</p>
+<ol>
+<li>socket timeout 必须比 context timeout 小</li>
+</ol>
+<p>在上文的 <code>readAll</code> 函数中，当 socket timeout 触发时，会检查是否达到了 context timeout 的限制，如果我们设置了 <code>socket timeout</code> &gt; <code>context timeout</code>, 那么就会存在 <code>context timeout</code> 到了限制时间，但函数仍然阻塞在 <code>transport.Read</code> 中的情况</p>
+<ol start="2">
+<li>弱网环境中，socket timeout 不能设置的特别小</li>
+</ol>
+<p>在上一节的分析中，我们知道了在 <strong>step2</strong> 中遇到了 <code>socket timeout</code>时, 请求会直接失败，返回 <code>timeout error</code>。</p>
+<p>那么在弱网环境中，如果我们将 <code>socket timeout</code> 设置的很小，但是 <code>context timeout</code> 很大，那么会遇到很多在 <strong>step2</strong> 中因为 <code>socket timeout</code> 导致的超时错误，而 <code>context timeout</code> 实际上还远远达不到。</p>
+<ol start="3">
+<li>遇到超时错误后，应该将连接关闭</li>
+</ol>
+<p>如果遇到超时错误了，client 会直接返回错误，但是过了一段时间 server 又将响应发回来了，后续的 <strong>新请求</strong> 就可能读到 <strong>旧响应</strong> 。</p>
+<p>此时因为 thrift 请求和响应的 seq_id 或 method name 对不上，就会返回错误</p>
+<pre tabindex="0"><code>{method_name}: out of order sequence response // seq id 对不上
+{method_name}: wrong method name  // 方法名对不上
+</code></pre><p>这部分检查代码在 <a href="https://github.com/apache/thrift/blob/v0.18.1/lib/go/thrift/client.go#L56-L66"><code>lib/go/thrift/client.go:56</code></a> 文件的 <code>func (p *TStandardClient) Recv</code> 函数中</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">p</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">TStandardClient</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">Recv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Context</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">iprot</span> <span style="color:#000">TProtocol</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">seqId</span> <span style="color:#204a87;font-weight:bold">int32</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">method</span> <span style="color:#204a87;font-weight:bold">string</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">result</span> <span style="color:#000">TStruct</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">error</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">rMethod</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">rTypeId</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">rSeqId</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">iprot</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">ReadMessageBegin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">err</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">method</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000">rMethod</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">NewTApplicationException</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">WRONG_METHOD_NAME</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Sprintf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;%s: wrong method name&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">method</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">seqId</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000">rSeqId</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">NewTApplicationException</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">BAD_SEQUENCE_ID</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Sprintf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;%s: out of order sequence response&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">method</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">...</span>
+</span></span></code></pre></div>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-627b44310e536ffc3394a1aa2f824a8c">4.2 - Thrft</h1>
     
 	<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2018-05-27-060022.png" alt=""></p>
 
