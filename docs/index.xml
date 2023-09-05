@@ -649,7 +649,6 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
 &lt;ol&gt;
 &lt;li&gt;&lt;code&gt;cancel&lt;/code&gt; 函数被调用&lt;/li&gt;
 &lt;li&gt;到了设置的超时时间，golang context 内部的的 goroutine 会调用 cancel 函数&lt;/li&gt;
-&lt;li&gt;遇到超时错误后应该将连接关闭&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;当上述两个条件满足其一时，会触发两个函数&lt;/p&gt;
 &lt;ol&gt;
@@ -660,8 +659,9 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
 &lt;ol&gt;
 &lt;li&gt;socket timeout 必须比 context timeout 小&lt;/li&gt;
 &lt;li&gt;在弱网环境下，不能将 socket timeout 设置的非常小, context timeout 设置的特别大&lt;/li&gt;
+&lt;li&gt;遇到超时错误后应该将连接关闭&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;为什么要遵循这两个规则，我们先了解 timeout 工作原理，最后再来解答。&lt;/p&gt;
+&lt;p&gt;为什么要遵循这些规则，我们先了解 timeout 工作原理，最后再来解答。&lt;/p&gt;
 &lt;h2 id=&#34;超时时间是如何工作的&#34;&gt;超时时间是如何工作的&lt;/h2&gt;
 &lt;p&gt;为了了解这两个超时时间是如何工作的，我们首先需要理清楚 binary protocol 中函数的调用关系&lt;/p&gt;
 &lt;h3 id=&#34;binary-protocol-中的函数调用关系&#34;&gt;binary protocol 中的函数调用关系&lt;/h3&gt;

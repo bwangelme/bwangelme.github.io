@@ -1273,7 +1273,6 @@ replace (
 <ol>
 <li><code>cancel</code> 函数被调用</li>
 <li>到了设置的超时时间，golang context 内部的的 goroutine 会调用 cancel 函数</li>
-<li>遇到超时错误后应该将连接关闭</li>
 </ol>
 <p>当上述两个条件满足其一时，会触发两个函数</p>
 <ol>
@@ -1284,8 +1283,9 @@ replace (
 <ol>
 <li>socket timeout 必须比 context timeout 小</li>
 <li>在弱网环境下，不能将 socket timeout 设置的非常小, context timeout 设置的特别大</li>
+<li>遇到超时错误后应该将连接关闭</li>
 </ol>
-<p>为什么要遵循这两个规则，我们先了解 timeout 工作原理，最后再来解答。</p>
+<p>为什么要遵循这些规则，我们先了解 timeout 工作原理，最后再来解答。</p>
 <h2 id="超时时间是如何工作的">超时时间是如何工作的</h2>
 <p>为了了解这两个超时时间是如何工作的，我们首先需要理清楚 binary protocol 中函数的调用关系</p>
 <h3 id="binary-protocol-中的函数调用关系">binary protocol 中的函数调用关系</h3>
