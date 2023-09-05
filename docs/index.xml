@@ -735,7 +735,7 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
 &lt;ol&gt;
 &lt;li&gt;socket fd 首先发会了 thrift message header,&lt;/li&gt;
 &lt;li&gt;正好发完 message header 之后, 网络阻塞了&lt;/li&gt;
-&lt;li&gt;此时 client 正在调用 &lt;code&gt;ReadFieldBegin&lt;/code&gt; 函数读取参数结构体，此时它就会进行重试&lt;/li&gt;
+&lt;li&gt;此时 client 正在调用 &lt;code&gt;ReadFieldBegin&lt;/code&gt; 函数读取参数结构体，它遇到 socket timeout error 就会进行重试&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;在 golang server 中，响应是一起发送的，所以不存在 server 主动卡住的请求，TCP 发送字节的情况特别随机，几乎不可能存在正好发送完 message header 就卡住的情况(而且 message header 长度还是可变的)，所以可以认为这种特别极端的情况不存在。&lt;/p&gt;
 &lt;h2 id=&#34;回到注意事项&#34;&gt;回到注意事项&lt;/h2&gt;
