@@ -127,7 +127,7 @@ type TProtocol interface {
 
 它的 if 条件有四个子条件
 
-1. ctx 设置了 deadline, 及 ctx 用 `WithTimeout`, `WithDeadline` 包裹了
+1. ctx 设置了 deadline, 即 ctx 用 `WithTimeout`, `WithDeadline` 包裹了
 2. protocol 底层的 transport 中读取的数据为0
 3. protocol 底层的 transport 读取时返回的 err 是 timeout error
 4. ctx 的 cancel 函数没有被调用(这也表示 WithTimeout ctx 没有超时)，`ctx.Err() == nil`
@@ -140,8 +140,8 @@ type TProtocol interface {
 
 ![](https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-09-05-222326.png)
 
-- step1 表示从 client 开始调用到 socket fd 返回第一个字节经过的时间
-- step2 表示从 client 开始接受第一个字节，到接受整个请求所花费的时间
+- __step1__ 表示从 client 开始调用到 socket fd 返回第一个字节经过的时间
+- __step2__ 表示从 client 开始接受第一个字节，到接受整个请求所花费的时间
 
 1. 在 __step1__ 中，client 遇到 socket timeout 会进行重试，直到到达了 ctx 设置的时间上限
 2. 在 __step2__ 中，client 遇到 socket timeout ，大多数时候都是直接返回 timeout error, 只有 __特别极端的案例__ ，才会进行重试。
