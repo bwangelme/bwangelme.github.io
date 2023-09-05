@@ -44,7 +44,6 @@ golang thrift client 有两个超时时间
 
 1. `cancel` 函数被调用
 2. 到了设置的超时时间，golang context 内部的的 goroutine 会调用 cancel 函数
-3. 遇到超时错误后应该将连接关闭
 
 当上述两个条件满足其一时，会触发两个函数
 
@@ -55,8 +54,9 @@ golang thrift client 有两个超时时间
 
 1. socket timeout 必须比 context timeout 小
 2. 在弱网环境下，不能将 socket timeout 设置的非常小, context timeout 设置的特别大
+3. 遇到超时错误后应该将连接关闭
 
-为什么要遵循这两个规则，我们先了解 timeout 工作原理，最后再来解答。
+为什么要遵循这些规则，我们先了解 timeout 工作原理，最后再来解答。
 
 ## 超时时间是如何工作的
 
