@@ -152,7 +152,7 @@ __特别极端的案例是什么:__
 
 1. socket fd 首先发会了 thrift message header, 
 2. 正好发完 message header 之后, 网络阻塞了
-3. 此时 client 正在调用 `ReadFieldBegin` 函数读取参数结构体，此时它就会进行重试
+3. 此时 client 正在调用 `ReadFieldBegin` 函数读取参数结构体，它遇到 socket timeout error 就会进行重试
 
 在 golang server 中，响应是一起发送的，所以不存在 server 主动卡住的请求，TCP 发送字节的情况特别随机，几乎不可能存在正好发送完 message header 就卡住的情况(而且 message header 长度还是可变的)，所以可以认为这种特别极端的情况不存在。
 
