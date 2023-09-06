@@ -35,7 +35,7 @@ QPS = 1000 / RT_CPU
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bwangelme.github.io/647/docs/performance/qps_rt/" /><meta property="article:section" content="docs" />
 <meta property="article:published_time" content="2023-08-13T16:17:52+08:00" />
-<meta property="article:modified_time" content="2023-08-13T17:21:24+08:00" /><meta property="og:site_name" content="647号宇宙" />
+<meta property="article:modified_time" content="2023-09-06T09:54:27+08:00" /><meta property="og:site_name" content="647号宇宙" />
 <meta itemprop="name" content="QPS 和 RT 的关系">
 <meta itemprop="description" content="术语说明 QPS: Query Per Second RT: Response Time RT_CPU: 单个请求中的 CPU 时间 RT_WAIT: 单个请求中除了 CPU 时间外的其他时间(等待时间) 结论 单线程情况下, QPS = 1000 / RT
 多线程情况下，最好的情况(最佳线程数)是
@@ -43,9 +43,9 @@ QPS = 1000 / RT_CPU
 最佳线程数 = (RT_CPU&#43;RT_WAIT) / RT_CPU * CPU核心
 线程数超过 最佳线程数 后, 系统的 QPS 不会再增加了，如果进一步增多，因为多个线程抢夺 CPU 资源导致的时间浪费，QPS 还会下降。 说明 一个请求我们除了有 CPU 执行时间外，还有等待时间(等待IO/等待锁资源)。
 如果单个请求的等待时间占比很高，我们可以增加线程数，提升 CPU 的利用率，这样 QPS 也会随之增加。(CPU 利用率达到 85% 以上才比较正常) 线程本身也会消耗资源，它消耗的是 OS 级别的内存，不是进程内存，如果线程数小于 1000, 那么对于系统性能的影响可以忽略不计。 如果单个请求的 CPU 时间占比很高，此时 CPU 成为系统瓶颈，那么系统整体的 QPS 已经没有提升空间了，要么优化程序，减少 CPU 指令数，要么增加 CPU 资源。 我们提升系统 QPS 的目的就是提升 CPU 的利用率，使 CPU 成为系统瓶颈。 "><meta itemprop="datePublished" content="2023-08-13T16:17:52+08:00" />
-<meta itemprop="dateModified" content="2023-08-13T17:21:24+08:00" />
+<meta itemprop="dateModified" content="2023-09-06T09:54:27+08:00" />
 <meta itemprop="wordCount" content="80">
-<meta itemprop="keywords" content="tips,thrift," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="tips,performance," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="QPS 和 RT 的关系"/>
 <meta name="twitter:description" content="术语说明 QPS: Query Per Second RT: Response Time RT_CPU: 单个请求中的 CPU 时间 RT_WAIT: 单个请求中除了 CPU 时间外的其他时间(等待时间) 结论 单线程情况下, QPS = 1000 / RT
 多线程情况下，最好的情况(最佳线程数)是
@@ -100,7 +100,14 @@ QPS = 1000 / RT_CPU
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-647docs-li">
   <a href="/647/docs/" title="Documentation" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-647docs"><span class="">Docs</span></a>
   <ul class="ul-1">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docswireshark-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsencoding-li">
+  <a href="/647/docs/encoding/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsencoding"><span class="">编码</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsencodingvariant_zigzag-li">
+  <a href="/647/docs/encoding/variant_zigzag/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsencodingvariant_zigzag"><span class="">ZigZag 变长整数编码</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docswireshark-li">
   <a href="/647/docs/wireshark/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docswireshark"><span class="">WireShark</span></a>
   <ul class="ul-2 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docswiresharkvbox-linux-wireshark-li">
@@ -132,8 +139,12 @@ QPS = 1000 / RT_CPU
   <ul class="ul-2 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftgolang-client-timeout-li">
   <a href="/647/docs/thrift/golang-client-timeout/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftgolang-client-timeout"><span class="">Thrift golang client 如何设置超时时间</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftthrft-concept-li">
-  <a href="/647/docs/thrift/thrft-concept/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftthrft-concept"><span class="">Thrft</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftthrift-protocol-li">
+  <a href="/647/docs/thrift/thrift-protocol/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftthrift-protocol"><span class="">Thrift 协议学习笔记</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftthrift-concept-li">
+  <a href="/647/docs/thrift/thrift-concept/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftthrift-concept"><span class="">Thrft</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftintroduction-to-apache-thrift-li">
+  <a href="/647/docs/thrift/introduction-to-apache-thrift/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftintroduction-to-apache-thrift"><span class="">翻译《Chapter 1. Introduction to Apache Thrift》</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsspec-li">
@@ -157,6 +168,8 @@ QPS = 1000 / RT_CPU
   <a href="/647/docs/linux/curl/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxcurl"><span class="">curl</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslinuxlsof-li">
   <a href="/647/docs/linux/lsof/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxlsof"><span class="">lsof</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslinuxnfs-server-li">
+  <a href="/647/docs/linux/nfs-server/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxnfs-server"><span class="">在 Ubuntu 22.04 上搭建 NFS Server</span></a>
 </li>
   </ul>
 </li>
@@ -192,16 +205,21 @@ QPS = 1000 / RT_CPU
             <div class="taxonomy taxonomy-terms-cloud taxo-tags">
       <h5 class="taxonomy-title">Tag Cloud</h5>
       <ul class="taxonomy-terms">
-        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span><span class="taxonomy-count">6</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">datetime</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">gomod</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">lsof</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">nfs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">performance</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">5</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">wireshark</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">zigzag</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/%E7%BC%96%E7%A0%81/" data-taxonomy-term="%E7%BC%96%E7%A0%81"><span class="taxonomy-label">编码</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/%E7%BF%BB%E8%AF%91/" data-taxonomy-term="%E7%BF%BB%E8%AF%91"><span class="taxonomy-label">翻译</span><span class="taxonomy-count">1</span></a></li>
         </ul>
     </div>
   
@@ -230,7 +248,7 @@ QPS = 1000 / RT_CPU
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
     <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">performance</span></a></li>
     </ul>
 </div>
 
@@ -267,7 +285,7 @@ QPS = 1000 / RT_CPU
 </ul>
 
 	<div class="text-muted mt-5 pt-3 border-top">
-   August 13, 2023: <a href="https://github.com/bwangelme/647/commit/85f6fadddae3a59c3d015ba244689b4f57b7c07c">add curl &amp;&amp; performance (85f6fad)</a>
+   September 6, 2023: <a href="https://github.com/bwangelme/647/commit/fe51905b84d06d45be1f30ef5ab38d5254b9134d">add thrift blog (fe51905)</a>
 </div>
 
 </div>

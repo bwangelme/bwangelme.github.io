@@ -255,5 +255,90 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
       </description>
     </item>
     
+    <item>
+      <title>Docs: 在 Ubuntu 22.04 上搭建 NFS Server</title>
+      <link>https://bwangelme.github.io/647/docs/linux/nfs-server/</link>
+      <pubDate>Wed, 06 Sep 2023 08:51:39 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/linux/nfs-server/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;环境准备&#34;&gt;环境准备&lt;/h2&gt;
+&lt;p&gt;我准备了两台机器&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;name&lt;/th&gt;
+&lt;th&gt;ip&lt;/th&gt;
+&lt;th&gt;user&lt;/th&gt;
+&lt;th&gt;user_id&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;server&lt;/td&gt;
+&lt;td&gt;191.168.58.11&lt;/td&gt;
+&lt;td&gt;vagrant&lt;/td&gt;
+&lt;td&gt;1000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;client&lt;/td&gt;
+&lt;td&gt;192.168.58.1&lt;/td&gt;
+&lt;td&gt;xuyundong&lt;/td&gt;
+&lt;td&gt;1000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;安装组件&#34;&gt;安装组件&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;服务端安装 nfs server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo apt update
+sudo apt install nfs-kernel-server
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;客户端安装 nfs-common&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo apt update
+sudo apt install nfs-common
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;服务端创建目录并导出&#34;&gt;服务端创建目录并导出&lt;/h2&gt;
+&lt;h3 id=&#34;在服务端上创建挂载目录并设置权限&#34;&gt;在服务端上创建挂载目录，并设置权限&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mkdir -p /mnt/share
+sudo chown vagrant:vagrant /mnt/share
+sudo chmod 755 /mnt/share
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;服务端上配置-nfs-export-目录&#34;&gt;服务端上配置 nfs export 目录&lt;/h3&gt;
+&lt;p&gt;修改 &lt;code&gt;/etc/exports&lt;/code&gt; 文件, 加入以下内容&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/mnt/share       *(rw,async,no_subtree_check)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;关于 export 选项的解释&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rw&lt;/code&gt;: 客户端具有读和写的权限&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sync&lt;/code&gt;: 强制 nfs 在回复 client 之前将更改写入磁盘，这保证了 nfs server 的可靠性，但也降低了写入速度&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;no_subtree_check&lt;/code&gt;: 此选项可防止子树检查，在子树检查过程中，主机必须为每个请求检查文件在导出的树中是否仍然可用。当客户端打开文件时重命名文件时，这可能会导致许多问题。&lt;strong&gt;通常建议禁用子树检查&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;no_root_squash&lt;/code&gt;: 当客户端以 root 权限写入文件时，nfs server 会将文件 owner 改成普通用户，当此选项开启时，nfs server 不修改 root 写入文件的 woner&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;修改完以后执行以下命令载入配置&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart nfs-kernel-server
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;客户端挂载&#34;&gt;客户端挂载&lt;/h2&gt;
+&lt;p&gt;客户端执行以下命令挂载&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 将服务端的 nfs 目录挂载到了客户端的 /home/xuyundong/tmp/nfs_exmaple 中&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo mount 192.168.58.11:/mnt/share /home/xuyundong/tmp/nfs_exmaple
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;修改 &lt;code&gt;/etc/fstab&lt;/code&gt; 文件，将以下内容写入可以让 client 在开机启动时自动挂载&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;192.168.58.11:/mnt/share   /home/xuyundong/tmp/nfs_exmaple   nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;测试访问&#34;&gt;测试访问&lt;/h2&gt;
+&lt;p&gt;在客户端的目录中，&lt;strong&gt;以 uid=1000 的用户执行&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;abc&amp;#34; &amp;gt; test.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以看到文件正常写入了。&lt;/p&gt;
+&lt;p&gt;这是因为 client 的写入的用户的 uid 是 1000, server 中目录的 owner 的 uid 也是 1000, owner 相同就能正常写入。&lt;/p&gt;
+&lt;h2 id=&#34;取消挂载&#34;&gt;取消挂载&lt;/h2&gt;
+&lt;p&gt;客户端执行以下命令可以取消挂载&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo umount ~/tmp/nfs_exmaple
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-22-04&#34;&gt;How To Set Up an NFS Mount on Ubuntu 22.04&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
   </channel>
 </rss>

@@ -18,21 +18,21 @@
 <link rel="icon" type="image/png" href="/647/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/647/favicons/android-192x192.png" sizes="192x192">
 
-<title>泛型 | 647 Universe</title>
-<meta name="description" content="利用泛型实现的语法糖 // Cond // 条件表达式的简单实现，支持任意类型 func Cond[T any](val bool, a, b T) T { if val { return a } return b } // Or // 返回 vals 中第一个不是对应类型0值的参数，如果没有，则返回对应类型的0值 func Or[T comparable](vals ...T) T { for _, val := range vals { if val != *new(T) { return val } } return *new(T) } 用法 func TestCond(t *testing.T) { assert.Equal(t, 1, Cond(true, 1, 2)) assert.Equal(t, 2, Cond(false, 1, 2)) var req *http.">
-<meta property="og:title" content="泛型" />
-<meta property="og:description" content="利用泛型实现的语法糖 // Cond // 条件表达式的简单实现，支持任意类型 func Cond[T any](val bool, a, b T) T { if val { return a } return b } // Or // 返回 vals 中第一个不是对应类型0值的参数，如果没有，则返回对应类型的0值 func Or[T comparable](vals ...T) T { for _, val := range vals { if val != *new(T) { return val } } return *new(T) } 用法 func TestCond(t *testing.T) { assert.Equal(t, 1, Cond(true, 1, 2)) assert.Equal(t, 2, Cond(false, 1, 2)) var req *http." />
+<title>Thrift 协议学习笔记 | 647 Universe</title>
+<meta name="description" content="本文主要讲了 thrift 的协议格式">
+<meta property="og:title" content="Thrift 协议学习笔记" />
+<meta property="og:description" content="本文主要讲了 thrift 的协议格式" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bwangelme.github.io/647/docs/golang/generic/" /><meta property="article:section" content="docs" />
-<meta property="article:published_time" content="2023-08-15T19:22:52+08:00" />
-<meta property="article:modified_time" content="2023-08-15T19:28:56+08:00" /><meta property="og:site_name" content="647号宇宙" />
-<meta itemprop="name" content="泛型">
-<meta itemprop="description" content="利用泛型实现的语法糖 // Cond // 条件表达式的简单实现，支持任意类型 func Cond[T any](val bool, a, b T) T { if val { return a } return b } // Or // 返回 vals 中第一个不是对应类型0值的参数，如果没有，则返回对应类型的0值 func Or[T comparable](vals ...T) T { for _, val := range vals { if val != *new(T) { return val } } return *new(T) } 用法 func TestCond(t *testing.T) { assert.Equal(t, 1, Cond(true, 1, 2)) assert.Equal(t, 2, Cond(false, 1, 2)) var req *http."><meta itemprop="datePublished" content="2023-08-15T19:22:52+08:00" />
-<meta itemprop="dateModified" content="2023-08-15T19:28:56+08:00" />
-<meta itemprop="wordCount" content="111">
-<meta itemprop="keywords" content="Golang," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="泛型"/>
-<meta name="twitter:description" content="利用泛型实现的语法糖 // Cond // 条件表达式的简单实现，支持任意类型 func Cond[T any](val bool, a, b T) T { if val { return a } return b } // Or // 返回 vals 中第一个不是对应类型0值的参数，如果没有，则返回对应类型的0值 func Or[T comparable](vals ...T) T { for _, val := range vals { if val != *new(T) { return val } } return *new(T) } 用法 func TestCond(t *testing.T) { assert.Equal(t, 1, Cond(true, 1, 2)) assert.Equal(t, 2, Cond(false, 1, 2)) var req *http."/>
+<meta property="og:url" content="https://bwangelme.github.io/647/docs/thrift/thrift-protocol/" /><meta property="article:section" content="docs" />
+<meta property="article:published_time" content="2023-01-11T11:03:19+08:00" />
+<meta property="article:modified_time" content="2023-09-06T09:54:27+08:00" /><meta property="og:site_name" content="647号宇宙" />
+<meta itemprop="name" content="Thrift 协议学习笔记">
+<meta itemprop="description" content="本文主要讲了 thrift 的协议格式"><meta itemprop="datePublished" content="2023-01-11T11:03:19+08:00" />
+<meta itemprop="dateModified" content="2023-09-06T09:54:27+08:00" />
+<meta itemprop="wordCount" content="679">
+<meta itemprop="keywords" content="thrift,blog," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Thrift 协议学习笔记"/>
+<meta name="twitter:description" content="本文主要讲了 thrift 的协议格式"/>
 
 
 
@@ -94,16 +94,16 @@
   <a href="/647/docs/wireshark/vbox-linux-wireshark/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docswiresharkvbox-linux-wireshark"><span class="">利用 VirtualBox 和 Ubuntu 22 重现抓包实验</span></a>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-647docsgolang-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsgolang-li">
   <a href="/647/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsgolang"><span class="">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-647docsgolanggeneric-li">
-  <a href="/647/docs/golang/generic/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggeneric"><span class="td-sidebar-nav-active-item">泛型</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docsgolangyaml-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggeneric-li">
+  <a href="/647/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggeneric"><span class="">泛型</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolangyaml-li">
   <a href="/647/docs/golang/yaml/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolangyaml"><span class="">YAML</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docsgolanggo-release-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-release-li">
   <a href="/647/docs/golang/go-release/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-release"><span class="">Golang 的版本发布计划</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docsgolanggoproxy-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggoproxy-li">
   <a href="/647/docs/golang/goproxy/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggoproxy"><span class="">Go proxy 的说明</span></a>
 </li>
   </ul>
@@ -114,16 +114,16 @@
   <a href="/647/docs/performance/qps_rt/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsperformanceqps_rt"><span class="">QPS 和 RT 的关系</span></a>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsthrift-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-647docsthrift-li">
   <a href="/647/docs/thrift/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsthrift"><span class="">Thrift</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftgolang-client-timeout-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docsthriftgolang-client-timeout-li">
   <a href="/647/docs/thrift/golang-client-timeout/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftgolang-client-timeout"><span class="">Thrift golang client 如何设置超时时间</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftthrift-protocol-li">
-  <a href="/647/docs/thrift/thrift-protocol/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftthrift-protocol"><span class="">Thrift 协议学习笔记</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftthrift-concept-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-647docsthriftthrift-protocol-li">
+  <a href="/647/docs/thrift/thrift-protocol/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-647docsthriftthrift-protocol"><span class="td-sidebar-nav-active-item">Thrift 协议学习笔记</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docsthriftthrift-concept-li">
   <a href="/647/docs/thrift/thrift-concept/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftthrift-concept"><span class="">Thrft</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftintroduction-to-apache-thrift-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docsthriftintroduction-to-apache-thrift-li">
   <a href="/647/docs/thrift/introduction-to-apache-thrift/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftintroduction-to-apache-thrift"><span class="">翻译《Chapter 1. Introduction to Apache Thrift》</span></a>
 </li>
   </ul>
@@ -163,19 +163,38 @@
           <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
             
 <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
-<a href="https://github.com/bwangelme/647/tree/master/content/cn/docs/Golang/generic.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines fa-fw"></i> </a>
-  <a href="https://github.com/bwangelme/647/edit/master/content/cn/docs/Golang/generic.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> </a>
-  <a href="https://github.com/bwangelme/647/new/master/content/cn/docs/Golang/generic.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> </a>
-  <a href="https://github.com/bwangelme/647/issues/new?title=%e6%b3%9b%e5%9e%8b" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> </a>
+<a href="https://github.com/bwangelme/647/tree/master/content/cn/docs/thrift/thrift-protocol.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines fa-fw"></i> </a>
+  <a href="https://github.com/bwangelme/647/edit/master/content/cn/docs/thrift/thrift-protocol.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> </a>
+  <a href="https://github.com/bwangelme/647/new/master/content/cn/docs/thrift/thrift-protocol.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> </a>
+  <a href="https://github.com/bwangelme/647/issues/new?title=Thrift%20%e5%8d%8f%e8%ae%ae%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> </a>
   <a href="https://github.com/bwangelme/647/issues/new" class="td-page-meta--project-issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> </a>
-  <a id="print" href="https://bwangelme.github.io/647/docs/golang/_print/"><i class="fa-solid fa-print fa-fw"></i> </a>
+  <a id="print" href="https://bwangelme.github.io/647/docs/thrift/_print/"><i class="fa-solid fa-print fa-fw"></i> </a>
 
 </div>
 
             <div class="td-toc">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#利用泛型实现的语法糖">利用泛型实现的语法糖</a></li>
+    <li><a href="#binary-协议">Binary 协议</a>
+      <ul>
+        <li><a href="#message-格式">Message 格式</a></li>
+        <li><a href="#struct-格式">struct 格式</a></li>
+        <li><a href="#list-和-set-的格式">list 和 set 的格式</a></li>
+        <li><a href="#binarystring-格式">binary/string 格式</a></li>
+        <li><a href="#map-格式">map 格式</a></li>
+        <li><a href="#request-格式">request 格式</a></li>
+        <li><a href="#response-格式">response 格式</a></li>
+        <li><a href="#exception-格式">exception 格式</a></li>
+      </ul>
+    </li>
+    <li><a href="#compact-协议">Compact 协议</a>
+      <ul>
+        <li><a href="#var-int">var int</a></li>
+        <li><a href="#message-如何编码">Message 如何编码</a></li>
+      </ul>
+    </li>
+    <li><a href="#framed-vs-unframed">framed vs unframed</a></li>
+    <li><a href="#参考链接">参考链接</a></li>
   </ul>
 </nav>
       </div>
@@ -212,66 +231,358 @@
   <li class="breadcrumb-item">
     <a href="https://bwangelme.github.io/647/docs/">Docs</a></li>
   <li class="breadcrumb-item">
-    <a href="https://bwangelme.github.io/647/docs/golang/">Golang</a></li>
+    <a href="https://bwangelme.github.io/647/docs/thrift/">Thrift</a></li>
   <li class="breadcrumb-item active" aria-current="page">
-    泛型</li>
+    Thrift 协议学习笔记</li>
   </ol>
 </nav>
             
 <div class="td-content">
-	<h1>泛型</h1>
+	<h1>Thrift 协议学习笔记</h1>
 	
 	<header class="article-meta">
 		<div class="taxonomy taxonomy-terms-article taxo-tags">
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span></a></li>
     </ul>
 </div>
 
   </header>
-	<h2 id="利用泛型实现的语法糖">利用泛型实现的语法糖</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// Cond
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 条件表达式的简单实现，支持任意类型
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">Cond</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span> <span style="color:#000">any</span><span style="color:#000;font-weight:bold">](</span><span style="color:#000">val</span> <span style="color:#204a87;font-weight:bold">bool</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">a</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">b</span> <span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">T</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">val</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">a</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">b</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// Or
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 返回 vals 中第一个不是对应类型0值的参数，如果没有，则返回对应类型的0值
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span> <span style="color:#000">comparable</span><span style="color:#000;font-weight:bold">](</span><span style="color:#000">vals</span> <span style="color:#ce5c00;font-weight:bold">...</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">T</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">_</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">val</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87;font-weight:bold">range</span> <span style="color:#000">vals</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">val</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#204a87">new</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">val</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#204a87">new</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><ul>
-<li>用法</li>
+	<p>本文主要讲了 thrift 的协议格式</p>
+<hr>
+<p>Thrift 是一个集序列化和服务通信功能于一身的 RPC 框架，主要包含三大部分，代码生成，序列化框架，RPC 框架。</p>
+<p>Thrift 支持多种序列化协议，主要有 Binary, Compact, JSON, 本文主要讲解了 Binary 和 Compact 序列化协议。</p>
+<h1 id="thrift-请求响应模型">Thrift 请求响应模型</h1>
+<p>Binary 协议和 Compact 协议都假定底层的 transport 层会提供一个允许双向通信的字节流信道(例如 TCP 套接字)。它们都使用了如下的通信模式:</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-113200.png" alt=""></p>
+<ol>
+<li>Client 发送 Message 给 Server, Message 主要包括方法名，参数以及一些元信息</li>
+<li>Client 将方法参数当作一个 Struct 发给 Server</li>
+<li>Server 处理完后，发送 Message 给 Client。Message 主要包括方法名，消息类型和一些元信息</li>
+<li>Server 发送 Struct 给 Client, 这个 Struct 包括响应或异常 body</li>
+</ol>
+<h2 id="binary-协议">Binary 协议</h2>
+<h3 id="message-格式">Message 格式</h3>
+<h4 id="编码格式">编码格式</h4>
+<p>Binary 协议中, Message 的格式如下 (strict encoding)</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-121420.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>字节索引</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>第1字节的第一位固定是1, 表示使用 strict encoding</td>
+</tr>
+<tr>
+<td>1-2</td>
+<td><code>vvv</code> 前两个字节的后15位表示版本号, 固定是 1 (二进制格式是 <code>000 0000 0000 0001</code>)</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>unused</code> 第三个字节 unused 表示它不使用</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>mmm</code> 第四个字节格式为 00000mmm，后三位表示消息的类型</td>
+</tr>
+<tr>
+<td>4-8</td>
+<td><code>name length</code> 4-8 字节存储方法名的长度，它是一个32位有符号整数，使用大端序存储，这意味着方法名最长是 2^31-1</td>
+</tr>
+<tr>
+<td>8..</td>
+<td><code>name</code> 8字节后存储变长的方法名字符串，它使用 utf-8 编码</td>
+</tr>
+<tr>
+<td>&hellip;4-end</td>
+<td><code>seq id</code> 最后四个字节存储序列号</td>
+</tr>
+</tbody>
+</table>
+<h4 id="消息类型">消息类型</h4>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Binary</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>001</td>
+<td><code>Call</code>: thrift 调用</td>
+</tr>
+<tr>
+<td>2</td>
+<td>010</td>
+<td><code>Reply</code>: thrift 响应</td>
+</tr>
+<tr>
+<td>3</td>
+<td>011</td>
+<td><code>Exception</code>: thrift server 返回了异常</td>
+</tr>
+<tr>
+<td>4</td>
+<td>100</td>
+<td><code>Oneway</code>: thrift oneway 调用</td>
+</tr>
+</tbody>
+</table>
+<h4 id="序列号">序列号</h4>
+<p>序列号是有符号的四字节整数，在一个传输层的连接上所有未完成的请求必须有唯一的序列号，客户端用序列号来处理响应的失序到达，实现请求和响应的匹配。服务端不需要检查序列号，也不应该在实现中对序列号有任何的依赖，只需要在响应的时候将其原样返回。</p>
+<h4 id="old-encoding">old encoding</h4>
+<p>上述讲的 binary 协议中的 strict encoding, 在 thrift 早期版本中，使用的是 old encoding 编码方式。old encoding 的编码方式如下</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-123231.png" alt=""></p>
+<p>它没有版本号等信息，直接传输了方法名，类型以及 seq id</p>
+<p>因为 old encoding 中，<code>name length</code> 是使用32位有符号数存储的，因为 <code>name length</code> 不能为负数，所以 old encoding 的第一位始终是0 (<code>name length</code> 在最前面)。strict encoding 中，将第一位设置成了1, 以此来区分 old encoding 和 strict encoding。</p>
+<h3 id="struct-格式">struct 格式</h3>
+<p>Struct 类型由两部分组成: Field + StopField</p>
+<pre tabindex="0"><code>Struct := Field + StopField
+Field := Field Header + Field Value
+Field Header := field id + field value
+</code></pre><p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-130322.png" alt=""></p>
+<p>StopField 长度一个字节，全都置0，表示 Struct 或 Request/Response Body 的结束</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-130230.png" alt=""></p>
+<p>Normal Field 的格式如上图所示，字段说明如下</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tttttttt</td>
+<td>field 类型，一个8位的有符号整数</td>
+</tr>
+<tr>
+<td>field id</td>
+<td>16位的有符号整数，使用大端字节序存储</td>
+</tr>
+<tr>
+<td>field value</td>
+<td>编码后的 field value</td>
+</tr>
+</tbody>
+</table>
+<p>field 类型的定义表</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>field type number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bool</td>
+<td>2</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>3</td>
+</tr>
+<tr>
+<td>double</td>
+<td>4</td>
+</tr>
+<tr>
+<td>i16</td>
+<td>6</td>
+</tr>
+<tr>
+<td>i32</td>
+<td>8</td>
+</tr>
+<tr>
+<td>i64</td>
+<td>10</td>
+</tr>
+<tr>
+<td>string</td>
+<td>11, used for binary and string fields</td>
+</tr>
+<tr>
+<td>struct</td>
+<td>12, used for struct and union fields</td>
+</tr>
+<tr>
+<td>map</td>
+<td>13</td>
+</tr>
+<tr>
+<td>set</td>
+<td>14</td>
+</tr>
+<tr>
+<td>list</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-130956.png" alt=""></p>
+<p>上图是一个 thrift 请求的抓包，可以看到此请求的 struct 中，共有三个 Field，分别存储了 1, 0, 4 这三个 I32 整数。</p>
+<h3 id="list-和-set-的格式">list 和 set 的格式</h3>
+<p>list 和 set 类型使用的是相同的格式，如下图所示:</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-145100.png" alt=""></p>
+<ul>
+<li>tttttttt 表示集合元素类型，被编码成了 i8</li>
+<li>size 表示集合中元素的格式，被编码成了 i32 (32位有符号整数)，且只允许是正数</li>
+<li>elements 表示元素</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">TestCond</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">testing</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Cond</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Cond</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">req</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Request</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">MethodGet</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Cond</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">req</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">MethodGet</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">MethodPost</span><span style="color:#000;font-weight:bold">))</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">TestOr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">testing</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 范型函数可以不传类型参数
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// 我在 1.18, 1.19, 1.20 上测试均可以工作
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">[</span><span style="color:#204a87;font-weight:bold">int</span><span style="color:#000;font-weight:bold">]())</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">))</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">))</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Or</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">))</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div>
+<p>集合中元素的类型和 struct 中 field-types 使用相同的定义。</p>
+<p>可以配置 list/set 最大的长度，默认没有设置，即是 i32 的最大值，(2^31-1, 2147483647)</p>
+<h3 id="binarystring-格式">binary/string 格式</h3>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-170954.png" alt=""></p>
+<p>binary 类型的格式如上图所示，4个字节的长度 + values。长度是 32位的有符号整数，这意味着 binary 数据的最大长度是 2^32-1, 2147483647</p>
+<p>string 类型被 encode 成 utf-8 编码，然后使用 binary 的格式传输。</p>
+<h3 id="map-格式">map 格式</h3>
+<p>map 的格式如下:</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-145643.png" alt=""></p>
+<ul>
+<li>kkkkkkkk 表示 map 中 key 的元素类型，被编码成了 i8</li>
+<li>vvvvvvvv 表示 map 中 value 的元素类型，被编码成了 i8</li>
+<li>size 表示 map 的大小，被编码成了 i32，只允许是正数</li>
+<li>key value pairs 表示被编码后的 key-value 对。</li>
+</ul>
+<p>可以配置 map 最大的长度，默认没有设置，即是 i32 的最大值，(2^31-1, 2147483647)</p>
+<h3 id="request-格式">request 格式</h3>
+<p>thrift Request 由两部分组成, Message + Data</p>
+<ol>
+<li>Message 的格式参考上文</li>
+<li>Data 使用 struct 格式序列化的方法的参数</li>
+</ol>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-150009.png" alt=""></p>
+<p>上图是用 wireshark 抓到的 thrift 请求:</p>
+<ol>
+<li>它是一个 Call 消息，方法名是 <code>calculate</code>, seq id 是 0</li>
+<li>它有两个参数，第一个参数是 i32 整数，第二个参数是一个结构体，这两个参数被用 struct 的方式序列化起来，变成了 Data</li>
+</ol>
+<h3 id="response-格式">response 格式</h3>
+<p>thrift Response 由两部分组成，Message + Data</p>
+<ol>
+<li>Message 的格式参考上文</li>
+<li>Data 是函数的返回值，它以 struct 的方式序列化，
+<ul>
+<li>返回值的 field id == 0 时，表示这是一个正常的响应</li>
+<li>返回值的 field id == 1 时，表示这个响应是 server 抛出了一个 thrift idl 文件中定义的异常</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-151113.png" alt=""></p>
+<p>上图抓到的 thrift 响应的包:</p>
+<ul>
+<li>Message 部分表示它是一个 Reply 类型的消息。</li>
+<li>Data 部分，由于 field id == 1, 表示它返回了一个异常。</li>
+<li>整个 Data 部分是一个 struct 格式的响应体，异常又是一个 struct 格式的数据</li>
+<li>响应的异常包含了 i32 数字和 string 两个字段。</li>
+</ul>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-151113.png" alt=""></p>
+<h3 id="exception-格式">exception 格式</h3>
+<p>thrift exception 响应表示 thrift server 出现了某种错误，无法正确地处理请求</p>
+<p>它由两部分组成: Message + Exception</p>
+<ol>
+<li>Message 的格式参考上文</li>
+<li>Exception 的 Data 也是按照 struct 格式来编码的</li>
+</ol>
+<p>下图是 thrift exception 响应抓取的包:</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-173446.png" alt=""></p>
+<ul>
+<li><code>00 00 00 2e</code> 是 frame 的长度</li>
+<li><code>80 01 ... 6b 00 00 00 00</code> 这是 Message 的定义</li>
+<li><code>0b</code> 表示第一个 field 是一个 string</li>
+<li><code>00 01</code> 表示 field id == 1</li>
+<li><code>00 00 00 0e</code> 表示 string 的长度是 14</li>
+<li><code>49 6e 74 65 72 6e 61 6c 20 65 72 72 6f 72</code> 表示 <code>Internal error</code> 这个字符串</li>
+<li><code>08</code> 表示第二个 field 是一个 i32</li>
+<li><code>00 02</code> 表示 field id == 2</li>
+<li><code>00 00 00 06</code> 表示 i32 的 值是6</li>
+<li><code>00</code> 表示 StopField，代表这个 Struct 结束了</li>
+</ul>
+<p>thrift exception 中数字的含义如下:</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-173956.png" alt=""></p>
+<h2 id="compact-协议">Compact 协议</h2>
+<h3 id="var-int">var int</h3>
+<p>Compact 协议中，使用 var int + zigzag int 的方式来将整数进行编码</p>
+<ol>
+<li>i32, i64 格式的整数被转换成 zigzag 格式的整数，这样所有整数都使用非负整数的格式存储</li>
+<li>zigzag 整数被编码成了 var int 变长整数。i32 整数消耗 1-5 个字节，i64 整数消耗 1-10 个字节。</li>
+</ol>
+<ul>
+<li>i16 首先被转换成 i32 之后，再进行 zigzag + var int 编码, i8 数字不会进行编码，直接进行传输。</li>
+</ul>
+<p>关于 zigzag 以及变长整数编码，可以参考我的另一篇文章: <a href="/2022/03/01/variant_zigzag/">ZigZag 变长整数编码</a></p>
+<h3 id="message-如何编码">Message 如何编码</h3>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-125326.png" alt=""></p>
+<p>Compact 协议中，Message 的编码格式如上图</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pppppppp</td>
+<td>协议 ID, 固定是 0x82, 1000 0010</td>
+</tr>
+<tr>
+<td>mmm</td>
+<td>消息类型，和 binary 协议中的消息类型定义相同</td>
+</tr>
+<tr>
+<td>vvvvv</td>
+<td>协议版本，无符号5位整数，固定是 00001</td>
+</tr>
+<tr>
+<td>seq id</td>
+<td>序列号 ID, 一个32位有符号整数被编码成了 var int</td>
+</tr>
+<tr>
+<td>name length</td>
+<td>方法名长度，一个有符号32位整数被编码成了 var int (name length &gt;= 0)</td>
+</tr>
+<tr>
+<td>name</td>
+<td>方法名, utf-8 编码的字符串</td>
+</tr>
+</tbody>
+</table>
+<h2 id="framed-vs-unframed">framed vs unframed</h2>
+<ul>
+<li>
+<p>unframed 会将数据直接写入到 socket</p>
+</li>
+<li>
+<p>使用 framed 格式，client/server 先将 request/response 写入到一个 buffer 中。最后向 socket 写入时，先写入一个四字节的 request/response 长度，再写入 request/response。</p>
+</li>
+<li>
+<p>framed 格式下，请求的最大长度是 16384000 (16M)</p>
+</li>
+<li>
+<p>thrift 引入 framed 格式的目的是为了方便异步处理器的实现。</p>
+</li>
+</ul>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://andrewpqc.github.io/2019/02/24/thrift/">Thrift序列化协议浅析</a></li>
+<li><a href="https://erikvanoosten.github.io/thrift-missing-specification/">Thrift specification - Remote Procedure Call</a></li>
+<li><a href="https://www.bwangel.me/2022/03/01/variant_zigzag/">ZigZag 变长整数编码</a></li>
+</ul>
 	<div class="text-muted mt-5 pt-3 border-top">
-   August 15, 2023: <a href="https://github.com/bwangelme/647/commit/0f5b321f4cf6fba568499eae85a3c5a122009fcc">add golang generic (0f5b321)</a>
+   September 6, 2023: <a href="https://github.com/bwangelme/647/commit/fe51905b84d06d45be1f30ef5ab38d5254b9134d">add thrift blog (fe51905)</a>
 </div>
 
 </div>

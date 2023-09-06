@@ -113,6 +113,14 @@
 
     
   
+    
+    
+	
+<li>3: <a href="#pg-634110a9992b6264c18b7b4beda6f789">在 Ubuntu 22.04 上搭建 NFS Server</a></li>
+
+
+    
+  
 
     </ul>
 
@@ -372,6 +380,95 @@ bf5846384913   test_download   &#34;python /download.py&#34;   37 seconds ago   
 </span></span></code></pre></div><h2 id="参考链接">参考链接</h2>
 <ul>
 <li><a href="https://linux.die.net/man/8/lsof">man lsof</a></li>
+</ul>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-634110a9992b6264c18b7b4beda6f789">3 - 在 Ubuntu 22.04 上搭建 NFS Server</h1>
+    
+	<h2 id="环境准备">环境准备</h2>
+<p>我准备了两台机器</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>ip</th>
+<th>user</th>
+<th>user_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>server</td>
+<td>191.168.58.11</td>
+<td>vagrant</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>client</td>
+<td>192.168.58.1</td>
+<td>xuyundong</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<h2 id="安装组件">安装组件</h2>
+<ul>
+<li>服务端安装 nfs server</li>
+</ul>
+<pre tabindex="0"><code>sudo apt update
+sudo apt install nfs-kernel-server
+</code></pre><ul>
+<li>客户端安装 nfs-common</li>
+</ul>
+<pre tabindex="0"><code>sudo apt update
+sudo apt install nfs-common
+</code></pre><h2 id="服务端创建目录并导出">服务端创建目录并导出</h2>
+<h3 id="在服务端上创建挂载目录并设置权限">在服务端上创建挂载目录，并设置权限</h3>
+<pre tabindex="0"><code>sudo mkdir -p /mnt/share
+sudo chown vagrant:vagrant /mnt/share
+sudo chmod 755 /mnt/share
+</code></pre><h3 id="服务端上配置-nfs-export-目录">服务端上配置 nfs export 目录</h3>
+<p>修改 <code>/etc/exports</code> 文件, 加入以下内容</p>
+<pre tabindex="0"><code>/mnt/share       *(rw,async,no_subtree_check)
+</code></pre><p>关于 export 选项的解释</p>
+<ul>
+<li><code>rw</code>: 客户端具有读和写的权限</li>
+<li><code>sync</code>: 强制 nfs 在回复 client 之前将更改写入磁盘，这保证了 nfs server 的可靠性，但也降低了写入速度</li>
+<li><code>no_subtree_check</code>: 此选项可防止子树检查，在子树检查过程中，主机必须为每个请求检查文件在导出的树中是否仍然可用。当客户端打开文件时重命名文件时，这可能会导致许多问题。<strong>通常建议禁用子树检查</strong>。</li>
+<li><code>no_root_squash</code>: 当客户端以 root 权限写入文件时，nfs server 会将文件 owner 改成普通用户，当此选项开启时，nfs server 不修改 root 写入文件的 woner</li>
+</ul>
+<p>修改完以后执行以下命令载入配置</p>
+<pre tabindex="0"><code>sudo systemctl restart nfs-kernel-server
+</code></pre><h2 id="客户端挂载">客户端挂载</h2>
+<p>客户端执行以下命令挂载</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 将服务端的 nfs 目录挂载到了客户端的 /home/xuyundong/tmp/nfs_exmaple 中</span>
+</span></span><span style="display:flex;"><span>sudo mount 192.168.58.11:/mnt/share /home/xuyundong/tmp/nfs_exmaple
+</span></span></code></pre></div><p>修改 <code>/etc/fstab</code> 文件，将以下内容写入可以让 client 在开机启动时自动挂载</p>
+<pre tabindex="0"><code>192.168.58.11:/mnt/share   /home/xuyundong/tmp/nfs_exmaple   nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0
+</code></pre><h2 id="测试访问">测试访问</h2>
+<p>在客户端的目录中，<strong>以 uid=1000 的用户执行</strong></p>
+<pre tabindex="0"><code>echo &#34;abc&#34; &gt; test.txt
+</code></pre><p>可以看到文件正常写入了。</p>
+<p>这是因为 client 的写入的用户的 uid 是 1000, server 中目录的 owner 的 uid 也是 1000, owner 相同就能正常写入。</p>
+<h2 id="取消挂载">取消挂载</h2>
+<p>客户端执行以下命令可以取消挂载</p>
+<pre tabindex="0"><code>sudo umount ~/tmp/nfs_exmaple
+</code></pre><h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-22-04">How To Set Up an NFS Mount on Ubuntu 22.04</a></li>
 </ul>
 
 </div>
