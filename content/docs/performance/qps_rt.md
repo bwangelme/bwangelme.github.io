@@ -3,7 +3,7 @@ title: "QPS 和 RT 的关系"
 date: 2023-08-13T16:17:52+08:00
 lastmod: 2023-08-13T16:17:52+08:00
 author: "bwangel"
-tags: [tips, thrift]
+tags: [tips, performance]
 weight: 4
 ---
 
