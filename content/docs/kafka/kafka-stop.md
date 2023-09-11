@@ -3,7 +3,7 @@ title: "优雅地关闭 Kafka Broker"
 date: 2022-04-20T17:42:24+08:00
 lastmod: 2022-04-20T17:42:24+08:00
 draft: false
-tags: [tips, go]
+tags: [tips, kafka]
 author: "bwangel"
 comment: true
 ---
