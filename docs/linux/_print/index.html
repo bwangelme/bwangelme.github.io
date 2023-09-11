@@ -34,8 +34,8 @@
 
 
 
-<link rel="preload" href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" as="style">
-<link href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/647/scss/main.scss" as="style">
+<link href="/647/scss/main.scss" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -116,7 +116,23 @@
     
     
 	
-<li>3: <a href="#pg-634110a9992b6264c18b7b4beda6f789">在 Ubuntu 22.04 上搭建 NFS Server</a></li>
+<li>3: <a href="#pg-69dc1da95bd41a25bf26e181c6ed42e5">DNS</a></li>
+
+
+    
+  
+    
+    
+	
+<li>4: <a href="#pg-634110a9992b6264c18b7b4beda6f789">在 Ubuntu 22.04 上搭建 NFS Server</a></li>
+
+
+    
+  
+    
+    
+	
+<li>5: <a href="#pg-d666840fe7c4f359e7566250aad67c80">查看信号的快捷键</a></li>
 
 
     
@@ -396,7 +412,197 @@ bf5846384913   test_download   &#34;python /download.py&#34;   37 seconds ago   
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-634110a9992b6264c18b7b4beda6f789">3 - 在 Ubuntu 22.04 上搭建 NFS Server</h1>
+	<h1 id="pg-69dc1da95bd41a25bf26e181c6ed42e5">3 - DNS</h1>
+    
+	<h2 id="a-记录">A 记录</h2>
+<p>Address Mapping records, 指示了对应名称的IPv4地址, A记录用来将域名转换为ip地址.</p>
+<h2 id="aaaa-记录">AAAA 记录</h2>
+<p>类似于A记录, 只不过指示的是IPv6的地址。</p>
+<p>因为 IPv6 地址长度是 IPv4 的四倍，所以用 AAAA 表示 IPv6 记录</p>
+<h2 id="ns-记录">NS 记录</h2>
+<ul>
+<li>Name Server records, 用来指定对应名称的可信名称服务器 (authoritative name server)</li>
+</ul>
+<p>例如这段 dig 日志是 <code>j.gtld-servers.net</code> 告诉我们，它不知道 <code>www.baidu.com</code> 的 IP, 但是它告诉我们要查询 <code>baidu.com.</code> 域的地址，可以去 ns[12345].baidu.com 这5个地址中查。</p>
+<pre tabindex="0"><code>baidu.com.              172800  IN      NS      ns2.baidu.com.
+baidu.com.              172800  IN      NS      ns3.baidu.com.
+baidu.com.              172800  IN      NS      ns4.baidu.com.
+baidu.com.              172800  IN      NS      ns1.baidu.com.
+baidu.com.              172800  IN      NS      ns7.baidu.com.
+;; Received 849 bytes from 192.48.79.30#53(j.gtld-servers.net) in 316 ms
+</code></pre><h2 id="ptr-记录">PTR 记录</h2>
+<p>Pointer records, 通过 IP 反查域名，大部分域名服务器都不支持，目前只找到了 <code>dns.google.</code> 支持 PTR 查询</p>
+<pre tabindex="0"><code>ø&gt; dig -x 8.8.4.4
+
+;; QUESTION SECTION:
+;4.4.8.8.in-addr.arpa.          IN      PTR
+
+;; ANSWER SECTION:
+4.4.8.8.in-addr.arpa.   1       IN      PTR     dns.google.
+</code></pre><h2 id="cname-记录">CNAME 记录</h2>
+<p>又称 alias 别名，是 A 记录的别名</p>
+<p>例如以下的查询说明</p>
+<ol>
+<li><code>www.baidu.com.</code> 是 <code>www.a.shifen.com.</code> 的别名</li>
+<li><code>www.a.shifen.com.</code> 指向了 <code>220.181.38.150</code> 和 <code>220.181.38.149</code></li>
+</ol>
+<pre tabindex="0"><code>ø&gt; dig -4 www.baidu.com
+
+;; QUESTION SECTION:
+;www.baidu.com.                 IN      A
+
+;; ANSWER SECTION:
+www.baidu.com.          70      IN      CNAME   www.a.shifen.com.
+www.a.shifen.com.       53      IN      A       220.181.38.150
+www.a.shifen.com.       53      IN      A       220.181.38.149
+</code></pre><h2 id="查询方式">查询方式</h2>
+<h3 id="递归查询">递归查询</h3>
+<p>client 发送请求给局域网 DNS, 局域网 DNS 再去上游 DNS 服务器执行进一步查询。一级一级向上递归并回到局域网 DNS , 局域网 DNS 将查询的地址返回给客户端</p>
+<p>dig 命令默认执行的就是递归查询</p>
+<h3 id="集中查询">集中查询</h3>
+<ol>
+<li>client 发送请求给局域网 DNS 获得 DNS 根服务器的地址</li>
+<li>client 请求根服务器获得下一级 DNS 服务器地址</li>
+<li>以此往复，一级一级直到查到目标域名的 IP 地址</li>
+</ol>
+<p>以下用集中查询的方式查询 <a href="https://www.baidu.com">www.baidu.com</a> IP 地址的过程</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ø&gt; dig -4 +trace www.baidu.com
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 获取根服务器的名字列表</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">;</span> &lt;&lt;&gt;&gt; DiG 9.18.12-0ubuntu0.22.04.2-Ubuntu &lt;&lt;&gt;&gt; -4 +trace www.baidu.com
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">;;</span> global options: +cmd
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      k.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      b.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      h.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      i.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      l.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      c.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      a.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      d.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      e.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      m.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      f.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      g.root-servers.net.
+</span></span><span style="display:flex;"><span>.                       <span style="color:#0000cf;font-weight:bold">2229</span>    IN      NS      j.root-servers.net.
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">;;</span> Received <span style="color:#0000cf;font-weight:bold">239</span> bytes from 10.8.0.1#53<span style="color:#ce5c00;font-weight:bold">(</span>10.8.0.1<span style="color:#ce5c00;font-weight:bold">)</span> in <span style="color:#0000cf;font-weight:bold">4</span> ms
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 根服务器返回通用定义域名的名字列表</span>
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      a.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      b.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      c.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      d.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      e.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      f.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      g.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      h.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      i.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      j.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      k.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      l.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      m.gtld-servers.net.
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">86400</span>   IN      DS      <span style="color:#0000cf;font-weight:bold">30909</span> <span style="color:#0000cf;font-weight:bold">8</span> <span style="color:#0000cf;font-weight:bold">2</span> E2D3C916F6DEEAC73294E8268FB5885044A833FC5459588F4A9184CF C41A5766
+</span></span><span style="display:flex;"><span>com.                    <span style="color:#0000cf;font-weight:bold">86400</span>   IN      RRSIG   DS <span style="color:#0000cf;font-weight:bold">8</span> <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#0000cf;font-weight:bold">86400</span> <span style="color:#0000cf;font-weight:bold">20230921210000</span> <span style="color:#0000cf;font-weight:bold">20230908200000</span> <span style="color:#0000cf;font-weight:bold">11019</span> . M02FKEukwDc7T/KjNtpdCfwvkzHx1STqPt3AO/eXQxqBU7jN9vrHbJMJ PNXpBlO5p+HgnZ9w0c7sR8qnDXFl1OziNAo0el1fRq0YFwBae9BgoLCg IeZVoZmqerXpVXCrpKX1Fb+ILjuIX1bL5li2xQ/gpq4u91EijGvZg6sQ UmBiQW0JlXKR927uOm+aJHN6Ujnzd7sZrOWpSXQAOVPf4dHjvCJNohfs V9cJkjBRI+QuOpArJ+gCGKoiMidjYZBuYXIsYV7PYLQbVfVZg2E3JFXX h5BkqZUlCZbabAcVCzQ6BGZMpxcs1A/J8g/7+eguU6bJFpbiBXeHEZhx <span style="color:#000">TS1zoQ</span><span style="color:#ce5c00;font-weight:bold">==</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">;;</span> Received <span style="color:#0000cf;font-weight:bold">1173</span> bytes from 192.58.128.30#53<span style="color:#ce5c00;font-weight:bold">(</span>j.root-servers.net<span style="color:#ce5c00;font-weight:bold">)</span> in <span style="color:#0000cf;font-weight:bold">8</span> ms
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 通用顶级域名返回 baidu.com. 域的 DNS 服务器名字列表</span>
+</span></span><span style="display:flex;"><span>baidu.com.              <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      ns2.baidu.com.
+</span></span><span style="display:flex;"><span>baidu.com.              <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      ns3.baidu.com.
+</span></span><span style="display:flex;"><span>baidu.com.              <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      ns4.baidu.com.
+</span></span><span style="display:flex;"><span>baidu.com.              <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      ns1.baidu.com.
+</span></span><span style="display:flex;"><span>baidu.com.              <span style="color:#0000cf;font-weight:bold">172800</span>  IN      NS      ns7.baidu.com.
+</span></span><span style="display:flex;"><span>CK0POJMG874LJREF7EFN8430QVIT8BSM.com. <span style="color:#0000cf;font-weight:bold">86400</span> IN NSEC3 <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#0000cf;font-weight:bold">0</span> - CK0Q2D6NI4I7EQH8NA30NS61O48UL8G5 NS SOA RRSIG DNSKEY NSEC3PARAM
+</span></span><span style="display:flex;"><span>CK0POJMG874LJREF7EFN8430QVIT8BSM.com. <span style="color:#0000cf;font-weight:bold">86400</span> IN RRSIG NSEC3 <span style="color:#0000cf;font-weight:bold">8</span> <span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#0000cf;font-weight:bold">86400</span> <span style="color:#0000cf;font-weight:bold">20230915042421</span> <span style="color:#0000cf;font-weight:bold">20230908031421</span> <span style="color:#0000cf;font-weight:bold">4459</span> com. ACWanRvoDIwYH40J5TjA8G6UXUldpz8+aNZdFlLO1eY9GRalvfLnpa6H RqiP03pvORSpHJEv2+HuQ1HtWTCj/nlJOeiRKG0Bk/HjcjkH9yv1b6pF ASeyvdJYN2wYPp4e1KPVe3GuoxBETq6kPKfUhR289IzQFy5vLgIfeVWK <span style="color:#000">pR6z0kgCFKTKaO21nj2LxxWsxmfuIpe8ztJuPTF7lVhXhw</span><span style="color:#ce5c00;font-weight:bold">==</span>
+</span></span><span style="display:flex;"><span>HPVV0C47Q7CQMTAJM90K1FBFJBRP4B4D.com. <span style="color:#0000cf;font-weight:bold">86400</span> IN NSEC3 <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#0000cf;font-weight:bold">0</span> - HPVVAN8CFKHHHMEIDVJHFNQEOI5G6C89 NS DS RRSIG
+</span></span><span style="display:flex;"><span>HPVV0C47Q7CQMTAJM90K1FBFJBRP4B4D.com. <span style="color:#0000cf;font-weight:bold">86400</span> IN RRSIG NSEC3 <span style="color:#0000cf;font-weight:bold">8</span> <span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#0000cf;font-weight:bold">86400</span> <span style="color:#0000cf;font-weight:bold">20230914060727</span> <span style="color:#0000cf;font-weight:bold">20230907045727</span> <span style="color:#0000cf;font-weight:bold">4459</span> com. oUS/iAWQKq/0KHQdg18vwuUvT1Ftl8tnpHZVCwdQPEaIq3gceZnmpE2Z u8pj+JPFOUqp/DWRNlWZYMmTuhSjJil7cCpahWk3+RJbeJQIWPtNvBkl BBmM1M3he1ELoS37YqcflA8U/q4CaNdEpIS7OiNy6f4efrkZMvqRZZ9U hRgI2CugaGb6C9mDeAfThooAqsc5xFCX9KjWGsNLr0pE+Q<span style="color:#ce5c00;font-weight:bold">==</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">;;</span> Received <span style="color:#0000cf;font-weight:bold">849</span> bytes from 192.48.79.30#53<span style="color:#ce5c00;font-weight:bold">(</span>j.gtld-servers.net<span style="color:#ce5c00;font-weight:bold">)</span> in <span style="color:#0000cf;font-weight:bold">316</span> ms
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># ns3.baidu.com 返回 www.baidu.com 的解析结果</span>
+</span></span><span style="display:flex;"><span>www.baidu.com.          <span style="color:#0000cf;font-weight:bold">1200</span>    IN      CNAME   www.a.shifen.com.
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">;;</span> Received <span style="color:#0000cf;font-weight:bold">100</span> bytes from 153.3.238.93#53<span style="color:#ce5c00;font-weight:bold">(</span>ns3.baidu.com<span style="color:#ce5c00;font-weight:bold">)</span> in <span style="color:#0000cf;font-weight:bold">24</span> ms
+</span></span></code></pre></div><p>这是集中查询的抓包过程(建议在新 tab 中打开图片对比说明查看)</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-09-09-143516.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>包序号</th>
+<th>包功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1, 2</td>
+<td>从 10.8.0.1 DNS 服务器获得根服务器的地址</td>
+</tr>
+<tr>
+<td>3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 24, 25, 26</td>
+<td>向 192.168.1.1 和 10.8.0.1 查询根服务器的地址 (两个网卡都发送了查询请求)</td>
+</tr>
+<tr>
+<td>14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 28, 29, 30, 31</td>
+<td>10.8.0.1 和 192.168.1.1 返回 DNS 根服务器地址</td>
+</tr>
+<tr>
+<td>26</td>
+<td>向根服务器 <code>g.root-servers.net.</code> 查询 <code>www.baidu.com.</code> 的地址</td>
+</tr>
+<tr>
+<td>32</td>
+<td>根服务器 <code>g.root-servers.net.</code> 返回通用顶级域名列表及其地址 <code>[a-j].gtld-servers.net</code></td>
+</tr>
+<tr>
+<td>33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44, 45</td>
+<td>向 10.8.0.1 查询通用顶级域名的 IP</td>
+</tr>
+<tr>
+<td>47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59</td>
+<td>10.8.0.1 返回通用顶级域名的 IP</td>
+</tr>
+<tr>
+<td>46</td>
+<td>向通用顶级域名 DNS server <code>i.gtld-servers.net</code> 查询 <a href="https://www.baidu.com">www.baidu.com</a> 的 IP</td>
+</tr>
+<tr>
+<td>60</td>
+<td><code>i.gtld-servers.net</code> DNS返回 <code>baidu.com.</code> 域的 DNS 服务器 <code>ns[12347].baidu.com</code> 的名字</td>
+</tr>
+<tr>
+<td>61, 62, 63, 64, 65, 69</td>
+<td>向 192.168.1.1 和 10.8.0.1 查询 <code>ns[12347].baidu.com</code> 的 IP</td>
+</tr>
+<tr>
+<td>66,67,68,71,72,73</td>
+<td>192.168.1.1 和 10.8.0.1 返回 <code>ns[12347].baidu.com</code> 的 IP</td>
+</tr>
+<tr>
+<td>70</td>
+<td>向 <code>ns2.baidu.com</code> 查询 <code>www.baidu.com</code> 的地址</td>
+</tr>
+<tr>
+<td>74</td>
+<td><code>ns2.baidu.com</code> 返回 <code>www.baidu.com</code> 的地址，它是 <code>www.a.shifen.com</code> 地址的别名</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://www.cnblogs.com/pannengzhi/p/6262076.html">关于DNS,你应该知道这些</a></li>
+</ul>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-634110a9992b6264c18b7b4beda6f789">4 - 在 Ubuntu 22.04 上搭建 NFS Server</h1>
     
 	<h2 id="环境准备">环境准备</h2>
 <p>我准备了两台机器</p>
@@ -471,6 +677,63 @@ sudo chmod 755 /mnt/share
 <li><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-22-04">How To Set Up an NFS Mount on Ubuntu 22.04</a></li>
 </ul>
 
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-d666840fe7c4f359e7566250aad67c80">5 - 查看信号的快捷键</h1>
+    
+	<hr>
+<h2 id="tips">Tips</h2>
+<p><code>stty</code>命令的作用是 <code>change and print terminal line settings</code>，查看或修改 Linux 终端的配置。</p>
+<p>今天遇到的需求是想查一下 <code>Ctrl-C</code> 按键发送的系统信号 ( <a href="https://man7.org/linux/man-pages/man7/signal.7.html">man 7 signal</a> )，搜了一下发现 stty 是最方便的查询命令</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ø&gt; stty -a
+</span></span><span style="display:flex;"><span>speed <span style="color:#0000cf;font-weight:bold">38400</span> baud<span style="color:#000;font-weight:bold">;</span> rows 68<span style="color:#000;font-weight:bold">;</span> columns 128<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">line</span> <span style="color:#ce5c00;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">####################  我们主要关心这两行的内容</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">intr</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^C<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">quit</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^<span style="color:#4e9a06">\;</span> <span style="color:#000">erase</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^?<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87">kill</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^U<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">eof</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^D<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">eol</span> <span style="color:#ce5c00;font-weight:bold">=</span> &lt;undef&gt;<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">eol2</span> <span style="color:#ce5c00;font-weight:bold">=</span> &lt;undef&gt;<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">swtch</span> <span style="color:#ce5c00;font-weight:bold">=</span> &lt;undef&gt;<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">start</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^Q<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">stop</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^S<span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">susp</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^Z<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">rprnt</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^R<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">werase</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^W<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">lnext</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^V<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">discard</span> <span style="color:#ce5c00;font-weight:bold">=</span> ^O<span style="color:#000;font-weight:bold">;</span> <span style="color:#000">min</span> <span style="color:#ce5c00;font-weight:bold">=</span> 1<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87">time</span> <span style="color:#ce5c00;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">####################</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>-parenb -parodd -cmspar cs8 -hupcl -cstopb cread -clocal -crtscts
+</span></span><span style="display:flex;"><span>-ignbrk -brkint -ignpar -parmrk -inpck -istrip -inlcr -igncr icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8
+</span></span><span style="display:flex;"><span>opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
+</span></span><span style="display:flex;"><span>isig icanon iexten <span style="color:#204a87">echo</span> echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
+</span></span></code></pre></div><p>stty 输出的解释如下:</p>
+<ul>
+<li><code>^C</code> (<code>ctrl+c</code>) 发送 interrupt 信号</li>
+<li><code>^\</code> (<code>ctr+\</code>) 发送 quit 信号</li>
+<li><code>^?</code> 清除上一个输入的字符</li>
+<li><code>^U</code> 删除当前行</li>
+<li><code>^D</code> 输入 EOF 字符(结束当前输入)</li>
+<li><code>^S</code> 暂停输出</li>
+<li><code>^Q</code> 在暂停输出后，重新开始输出</li>
+<li><code>^Z</code> 发送一个 terminal stop 信号</li>
+<li><code>^W</code> 删除最近输入的一个单词</li>
+</ul>
+<pre tabindex="0"><code>while true;do
+    date;
+    sleep 1
+done
+</code></pre><ul>
+<li>(我用上面的代码测试 <code>^S</code> 和 <code>^Q</code>, 发现不生效)</li>
+</ul>
+<p>stty 其他输入的含义，请参考 <a href="https://linux.die.net/man/1/stty">man 1 stty</a></p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://unix.stackexchange.com/a/362579/191858">List of terminal generated signals (eg Ctrl-C -&gt; SIGINT)</a></li>
+<li><a href="https://linux.die.net/man/1/stty">man 1 stty</a></li>
+</ul>
 </div>
 
 

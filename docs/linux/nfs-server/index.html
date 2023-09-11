@@ -49,8 +49,8 @@ rw: 客户端具有读和写的权限 sync: 强制 nfs 在回复 client 之前�
 
 
 
-<link rel="preload" href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" as="style">
-<link href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/647/scss/main.scss" as="style">
+<link href="/647/scss/main.scss" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -92,7 +92,54 @@ rw: 客户端具有读和写的权限 sync: 强制 nfs 在回复 client 之前�
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-647docs-li">
   <a href="/647/docs/" title="Documentation" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-647docs"><span class="">Docs</span></a>
   <ul class="ul-1">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsencoding-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docskafka-li">
+  <a href="/647/docs/kafka/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docskafka"><span class="">Kafka</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docskafkakafka-stop-li">
+  <a href="/647/docs/kafka/kafka-stop/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docskafkakafka-stop"><span class="">优雅地关闭 Kafka Broker</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docskafkakafka-storage-li">
+  <a href="/647/docs/kafka/kafka-storage/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docskafkakafka-storage"><span class="">Kafka 存储</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docskafkakakfa-consumer-commit-offset-li">
+  <a href="/647/docs/kafka/kakfa-consumer-commit-offset/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docskafkakakfa-consumer-commit-offset"><span class="">Kakfa 消费者提交 offset 的设置</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docskafkakakfa-offset-reset-li">
+  <a href="/647/docs/kafka/kakfa-offset-reset/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docskafkakakfa-offset-reset"><span class="">Kakfa Consumer 的 auto.offset.reset 选项</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsk8s-li">
+  <a href="/647/docs/k8s/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsk8s"><span class="">K8S</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8spod-status-li">
+  <a href="/647/docs/k8s/pod-status/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8spod-status"><span class="">Pod 状态笔记</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sk8s-pod-terminating-li">
+  <a href="/647/docs/k8s/k8s-pod-terminating/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sk8s-pod-terminating"><span class="">K8s Pod 如何结束</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docscontainer-li">
+  <a href="/647/docs/container/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docscontainer"><span class="">Container</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docscontainerdocker-dns-li">
+  <a href="/647/docs/container/docker-dns/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docscontainerdocker-dns"><span class="">Ubuntu 中 Docker 设置容器中 DNS 服务器的地址</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docshttp-li">
+  <a href="/647/docs/http/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docshttp"><span class="">HTTP</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docshttpnginx-header-underline-li">
+  <a href="/647/docs/http/nginx-header-underline/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docshttpnginx-header-underline"><span class="">HTTP 协议中带下划线的 header 说明</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docshttpnginx-proxy-set-header-li">
+  <a href="/647/docs/http/nginx-proxy-set-header/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docshttpnginx-proxy-set-header"><span class="">Nginx proxy_set_header 默认会覆盖上一层的设置</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docshttpnginx_install-li">
+  <a href="/647/docs/http/nginx_install/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docshttpnginx_install"><span class="">CentOS 下编译安装 Nginx</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsprometheus-li">
+  <a href="/647/docs/prometheus/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsprometheus"><span class="">Prometheus</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsprometheusstatsd-exporter-unchecked-metric-li">
+  <a href="/647/docs/prometheus/statsd-exporter-unchecked-metric/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsprometheusstatsd-exporter-unchecked-metric"><span class="">Statsd Exporter 如何跳过 prom 的指标检查</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsencoding-li">
   <a href="/647/docs/encoding/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsencoding"><span class="">编码</span></a>
   <ul class="ul-2 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsencodingvariant_zigzag-li">
@@ -113,10 +160,18 @@ rw: 客户端具有读和写的权限 sync: 强制 nfs 在回复 client 之前�
   <a href="/647/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggeneric"><span class="">泛型</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolangyaml-li">
   <a href="/647/docs/golang/yaml/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolangyaml"><span class="">YAML</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanglogrus-formatter-li">
+  <a href="/647/docs/golang/logrus-formatter/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanglogrus-formatter"><span class="">Logrus 添加预设字段</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-build-vcsmap-li">
+  <a href="/647/docs/golang/go-build-vcsmap/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-build-vcsmap"><span class="">Golang Build 出错: error obtaining VCS status: exit status 128</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggolang-err-li">
+  <a href="/647/docs/golang/golang-err/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggolang-err"><span class="">pkg/errors 和 go1.13 中 errors 库发展历史</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-release-li">
   <a href="/647/docs/golang/go-release/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-release"><span class="">Golang 的版本发布计划</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggoproxy-li">
   <a href="/647/docs/golang/goproxy/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggoproxy"><span class="">Go proxy 的说明</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggolang_error-li">
+  <a href="/647/docs/golang/golang_error/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggolang_error"><span class="">《Golang Error》学习笔记</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsperformance-li">
@@ -160,8 +215,12 @@ rw: 客户端具有读和写的权限 sync: 强制 nfs 在回复 client 之前�
   <a href="/647/docs/linux/curl/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxcurl"><span class="">curl</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxlsof-li">
   <a href="/647/docs/linux/lsof/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxlsof"><span class="">lsof</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxdns-li">
+  <a href="/647/docs/linux/dns/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxdns"><span class="">DNS</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-647docslinuxnfs-server-li">
   <a href="/647/docs/linux/nfs-server/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-647docslinuxnfs-server"><span class="td-sidebar-nav-active-item">在 Ubuntu 22.04 上搭建 NFS Server</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxstty-li">
+  <a href="/647/docs/linux/stty/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxstty"><span class="">查看信号的快捷键</span></a>
 </li>
   </ul>
 </li>
@@ -208,17 +267,29 @@ rw: 客户端具有读和写的权限 sync: 强制 nfs 在回复 client 之前�
       <ul class="taxonomy-terms">
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span><span class="taxonomy-count">6</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">datetime</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">dig</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">dns</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">docker</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">git</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span><span class="taxonomy-count">8</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">gomod</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">http</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">k8s</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">kafka</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/kakfa/" data-taxonomy-term="kakfa"><span class="taxonomy-label">kakfa</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">lsof</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">nfs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">nginx</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">performance</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">prometheus</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">stty</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">19</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">wireshark</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">zigzag</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/%E7%AC%94%E8%AE%B0/" data-taxonomy-term="%E7%AC%94%E8%AE%B0"><span class="taxonomy-label">笔记</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/%E7%BC%96%E7%A0%81/" data-taxonomy-term="%E7%BC%96%E7%A0%81"><span class="taxonomy-label">编码</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangelme.github.io/647/tags/%E7%BF%BB%E8%AF%91/" data-taxonomy-term="%E7%BF%BB%E8%AF%91"><span class="taxonomy-label">翻译</span><span class="taxonomy-count">1</span></a></li>
         </ul>

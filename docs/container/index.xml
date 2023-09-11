@@ -1,0 +1,50 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – Container</title>
+    <link>https://bwangelme.github.io/647/docs/container/</link>
+    <description>Recent content in Container on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Mon, 11 Sep 2023 10:34:11 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangelme.github.io/647/docs/container/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Ubuntu 中 Docker 设置容器中 DNS 服务器的地址</title>
+      <link>https://bwangelme.github.io/647/docs/container/docker-dns/</link>
+      <pubDate>Mon, 20 Mar 2023 18:28:08 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/container/docker-dns/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
+&lt;p&gt;修改 &lt;code&gt;/etc/docker/daemon.json&lt;/code&gt; 文件，写入以下配置:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;{
+  &amp;#34;dns&amp;#34;: [
+    &amp;#34;10.8.0.1&amp;#34;,
+    &amp;#34;192.168.45.155&amp;#34;,
+  ]
+  &amp;#34;dns-opts&amp;#34;: [ &amp;#34;ndots:1&amp;#34; ]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这样相当于在 &lt;code&gt;/etc/resolv.conf&lt;/code&gt; 设置了&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;nameserver 10.8.0.1
+nameserver 192.168.45.155
+options ndots:15
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改完成后重启 docker daemon 生效&lt;/p&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/moby/moby/issues/32093&#34;&gt;ndots:0 #32093&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>
