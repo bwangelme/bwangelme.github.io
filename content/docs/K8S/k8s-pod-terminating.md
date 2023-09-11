@@ -3,7 +3,7 @@ title: "K8s Pod 如何结束"
 date: 2022-07-03T14:44:36+08:00
 lastmod: 2022-07-03T14:44:36+08:00
 draft: false
-tags: [tips, go]
+tags: [tips, k8s]
 author: "bwangel"
 comment: true
 ---
