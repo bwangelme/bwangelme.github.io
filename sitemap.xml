@@ -20,6 +20,21 @@
     <loc>https://bwangelme.github.io/647/docs/</loc>
     <lastmod>2023-08-01T12:10:45+08:00</lastmod>
   </url><url>
+    <loc>https://bwangelme.github.io/647/docs/kafka/consumer/</loc>
+    <lastmod>2023-09-11T16:36:30+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangelme.github.io/647/tags/kafka/</loc>
+    <lastmod>2023-09-11T16:36:30+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangelme.github.io/647/tags/</loc>
+    <lastmod>2023-09-11T16:36:30+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangelme.github.io/647/tags/tips/</loc>
+    <lastmod>2023-09-11T16:36:30+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangelme.github.io/647/docs/kafka/broker/</loc>
+    <lastmod>2023-09-11T16:36:30+08:00</lastmod>
+  </url><url>
     <loc>https://bwangelme.github.io/647/docs/kafka/</loc>
     <lastmod>2023-09-11T10:46:19+08:00</lastmod>
   </url><url>
@@ -46,12 +61,6 @@
   </url><url>
     <loc>https://bwangelme.github.io/647/tags/linux/</loc>
     <lastmod>2023-09-11T10:46:19+08:00</lastmod>
-  </url><url>
-    <loc>https://bwangelme.github.io/647/tags/</loc>
-    <lastmod>2023-09-11T10:46:58+08:00</lastmod>
-  </url><url>
-    <loc>https://bwangelme.github.io/647/tags/tips/</loc>
-    <lastmod>2023-09-11T10:46:58+08:00</lastmod>
   </url><url>
     <loc>https://bwangelme.github.io/647/docs/encoding/</loc>
     <lastmod>2023-09-06T09:54:27+08:00</lastmod>
@@ -175,24 +184,6 @@
   </url><url>
     <loc>https://bwangelme.github.io/647/docs/golang/go-release/</loc>
     <lastmod>2023-08-15T14:21:47+08:00</lastmod>
-  </url><url>
-    <loc>https://bwangelme.github.io/647/tags/kafka/</loc>
-    <lastmod>2023-09-11T10:46:58+08:00</lastmod>
-  </url><url>
-    <loc>https://bwangelme.github.io/647/docs/kafka/kafka-stop/</loc>
-    <lastmod>2023-09-11T10:46:58+08:00</lastmod>
-  </url><url>
-    <loc>https://bwangelme.github.io/647/docs/kafka/kafka-storage/</loc>
-    <lastmod>2023-09-11T10:46:19+08:00</lastmod>
-  </url><url>
-    <loc>https://bwangelme.github.io/647/tags/kakfa/</loc>
-    <lastmod>2023-09-11T10:46:19+08:00</lastmod>
-  </url><url>
-    <loc>https://bwangelme.github.io/647/docs/kafka/kakfa-consumer-commit-offset/</loc>
-    <lastmod>2023-09-11T10:46:19+08:00</lastmod>
-  </url><url>
-    <loc>https://bwangelme.github.io/647/docs/kafka/kakfa-offset-reset/</loc>
-    <lastmod>2023-09-11T10:46:19+08:00</lastmod>
   </url><url>
     <loc>https://bwangelme.github.io/647/tags/zigzag/</loc>
     <lastmod>2023-09-06T09:54:27+08:00</lastmod>

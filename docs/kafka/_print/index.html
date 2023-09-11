@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.117.0">
+<meta name="generator" content="Hugo 0.115.2">
 <link rel="canonical" type="text/html" href="https://bwangelme.github.io/647/docs/kafka/">
 <link rel="alternate" type="application/rss&#43;xml" href="https://bwangelme.github.io/647/docs/kafka/index.xml">
 <meta name="robots" content="noindex, nofollow">
@@ -34,8 +34,8 @@
 
 
 
-<link rel="preload" href="/647/scss/main.scss" as="style">
-<link href="/647/scss/main.scss" rel="stylesheet" integrity="">
+<link rel="preload" href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" as="style">
+<link href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -100,7 +100,7 @@
     
     
 	
-<li>1: <a href="#pg-5b0c1ce7eeacf7a18980a1a660439c1f">优雅地关闭 Kafka Broker</a></li>
+<li>1: <a href="#pg-c7b3f27b65643bf045308409a82ca6b8">Consumer</a></li>
 
 
     
@@ -108,23 +108,7 @@
     
     
 	
-<li>2: <a href="#pg-4f8891d73d6312c68c76352ef6417207">Kafka 存储</a></li>
-
-
-    
-  
-    
-    
-	
-<li>3: <a href="#pg-a9295d3c816fe4c74000afa29b7aef6d">Kakfa 消费者提交 offset 的设置</a></li>
-
-
-    
-  
-    
-    
-	
-<li>4: <a href="#pg-ca5626468eaaa8c7ea4d3c87915c726b">Kakfa Consumer 的 auto.offset.reset 选项</a></li>
+<li>2: <a href="#pg-b0db364c520cdda052412caee9f7bb79">Broker</a></li>
 
 
     
@@ -155,10 +139,67 @@
 
 <div class="td-content" style="">
     
-	<h1 id="pg-5b0c1ce7eeacf7a18980a1a660439c1f">1 - 优雅地关闭 Kafka Broker</h1>
+	<h1 id="pg-c7b3f27b65643bf045308409a82ca6b8">1 - Consumer</h1>
     
-	<hr>
-<h2 id="tips">Tips</h2>
+	<h2 id="commit">Commit</h2>
+<ul>
+<li>
+<p>当 Consumer 将 <code>enable.auto.commit</code> 设置为 true 的时候，kafka consumer 会自动提交 offset。
+它在 <code>auto.commit.interval.ms</code> 选项的控制下，间隔N秒后，自动将当前 consumer 拉取到的消息 offset 提交到 kafka 中。</p>
+</li>
+<li>
+<p>当 <code>enable.auto.commit=false</code> 时，kafka 客户端不会自动提交 offset，需要开发者通过 <code>consumer.commitSync</code> 或 <code>consumer.commitAsync</code> 提交 offset。</p>
+</li>
+<li>
+<p>不建议每收到一条消息就提交一次 offset，<code>consumer.commitSync</code> 是有性能损耗的，如果 <code>consumer.commitSync</code> 调用的频率非常高，consumer 消费消息的速度将会变得很慢。</p>
+</li>
+<li>
+<p><code>consumer.commitAsync</code> 是异步提交的，它相对 <code>consumer.commitSync</code> 会有一定的性能提升。<code>consumer.commitAsync</code> 还有一个回调函数参数，让开发者设定在提交失败时做什么。</p>
+<ul>
+<li>一般在 broker 正常时，提交失败的情况很少发生。开发者不需要做提交失败后重试的逻辑。</li>
+</ul>
+</li>
+</ul>
+<h3 id="参考链接">参考链接</h3>
+<ul>
+<li><a href="https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md">https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md</a></li>
+<li><a href="https://docs.confluent.io/platform/current/clients/consumer.html#id1">https://docs.confluent.io/platform/current/clients/consumer.html#id1</a></li>
+</ul>
+<h2 id="offset">offset</h2>
+<p>kafka 的消息以 group 为单位给 Consumer 发送。Consumer Group 在 topic 中的 offset 存储在 broker 的 <code>__consumer_offsets</code> topic 中。</p>
+<p>新加入的 consumer group 默认从最新位置读取 message。可以通过修改 Consumer 的<code>auto.offset.reset=smallest</code> 选项，让 consumer 从头开始读取 message.</p>
+<p>当 broker 获取 consumer group 的 offset 出错时(offset 不存在或者 offset 超出已有的 message 的范围)，也会根据 <code>auto.offset.reset</code> 的配置来决定从什么位置开始读取 message。</p>
+<ul>
+<li>auto.offset.reset 说明
+<ul>
+<li><code>smallest</code>, <code>earliest</code> 自动将 offset 设置成最小的 offset</li>
+<li><code>largest</code>, <code>latest</code> 自动将 offset 设置成最大的 offset</li>
+<li><code>error</code> 抛出一个错误 (ERR__AUTO_OFFSET_RESET) consumer 可以通过 <code>message-&gt;err</code> 获取到该错误</li>
+</ul>
+</li>
+</ul>
+<h3 id="参考链接-1">参考链接</h3>
+<ul>
+<li><a href="https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md">https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md</a></li>
+</ul>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-b0db364c520cdda052412caee9f7bb79">2 - Broker</h1>
+    
+	<h2 id="优雅地关闭-kafka-broker">优雅地关闭 Kafka Broker</h2>
 <p>向进程发送 <code>TERM</code> 信号就可以优雅地关闭 Kafka Broker</p>
 <p>这是 <code>bin/kafka-server-stop.sh</code> 的内容，他的思路就是通过 ps 查找 cmd 中包括 <code>kafka.Kafka</code> 的进程，来寻找进程 ID</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#000">SIGNAL</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">SIGNAL</span><span style="color:#204a87;font-weight:bold">:-</span><span style="color:#000">TERM</span><span style="color:#4e9a06">}</span>
@@ -183,24 +224,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
 </span></span></code></pre></div><p>但是 Linux 内核有限制，ps 输出的一行内容不能超过页大小 <code>PAGE_SIZE</code> (4096)，所以如果 kafka 进程的 cmd 过长，可能会导致 ps + grep 失败。</p>
 <p>此时就需要我们手动来找对应的进程，可以通过 <code>ps ax | grep 'kafka'</code> 来寻找对应的进程。</p>
-</div>
-
-
-
-    
-	
-  
-    
-    
-	
-    
-
-<div class="td-content" style="page-break-before: always">
-    
-	<h1 id="pg-4f8891d73d6312c68c76352ef6417207">2 - Kafka 存储</h1>
-    
-	<hr>
-<h2 id="tips">Tips</h2>
+<h2 id="存储">存储</h2>
 <ul>
 <li>
 <p>顺序写盘的速度不仅比随机写盘的速度快，而且也比随机写内存的速度快。kafka 在设计时采用了文件追加的方式来写入消息，即只能在日志文件的尾部追加新的消息，并且也不允许修改已经写入的消息，这种方式属于典型的顺序写盘的操作。</p>
@@ -209,68 +233,10 @@
 <p>kafka 大量地使用了页缓存来提高读写文件的效率，而并没有怎么使用进程内的缓存。Java 对象的内存开销非常大，是真实数据的几倍，Java 的 GC 会随着堆内数据的增多而变得越来越慢。基于以上考虑，kafka 使用 Linux 为文件 I/O 提供的页缓存，而不是使用 Java 进程内的缓存。</p>
 </li>
 <li>
-<p>Linux 系统提供了 swap 分区的功能，将非活跃的进程调入 swap 分区，以此把内存空出来让给活跃的进程。对于大量使用系统页缓存的 kafka 而言，应避免这种内存的交换，否则会对它各方面的性能产生较大的影响。vm.swappiness 参数控制 swap 分区的使用率，数值在 0 - 100，数值越大使用的越多，建议设置成1，不设置成 0 防止系统在内存耗尽时 kill 进程。</p>
+<p>Linux 系统提供了 swap 分区的功能，将非活跃的进程调入 swap 分区，以此把内存空出来让给活跃的进程。对于大量使用系统页缓存的 kafka 而言，应避免这种内存的交换，否则会对它各方面的性能产生较大的影响。<code>vm.swappiness</code> 参数控制 swap 分区的使用率，数值在 0 - 100，数值越大使用的越多，建议设置成1，不设置成 0 防止系统在内存耗尽时 kill 进程。</p>
 </li>
 </ul>
-</div>
 
-
-
-    
-	
-  
-    
-    
-	
-    
-
-<div class="td-content" style="page-break-before: always">
-    
-	<h1 id="pg-a9295d3c816fe4c74000afa29b7aef6d">3 - Kakfa 消费者提交 offset 的设置</h1>
-    
-	<hr>
-<h2 id="tips">Tips</h2>
-<p>当 Consumer 将 <code>enable.auto.commit</code> 设置为 true 的时候，kafka consumer 会自动提交 offset。
-它在 <code>auto.commit.interval.ms</code> 选项的控制下，间隔N秒后，自动将当前 consumer 拉取到的消息 offset 提交到 kafka 中。</p>
-<p>当 <code>enable.auto.commit=false</code> 时，kafka 客户端不会自动提交 offset，需要开发者通过 <code>consumer.commitSync</code> 或 <code>consumer.commitAsync</code> 提交 offset。</p>
-<p>不建议每收到一条消息就提交一次 offset，<code>consumer.commitSync</code> 是有性能损耗的，如果 <code>consumer.commitSync</code> 调用的频率非常高，consumer 消费消息的速度将会变得很慢。</p>
-<p><code>consumer.commitAsync</code> 是异步提交的，它相对 <code>consumer.commitSync</code> 会有一定的性能提升。<code>consumer.commitAsync</code> 还有一个回调函数参数，让开发者设定在提交失败时做什么。</p>
-<p>一般在 broker 正常时，提交失败的情况很少发生。开发者不需要做提交失败后重试的逻辑。</p>
-<h2 id="参考链接">参考链接</h2>
-<ul>
-<li><a href="https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md">https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md</a></li>
-<li><a href="https://docs.confluent.io/platform/current/clients/consumer.html#id1">https://docs.confluent.io/platform/current/clients/consumer.html#id1</a></li>
-</ul>
-</div>
-
-
-
-    
-	
-  
-    
-    
-	
-    
-
-<div class="td-content" style="page-break-before: always">
-    
-	<h1 id="pg-ca5626468eaaa8c7ea4d3c87915c726b">4 - Kakfa Consumer 的 auto.offset.reset 选项</h1>
-    
-	<hr>
-<h2 id="tips">Tips</h2>
-<p>kafka 的消息以组为单位给 Consumer 发送。Consumer Group 在 topic 中的 offset 存储在 broker 的 <code>__consumer_offsets</code> topic 中。</p>
-<p>新加入的 consumer group 默认从最新位置读取 message。可以通过修改 Consumer 的<code>auto.offset.reset=smallest</code> 选项，让 consumer 从头开始读取 message.</p>
-<p>当 broker 获取 consumer group 的 offset 出错时(offset 不存在或者 offset 超出已有的 message 的范围)，也会根据 <code>auto.offset.reset</code> 的配置来决定从什么位置开始读取 message。</p>
-<ul>
-<li>&lsquo;smallest&rsquo;,&rsquo;earliest&rsquo; 自动将 offset 设置成最小的 offset</li>
-<li>&rsquo;largest&rsquo;,&rsquo;latest&rsquo; 自动将 offset 设置成最大的 offset</li>
-<li>&rsquo;error&rsquo; 抛出一个错误 (ERR__AUTO_OFFSET_RESET) consumer 可以通过 <code>message-&gt;err</code> 获取到该错误</li>
-</ul>
-<h2 id="参考链接">参考链接</h2>
-<ul>
-<li><a href="https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md">https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md</a></li>
-</ul>
 </div>
 
 
