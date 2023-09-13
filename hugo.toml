@@ -22,6 +22,9 @@ enableGitInfo = true
 tag = "tags"
 category = "categories"
 
+[params.katex]
+enable = true
+
 [params.taxonomy]
 # set taxonomyCloud = [] to hide taxonomy clouds
 taxonomyCloud = ["tags", "categories"]
