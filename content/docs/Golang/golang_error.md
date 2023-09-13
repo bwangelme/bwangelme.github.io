@@ -3,7 +3,7 @@ title: "《Golang Error》学习笔记"
 date: 2020-12-30T22:28:45+08:00
 lastmod: 2020-12-30T22:28:45+08:00
 draft: false
-tags: [笔记, Go]
+tags: [笔记, Go, blog]
 author: "bwangel"
 comment: true
 ---
