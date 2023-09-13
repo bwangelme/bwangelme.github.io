@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.115.2">
+<meta name="generator" content="Hugo 0.117.0">
 <link rel="canonical" type="text/html" href="https://bwangelme.github.io/647/docs/linux/">
 <link rel="alternate" type="application/rss&#43;xml" href="https://bwangelme.github.io/647/docs/linux/index.xml">
 <meta name="robots" content="noindex, nofollow">
@@ -34,8 +34,8 @@
 
 
 
-<link rel="preload" href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" as="style">
-<link href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/647/scss/main.scss" as="style">
+<link href="/647/scss/main.scss" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -133,6 +133,14 @@
     
 	
 <li>5: <a href="#pg-d666840fe7c4f359e7566250aad67c80">查看信号的快捷键</a></li>
+
+
+    
+  
+    
+    
+	
+<li>6: <a href="#pg-729348d4b27273c38fd9756aca09119c">修复 Ubuntu 中 chrome vimium-c 插件失效的问题</a></li>
 
 
     
@@ -741,6 +749,48 @@ done
     
 	
   
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-729348d4b27273c38fd9756aca09119c">6 - 修复 Ubuntu 中 chrome vimium-c 插件失效的问题</h1>
+    
+	<blockquote>
+<p>记录一次折腾 Ubuntu 的经历</p>
+</blockquote>
+<hr>
+<p>下午升级了 Ubuntu 的一些软件之后，发现 Chrome 中的 vimium-c 插件失效了，按 k 不会向上滑动，而是像按下 tab 按键一样，选中 url 链接。weasd 等字符也是一样，同时飞书中输入不了 wkeasd 等字符。</p>
+<h2 id="排查-vimium-c">排查 vimium-c</h2>
+<p>最开始以为是 vimium-c 软件的 bug，于是去 github 中提 Issue。<a href="https://github.com/gdh1995/vimium-c/issues/558">#558</a></p>
+<p>和作者排查了半天，使用作者提供了 <a href="https://gdh1995.cn/vimium-c/keyboard-test.html">keyboard-test</a> 工具检查按键能否正常工作，最后得出的结论是，</p>
+<ol>
+<li>使用 firefox, chromium 等浏览器依然会遇到这个问题</li>
+<li>换一个用户后，这个问题就解决了。</li>
+</ol>
+<p>由此我认定一定是我的系统配置有问题，和浏览器无关。于是开始排查系统配置</p>
+<h2 id="排查按键映射">排查按键映射</h2>
+<p>一开始以为是 <code>xmodmap</code> 设置的问题，因为我用 <code>xmodmap</code> 改过键，将 caps-lock 改成了 Esc。</p>
+<p>但是查了半天，发现我原来是用 <code>dconf</code> 改的，并不是用 <code>xmodmap</code>，我把 <code>dconf</code> 中的改键配置删除后，vimium-c 仍然不工作。</p>
+<p>此时我就很无力了，用 <code>ls -al ~/</code> 和 <code>ls -al ~/.config</code> 反复看 HOME 目录下的配置文件，反复想可能是哪个配置文件导致的问题。</p>
+<h2 id="最终定位问题">最终定位问题</h2>
+<p>后来一想，既然这个问题能够复现，燕过留痕，肯定有个进程拦截了这些按键的事件，导致 chrome 出错了。排查进程比排查配置文件范围小了很多，就开始排查进程。</p>
+<p>于是用 <code>ps aufx</code> 查看所有进程，一个一个地排查所有的进程。</p>
+<p>最后发现罪魁祸首是 <code>orca</code>(Ubuntu 下屏幕阅读功能的进程) 进程，关掉 Ubuntu 阅读屏幕的辅助功能后，chrome 中就能够正常捕获这些按键的事件了。</p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://github.com/gdh1995/vimium-c/issues/558">https://github.com/gdh1995/vimium-c/issues/558</a></li>
+<li><a href="https://manpages.ubuntu.com/manpages/bionic/man1/orca.1.html">https://manpages.ubuntu.com/manpages/bionic/man1/orca.1.html</a></li>
+</ul>
+</div>
+
+
+
+    
+	
+  
 
 
 
@@ -782,7 +832,17 @@ done
 </footer>
     </div>
     
-  <script src="/647/js/main.min.6f5832c0d01e88c997eeb57e6b773ea3e1ac128fdf53739b3c750242f2355881.js" integrity="sha256-b1gywNAeiMmX7rV&#43;a3c&#43;o&#43;GsEo/fU3ObPHUCQvI1WIE=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+      integrity="sha512-mQwom8Ns4op+H29oDkD/LXO/OsXPvCFfkgZkFAVrhhePzRLU8NUI3Nkm43NhWUSmj3p5Cca2HTEkMQmXQRwDQQ==" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+        integrity="sha512-sHSNLECRJSK+BFs7E8DiFc6pf6n90bLI85Emiw1jhreduZhK3VXgq9l4kAt9eTIHYAcuQBKHL01QKs4/3Xgl8g=="
+        crossorigin="anonymous">
+</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+       integrity="sha512-iWiuBS5nt6r60fCz26Nd0Zqe0nbk1ZTIQbl3Kv7kYsX+yKMUFHzjaH2+AnM6vp2Xs+gNmaBAVWJjSmuPw76Efg==" crossorigin="anonymous"
+       onload='renderMathInElement(document.body, null);'>
+</script>
+<script src="/647/js/main.min.6f5832c0d01e88c997eeb57e6b773ea3e1ac128fdf53739b3c750242f2355881.js" integrity="sha256-b1gywNAeiMmX7rV&#43;a3c&#43;o&#43;GsEo/fU3ObPHUCQvI1WIE=" crossorigin="anonymous"></script>
 <script src='/647/js/prism.js'></script>
 <script src='/647/js/tabpane-persist.js'></script>
 

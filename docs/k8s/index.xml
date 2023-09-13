@@ -61,6 +61,109 @@
     </item>
     
     <item>
+      <title>Docs: K8S 中观察 CPU Throttling 情况的指标</title>
+      <link>https://bwangelme.github.io/647/docs/k8s/k8s-cpu-throttle-prom-metric/</link>
+      <pubDate>Tue, 16 Aug 2022 23:14:25 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/k8s/k8s-cpu-throttle-prom-metric/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;p&gt;解释了一下观察 CPU Throttling 情况的指标&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;观察容器-cpu-throttling-的指标&#34;&gt;观察容器 CPU Throttling 的指标&lt;/h2&gt;
+&lt;p&gt;k8s 中为每个 Pod 提供了限制 CPU 资源的选项，当 Pod 使用的 CPU 资源超出设置的 limit 时，会发生 Throttling 的情况，即进程被分配的 CPU 时间片被夺走了。&lt;/p&gt;
+&lt;p&gt;cAdvisor 提供了三个关于 CPU 运行时间的指标&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;name&lt;/th&gt;
+&lt;th&gt;desc&lt;/th&gt;
+&lt;th&gt;解释&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;container_cpu_cfs_throttled_periods_total&lt;/td&gt;
+&lt;td&gt;Number of throttled period intervals&lt;/td&gt;
+&lt;td&gt;容器被 Throttled 的 CPU 时间片数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;container_cpu_cfs_throttled_seconds_total&lt;/td&gt;
+&lt;td&gt;Total time duration the container has been throttled&lt;/td&gt;
+&lt;td&gt;容器被 Throttled 的 CPU 时间(单位是秒)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;container_cpu_cfs_periods_total&lt;/td&gt;
+&lt;td&gt;Number of elapsed enforcement period intervals&lt;/td&gt;
+&lt;td&gt;容器被分配的，应该执行的 CPU 时间片书&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;以上三个指标都是 prometheus 中的 counter 类型，即只会增加的绝对值，它们的数值对于维护者的观察意义也不大。&lt;/p&gt;
+&lt;p&gt;我们常用的指标是&lt;/p&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$\frac{rate(container-cpu-cfs-throttled-periods-total[5m])}{rate(container-cpu-cfs-periods-total[5m])}$$&lt;/div&gt;&lt;p&gt;它表示 CPU 被 Throttling 的时间片占总分配的时间片的比重。我们以此来判断某个容器的 CPU 资源是否不足。&lt;/p&gt;
+&lt;h2 id=&#34;指标的去重&#34;&gt;指标的去重&lt;/h2&gt;
+&lt;p&gt;以上三个指标针对每个 Pod 都有 N+1 个，&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;pod 的总指标&lt;/li&gt;
+&lt;li&gt;pod 中每个容器的指标&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;所以计算时，我们需要设置 &lt;code&gt;{container=&amp;quot;&amp;quot;}&lt;/code&gt; 或 &lt;code&gt;{image=&amp;quot;&amp;quot;}&lt;/code&gt; 来只保留 pod 的指标&lt;/p&gt;
+&lt;h2 id=&#34;指标加上-pod-label&#34;&gt;指标加上 Pod label&lt;/h2&gt;
+&lt;p&gt;以上的三个指标，他们中的 label 都是和容器相关的(&lt;code&gt;pod&lt;/code&gt;, &lt;code&gt;container&lt;/code&gt;, &lt;code&gt;image&lt;/code&gt;)，我们需要根据 pod 的 label 来对指标进行聚合，观察某个 deployment 或某个 k8s job 的 CPU Throttling 情况，此时，我们就需要用到 &lt;code&gt;kube_pod_label&lt;/code&gt; 指标，来和上述指标进行相乘。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;kube_pod_label&lt;/code&gt; 是 &lt;a href=&#34;https://github.com/kubernetes/kube-state-metrics&#34;&gt;kube-state-metrics&lt;/a&gt; 提供的指标，它将 k8s label 转换成 prometheus 指标，每个 pod 上的 k8s label 都在 prom 指标中变成 &lt;code&gt;label_xx&lt;/code&gt; 的形式。例如我们假设某个 pod 有 app 和 owner 两个 k8s label，那么它的 prom 指标如下&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kube_pod_labels{
+    cluster=&amp;#34;local&amp;#34;, container=&amp;#34;kube-state-metrics&amp;#34;, endpoint=&amp;#34;http&amp;#34;,
+    instance=&amp;#34;172.19.2.101:8080&amp;#34;, job=&amp;#34;kube-state-metrics&amp;#34;, label_app=&amp;#34;http-bin&amp;#34;,
+    label_owner=&amp;#34;xyd&amp;#34;, namespace=&amp;#34;default&amp;#34;,
+    pod=&amp;#34;http-bin-867bc77ld45d&amp;#34;, prometheus=&amp;#34;monitoring/kube-prom-kube-prometheus-prometheus&amp;#34;,
+    uid=&amp;#34;7b9c5473-1455-454d-b5a3-69f08dc99bb1&amp;#34;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;instance&lt;/code&gt; label 表示 kube-state-metrics 的 IP 地址。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rate(
+    container_cpu_cfs_throttled_periods_total{pod=&amp;#34;http-bin-867bc77ld45d&amp;#34;, image=&amp;#34;&amp;#34;}[5m]
+) * on(pod) group_left(label_app, label_owner) 
+    kube_pod_labels{namespace=&amp;#34;default&amp;#34;, pod=&amp;#34;http-bin-867bc77ld45d&amp;#34;}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;上面的计算公式中，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;* on(pod)&lt;/code&gt; 表示左边的指标 &lt;code&gt;container_cpu_cfs_throttled_periods_total&lt;/code&gt; 和右边的指标 &lt;code&gt;kube_pod_labels&lt;/code&gt; 根据相同的 &lt;code&gt;pod&lt;/code&gt; label，对 value 进行相乘。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;group_left(label_app, label_owner)&lt;/code&gt; 表示将右边指标的 &lt;code&gt;label_app&lt;/code&gt;, &lt;code&gt;label_owner&lt;/code&gt; 添加到左边指标中，生成一个新指标&lt;/li&gt;
+&lt;li&gt;如果写成 &lt;code&gt;group_right(label_app, label_owner)&lt;/code&gt;，表示以右边的指标为基准，将 &lt;code&gt;label_app&lt;/code&gt;, &lt;code&gt;label_owner&lt;/code&gt; 添加上，生成一个新指标&lt;/li&gt;
+&lt;li&gt;注意新指标的值是左右两个指标相乘，&lt;code&gt;kube_pod_labels&lt;/code&gt; 的 value 始终是1, 所以新指标的值和 &lt;code&gt;container_cpu_cfs_throttled_periods_total&lt;/code&gt; 相同&lt;/li&gt;
+&lt;li&gt;如果针对同一个 pod label, &lt;code&gt;container_cpu_cfs_throttled_periods_total&lt;/code&gt; 有多个，那么就只能写 &lt;code&gt;group_left(label_app, label_owner)&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;如果写 &lt;code&gt;group_right(label_app, label_owner)&lt;/code&gt;，prom 不知道如何将多个 &lt;code&gt;container_cpu_cfs_throttled_periods_total&lt;/code&gt; 聚合起来，就会报错&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Error executing query: found duplicate series for the match group {pod=&amp;#34;http-bin-867bc77ld45d&amp;#34;} on the left hand-side of the operation: [{...}, {...}];many-to-many matching not allowed: matching labels must be unique on one side
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;正常情况下，&lt;code&gt;kube_pod_label&lt;/code&gt; 针对同一个 pod 只有一个，但是当 kube-state-metrics 重启的时候，由于 kube-state-metrics 的 IP 地址变了，&lt;code&gt;kube_pod_label&lt;/code&gt; 就会出现 pod 相同，但是 &lt;code&gt;instance&lt;/code&gt; 不同的指标。所以，最好还是要保证和 &lt;code&gt;kube_pod_labels&lt;/code&gt; 相乘的指标针对同一个 pod 只有一个，否则当 kube-state-metrics 重启时，相乘的计算公式就会出现以下两种错误。
+&lt;ul&gt;
+&lt;li&gt;many * many 的错误&lt;/li&gt;
+&lt;li&gt;one * group_left() many 的错误&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;为 cpu throttled 指标加上 pod label 后，我们再根据 k8s app sum 一下，就得到我们最终想要的结果了&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sum(
+    rate(container_cpu_cfs_throttled_periods_total{namespace=&amp;#34;default&amp;#34;, image=&amp;#34;&amp;#34;}[5m])
+        * on(pod) group_left(label_app, label_owner)
+    kube_pod_labels{namespace=&amp;#34;default&amp;#34;}
+) by (label_app, label_owner)
+  /
+sum(
+    rate(container_cpu_cfs_periods_total{namespace=&amp;#34;default&amp;#34;, image=&amp;#34;&amp;#34;}[5m])
+        * on(pod) group_left(label_app, label_owner)
+    kube_pod_labels{namespace=&amp;#34;default&amp;#34;}
+) by (label_app, label_owner)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;上述指标按 &lt;code&gt;label_app&lt;/code&gt; 和 &lt;code&gt;label_owner&lt;/code&gt; 这两个维度，求和了一下符合筛选标签的所有 pod 的 CPU Throttling 时间片的百分比。&lt;/p&gt;
+      </description>
+    </item>
+    
+    <item>
       <title>Docs: K8s Pod 如何结束</title>
       <link>https://bwangelme.github.io/647/docs/k8s/k8s-pod-terminating/</link>
       <pubDate>Sun, 03 Jul 2022 14:44:36 +0800</pubDate>

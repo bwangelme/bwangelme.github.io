@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.115.2">
+<meta name="generator" content="Hugo 0.117.0">
 <link rel="canonical" type="text/html" href="https://bwangelme.github.io/647/docs/container/">
 <link rel="alternate" type="application/rss&#43;xml" href="https://bwangelme.github.io/647/docs/container/index.xml">
 <meta name="robots" content="noindex, nofollow">
@@ -34,8 +34,8 @@
 
 
 
-<link rel="preload" href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" as="style">
-<link href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/647/scss/main.scss" as="style">
+<link href="/647/scss/main.scss" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -105,6 +105,30 @@
 
     
   
+    
+    
+	
+<li>2: <a href="#pg-ebcaa5066994bddfb13c8bffcd9addae">从 none 开始，用网桥模式启动容器的网络</a></li>
+
+
+    
+  
+    
+    
+	
+<li>3: <a href="#pg-b711168a3d768a0c419283a9a611a17f">Ubuntu 下安装 Containerd 及配置代理</a></li>
+
+
+    
+  
+    
+    
+	
+<li>4: <a href="#pg-72ba781c964286a98ded46d175dfee82">Docker 客户端连接远程 Docker Daemon</a></li>
+
+
+    
+  
 
     </ul>
 
@@ -159,6 +183,450 @@ options ndots:15
     
 	
   
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-ebcaa5066994bddfb13c8bffcd9addae">2 - 从 none 开始，用网桥模式启动容器的网络</h1>
+    
+	<p>用 none 网络模式启动的容器，创建一个可以对外通信的网络</p>
+<hr>
+<h2 id="目的">目的</h2>
+<p>本篇文章中，我们首先使用 none 网络模式启动一个容器，然后一步步给它配置好网络，让这个容器能够正常进行网络通信。</p>
+<p>最终容器的网络架构图如下图所示:</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-20-103416.png" alt=""></p>
+<ul>
+<li>enp4s0 是宿主机的网络设备</li>
+<li>eth0 是 nginx 容器的网络设备, eth0 和 A 是一对 veth 设备</li>
+<li>docker0 是 docker 安装时自动创建的网桥设备</li>
+</ul>
+<h2 id="veth-是什么">veth 是什么</h2>
+<p>veth 全称是 virtual ethernet devices, 虚拟以太网设备。
+它们可以作为网络 namespace 之间通信的通道，在另一个网络 namespace 创建和网络物理设备通信的桥梁。
+也可以作为内部网络设备。</p>
+<p>veth 设备总是成对出现，一对 veth 设备可以用如下的命令创建:</p>
+<pre tabindex="0"><code>ip link add &lt;p1-name&gt; type veth peer name &lt;p2-name&gt;
+</code></pre><p>在上面的代码中，p1-name 和 p2-name 是分配给两个连接的端点的名称。</p>
+<p>对一个设备上传输的数据包会立即在另一个设备上接收。当任何一个设备关闭时，veth 对的链路状态就会关闭。</p>
+<p>Veth 设备对用于以有趣的方式将内核的网络设施组合在一起。</p>
+<p>一个特别有趣的用例是将 veth 对的一端放在一个网络 namespace 中，
+另一端放在另一个网络 namepsace 中，从而允许网络 namespace 之间进行通信。</p>
+<p>为此，可以在创建接口时提供 netns 参数:</p>
+<pre tabindex="0"><code>ip link add &lt;p1-name&gt; netns &lt;p1-ns&gt; type veth peer &lt;p2-name&gt; netns &lt;p2-ns&gt;
+</code></pre><p>或者，对于现有的 veth 对，可以将一端移动到另一个名称空间:</p>
+<pre tabindex="0"><code>ip link set &lt;p2-name&gt; netns &lt;p2-ns&gt;
+</code></pre><p><a href="https://man7.org/linux/man-pages/man8/ethtool.8.html">ethtool(8)</a> 可用于查找 veth 网络接口的对等点，使用类似下面这样的命令:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ip link add ve_A <span style="color:#204a87">type</span> veth peer name ve_B   <span style="color:#8f5902;font-style:italic"># 创建一对 veth 设备</span>
+</span></span><span style="display:flex;"><span>$ ethtool -S ve_A         <span style="color:#8f5902;font-style:italic"># 查找 ve_A 接口对端接口的索引</span>
+</span></span><span style="display:flex;"><span>NIC statistics:
+</span></span><span style="display:flex;"><span>    peer_ifindex: <span style="color:#0000cf;font-weight:bold">16</span>
+</span></span><span style="display:flex;"><span>$ ip link <span style="color:#000;font-weight:bold">|</span> grep <span style="color:#4e9a06">&#39;^16:&#39;</span>   <span style="color:#8f5902;font-style:italic"># 查找索引是 16 的设备</span>
+</span></span><span style="display:flex;"><span>16: ve_B@ve_A: &lt;BROADCAST,MULTICAST,M-DOWN&gt; mtu <span style="color:#0000cf;font-weight:bold">1500</span> qdisc ...
+</span></span></code></pre></div><ul>
+<li><strong>注意</strong>：如果 veth 的设备名太长，ethtool 会出错</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# ethtool -S veth550bfa1@if25
+</span></span><span style="display:flex;"><span>ioctl-only request, device name longer than <span style="color:#0000cf;font-weight:bold">15</span> not supported
+</span></span></code></pre></div><h2 id="准备工作">准备工作</h2>
+<ul>
+<li>查看当前主机上的网桥设备，默认有一个 docker0</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@dockervbox:~# brctl show
+</span></span><span style="display:flex;"><span>bridge name     bridge id               STP enabled     interfaces
+</span></span><span style="display:flex;"><span>docker0         8000.02421f335f1f       no
+</span></span></code></pre></div><ul>
+<li>创建 /var/run/netns 目录，ip netns 操作的就是此目录中的网络 namespace</li>
+<li>删除 /var/run/netns 中的所有目录</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@dockervbox:~# mkdir -p /var/run/netns
+</span></span><span style="display:flex;"><span>root@dockervbox:~# find -L /var/run/netns -type l -delete
+</span></span></code></pre></div><h2 id="启动容器">启动容器</h2>
+<ul>
+<li>使用 none 网络模式启动一个 nginx 容器</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ø&gt; docker run --rm -it --network<span style="color:#ce5c00;font-weight:bold">=</span>none -d nginx
+</span></span><span style="display:flex;"><span>ebcf462cbb463d41dd677a501aee5a629f587141c27632d4954017784877b7c0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ø&gt; docker ps
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
+</span></span><span style="display:flex;"><span>ebcf462cbb46   nginx     <span style="color:#4e9a06">&#34;/docker-entrypoint.…&#34;</span>   <span style="color:#0000cf;font-weight:bold">6</span> minutes ago   Up <span style="color:#0000cf;font-weight:bold">6</span> minutes             exciting_torvalds
+</span></span></code></pre></div><ul>
+<li>启动成功后，记录此容器的 pid 到 $pid 环境变量</li>
+</ul>
+<pre tabindex="0"><code>ø&gt; docker inspect ebcf462cbb463d41dd677a501aee5a629f587141c27632d4954017784877b7c0 | grep -i pid
+            &#34;Pid&#34;: 119320,
+            &#34;PidMode&#34;: &#34;&#34;,
+            &#34;PidsLimit&#34;: null,
+ø&gt; export pid=119320
+ø&gt; echo $pid
+119320
+</code></pre><ul>
+<li>进入 $pid 进程所在的网络 ns, 查看所有的网络设备，可以看到只有一个 lo 设备，没有其他的网络设备</li>
+</ul>
+<pre tabindex="0"><code>root@Macmini:~# nsenter -t $pid -n ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+</code></pre><ul>
+<li>软链接 $pid 的网络 ns 到 /var/run/netns/ 中, 使 ip netns 可以操作它</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# ln -s <span style="color:#4e9a06">&#34;/proc/</span><span style="color:#000">$pid</span><span style="color:#4e9a06">/ns/net&#34;</span> /var/run/netns/<span style="color:#000">$pid</span>
+</span></span><span style="display:flex;"><span>root@Macmini:~# ls /var/run/netns/119320
+</span></span><span style="display:flex;"><span>/var/run/netns/119320
+</span></span><span style="display:flex;"><span>root@Macmini:~# ip netns list
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">119320</span>
+</span></span></code></pre></div><ul>
+<li>使用 <code>lsns -t net</code> 查看当前系统的 network namespace, 可以看到已经有 nginx 容器的 network namespace 了</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# lsns -t net <span style="color:#000;font-weight:bold">|</span> head -n <span style="color:#0000cf;font-weight:bold">3</span>
+</span></span><span style="display:flex;"><span>        NS TYPE NPROCS    PID USER         NETNSID NSFS                           COMMAND
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">4026531840</span> net     <span style="color:#0000cf;font-weight:bold">345</span>      <span style="color:#0000cf;font-weight:bold">1</span> root      unassigned                                /sbin/init
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">4026532348</span> net      <span style="color:#0000cf;font-weight:bold">13</span> <span style="color:#0000cf;font-weight:bold">119320</span> root      unassigned /run/docker/netns/2bdfbe67a978 nginx: master process nginx -g daemon off<span style="color:#000;font-weight:bold">;</span>
+</span></span></code></pre></div><ul>
+<li>查看 <code>/proc/$pid/ns</code> 目录中的 namespace id, 能够看到 net namespace id 和 lsns 列出的 id 相同</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# ls -l /proc/<span style="color:#000">$pid</span>/ns
+</span></span><span style="display:flex;"><span>总用量 <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#0000cf;font-weight:bold">1</span> root root <span style="color:#0000cf;font-weight:bold">0</span>  1月 <span style="color:#0000cf;font-weight:bold">20</span> 11:01 cgroup -&gt; <span style="color:#4e9a06">&#39;cgroup:[4026532904]&#39;</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#0000cf;font-weight:bold">1</span> root root <span style="color:#0000cf;font-weight:bold">0</span>  1月 <span style="color:#0000cf;font-weight:bold">20</span> 11:01 ipc -&gt; <span style="color:#4e9a06">&#39;ipc:[4026532307]&#39;</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#0000cf;font-weight:bold">1</span> root root <span style="color:#0000cf;font-weight:bold">0</span>  1月 <span style="color:#0000cf;font-weight:bold">20</span> 11:01 mnt -&gt; <span style="color:#4e9a06">&#39;mnt:[4026532278]&#39;</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#0000cf;font-weight:bold">1</span> root root <span style="color:#0000cf;font-weight:bold">0</span>  1月 <span style="color:#0000cf;font-weight:bold">20</span> 10:50 net -&gt; <span style="color:#4e9a06">&#39;net:[4026532348]&#39;</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#0000cf;font-weight:bold">1</span> root root <span style="color:#0000cf;font-weight:bold">0</span>  1月 <span style="color:#0000cf;font-weight:bold">20</span> 11:01 pid -&gt; <span style="color:#4e9a06">&#39;pid:[4026532312]&#39;</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#0000cf;font-weight:bold">1</span> root root <span style="color:#0000cf;font-weight:bold">0</span>  1月 <span style="color:#0000cf;font-weight:bold">20</span> 11:01 pid_for_children -&gt; <span style="color:#4e9a06">&#39;pid:[4026532312]&#39;</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#0000cf;font-weight:bold">1</span> root root <span style="color:#0000cf;font-weight:bold">0</span>  1月 <span style="color:#0000cf;font-weight:bold">20</span> 11:01 <span style="color:#204a87">time</span> -&gt; <span style="color:#4e9a06">&#39;time:[4026531834]&#39;</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#0000cf;font-weight:bold">1</span> root root <span style="color:#0000cf;font-weight:bold">0</span>  1月 <span style="color:#0000cf;font-weight:bold">20</span> 11:01 time_for_children -&gt; <span style="color:#4e9a06">&#39;time:[4026531834]&#39;</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#0000cf;font-weight:bold">1</span> root root <span style="color:#0000cf;font-weight:bold">0</span>  1月 <span style="color:#0000cf;font-weight:bold">20</span> 11:01 user -&gt; <span style="color:#4e9a06">&#39;user:[4026531837]&#39;</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#0000cf;font-weight:bold">1</span> root root <span style="color:#0000cf;font-weight:bold">0</span>  1月 <span style="color:#0000cf;font-weight:bold">20</span> 11:01 uts -&gt; <span style="color:#4e9a06">&#39;uts:[4026532280]&#39;</span>
+</span></span></code></pre></div><h2 id="创建-veth-设备">创建 veth 设备</h2>
+<ul>
+<li>创建一对 veth 设备，叫做 A 和 B</li>
+<li>将 A 连接到 docker0 网桥上</li>
+<li>启动 A</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# ip link add A <span style="color:#204a87">type</span> veth peer name B
+</span></span><span style="display:flex;"><span>root@Macmini:~# brctl addif docker0 A
+</span></span><span style="display:flex;"><span>root@Macmini:~# ip link <span style="color:#204a87">set</span> A up
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># A 处于 UP 状态，但因为 A 没有完全连通，所以还是有 M-DOWN 的状态</span>
+</span></span><span style="display:flex;"><span>root@Macmini:~# ip a
+</span></span><span style="display:flex;"><span>23: B@A: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#0000cf;font-weight:bold">1500</span> qdisc noop state DOWN group default qlen <span style="color:#0000cf;font-weight:bold">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 16:81:96:a3:bf:27 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>24: A@B: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN&gt; mtu <span style="color:#0000cf;font-weight:bold">1500</span> qdisc noqueue master docker0 state LOWERLAYERDOWN group default qlen <span style="color:#0000cf;font-weight:bold">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 76:8b:1a:65:f5:57 brd ff:ff:ff:ff:ff:ff
+</span></span></code></pre></div><h2 id="设置-veth-设备">设置 veth 设备</h2>
+<ul>
+<li>将 ip, 掩码， 网关保存成环境变量</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# <span style="color:#000">SETIP</span><span style="color:#ce5c00;font-weight:bold">=</span>172.17.0.10
+</span></span><span style="display:flex;"><span>root@Macmini:~# <span style="color:#000">SETMASK</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">16</span>
+</span></span><span style="display:flex;"><span>root@Macmini:~# <span style="color:#000">GATEWAY</span><span style="color:#ce5c00;font-weight:bold">=</span>172.17.0.1
+</span></span></code></pre></div><ul>
+<li>将 veth 设备 B 加入到 $pid 所在的 network namespace 中</li>
+<li>并将 设备 B 的名字改成 eth0</li>
+</ul>
+<pre tabindex="0"><code>root@Macmini:~# ip link set B netns $pid
+root@Macmini:~# ip netns exec $pid ip link set dev B name eth0
+</code></pre><ul>
+<li>此时查看 $pid network namespace 中的网络设备，可以看到 eth0 已经存在了</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# ip netns <span style="color:#204a87">exec</span> <span style="color:#000">$pid</span> ip a
+</span></span><span style="display:flex;"><span>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#0000cf;font-weight:bold">65536</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#0000cf;font-weight:bold">1000</span>
+</span></span><span style="display:flex;"><span>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span style="display:flex;"><span>    inet 127.0.0.1/8 scope host lo
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>23: eth0@if24: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#0000cf;font-weight:bold">1500</span> qdisc noop state DOWN group default qlen <span style="color:#0000cf;font-weight:bold">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 16:81:96:a3:bf:27 brd ff:ff:ff:ff:ff:ff link-netnsid <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span></code></pre></div><ul>
+<li>启动 eth0</li>
+<li>因为 A 已经连接到了网桥上，所以直接启动成功，出现了 <code>LOWER_UP</code> 的状态</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# ip netns <span style="color:#204a87">exec</span> <span style="color:#000">$pid</span> ip link <span style="color:#204a87">set</span> eth0 up
+</span></span><span style="display:flex;"><span>root@Macmini:~# ip netns <span style="color:#204a87">exec</span> <span style="color:#000">$pid</span> ip a
+</span></span><span style="display:flex;"><span>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#0000cf;font-weight:bold">65536</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#0000cf;font-weight:bold">1000</span>
+</span></span><span style="display:flex;"><span>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span style="display:flex;"><span>    inet 127.0.0.1/8 scope host lo
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>23: eth0@if24: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#0000cf;font-weight:bold">1500</span> qdisc noqueue state UP group default qlen <span style="color:#0000cf;font-weight:bold">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 16:81:96:a3:bf:27 brd ff:ff:ff:ff:ff:ff link-netnsid <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span></code></pre></div><ul>
+<li>设置 IP 和路由</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置 $pid ns 中的 eth0 设备的 ip 和 掩码</span>
+</span></span><span style="display:flex;"><span>root@dockervbox:~# ip netns <span style="color:#204a87">exec</span> <span style="color:#000">$pid</span> ip addr add <span style="color:#000">$SETIP</span>/<span style="color:#000">$SETMASK</span> dev eth0
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置 $pid ns 中的 eth0 设备的默认路由网关</span>
+</span></span><span style="display:flex;"><span>root@dockervbox:~# ip netns <span style="color:#204a87">exec</span> <span style="color:#000">$pid</span> ip route add default via <span style="color:#000">$GATEWAY</span>
+</span></span></code></pre></div><ul>
+<li>查看 IP 和路由</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 查看 $pid ns 中的所有设备，可以看到 eth0 已经启动成功，并且有了 ip 和子网掩码</span>
+</span></span><span style="display:flex;"><span>root@Macmini:~# nsenter -t <span style="color:#000">$pid</span> -n ip a
+</span></span><span style="display:flex;"><span>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#0000cf;font-weight:bold">65536</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#0000cf;font-weight:bold">1000</span>
+</span></span><span style="display:flex;"><span>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span style="display:flex;"><span>    inet 127.0.0.1/8 scope host lo
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>23: eth0@if24: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#0000cf;font-weight:bold">1500</span> qdisc noqueue state UP group default qlen <span style="color:#0000cf;font-weight:bold">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 16:81:96:a3:bf:27 brd ff:ff:ff:ff:ff:ff link-netnsid <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span>    inet 172.17.0.10/16 scope global eth0
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span></code></pre></div><ul>
+<li>查看 $pid ns 中的路由表，可以看到 eth0 默认的路由地址是 172.17.0.1</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# nsenter -t <span style="color:#000">$pid</span> -n ip route
+</span></span><span style="display:flex;"><span>default via 172.17.0.1 dev eth0
+</span></span><span style="display:flex;"><span>172.17.0.0/16 dev eth0 proto kernel scope link src 172.17.0.10
+</span></span></code></pre></div><ul>
+<li>查看宿主机上的网络设备，可以看到 veth A 的名字变成了 A@if23, 并且状态已经由 <code>M-DOWN</code> 变成了 <code>LOWER_UP</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# ip a
+</span></span><span style="display:flex;"><span>24: A@if23: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#0000cf;font-weight:bold">1500</span> qdisc noqueue master docker0 state UP group default qlen <span style="color:#0000cf;font-weight:bold">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 76:8b:1a:65:f5:57 brd ff:ff:ff:ff:ff:ff link-netns <span style="color:#0000cf;font-weight:bold">119320</span>
+</span></span><span style="display:flex;"><span>    inet6 fe80::748b:1aff:fe65:f557/64 scope link
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span></code></pre></div><h2 id="容器网络启动成功">容器网络启动成功</h2>
+<ul>
+<li>最后，我们在容器中访问互联网，能够成功访问</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# docker <span style="color:#204a87">exec</span> ebcf462cbb46 curl -I www.baidu.com
+</span></span><span style="display:flex;"><span>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+</span></span><span style="display:flex;"><span>                                 Dload  Upload   Total   Spent    Left  Speed
+</span></span><span style="display:flex;"><span>  <span style="color:#0000cf;font-weight:bold">0</span>   <span style="color:#0000cf;font-weight:bold">277</span>    <span style="color:#0000cf;font-weight:bold">0</span>     <span style="color:#0000cf;font-weight:bold">0</span>    <span style="color:#0000cf;font-weight:bold">0</span>     <span style="color:#0000cf;font-weight:bold">0</span>      <span style="color:#0000cf;font-weight:bold">0</span>      <span style="color:#0000cf;font-weight:bold">0</span> --:--:-- --:--:-- --:--:--     <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span>HTTP/1.1 <span style="color:#0000cf;font-weight:bold">200</span> OK
+</span></span><span style="display:flex;"><span>Accept-Ranges: bytes
+</span></span><span style="display:flex;"><span>Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform
+</span></span><span style="display:flex;"><span>Connection: keep-alive
+</span></span><span style="display:flex;"><span>Content-Length: <span style="color:#0000cf;font-weight:bold">277</span>
+</span></span><span style="display:flex;"><span>Content-Type: text/html
+</span></span><span style="display:flex;"><span>Date: Fri, <span style="color:#0000cf;font-weight:bold">20</span> Jan <span style="color:#0000cf;font-weight:bold">2023</span> 03:33:01 GMT
+</span></span><span style="display:flex;"><span>Etag: <span style="color:#4e9a06">&#34;575e1f60-115&#34;</span>
+</span></span><span style="display:flex;"><span>Last-Modified: Mon, <span style="color:#0000cf;font-weight:bold">13</span> Jun <span style="color:#0000cf;font-weight:bold">2016</span> 02:50:08 GMT
+</span></span><span style="display:flex;"><span>Pragma: no-cache
+</span></span><span style="display:flex;"><span>Server: bfe/1.0.8.18
+</span></span></code></pre></div><ul>
+<li>在宿主机上访问 nginx 容器的 ip, 也能够正常访问</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Macmini:~# curl -I <span style="color:#000">$SETIP</span>
+</span></span><span style="display:flex;"><span>HTTP/1.1 <span style="color:#0000cf;font-weight:bold">200</span> OK
+</span></span><span style="display:flex;"><span>Server: nginx/1.23.3
+</span></span><span style="display:flex;"><span>Date: Fri, <span style="color:#0000cf;font-weight:bold">20</span> Jan <span style="color:#0000cf;font-weight:bold">2023</span> 03:28:12 GMT
+</span></span><span style="display:flex;"><span>Content-Type: text/html
+</span></span><span style="display:flex;"><span>Content-Length: <span style="color:#0000cf;font-weight:bold">615</span>
+</span></span><span style="display:flex;"><span>Last-Modified: Tue, <span style="color:#0000cf;font-weight:bold">13</span> Dec <span style="color:#0000cf;font-weight:bold">2022</span> 15:53:53 GMT
+</span></span><span style="display:flex;"><span>Connection: keep-alive
+</span></span><span style="display:flex;"><span>ETag: <span style="color:#4e9a06">&#34;6398a011-267&#34;</span>
+</span></span><span style="display:flex;"><span>Accept-Ranges: bytes
+</span></span></code></pre></div>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-b711168a3d768a0c419283a9a611a17f">3 - Ubuntu 下安装 Containerd 及配置代理</h1>
+    
+	<blockquote>
+<p>介绍了安装 containerd 的方法</p>
+</blockquote>
+<hr>
+<h2 id="安装-containerd">安装 containerd</h2>
+<ul>
+<li>卸载从 apt 源安装的 containerd</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt-get remove -y containerd docker.io
+</span></span><span style="display:flex;"><span>rm -vf /etc/systemd/system/containerd.service
+</span></span><span style="display:flex;"><span>rm -rvf /etc/systemd/system/containerd.service.d
+</span></span></code></pre></div><ul>
+<li>安装 containerd 二进制文件</li>
+</ul>
+<ol>
+<li>从 <a href="https://github.com/containerd/containerd/releases">containerd release 页面</a> 下载 <code>containerd-{version}-linux-amd64.tar.gz</code></li>
+<li>将 containerd 的二进制文件解压到 /usr/local/bin 中</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 我下载的是 1.6.8 版本</span>
+</span></span><span style="display:flex;"><span>tar Cxzvf /usr/local containerd-1.6.8-linux-amd64.tar.gz
+</span></span></code></pre></div><ol start="3">
+<li>从 <a href="https://github.com/containerd/containerd/blob/main/containerd.service">containerd 仓库</a> 中下载 systemd 配置文件, 并将其复制到 <code>/usr/local/lib/systemd/system/containerd.service</code> 中</li>
+<li>重启令 systemd 配置文件生效</li>
+</ol>
+<pre tabindex="0"><code>systemctl daemon-reload
+systemctl enable --now containerd
+</code></pre><ul>
+<li>安装 runc</li>
+</ul>
+<ol>
+<li>从 <a href="https://github.com/opencontainers/runc/releases">runc release 页面</a> 下载 <code>runc.amd64</code></li>
+<li>安装 runc,</li>
+</ol>
+<pre tabindex="0"><code>install -m 755 runc.amd64 /usr/local/sbin/runc
+</code></pre><ul>
+<li>安装 CNI 插件</li>
+</ul>
+<ol>
+<li>从 <a href="https://github.com/containernetworking/plugins/releases">containernetworking release 页面</a> 下载 <code>cni-plugins-linux-amd64-v{vesion}.tgz</code></li>
+<li>将其解压到 <code>/opt/cni/bin</code> 中</li>
+</ol>
+<pre tabindex="0"><code>mkdir -p /opt/cni/bin
+tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.1.1.tgz
+</code></pre><h2 id="containerd-客户端的说明">containerd 客户端的说明</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Community</th>
+<th>API</th>
+<th>Target</th>
+<th>Web site</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctr</code></td>
+<td>containerd</td>
+<td>Native</td>
+<td>For debugging only</td>
+<td>(None, see <code>ctr --help</code> to learn the usage)</td>
+</tr>
+<tr>
+<td><code>nerdctl</code></td>
+<td>containerd (non-core)</td>
+<td>Native</td>
+<td>General-purpose</td>
+<td><a href="https://github.com/containerd/nerdctl">https://github.com/containerd/nerdctl</a></td>
+</tr>
+<tr>
+<td><code>crictl</code></td>
+<td>Kubernetes SIG-node</td>
+<td>CRI</td>
+<td>For debugging only</td>
+<td><a href="https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md">https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md</a></td>
+</tr>
+</tbody>
+</table>
+<p>一共有三种命令行工具可以和 containerd 交互:</p>
+<ul>
+<li><code>ctr</code> 和 <code>nerdctl</code> 都是 containerd 社区提供的工具, <code>ctr</code> 是和 <code>containerd</code> 一起安装的.</li>
+<li><code>crictl</code> 是 k8s 社区提供的符合 CRI 接口的交互工具. 在 Ubuntu 下,可以通过 <code>sudo apt get install cri-tools</code> 安装 <code>crictl</code></li>
+</ul>
+<h2 id="生成-containerd-配置文件">生成 containerd 配置文件</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>containerd config default <span style="color:#000;font-weight:bold">|</span> sudo tee /etc/containerd/config.toml
+</span></span></code></pre></div><p>执行以上命令可以生成 containerd 的默认配置文件, 我们可以做一些自定义的修改, 例如修改 <code>[plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc.options]</code>, 令 <code>SystemdCgroup = true</code>, 让 containerd 和 systemd 使用同一个 cgroups 控制器</p>
+<p>crictl 默认连接的 service socket是 <code>unix:///var/run/dockershim.sock</code>, 我们可以在 <code>/etc/crictl.yaml</code> 中写入以下配置</p>
+<pre tabindex="0"><code>runtime-endpoint: unix:///run/containerd/containerd.sock
+</code></pre><p>让它默认连接 containerd 的 socket 接口</p>
+<h2 id="设置拉取镜像的-http-代理">设置拉取镜像的 http 代理</h2>
+<p>通过设置 <code>HTTP_PROXY</code>, <code>HTTPS_PROXY</code> 环境变量, 可以设置 http 代理.</p>
+<blockquote>
+<p><strong>注意</strong></p>
+<ul>
+<li><code>ctr pull ...</code> 是在客户端进程中拉取镜像的, 环境变量需要设置到客户端中</li>
+<li><code>crictl pull ...</code> 是在 cri 插件中拉取镜像的, 它被集成到了 containerd 中, 所以需要在 server 端设置环境变量</li>
+</ul>
+</blockquote>
+<h3 id="设置-server-端的环境变量">设置 server 端的环境变量</h3>
+<p>修改 <code>/usr/local/lib/systemd/system/containerd.service</code> 文件, 在 <code>[Service]</code> 段加入以下内容</p>
+<pre tabindex="0"><code># 设置拉取镜像的代理
+Environment=HTTP_PROXY=127.0.0.1:8118
+Environment=HTTPS_PROXY=127.0.0.1:8118
+Environment=NO_PROXY=localhost,127.0.0.1,172.17.0.0/16,192.168.56.0/24,10.96.0.0/16
+</code></pre><p>修改完以上配置后, 重启 containerd , 环境变量就生效了</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>systemctl daemon-reload
+</span></span><span style="display:flex;"><span>systemctl restart containerd
+</span></span></code></pre></div><p>此时再执行 <code>sudo crictl pull k8s.gcr.io/kube-controller-manager:v1.24.4</code> 就可以成功拉取到 k8s 相关的镜像了, 也能够正常地和 <code>kubeadm</code> 交互了</p>
+<h3 id="设置-client-侧的环境变量">设置 client 侧的环境变量</h3>
+<p>如果想通过 <code>ctr</code> 拉取镜像, 需要在 client 侧设置环境变量</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo <span style="color:#000">HTTP_PROXY</span><span style="color:#ce5c00;font-weight:bold">=</span>127.0.0.1:8118 <span style="color:#000">HTTPS_PROXY</span><span style="color:#ce5c00;font-weight:bold">=</span>127.0.0.1:8118 ctr i pull k8s.gcr.io/kube-apiserver:v1.24.4
+</span></span></code></pre></div><p>这样也能正常拉取镜像</p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://github.com/containerd/containerd/blob/main/docs/getting-started.md">https://github.com/containerd/containerd/blob/main/docs/getting-started.md</a></li>
+<li><a href="https://github.com/containerd/cri/issues/1169#issuecomment-501376676">https://github.com/containerd/cri/issues/1169#issuecomment-501376676</a></li>
+</ul>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-72ba781c964286a98ded46d175dfee82">4 - Docker 客户端连接远程 Docker Daemon</h1>
+    
+	<blockquote>
+<ul>
+<li>Docker 客户端连接远程 Docker Daemon</li>
+<li><a href="https://dockerlabs.collabnix.com/beginners/components/daemon/access-daemon-externally.html">参考链接 How to Connect to a Remote Docker Daemon</a></li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="环境准备">环境准备</h2>
+<ul>
+<li>Ubuntu 18.04 运行着 Docker Daemon 19.03.6</li>
+<li>MacOS 系统运行着 Docker Client 20.10.2 版本</li>
+</ul>
+<h2 id="设置-ubuntu-中的-docker-daemon">设置 Ubuntu 中的 Docker Daemon</h2>
+<p><strong>注:</strong> 这一小节的命令都在 Ubuntu 中执行</p>
+<ul>
+<li>配置 Docker Daemon</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 创建 docker service 的配置文件目录</span>
+</span></span><span style="display:flex;"><span>sudo mkdir -p /etc/systemd/system/docker.service.d
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 修改 docker service 的启动命令，令其监听本地套接字文件和 2375 端口</span>
+</span></span><span style="display:flex;"><span>sudo cat &gt; /etc/systemd/system/docker.service.d/options.conf <span style="color:#4e9a06">&lt;&lt;EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">[Service]
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">ExecStart=
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock -H tcp://0.0.0.0:2375
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span></code></pre></div><ul>
+<li>
+<p>TODO: 配置防火墙 (由于我的 Ubuntu 是台虚拟机，我直接将防火墙关闭了)</p>
+</li>
+<li>
+<p>重启 docker service，令配置生效</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo systemctl daemon-reload <span style="color:#8f5902;font-style:italic"># 重新载入 systemd 关于 docker service 的配置</span>
+</span></span><span style="display:flex;"><span>sudo systemctl restart docker.service <span style="color:#8f5902;font-style:italic"># 重启 docker service</span>
+</span></span></code></pre></div><ul>
+<li>执行 <code>docker version -f '{{.Server.APIVersion}}'</code>，查看 Docker API 版本，我的版本是 <code>1.40</code></li>
+</ul>
+<h2 id="客户端测试连接">客户端测试连接</h2>
+<p><strong>注:</strong> 这一小节的命令都在 MacOS 中执行</p>
+<ul>
+<li>执行 <code>curl 192.168.56.23:2375/v1.40/images/json</code>，会列出所有已经下载的镜像，若返回值正确，表示 Docker Daemon 已经配置好了</li>
+<li>使用 docker client 连接 Ubuntu 中的 Docker Daemon</li>
+</ul>
+<pre tabindex="0"><code>ø&gt; DOCKER_HOST=tcp://192.168.56.23:2375 docker images                                                                                                                                                                                                                                                     11:55:17 (05-22)
+REPOSITORY                        TAG       IMAGE ID       CREATED         SIZE
+ubuntu                            20.04     8e428cff54c8   8 weeks ago     72.9MB
+ubuntu                            latest    8e428cff54c8   8 weeks ago     72.9MB
+elasticsearch                     7.5.1     2bd69c322e98   17 months ago   779MB
+docker.elastic.co/kibana/kibana   7.1.0     714b175e84e8   2 years ago     745MB
+</code></pre><p>最后，我在 zshrc 中添加了一条 alias:</p>
+<pre tabindex="0"><code>(( $+commands[docker] )) &amp;&amp; alias docker=&#34;DOCKER_HOST=tcp://192.168.56.23:2375 docker&#34;
+</code></pre><p>这样在 MacOS 中执行 docker 命令访问的就是 Ubuntu 虚拟机中的 Docker Daemon 了。</p>
+</div>
+
+
+
+    
+	
+  
 
 
 
@@ -200,7 +668,17 @@ options ndots:15
 </footer>
     </div>
     
-  <script src="/647/js/main.min.6f5832c0d01e88c997eeb57e6b773ea3e1ac128fdf53739b3c750242f2355881.js" integrity="sha256-b1gywNAeiMmX7rV&#43;a3c&#43;o&#43;GsEo/fU3ObPHUCQvI1WIE=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+      integrity="sha512-mQwom8Ns4op+H29oDkD/LXO/OsXPvCFfkgZkFAVrhhePzRLU8NUI3Nkm43NhWUSmj3p5Cca2HTEkMQmXQRwDQQ==" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+        integrity="sha512-sHSNLECRJSK+BFs7E8DiFc6pf6n90bLI85Emiw1jhreduZhK3VXgq9l4kAt9eTIHYAcuQBKHL01QKs4/3Xgl8g=="
+        crossorigin="anonymous">
+</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+       integrity="sha512-iWiuBS5nt6r60fCz26Nd0Zqe0nbk1ZTIQbl3Kv7kYsX+yKMUFHzjaH2+AnM6vp2Xs+gNmaBAVWJjSmuPw76Efg==" crossorigin="anonymous"
+       onload='renderMathInElement(document.body, null);'>
+</script>
+<script src="/647/js/main.min.6f5832c0d01e88c997eeb57e6b773ea3e1ac128fdf53739b3c750242f2355881.js" integrity="sha256-b1gywNAeiMmX7rV&#43;a3c&#43;o&#43;GsEo/fU3ObPHUCQvI1WIE=" crossorigin="anonymous"></script>
 <script src='/647/js/prism.js'></script>
 <script src='/647/js/tabpane-persist.js'></script>
 

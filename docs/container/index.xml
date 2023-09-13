@@ -46,5 +46,437 @@ options ndots:15
       </description>
     </item>
     
+    <item>
+      <title>Docs: 从 none 开始，用网桥模式启动容器的网络</title>
+      <link>https://bwangelme.github.io/647/docs/container/docker-none-network/</link>
+      <pubDate>Fri, 20 Jan 2023 10:15:48 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/container/docker-none-network/</guid>
+      <description>
+        
+        
+        &lt;p&gt;用 none 网络模式启动的容器，创建一个可以对外通信的网络&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;目的&#34;&gt;目的&lt;/h2&gt;
+&lt;p&gt;本篇文章中，我们首先使用 none 网络模式启动一个容器，然后一步步给它配置好网络，让这个容器能够正常进行网络通信。&lt;/p&gt;
+&lt;p&gt;最终容器的网络架构图如下图所示:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-20-103416.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;enp4s0 是宿主机的网络设备&lt;/li&gt;
+&lt;li&gt;eth0 是 nginx 容器的网络设备, eth0 和 A 是一对 veth 设备&lt;/li&gt;
+&lt;li&gt;docker0 是 docker 安装时自动创建的网桥设备&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;veth-是什么&#34;&gt;veth 是什么&lt;/h2&gt;
+&lt;p&gt;veth 全称是 virtual ethernet devices, 虚拟以太网设备。
+它们可以作为网络 namespace 之间通信的通道，在另一个网络 namespace 创建和网络物理设备通信的桥梁。
+也可以作为内部网络设备。&lt;/p&gt;
+&lt;p&gt;veth 设备总是成对出现，一对 veth 设备可以用如下的命令创建:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ip link add &amp;lt;p1-name&amp;gt; type veth peer name &amp;lt;p2-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在上面的代码中，p1-name 和 p2-name 是分配给两个连接的端点的名称。&lt;/p&gt;
+&lt;p&gt;对一个设备上传输的数据包会立即在另一个设备上接收。当任何一个设备关闭时，veth 对的链路状态就会关闭。&lt;/p&gt;
+&lt;p&gt;Veth 设备对用于以有趣的方式将内核的网络设施组合在一起。&lt;/p&gt;
+&lt;p&gt;一个特别有趣的用例是将 veth 对的一端放在一个网络 namespace 中，
+另一端放在另一个网络 namepsace 中，从而允许网络 namespace 之间进行通信。&lt;/p&gt;
+&lt;p&gt;为此，可以在创建接口时提供 netns 参数:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ip link add &amp;lt;p1-name&amp;gt; netns &amp;lt;p1-ns&amp;gt; type veth peer &amp;lt;p2-name&amp;gt; netns &amp;lt;p2-ns&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;或者，对于现有的 veth 对，可以将一端移动到另一个名称空间:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ip link set &amp;lt;p2-name&amp;gt; netns &amp;lt;p2-ns&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a href=&#34;https://man7.org/linux/man-pages/man8/ethtool.8.html&#34;&gt;ethtool(8)&lt;/a&gt; 可用于查找 veth 网络接口的对等点，使用类似下面这样的命令:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ip link add ve_A &lt;span style=&#34;color:#204a87&#34;&gt;type&lt;/span&gt; veth peer name ve_B   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 创建一对 veth 设备&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ethtool -S ve_A         &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 查找 ve_A 接口对端接口的索引&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NIC statistics:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    peer_ifindex: &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ip link &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;^16:&amp;#39;&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 查找索引是 16 的设备&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;16: ve_B@ve_A: &amp;lt;BROADCAST,MULTICAST,M-DOWN&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1500&lt;/span&gt; qdisc ...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;注意&lt;/strong&gt;：如果 veth 的设备名太长，ethtool 会出错&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ethtool -S veth550bfa1@if25
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ioctl-only request, device name longer than &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;15&lt;/span&gt; not supported
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;准备工作&#34;&gt;准备工作&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;查看当前主机上的网桥设备，默认有一个 docker0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@dockervbox:~# brctl show
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bridge name     bridge id               STP enabled     interfaces
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker0         8000.02421f335f1f       no
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;创建 /var/run/netns 目录，ip netns 操作的就是此目录中的网络 namespace&lt;/li&gt;
+&lt;li&gt;删除 /var/run/netns 中的所有目录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@dockervbox:~# mkdir -p /var/run/netns
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@dockervbox:~# find -L /var/run/netns -type l -delete
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;启动容器&#34;&gt;启动容器&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 none 网络模式启动一个 nginx 容器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; docker run --rm -it --network&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;none -d nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ebcf462cbb463d41dd677a501aee5a629f587141c27632d4954017784877b7c0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; docker ps
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ebcf462cbb46   nginx     &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/docker-entrypoint.…&amp;#34;&lt;/span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;6&lt;/span&gt; minutes ago   Up &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;6&lt;/span&gt; minutes             exciting_torvalds
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;启动成功后，记录此容器的 pid 到 $pid 环境变量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; docker inspect ebcf462cbb463d41dd677a501aee5a629f587141c27632d4954017784877b7c0 | grep -i pid
+            &amp;#34;Pid&amp;#34;: 119320,
+            &amp;#34;PidMode&amp;#34;: &amp;#34;&amp;#34;,
+            &amp;#34;PidsLimit&amp;#34;: null,
+ø&amp;gt; export pid=119320
+ø&amp;gt; echo $pid
+119320
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;进入 $pid 进程所在的网络 ns, 查看所有的网络设备，可以看到只有一个 lo 设备，没有其他的网络设备&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;root@Macmini:~# nsenter -t $pid -n ip a
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;软链接 $pid 的网络 ns 到 /var/run/netns/ 中, 使 ip netns 可以操作它&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ln -s &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/proc/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$pid&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;/ns/net&amp;#34;&lt;/span&gt; /var/run/netns/&lt;span style=&#34;color:#000&#34;&gt;$pid&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ls /var/run/netns/119320
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/var/run/netns/119320
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ip netns list
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;119320&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;使用 &lt;code&gt;lsns -t net&lt;/code&gt; 查看当前系统的 network namespace, 可以看到已经有 nginx 容器的 network namespace 了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# lsns -t net &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; head -n &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        NS TYPE NPROCS    PID USER         NETNSID NSFS                           COMMAND
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4026531840&lt;/span&gt; net     &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;345&lt;/span&gt;      &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; root      unassigned                                /sbin/init
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4026532348&lt;/span&gt; net      &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;13&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;119320&lt;/span&gt; root      unassigned /run/docker/netns/2bdfbe67a978 nginx: master process nginx -g daemon off&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;查看 &lt;code&gt;/proc/$pid/ns&lt;/code&gt; 目录中的 namespace id, 能够看到 net namespace id 和 lsns 列出的 id 相同&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ls -l /proc/&lt;span style=&#34;color:#000&#34;&gt;$pid&lt;/span&gt;/ns
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;总用量 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lrwxrwxrwx &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; root root &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  1月 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; 11:01 cgroup -&amp;gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;cgroup:[4026532904]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lrwxrwxrwx &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; root root &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  1月 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; 11:01 ipc -&amp;gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;ipc:[4026532307]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lrwxrwxrwx &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; root root &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  1月 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; 11:01 mnt -&amp;gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;mnt:[4026532278]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lrwxrwxrwx &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; root root &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  1月 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; 10:50 net -&amp;gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;net:[4026532348]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lrwxrwxrwx &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; root root &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  1月 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; 11:01 pid -&amp;gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;pid:[4026532312]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lrwxrwxrwx &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; root root &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  1月 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; 11:01 pid_for_children -&amp;gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;pid:[4026532312]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lrwxrwxrwx &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; root root &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  1月 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; 11:01 &lt;span style=&#34;color:#204a87&#34;&gt;time&lt;/span&gt; -&amp;gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;time:[4026531834]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lrwxrwxrwx &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; root root &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  1月 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; 11:01 time_for_children -&amp;gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;time:[4026531834]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lrwxrwxrwx &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; root root &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  1月 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; 11:01 user -&amp;gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;user:[4026531837]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lrwxrwxrwx &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; root root &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  1月 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; 11:01 uts -&amp;gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;uts:[4026532280]&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;创建-veth-设备&#34;&gt;创建 veth 设备&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;创建一对 veth 设备，叫做 A 和 B&lt;/li&gt;
+&lt;li&gt;将 A 连接到 docker0 网桥上&lt;/li&gt;
+&lt;li&gt;启动 A&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ip link add A &lt;span style=&#34;color:#204a87&#34;&gt;type&lt;/span&gt; veth peer name B
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# brctl addif docker0 A
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ip link &lt;span style=&#34;color:#204a87&#34;&gt;set&lt;/span&gt; A up
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# A 处于 UP 状态，但因为 A 没有完全连通，所以还是有 M-DOWN 的状态&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ip a
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;23: B@A: &amp;lt;BROADCAST,MULTICAST&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1500&lt;/span&gt; qdisc noop state DOWN group default qlen &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    link/ether 16:81:96:a3:bf:27 brd ff:ff:ff:ff:ff:ff
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;24: A@B: &amp;lt;NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1500&lt;/span&gt; qdisc noqueue master docker0 state LOWERLAYERDOWN group default qlen &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    link/ether 76:8b:1a:65:f5:57 brd ff:ff:ff:ff:ff:ff
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;设置-veth-设备&#34;&gt;设置 veth 设备&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;将 ip, 掩码， 网关保存成环境变量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# &lt;span style=&#34;color:#000&#34;&gt;SETIP&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;172.17.0.10
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# &lt;span style=&#34;color:#000&#34;&gt;SETMASK&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# &lt;span style=&#34;color:#000&#34;&gt;GATEWAY&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;172.17.0.1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;将 veth 设备 B 加入到 $pid 所在的 network namespace 中&lt;/li&gt;
+&lt;li&gt;并将 设备 B 的名字改成 eth0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;root@Macmini:~# ip link set B netns $pid
+root@Macmini:~# ip netns exec $pid ip link set dev B name eth0
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;此时查看 $pid network namespace 中的网络设备，可以看到 eth0 已经存在了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ip netns &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$pid&lt;/span&gt; ip a
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;65536&lt;/span&gt; qdisc noqueue state UNKNOWN group default qlen &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    inet 127.0.0.1/8 scope host lo
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;23: eth0@if24: &amp;lt;BROADCAST,MULTICAST&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1500&lt;/span&gt; qdisc noop state DOWN group default qlen &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    link/ether 16:81:96:a3:bf:27 brd ff:ff:ff:ff:ff:ff link-netnsid &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;启动 eth0&lt;/li&gt;
+&lt;li&gt;因为 A 已经连接到了网桥上，所以直接启动成功，出现了 &lt;code&gt;LOWER_UP&lt;/code&gt; 的状态&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ip netns &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$pid&lt;/span&gt; ip link &lt;span style=&#34;color:#204a87&#34;&gt;set&lt;/span&gt; eth0 up
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ip netns &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$pid&lt;/span&gt; ip a
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;65536&lt;/span&gt; qdisc noqueue state UNKNOWN group default qlen &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    inet 127.0.0.1/8 scope host lo
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;23: eth0@if24: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1500&lt;/span&gt; qdisc noqueue state UP group default qlen &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    link/ether 16:81:96:a3:bf:27 brd ff:ff:ff:ff:ff:ff link-netnsid &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;设置 IP 和路由&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 设置 $pid ns 中的 eth0 设备的 ip 和 掩码&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@dockervbox:~# ip netns &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$pid&lt;/span&gt; ip addr add &lt;span style=&#34;color:#000&#34;&gt;$SETIP&lt;/span&gt;/&lt;span style=&#34;color:#000&#34;&gt;$SETMASK&lt;/span&gt; dev eth0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 设置 $pid ns 中的 eth0 设备的默认路由网关&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@dockervbox:~# ip netns &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$pid&lt;/span&gt; ip route add default via &lt;span style=&#34;color:#000&#34;&gt;$GATEWAY&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;查看 IP 和路由&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 查看 $pid ns 中的所有设备，可以看到 eth0 已经启动成功，并且有了 ip 和子网掩码&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# nsenter -t &lt;span style=&#34;color:#000&#34;&gt;$pid&lt;/span&gt; -n ip a
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;65536&lt;/span&gt; qdisc noqueue state UNKNOWN group default qlen &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    inet 127.0.0.1/8 scope host lo
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;23: eth0@if24: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1500&lt;/span&gt; qdisc noqueue state UP group default qlen &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    link/ether 16:81:96:a3:bf:27 brd ff:ff:ff:ff:ff:ff link-netnsid &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    inet 172.17.0.10/16 scope global eth0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;查看 $pid ns 中的路由表，可以看到 eth0 默认的路由地址是 172.17.0.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# nsenter -t &lt;span style=&#34;color:#000&#34;&gt;$pid&lt;/span&gt; -n ip route
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;default via 172.17.0.1 dev eth0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;172.17.0.0/16 dev eth0 proto kernel scope link src 172.17.0.10
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;查看宿主机上的网络设备，可以看到 veth A 的名字变成了 A@if23, 并且状态已经由 &lt;code&gt;M-DOWN&lt;/code&gt; 变成了 &lt;code&gt;LOWER_UP&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# ip a
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;24: A@if23: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1500&lt;/span&gt; qdisc noqueue master docker0 state UP group default qlen &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    link/ether 76:8b:1a:65:f5:57 brd ff:ff:ff:ff:ff:ff link-netns &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;119320&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    inet6 fe80::748b:1aff:fe65:f557/64 scope link
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;容器网络启动成功&#34;&gt;容器网络启动成功&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;最后，我们在容器中访问互联网，能够成功访问&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# docker &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; ebcf462cbb46 curl -I www.baidu.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                 Dload  Upload   Total   Spent    Left  Speed
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;277&lt;/span&gt;    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;     &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;     &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;      &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;      &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; --:--:-- --:--:-- --:--:--     &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;HTTP/1.1 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;200&lt;/span&gt; OK
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Accept-Ranges: bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Connection: keep-alive
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Content-Length: &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;277&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Content-Type: text/html
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Date: Fri, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; Jan &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2023&lt;/span&gt; 03:33:01 GMT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Etag: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;575e1f60-115&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Last-Modified: Mon, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;13&lt;/span&gt; Jun &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2016&lt;/span&gt; 02:50:08 GMT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Pragma: no-cache
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Server: bfe/1.0.8.18
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;在宿主机上访问 nginx 容器的 ip, 也能够正常访问&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# curl -I &lt;span style=&#34;color:#000&#34;&gt;$SETIP&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;HTTP/1.1 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;200&lt;/span&gt; OK
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Server: nginx/1.23.3
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Date: Fri, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; Jan &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2023&lt;/span&gt; 03:28:12 GMT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Content-Type: text/html
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Content-Length: &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;615&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Last-Modified: Tue, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;13&lt;/span&gt; Dec &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2022&lt;/span&gt; 15:53:53 GMT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Connection: keep-alive
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ETag: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;6398a011-267&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Accept-Ranges: bytes
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Ubuntu 下安装 Containerd 及配置代理</title>
+      <link>https://bwangelme.github.io/647/docs/container/install-containerd/</link>
+      <pubDate>Tue, 23 Aug 2022 08:17:21 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/container/install-containerd/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;p&gt;介绍了安装 containerd 的方法&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;安装-containerd&#34;&gt;安装 containerd&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;卸载从 apt 源安装的 containerd&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt-get remove -y containerd docker.io
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rm -vf /etc/systemd/system/containerd.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rm -rvf /etc/systemd/system/containerd.service.d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;安装 containerd 二进制文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;从 &lt;a href=&#34;https://github.com/containerd/containerd/releases&#34;&gt;containerd release 页面&lt;/a&gt; 下载 &lt;code&gt;containerd-{version}-linux-amd64.tar.gz&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;将 containerd 的二进制文件解压到 /usr/local/bin 中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 我下载的是 1.6.8 版本&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar Cxzvf /usr/local containerd-1.6.8-linux-amd64.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;从 &lt;a href=&#34;https://github.com/containerd/containerd/blob/main/containerd.service&#34;&gt;containerd 仓库&lt;/a&gt; 中下载 systemd 配置文件, 并将其复制到 &lt;code&gt;/usr/local/lib/systemd/system/containerd.service&lt;/code&gt; 中&lt;/li&gt;
+&lt;li&gt;重启令 systemd 配置文件生效&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl daemon-reload
+systemctl enable --now containerd
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;安装 runc&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;从 &lt;a href=&#34;https://github.com/opencontainers/runc/releases&#34;&gt;runc release 页面&lt;/a&gt; 下载 &lt;code&gt;runc.amd64&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;安装 runc,&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;install -m 755 runc.amd64 /usr/local/sbin/runc
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;安装 CNI 插件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;从 &lt;a href=&#34;https://github.com/containernetworking/plugins/releases&#34;&gt;containernetworking release 页面&lt;/a&gt; 下载 &lt;code&gt;cni-plugins-linux-amd64-v{vesion}.tgz&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;将其解压到 &lt;code&gt;/opt/cni/bin&lt;/code&gt; 中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir -p /opt/cni/bin
+tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.1.1.tgz
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;containerd-客户端的说明&#34;&gt;containerd 客户端的说明&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Community&lt;/th&gt;
+&lt;th&gt;API&lt;/th&gt;
+&lt;th&gt;Target&lt;/th&gt;
+&lt;th&gt;Web site&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ctr&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;containerd&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;td&gt;For debugging only&lt;/td&gt;
+&lt;td&gt;(None, see &lt;code&gt;ctr --help&lt;/code&gt; to learn the usage)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;nerdctl&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;containerd (non-core)&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;td&gt;General-purpose&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/containerd/nerdctl&#34;&gt;https://github.com/containerd/nerdctl&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;crictl&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Kubernetes SIG-node&lt;/td&gt;
+&lt;td&gt;CRI&lt;/td&gt;
+&lt;td&gt;For debugging only&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md&#34;&gt;https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;一共有三种命令行工具可以和 containerd 交互:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctr&lt;/code&gt; 和 &lt;code&gt;nerdctl&lt;/code&gt; 都是 containerd 社区提供的工具, &lt;code&gt;ctr&lt;/code&gt; 是和 &lt;code&gt;containerd&lt;/code&gt; 一起安装的.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;crictl&lt;/code&gt; 是 k8s 社区提供的符合 CRI 接口的交互工具. 在 Ubuntu 下,可以通过 &lt;code&gt;sudo apt get install cri-tools&lt;/code&gt; 安装 &lt;code&gt;crictl&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;生成-containerd-配置文件&#34;&gt;生成 containerd 配置文件&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;containerd config default &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sudo tee /etc/containerd/config.toml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行以上命令可以生成 containerd 的默认配置文件, 我们可以做一些自定义的修改, 例如修改 &lt;code&gt;[plugins.&amp;quot;io.containerd.grpc.v1.cri&amp;quot;.containerd.runtimes.runc.options]&lt;/code&gt;, 令 &lt;code&gt;SystemdCgroup = true&lt;/code&gt;, 让 containerd 和 systemd 使用同一个 cgroups 控制器&lt;/p&gt;
+&lt;p&gt;crictl 默认连接的 service socket是 &lt;code&gt;unix:///var/run/dockershim.sock&lt;/code&gt;, 我们可以在 &lt;code&gt;/etc/crictl.yaml&lt;/code&gt; 中写入以下配置&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;runtime-endpoint: unix:///run/containerd/containerd.sock
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;让它默认连接 containerd 的 socket 接口&lt;/p&gt;
+&lt;h2 id=&#34;设置拉取镜像的-http-代理&#34;&gt;设置拉取镜像的 http 代理&lt;/h2&gt;
+&lt;p&gt;通过设置 &lt;code&gt;HTTP_PROXY&lt;/code&gt;, &lt;code&gt;HTTPS_PROXY&lt;/code&gt; 环境变量, 可以设置 http 代理.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctr pull ...&lt;/code&gt; 是在客户端进程中拉取镜像的, 环境变量需要设置到客户端中&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;crictl pull ...&lt;/code&gt; 是在 cri 插件中拉取镜像的, 它被集成到了 containerd 中, 所以需要在 server 端设置环境变量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;设置-server-端的环境变量&#34;&gt;设置 server 端的环境变量&lt;/h3&gt;
+&lt;p&gt;修改 &lt;code&gt;/usr/local/lib/systemd/system/containerd.service&lt;/code&gt; 文件, 在 &lt;code&gt;[Service]&lt;/code&gt; 段加入以下内容&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 设置拉取镜像的代理
+Environment=HTTP_PROXY=127.0.0.1:8118
+Environment=HTTPS_PROXY=127.0.0.1:8118
+Environment=NO_PROXY=localhost,127.0.0.1,172.17.0.0/16,192.168.56.0/24,10.96.0.0/16
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改完以上配置后, 重启 containerd , 环境变量就生效了&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl daemon-reload
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl restart containerd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此时再执行 &lt;code&gt;sudo crictl pull k8s.gcr.io/kube-controller-manager:v1.24.4&lt;/code&gt; 就可以成功拉取到 k8s 相关的镜像了, 也能够正常地和 &lt;code&gt;kubeadm&lt;/code&gt; 交互了&lt;/p&gt;
+&lt;h3 id=&#34;设置-client-侧的环境变量&#34;&gt;设置 client 侧的环境变量&lt;/h3&gt;
+&lt;p&gt;如果想通过 &lt;code&gt;ctr&lt;/code&gt; 拉取镜像, 需要在 client 侧设置环境变量&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo &lt;span style=&#34;color:#000&#34;&gt;HTTP_PROXY&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;127.0.0.1:8118 &lt;span style=&#34;color:#000&#34;&gt;HTTPS_PROXY&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;127.0.0.1:8118 ctr i pull k8s.gcr.io/kube-apiserver:v1.24.4
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样也能正常拉取镜像&lt;/p&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/containerd/containerd/blob/main/docs/getting-started.md&#34;&gt;https://github.com/containerd/containerd/blob/main/docs/getting-started.md&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/containerd/cri/issues/1169#issuecomment-501376676&#34;&gt;https://github.com/containerd/cri/issues/1169#issuecomment-501376676&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Docker 客户端连接远程 Docker Daemon</title>
+      <link>https://bwangelme.github.io/647/docs/container/docker-client-remote-server/</link>
+      <pubDate>Sat, 22 May 2021 11:41:46 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/container/docker-client-remote-server/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Docker 客户端连接远程 Docker Daemon&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://dockerlabs.collabnix.com/beginners/components/daemon/access-daemon-externally.html&#34;&gt;参考链接 How to Connect to a Remote Docker Daemon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;环境准备&#34;&gt;环境准备&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Ubuntu 18.04 运行着 Docker Daemon 19.03.6&lt;/li&gt;
+&lt;li&gt;MacOS 系统运行着 Docker Client 20.10.2 版本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;设置-ubuntu-中的-docker-daemon&#34;&gt;设置 Ubuntu 中的 Docker Daemon&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;注:&lt;/strong&gt; 这一小节的命令都在 Ubuntu 中执行&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;配置 Docker Daemon&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 创建 docker service 的配置文件目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo mkdir -p /etc/systemd/system/docker.service.d
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 修改 docker service 的启动命令，令其监听本地套接字文件和 2375 端口&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo cat &amp;gt; /etc/systemd/system/docker.service.d/options.conf &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt;EOF
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;[Service]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;ExecStart=
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock -H tcp://0.0.0.0:2375
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;TODO: 配置防火墙 (由于我的 Ubuntu 是台虚拟机，我直接将防火墙关闭了)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;重启 docker service，令配置生效&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl daemon-reload &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 重新载入 systemd 关于 docker service 的配置&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl restart docker.service &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 重启 docker service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;执行 &lt;code&gt;docker version -f &#39;{{.Server.APIVersion}}&#39;&lt;/code&gt;，查看 Docker API 版本，我的版本是 &lt;code&gt;1.40&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;客户端测试连接&#34;&gt;客户端测试连接&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;注:&lt;/strong&gt; 这一小节的命令都在 MacOS 中执行&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;执行 &lt;code&gt;curl 192.168.56.23:2375/v1.40/images/json&lt;/code&gt;，会列出所有已经下载的镜像，若返回值正确，表示 Docker Daemon 已经配置好了&lt;/li&gt;
+&lt;li&gt;使用 docker client 连接 Ubuntu 中的 Docker Daemon&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; DOCKER_HOST=tcp://192.168.56.23:2375 docker images                                                                                                                                                                                                                                                     11:55:17 (05-22)
+REPOSITORY                        TAG       IMAGE ID       CREATED         SIZE
+ubuntu                            20.04     8e428cff54c8   8 weeks ago     72.9MB
+ubuntu                            latest    8e428cff54c8   8 weeks ago     72.9MB
+elasticsearch                     7.5.1     2bd69c322e98   17 months ago   779MB
+docker.elastic.co/kibana/kibana   7.1.0     714b175e84e8   2 years ago     745MB
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最后，我在 zshrc 中添加了一条 alias:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;(( $+commands[docker] )) &amp;amp;&amp;amp; alias docker=&amp;#34;DOCKER_HOST=tcp://192.168.56.23:2375 docker&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这样在 MacOS 中执行 docker 命令访问的就是 Ubuntu 虚拟机中的 Docker Daemon 了。&lt;/p&gt;
+      </description>
+    </item>
+    
   </channel>
 </rss>
