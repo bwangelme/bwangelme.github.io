@@ -3,7 +3,7 @@ title: "HTTP 协议中带下划线的 header 说明"
 date: 2023-05-09T22:40:29+08:00
 lastmod: 2023-05-09T22:40:29+08:00
 draft: false
-tags: [tips, http, nginx]
+tags: [blog, http, nginx]
 author: "bwangel"
 comment: true
 ---
