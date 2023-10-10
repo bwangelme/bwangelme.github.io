@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.115.2">
+<meta name="generator" content="Hugo 0.117.0">
 <link rel="canonical" type="text/html" href="https://bwangelme.github.io/647/docs/golang/">
 <link rel="alternate" type="application/rss&#43;xml" href="https://bwangelme.github.io/647/docs/golang/index.xml">
 <meta name="robots" content="noindex, nofollow">
@@ -34,8 +34,8 @@
 
 
 
-<link rel="preload" href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" as="style">
-<link href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/647/scss/main.scss" as="style">
+<link href="/647/scss/main.scss" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -164,7 +164,7 @@
     
     
 	
-<li>9: <a href="#pg-5e7f1bf4777000a4a638a29b3b04d48f">Golang 链接时注入额外信息</a></li>
+<li>9: <a href="#pg-e8eaec0059b446cf3655c3f76c3de6b5">Golang 中空数组是否是 nil</a></li>
 
 
     
@@ -172,7 +172,7 @@
     
     
 	
-<li>10: <a href="#pg-495e45c0b281c859ecdd31687f35d51b">《Golang Error》学习笔记</a></li>
+<li>10: <a href="#pg-5e7f1bf4777000a4a638a29b3b04d48f">Golang 链接时注入额外信息</a></li>
 
 
     
@@ -180,7 +180,7 @@
     
     
 	
-<li>11: <a href="#pg-6be775a3d57f960eb07e45a142768f29">Go 的调度模型学习笔记</a></li>
+<li>11: <a href="#pg-495e45c0b281c859ecdd31687f35d51b">《Golang Error》学习笔记</a></li>
 
 
     
@@ -188,7 +188,7 @@
     
     
 	
-<li>12: <a href="#pg-e9992c55d10cbbee93c95c796a5e0152">Go 并发模式之发布订阅模型</a></li>
+<li>12: <a href="#pg-6be775a3d57f960eb07e45a142768f29">Go 的调度模型学习笔记</a></li>
 
 
     
@@ -196,7 +196,7 @@
     
     
 	
-<li>13: <a href="#pg-635fed7c7f961ced2f2b68e493f04ffb">关于线程同步操作的一道面试题</a></li>
+<li>13: <a href="#pg-e9992c55d10cbbee93c95c796a5e0152">Go 并发模式之发布订阅模型</a></li>
 
 
     
@@ -204,7 +204,7 @@
     
     
 	
-<li>14: <a href="#pg-e7414abf063a165b8718b37f17cb4f2f">Go 调度器的一个无法执行陷阱</a></li>
+<li>14: <a href="#pg-635fed7c7f961ced2f2b68e493f04ffb">关于线程同步操作的一道面试题</a></li>
 
 
     
@@ -212,7 +212,7 @@
     
     
 	
-<li>15: <a href="#pg-fbbcf89e72ac3f247786060b50fa9d08">Go Panic 的触发及恢复过程</a></li>
+<li>15: <a href="#pg-e7414abf063a165b8718b37f17cb4f2f">Go 调度器的一个无法执行陷阱</a></li>
 
 
     
@@ -220,7 +220,7 @@
     
     
 	
-<li>16: <a href="#pg-4b954ae7a79512193186d57a0ec102ff">线程同步操作面试题使用锁的解法</a></li>
+<li>16: <a href="#pg-fbbcf89e72ac3f247786060b50fa9d08">Go Panic 的触发及恢复过程</a></li>
 
 
     
@@ -228,7 +228,7 @@
     
     
 	
-<li>17: <a href="#pg-770a44637da1a99d5af0d32fd0c958e9">Go 的测试</a></li>
+<li>17: <a href="#pg-4b954ae7a79512193186d57a0ec102ff">线程同步操作面试题使用锁的解法</a></li>
 
 
     
@@ -236,7 +236,7 @@
     
     
 	
-<li>18: <a href="#pg-c7d2056c34effb010b85e592bf9d77d9">Go 模板</a></li>
+<li>18: <a href="#pg-770a44637da1a99d5af0d32fd0c958e9">Go 的测试</a></li>
 
 
     
@@ -244,7 +244,7 @@
     
     
 	
-<li>19: <a href="#pg-c6e65801f450a5190e19f70c05c579be">Go mod 说明</a></li>
+<li>19: <a href="#pg-c7d2056c34effb010b85e592bf9d77d9">Go 模板</a></li>
 
 
     
@@ -252,7 +252,7 @@
     
     
 	
-<li>20: <a href="#pg-5d60a98a1071c1eb27363bb8fd0863bf">Go 语言的 Type Switch 语句解析</a></li>
+<li>20: <a href="#pg-c6e65801f450a5190e19f70c05c579be">Go mod 说明</a></li>
 
 
     
@@ -260,7 +260,7 @@
     
     
 	
-<li>21: <a href="#pg-05bc77af5135b5de6472208f6d8b18f0">Go的并发编程简述</a></li>
+<li>21: <a href="#pg-5d60a98a1071c1eb27363bb8fd0863bf">Go 语言的 Type Switch 语句解析</a></li>
 
 
     
@@ -268,7 +268,15 @@
     
     
 	
-<li>22: <a href="#pg-9c00886a50ca7b0f720c54623a097403">Go 的反射包浅析</a></li>
+<li>22: <a href="#pg-05bc77af5135b5de6472208f6d8b18f0">Go的并发编程简述</a></li>
+
+
+    
+  
+    
+    
+	
+<li>23: <a href="#pg-9c00886a50ca7b0f720c54623a097403">Go 的反射包浅析</a></li>
 
 
     
@@ -1080,7 +1088,38 @@ replace (
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-5e7f1bf4777000a4a638a29b3b04d48f">9 - Golang 链接时注入额外信息</h1>
+	<h1 id="pg-e8eaec0059b446cf3655c3f76c3de6b5">9 - Golang 中空数组是否是 nil</h1>
+    
+	<hr>
+<h2 id="tips">Tips</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">t1</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#204a87;font-weight:bold">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">t2</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#204a87;font-weight:bold">string</span><span style="color:#000;font-weight:bold">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;t1&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">t1</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t1</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#8f5902;font-style:italic">// t1 true 0
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;t2&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">t2</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t2</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#8f5902;font-style:italic">// t2 false 0
+</span></span></span></code></pre></div><p>在上述的声明中，</p>
+<ul>
+<li>t1 未初始化，所以它是 nil</li>
+<li>t2 已经初始化了一个底层数组，底层数组的长度是0，所以它不是 nil</li>
+</ul>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://ieevee.com/tech/2019/07/26/slice-nil-empty.html">小贴士：Golang的空数组是否为nil</a></li>
+</ul>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-5e7f1bf4777000a4a638a29b3b04d48f">10 - Golang 链接时注入额外信息</h1>
     
 	<blockquote>
 <p>Go 编译器注入 git 版本，时间等信息到可执行文件中</p>
@@ -1136,7 +1175,7 @@ Note that before Go 1.5 this option took two separate arguments.</p>
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-495e45c0b281c859ecdd31687f35d51b">10 - 《Golang Error》学习笔记</h1>
+	<h1 id="pg-495e45c0b281c859ecdd31687f35d51b">11 - 《Golang Error》学习笔记</h1>
     
 	<blockquote>
 <p>Golang Error 学习笔记</p>
@@ -1378,7 +1417,7 @@ Note that before Go 1.5 this option took two separate arguments.</p>
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-6be775a3d57f960eb07e45a142768f29">11 - Go 的调度模型学习笔记</h1>
+	<h1 id="pg-6be775a3d57f960eb07e45a142768f29">12 - Go 的调度模型学习笔记</h1>
     
 	<blockquote>
 <p>阅读 <a href="https://wudaijun.com/2018/01/go-scheduler/">Go 调度模型</a> 后记的笔记</p>
@@ -1433,7 +1472,7 @@ P取 G 的顺序是: <code>LRQ &gt; GRQ &gt; 从其他 P 偷 G</code></p>
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-e9992c55d10cbbee93c95c796a5e0152">12 - Go 并发模式之发布订阅模型</h1>
+	<h1 id="pg-e9992c55d10cbbee93c95c796a5e0152">13 - Go 并发模式之发布订阅模型</h1>
     
 	<blockquote>
 <p>发布订阅模型的一个简易单机实现</p>
@@ -1616,7 +1655,7 @@ P取 G 的顺序是: <code>LRQ &gt; GRQ &gt; 从其他 P 偷 G</code></p>
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-635fed7c7f961ced2f2b68e493f04ffb">13 - 关于线程同步操作的一道面试题</h1>
+	<h1 id="pg-635fed7c7f961ced2f2b68e493f04ffb">14 - 关于线程同步操作的一道面试题</h1>
     
 	<h2 id="前言">前言</h2>
 <p>前两天在 V2EX 上发现了<a href="https://www.v2ex.com/t/547045">一道好玩的面试题</a>，兴致冲冲地写了答案出来，并发到了 <a href="https://www.v2ex.com/t/552620">V2EX</a> 上。结果发现自己实现的思路完全是错误的，遂把上篇文章推翻，重新写一篇。</p>
@@ -1809,7 +1848,7 @@ P取 G 的顺序是: <code>LRQ &gt; GRQ &gt; 从其他 P 偷 G</code></p>
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-e7414abf063a165b8718b37f17cb4f2f">14 - Go 调度器的一个无法执行陷阱</h1>
+	<h1 id="pg-e7414abf063a165b8718b37f17cb4f2f">15 - Go 调度器的一个无法执行陷阱</h1>
     
 	<blockquote>
 <p><strong>注意</strong>: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 <a href="/2019/04/13/go-sync-channel/">关于线程同步操作的一道面试题</a></p>
@@ -1956,7 +1995,7 @@ Go 通过这种方式来将执行权切换到 Go 调度器，从而避免通过�
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-fbbcf89e72ac3f247786060b50fa9d08">15 - Go Panic 的触发及恢复过程</h1>
+	<h1 id="pg-fbbcf89e72ac3f247786060b50fa9d08">16 - Go Panic 的触发及恢复过程</h1>
     
 	<blockquote>
 <ul>
@@ -1995,7 +2034,7 @@ Go 通过这种方式来将执行权切换到 Go 调度器，从而避免通过�
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-4b954ae7a79512193186d57a0ec102ff">16 - 线程同步操作面试题使用锁的解法</h1>
+	<h1 id="pg-4b954ae7a79512193186d57a0ec102ff">17 - 线程同步操作面试题使用锁的解法</h1>
     
 	<blockquote>
 <p><strong>注意</strong>: 这篇文章的思路是不正确的，正确的思路请参考 <a href="/2019/04/13/go-sync-channel/">关于线程同步操作的一道面试题</a></p>
@@ -2371,7 +2410,7 @@ Go 通过这种方式来将执行权切换到 Go 调度器，从而避免通过�
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-770a44637da1a99d5af0d32fd0c958e9">17 - Go 的测试</h1>
+	<h1 id="pg-770a44637da1a99d5af0d32fd0c958e9">18 - Go 的测试</h1>
     
 	<blockquote>
 <p>主要讲了 Go 相关的测试</p>
@@ -2529,7 +2568,7 @@ ok      puzzlers/article20/q3   1.739s
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-c7d2056c34effb010b85e592bf9d77d9">18 - Go 模板</h1>
+	<h1 id="pg-c7d2056c34effb010b85e592bf9d77d9">19 - Go 模板</h1>
     
 	<p>关于 Go 模板的笔记</p>
 <h2 id="字段操作">字段操作</h2>
@@ -2766,7 +2805,7 @@ ok      puzzlers/article20/q3   1.739s
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-c6e65801f450a5190e19f70c05c579be">19 - Go mod 说明</h1>
+	<h1 id="pg-c6e65801f450a5190e19f70c05c579be">20 - Go mod 说明</h1>
     
 	<p>关于 Go mod 的介绍</p>
 <ul>
@@ -2888,7 +2927,7 @@ ok      puzzlers/article20/q3   1.739s
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-5d60a98a1071c1eb27363bb8fd0863bf">20 - Go 语言的 Type Switch 语句解析</h1>
+	<h1 id="pg-5d60a98a1071c1eb27363bb8fd0863bf">21 - Go 语言的 Type Switch 语句解析</h1>
     
 	<p>讲述了Go语言中 Type Swith 的用法以及获取对应变量的一些特殊情况。</p>
 <h2 id="type-switch-的基本用法">Type Switch 的基本用法</h2>
@@ -3039,7 +3078,7 @@ ok      puzzlers/article20/q3   1.739s
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-05bc77af5135b5de6472208f6d8b18f0">21 - Go的并发编程简述</h1>
+	<h1 id="pg-05bc77af5135b5de6472208f6d8b18f0">22 - Go的并发编程简述</h1>
     
 	<p>简述了 Go 中的 goroutine，channel 和 WaitGroup，并通过例子来展示了这些功能的用法</p>
 <h2 id="goroutine-简述">Goroutine 简述</h2>
@@ -3353,7 +3392,7 @@ ok      puzzlers/article20/q3   1.739s
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-9c00886a50ca7b0f720c54623a097403">22 - Go 的反射包浅析</h1>
+	<h1 id="pg-9c00886a50ca7b0f720c54623a097403">23 - Go 的反射包浅析</h1>
     
 	<p>本文主要介绍了反射包中的常用类型和方法，并使用了几个例子进行了说明。</p>
 <h2 id="类型">类型</h2>

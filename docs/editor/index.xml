@@ -33,5 +33,29 @@
       </description>
     </item>
     
+    <item>
+      <title>Docs: Caps-lock mapping 成 Esc 在 vscode 中不生效</title>
+      <link>https://bwangelme.github.io/647/docs/editor/vscode-esc-not-work/</link>
+      <pubDate>Mon, 18 Oct 2021 11:27:39 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/editor/vscode-esc-not-work/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;问题: Linux 下将 caps-lock 键映射为 Esc。在 vscode 中失效。&lt;/li&gt;
+&lt;li&gt;解决方案:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;打开 &lt;code&gt;Preferences → Settings → Application → Keyboard → Dispatch&lt;/code&gt; 设置为 &lt;code&gt;keyCode&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com//2021-10-18-113151.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://linuxdev.io/howto-fix-caps-lock-escape-swap-not-working-in-vs-code/&#34;&gt;Howto: Fix Caps Lock Escape Swap Not Working in VS Code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
   </channel>
 </rss>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.115.2">
+<meta name="generator" content="Hugo 0.117.0">
 <link rel="canonical" type="text/html" href="https://bwangelme.github.io/647/docs/container/">
 <link rel="alternate" type="application/rss&#43;xml" href="https://bwangelme.github.io/647/docs/container/index.xml">
 <meta name="robots" content="noindex, nofollow">
@@ -34,8 +34,8 @@
 
 
 
-<link rel="preload" href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" as="style">
-<link href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/647/scss/main.scss" as="style">
+<link href="/647/scss/main.scss" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -124,7 +124,15 @@
     
     
 	
-<li>4: <a href="#pg-72ba781c964286a98ded46d175dfee82">Docker 客户端连接远程 Docker Daemon</a></li>
+<li>4: <a href="#pg-00dc390d2f975a93f93712be0cac7f2e">Ubuntu 下 Docker 设置 Registry</a></li>
+
+
+    
+  
+    
+    
+	
+<li>5: <a href="#pg-72ba781c964286a98ded46d175dfee82">Docker 客户端连接远程 Docker Daemon</a></li>
 
 
     
@@ -565,7 +573,112 @@ Environment=NO_PROXY=localhost,127.0.0.1,172.17.0.0/16,192.168.56.0/24,10.96.0.0
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-72ba781c964286a98ded46d175dfee82">4 - Docker 客户端连接远程 Docker Daemon</h1>
+	<h1 id="pg-00dc390d2f975a93f93712be0cac7f2e">4 - Ubuntu 下 Docker 设置 Registry</h1>
+    
+	<blockquote>
+<ul>
+<li>docker 拉取镜像怎么办?
+<ul>
+<li>
+<ol>
+<li>设置 registry-mirror</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>为 dockerd 设置 http 代理</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>鉴于很多厂商不再提供公共的 docker registry，提供服务的也都对下载速度进行了限制，建议使用第二种解决方案</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="docker-配置-registry-mirror">docker 配置 registry-mirror</h2>
+<ul>
+<li>执行 <code>systemctl cat docker | grep Exec</code> 查看 dockerd 的启动命令，确认启动时没有指定 <code>registry-mirror</code> 选项</li>
+</ul>
+<pre tabindex="0"><code>ø&gt; systemctl cat docker | grep Exec
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+ExecReload=/bin/kill -s HUP $MAINPID
+</code></pre><ul>
+<li>向 <code>/etc/docker/daemon.json</code> 写入以下内容</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo mkdir -p /etc/docker
+</span></span><span style="display:flex;"><span>sudo tee /etc/docker/daemon.json <span style="color:#4e9a06">&lt;&lt;-&#39;EOF&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">{
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  &#34;registry-mirrors&#34;: [
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    &#34;https://hub-mirror.c.163.com&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    &#34;https://mirror.baidubce.com&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  ]
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">}
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span></code></pre></div><ul>
+<li>重新启动服务</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo systemctl daemon-reload
+</span></span><span style="display:flex;"><span>sudo systemctl restart docker
+</span></span></code></pre></div><ul>
+<li>检查配置是否成功</li>
+</ul>
+<pre tabindex="0"><code>docker info | grep -A 3 &#39;Registry Mirrors:&#39;
+</code></pre><ul>
+<li>速度限制</li>
+</ul>
+<p>目前找到的可用的公共 registry-mirror 一共有三个</p>
+<ul>
+<li><code>https://hub-mirror.c.163.com</code></li>
+<li><code>https://mirror.baidubce.com</code></li>
+<li><code>https://xxx.mirror.aliyuncs.com</code> (需要登录阿里云后获取)</li>
+</ul>
+<p>他们都存在限速，最高下载速度是每秒 500k 左右。</p>
+<ul>
+<li>镜像更新不及时</li>
+</ul>
+<p>有些较新的镜像，例如 <code>golang:1.19</code>， registry mirror 中并没有，最终还是会从 <code>registry-1.docker.io</code> 去拉取镜像</p>
+<h2 id="dockerd-使用-http-代理">dockerd 使用 http 代理</h2>
+<ul>
+<li>在执行 <code>docker pull</code> 的时候，拉取镜像的过程实际是由 dockerd 执行，因此，想要在访问 <code>docker.io</code> 时加上代理，就需要通过 <code>http_proxy</code> 环境变量为 dockerd 配置代理</li>
+<li>修改 systemd 配置，并写入代理配置</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo mkdir -p /etc/systemd/system/docker.service.d
+</span></span><span style="display:flex;"><span>sudo touch /etc/systemd/system/docker.service.d/proxy.conf
+</span></span><span style="display:flex;"><span>sudo tee /etc/systemd/system/docker.service.d/proxy.conf <span style="color:#4e9a06">&lt;&lt;-&#39;EOF&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">[Service]
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">Environment=&#34;HTTP_PROXY=http://proxy.example.com:8080/&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">Environment=&#34;HTTPS_PROXY=http://proxy.example.com:8080/&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">Environment=&#34;NO_PROXY=localhost,127.0.0.1,.example.com&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span></code></pre></div><ul>
+<li>重新启动服务</li>
+</ul>
+<pre tabindex="0"><code>sudo systemctl daemon-reload
+sudo systemctl restart docker
+</code></pre><ul>
+<li>检查配置是否成功</li>
+</ul>
+<pre tabindex="0"><code>docker info | grep -A 3 &#39;Proxy&#39;
+</code></pre><h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://yeasy.gitbook.io/docker_practice/install/mirror">镜像加速器</a></li>
+<li><a href="https://note.qidong.name/2020/05/docker-proxy/">Docker的三种网络代理配置</a></li>
+</ul>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-72ba781c964286a98ded46d175dfee82">5 - Docker 客户端连接远程 Docker Daemon</h1>
     
 	<blockquote>
 <ul>

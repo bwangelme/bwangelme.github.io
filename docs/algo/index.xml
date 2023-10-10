@@ -16,6 +16,44 @@
     
     
     <item>
+      <title>Docs: 二分查找</title>
+      <link>https://bwangelme.github.io/647/docs/algo/binary_search/</link>
+      <pubDate>Tue, 10 Oct 2023 09:31:53 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/algo/binary_search/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;二分查找的注意点&#34;&gt;二分查找的注意点&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;循环的条件: &lt;code&gt;left &amp;lt;= right&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;mid 计算方法:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 用移位预算速度更快
+mid = left + ((right-left) &amp;gt;&amp;gt; 2))
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;left 和 right 的更新方法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;left = mid + 1
+right = mid - 1
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: LeetCode</title>
+      <link>https://bwangelme.github.io/647/docs/algo/leetcode/</link>
+      <pubDate>Fri, 29 Sep 2023 11:12:22 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/algo/leetcode/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+    <item>
       <title>Docs: Go与数据结构之二叉搜索树</title>
       <link>https://bwangelme.github.io/647/docs/algo/go-binarysearchtree/</link>
       <pubDate>Thu, 01 Mar 2018 22:22:52 +0800</pubDate>

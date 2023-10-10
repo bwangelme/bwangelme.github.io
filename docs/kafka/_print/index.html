@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.115.2">
+<meta name="generator" content="Hugo 0.117.0">
 <link rel="canonical" type="text/html" href="https://bwangelme.github.io/647/docs/kafka/">
 <link rel="alternate" type="application/rss&#43;xml" href="https://bwangelme.github.io/647/docs/kafka/index.xml">
 <meta name="robots" content="noindex, nofollow">
@@ -34,8 +34,8 @@
 
 
 
-<link rel="preload" href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" as="style">
-<link href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/647/scss/main.scss" as="style">
+<link href="/647/scss/main.scss" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -109,6 +109,14 @@
     
 	
 <li>2: <a href="#pg-b0db364c520cdda052412caee9f7bb79">Broker</a></li>
+
+
+    
+  
+    
+    
+	
+<li>3: <a href="#pg-2fabee976deeadba60c4cdb9b8ab43f2">从源码安装 confluent-kafka-python</a></li>
 
 
     
@@ -237,6 +245,53 @@
 </li>
 </ul>
 
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-2fabee976deeadba60c4cdb9b8ab43f2">3 - 从源码安装 confluent-kafka-python</h1>
+    
+	<hr>
+<h2 id="从源码安装-librdkafka">从源码安装 librdkafka</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装 vcpkg</span>
+</span></span><span style="display:flex;"><span>&gt; git clone https://github.com/microsoft/vcpkg ~/.local/vcpkg
+</span></span><span style="display:flex;"><span>&gt; ~/.local/vcpkg/bootstrap-vcpkg.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 安装 librdkafka</span>
+</span></span><span style="display:flex;"><span>&gt; ~/.local/vcpkg/vcpkg install librdkafka
+</span></span></code></pre></div><ul>
+<li>设置 include path 和 link path</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#204a87">export</span> <span style="color:#000">CPATH</span><span style="color:#ce5c00;font-weight:bold">=</span>~/.local/vcpkg/packages/librdkafka_x64-linux/include
+</span></span><span style="display:flex;"><span><span style="color:#204a87">export</span> <span style="color:#000">LIBRARY_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span>~/.local/vcpkg/packages/librdkafka_x64-linux/lib
+</span></span></code></pre></div><blockquote>
+<p>GCC uses the following environment variables:</p>
+<ul>
+<li>PATH: For searching the executables and run-time shared libraries (.dll, .so).</li>
+<li>CPATH: For searching the include-paths for headers. It is searched after paths specified in <code>-I&lt;dir&gt;</code> options. <code>C_INCLUDE_PATH</code> and <code>CPLUS_INCLUDE_PATH</code> can be used to specify C and C++ headers if the particular language was indicated in pre-processing.</li>
+<li>LIBRARY_PATH: For searching library-paths for link libraries. It is searched after paths specified in <code>-L&lt;dir&gt;</code> options. 程序编译期查找动态链接库的路径。</li>
+<li>LD_LIBRARY_PATH: 程序运行期间查找动态链接库的路径。</li>
+</ul>
+</blockquote>
+<ul>
+<li>安装 librdkafka</li>
+</ul>
+<pre tabindex="0"><code>pip install -e ~/work/Douban/code/confluent-kafka-python/
+</code></pre><h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html#zz-1.9">https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html#zz-1.9</a></li>
+<li><a href="https://github.com/microsoft/vcpkg">https://github.com/microsoft/vcpkg</a></li>
+</ul>
 </div>
 
 

@@ -1,0 +1,46 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – Python</title>
+    <link>https://bwangelme.github.io/647/docs/python/</link>
+    <description>Recent content in Python on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Fri, 29 Sep 2023 11:07:44 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangelme.github.io/647/docs/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: 匹配所有可打印 Ascii 字符的正则</title>
+      <link>https://bwangelme.github.io/647/docs/python/re-ascii-print/</link>
+      <pubDate>Wed, 15 Dec 2021 19:16:45 +0800</pubDate>
+      
+      <guid>https://bwangelme.github.io/647/docs/python/re-ascii-print/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;[ -~]&lt;/code&gt; 可以匹配所有的可打印 ascii 字符&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;In [1]: import re
+
+In [2]: p = re.compile(&amp;#39;[ -~]&amp;#39;)
+
+In [3]: p.match(&amp;#39;中文&amp;#39;)
+
+In [4]: p.match(&amp;#39;ドウバン&amp;#39;)
+
+In [5]: p.match(&amp;#39;^&amp;amp;#^&amp;amp;@#abcdefdjskla&amp;#39;)
+Out[5]: &amp;lt;re.Match object; span=(0, 1), match=&amp;#39;^&amp;#39;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;它的原理就是匹配 ASCII 码表中所有从 &lt;code&gt;空格(0x20)&lt;/code&gt; 到 &lt;code&gt;-(0x7E)&lt;/code&gt; 的字符&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com//2021-12-15-191941.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

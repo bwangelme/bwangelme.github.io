@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.115.2">
+<meta name="generator" content="Hugo 0.117.0">
 <link rel="canonical" type="text/html" href="https://bwangelme.github.io/647/docs/redis/">
 <link rel="alternate" type="application/rss&#43;xml" href="https://bwangelme.github.io/647/docs/redis/index.xml">
 <meta name="robots" content="noindex, nofollow">
@@ -34,8 +34,8 @@
 
 
 
-<link rel="preload" href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" as="style">
-<link href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/647/scss/main.scss" as="style">
+<link href="/647/scss/main.scss" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -100,7 +100,7 @@
     
     
 	
-<li>1: <a href="#pg-9f184c796063902888d119a9e9dbf239">Redis 主从同步细节</a></li>
+<li>1: <a href="#pg-452fe98fe10bf583ed0509083a6fa631">Redis 备份恢复的正确步骤</a></li>
 
 
     
@@ -108,7 +108,7 @@
     
     
 	
-<li>2: <a href="#pg-5e80ba3bff85aef5c731bcf3ecb0922c">Redis 源码阅读之 dict </a></li>
+<li>2: <a href="#pg-9f184c796063902888d119a9e9dbf239">Redis 主从同步细节</a></li>
 
 
     
@@ -116,7 +116,31 @@
     
     
 	
-<li>3: <a href="#pg-24908c465f52816f8bd5bc366e5a5645">Redis Sort 命令简介</a></li>
+<li>3: <a href="#pg-f69785f60caf73840045abeb86206c30">Redis 备份机制</a></li>
+
+
+    
+  
+    
+    
+	
+<li>4: <a href="#pg-0bff432c35e390c24fb8a4000eb1827a">Redis 集群简介</a></li>
+
+
+    
+  
+    
+    
+	
+<li>5: <a href="#pg-5e80ba3bff85aef5c731bcf3ecb0922c">Redis 源码阅读之 dict </a></li>
+
+
+    
+  
+    
+    
+	
+<li>6: <a href="#pg-24908c465f52816f8bd5bc366e5a5645">Redis Sort 命令简介</a></li>
 
 
     
@@ -147,7 +171,37 @@
 
 <div class="td-content" style="">
     
-	<h1 id="pg-9f184c796063902888d119a9e9dbf239">1 - Redis 主从同步细节</h1>
+	<h1 id="pg-452fe98fe10bf583ed0509083a6fa631">1 - Redis 备份恢复的正确步骤</h1>
+    
+	<hr>
+<h2 id="tips">Tips</h2>
+<ol start="0">
+<li>清空数据目录下的 dump.rdb 和 appendonly.aof 文件</li>
+<li>将备份的 rdb 文件拷贝到 redis 的数据目录下 (<code>dir</code>选项配置了数据目录)</li>
+<li>修改配置文件，设置 <code>appendonly no</code></li>
+<li>启动 redis-server</li>
+<li>通过 redis-cli 开启 appendonly 备份: <code>CONFIG SET appendonly yes</code></li>
+<li>同时修改配置文件，开启 aof 备份</li>
+</ol>
+<h2 id="注意">注意</h2>
+<p>必须要关闭 appendonly 后，rdb 备份才能正确回复，否则恢复出来的数据是空的</p>
+<h2 id="原因">原因</h2>
+<p>redis server 启动后会生成 appendonly.aof 文件，在 dump.rdb 和 appendonly.aof 文件同时存在的时候，会优先恢复 appendonly.aof 文件，由于 appendonly.aof 是空的，redis server 中的数据也会变成空的。</p>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-9f184c796063902888d119a9e9dbf239">2 - Redis 主从同步细节</h1>
     
 	<blockquote>
 <p>介绍了 Redis 的主从同步流程及一些配置选项</p>
@@ -298,7 +352,99 @@
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-5e80ba3bff85aef5c731bcf3ecb0922c">2 - Redis 源码阅读之 dict </h1>
+	<h1 id="pg-f69785f60caf73840045abeb86206c30">3 - Redis 备份机制</h1>
+    
+	<hr>
+<h2 id="redis-的-aof-和-rdb-备份机制">Redis 的 AOF 和 RDB 备份机制</h2>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com//2021-02-19-224253.png" alt="RDB 和 AOF 介绍"></p>
+<p>RDB 比 AOF 恢复要快</p>
+<ul>
+<li>AOF 存储的是写入指令，它恢复是重放写入指令。</li>
+<li>RDB 恢复时是将文件直接写入内存，恢复速度更快。</li>
+</ul>
+<p>RDB 是定时备份，AOF 的每条操作都会写入磁盘(中间有 linux 系统缓存, fsync 会同步系统缓存到磁盘中)，故 RDB 的写入速度要比 AOF 要高。</p>
+<p>如果 AOF 和 RDB 备份都存在，那么 redis 优先会从 AOF 恢复数据文件。</p>
+<h3 id="rdb-备份">RDB 备份</h3>
+<p>配置文件中设置:</p>
+<p>每条 save 是一个检查点，每隔 <code>&lt;seconds&gt;</code> 秒，检查是否有至少 <code>&lt;changes&gt;</code> 个key 发生了变化，如果有的话就执行一次备份。</p>
+<pre tabindex="0"><code># save &lt;seconds&gt; &lt;changes&gt;
+save 900 1
+save 300 10
+save 60 10000
+</code></pre><p>RDB 持久化的工作流程:</p>
+<ol>
+<li>redis 根据配置的检查点，尝试去生成 rdb 快照文件</li>
+<li>redis fork 一个子进程出来</li>
+<li>子进程尝试将数据 dump 到 rdb 快照文件中</li>
+<li>完成 rdb 文件的 dump 后，就用新文件替换掉之前的旧文件</li>
+</ol>
+<p>如果是通过 <code>redis-cli shutdown</code> 的方式来关闭 redis server 的话，redis server 会在关闭之前会同步一次 rdb 文件。</p>
+<h3 id="aof-备份">AOF 备份</h3>
+<p>配置:</p>
+<p><code>appendfsync</code> 表示多长时间执行一次 <code>fsync</code> 系统调用，将 os cache 数据写入到磁盘中，默认是 everysec，每秒写一次。</p>
+<p>AOF ReWrite 过程:</p>
+<ol>
+<li>redis fork 一个子进程</li>
+<li>子进程基于当前内存中的数据，构建日志，开始往一个新的临时的 aof 文件中写入日志</li>
+<li>redis 主进程，接收到 client 端的写操作之后，
+<ol>
+<li>往旧的 aof 文件中写日志</li>
+<li>开辟一个新的内存区域，在其中写入日志</li>
+</ol>
+</li>
+<li>子进程写完新的日志文件之后，redis 主进程会将内存区域中的新日志再次追加到新的 aof 文件之中</li>
+<li>用新的日志文件，替换掉旧的日志文件</li>
+</ol>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-0bff432c35e390c24fb8a4000eb1827a">4 - Redis 集群简介</h1>
+    
+	<hr>
+<h2 id="为什么要有-redis-集群">为什么要有 Redis 集群</h2>
+<p>redis 单机最多只能支持 1万 到 几万不等的 QPS (根据操作的不同 serve 能力也不同)。如果我们想要支撑更高的 QPS，就需要配置 Redis 集群。</p>
+<h2 id="redis-集群是为了解决什么问题">Redis 集群是为了解决什么问题</h2>
+<p>Redis 集群可以通过读写分离的设置，支持大规模读多写少的操作场景( QPS 达到百万级)。写多的操作场景单纯配置 Redis 集群是无法支持的，我们还需要更改客户端实现，像 kafka 客户端一样通过队列合并写入操作。</p>
+<h2 id="redis-replication-是如何工作的">Redis Replication 是如何工作的</h2>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNly1gvnd81kfq3j60er0dhjs002.jpg" alt=""></p>
+<p>Redis 集群的架构图如上所示。</p>
+<ul>
+<li>Client 将数据写入到 Master 节点后就立刻返回了，Slave 节点从 Master 同步数据过来，Client 不会确认数据是否同步到了 Slave 节点中。</li>
+<li>2.8 以后， Slave 会周期性地确认自己复制的数据量</li>
+<li>Slave 节点也可以连接其他 Slave 节点</li>
+<li>Slave 节点做复制的时候，不会阻塞 Master 节点，也不会阻塞自己，它会用旧的数据集 Serve，当复制完成时，会删除旧的数据集，加载新的数据集，此时会短暂地停止对外服务。(时间在毫秒到秒之间)</li>
+<li>Slave 节点主要应用在读多写少场景下的读写分离操作上，扩容 Slave，可以提高集群的 <strong>读</strong> 吞吐量。</li>
+</ul>
+<h2 id="redis-集群数据备份的配置">Redis 集群数据备份的配置</h2>
+<p>Redis 集群做持久化的时候，需要配置 Master 节点的持久化。因为以下原因：</p>
+<p>假设我们配置了 Slave 节点的持久化，而没有配置 Master 节点。当 Master 节点宕机重启后，它会直接认为自己的数据是空的，同时将这个状态同步到 Slave，从而导致集群的数据消失。</p>
+<p>尽管 Master 挂掉以后，Sentinel 会切换 Master，但这有时间成本，如果在 Sentinel 发现之前 Master 就重启了，一样会造成数据丢失。</p>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-5e80ba3bff85aef5c731bcf3ecb0922c">5 - Redis 源码阅读之 dict </h1>
     
 	<p>本文主要介绍了 Redis 的基础数据结构 dict 的实现，并描述了其渐进式 rehash 的操作</p>
 <p><strong>注意</strong>: 本文基于 Redis 3.0.0 的代码进行分析的</p>
@@ -467,7 +613,7 @@ idx = hash &amp; d-&gt;ht[table].sizemask
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-24908c465f52816f8bd5bc366e5a5645">3 - Redis Sort 命令简介</h1>
+	<h1 id="pg-24908c465f52816f8bd5bc366e5a5645">6 - Redis Sort 命令简介</h1>
     
 	<blockquote>
 <p><code>sort</code>命令是Redis中最强大的命令之一，本文试图通过一些例子来总结Redis Sort的常用方法。</p>
