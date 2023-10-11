@@ -153,6 +153,22 @@
 
     
   
+    
+    
+	
+<li>8: <a href="#pg-25c9fa87749c3a8b80df79ec7693c21d">【流水账】利用闲置笔记本搭建自己的开发服务器</a></li>
+
+
+    
+  
+    
+    
+	
+<li>9: <a href="#pg-3b4ec5fedefcf82985dda74fa4bef98c">【非技术】 Arch 下的无线自动断开</a></li>
+
+
+    
+  
 
     </ul>
 
@@ -878,6 +894,180 @@ done
 </span></span></code></pre></div><h2 id="参考链接">参考链接</h2>
 <ul>
 <li><a href="https://rgb-24bit.github.io/blog/2018/glob.html">Glob 语法及解析</a></li>
+</ul>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-25c9fa87749c3a8b80df79ec7693c21d">8 - 【流水账】利用闲置笔记本搭建自己的开发服务器</h1>
+    
+	<ol>
+<li>对Ubuntu服务器进行基础配置</li>
+<li>配置dnsmasq服务器</li>
+<li>文章没什么技术含量，主要记录一些配置文件的位置</li>
+</ol>
+<h2 id="前言">前言</h2>
+<p>最近新入手了一台MacBook Air，原来的ThinkPad就闲置下来了，感觉一直放着太浪费了，就重装了一个Ubuntu Server 16.04的系统，用来做自己的开发服务器。折腾了几个小时，就都搞定了，特意写下这篇文章，来记录一下自己折腾的过程。</p>
+<h2 id="基础配置">基础配置</h2>
+<p>服务器安装的过程就不说了，大都是那么几步。有一个奇怪的问题就是安装的时候，需要设置时区，我竟然没有找到东八区，只好先设置了一个太平洋时区，好尴尬，不知道是不是Ubuntu的文本安装界面没有东八区这个选项，还是我英文太差了，没有找到。</p>
+<h3 id="设置时间">设置时间</h3>
+<p>由于安装时我们设置了错误的时区，所以首先需要调整一下时区。Ubuntu 16.04已经完全集成了Systemd，所以我们只需要通过<code>sudo timedatectl set-timezone Asia/Shanghai</code>命令，就可以将时区设置为亚洲/上海了，同时我们也可以运行<code>sudo timedatectl set-ntp 1</code>命令，打开自动从 NTP 服务器同步时间，一会之后服务器时间就正常了。<code>timedatectl</code>命令还有一个选项是<code>set-local-rtc</code>，用来将硬件时间设置为本地时间，而不是UTC时间，这个选项我默认是关闭的。</p>
+<h3 id="更改软件源为中科大源">更改软件源为中科大源</h3>
+<p>接下来，就是更改源了，打开<code>/etc/apt/sources.list</code>文件，将所有的<code>us.archive.ubuntu.com</code>替换成<code>mirrors.ustc.edu.cn</code>就可以了，注意这里由于我安装的时候选择的是美国的源，所以域名为<code>us.archive.ubuntu.com</code>，如果选择了其他地方的源，域名可能不一样。</p>
+<p>同时要注意，<code>security.ubuntu.com</code>这个源表示的是 Ubuntu 进行安全更新的源，用来推送紧急安全更新的补丁，这个源我建议保持原样，因为紧急安全更新的补丁还是从 Ubuntu 官方下载比较好，不建议从其他地方来下载。</p>
+<h3 id="设置关闭盖子不休眠">设置关闭盖子不休眠</h3>
+<p>由于我的电脑是笔记本，尽管没有装图形界面，但是在合上盖子之后，系统仍然会自动休眠，所以需要将这个自动休眠的功能关掉。我在网上搜索了一下，在 Askubuntu 上找到了一个相关的<a href="http://askubuntu.com/questions/141866/keep-ubuntu-server-running-on-a-laptop-with-the-lid-closed">问题</a>，按照问题中的答案所说，向<code>/etc/systemd/logind.conf</code>文件中添加一行<code>HandleLidSwitch=ignore</code>，然后重启<code>systemd-logind.service</code>服务，就关闭掉这个功能啦。</p>
+<h2 id="配置网络环境">配置网络环境</h2>
+<p>将服务器配置好以后，接下来我们就需要配置网络了。</p>
+<h3 id="设置dhcp">设置DHCP</h3>
+<p>我的笔记本是通过网线连接到路由器上的，所以，首先我们需要将有线网卡通过 DHCP 自动连接网络的功能打开。这里我在网上搜索了一下，搜到了一篇文章：<a href="http://www.ubuntugeek.com/ubuntu-networking-configuration-using-command-line.html">Ubuntu Networking Configuration Using Command Line </a>。这篇文章很详细地介绍了Ubuntu如何设置动态IP和静态IP。我的电脑在刚装好系统的时候，没有任何关于有线网卡的配置文件，仅能够通过<code>ip addr</code>命令来看到当前系统的网卡，在了解到有线网卡的名称为<code>enp12s0</code>之后，我新建了一个文件<code>/etc/network/interfaces.d/enp12s0.conf</code>，然后向其中添加了如下的内容，</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置网卡enp12s0在开机的时候通过 DHCP 自动连接到网络。</span>
+</span></span><span style="display:flex;"><span>auto enp12s0
+</span></span><span style="display:flex;"><span>iface enp12s0 inet dhcp
+</span></span></code></pre></div><p>上面两句配置就表示设置网卡enp12s0在开机的时候通过 DHCP 自动连接到网络。</p>
+<h3 id="设置默认网关">设置默认网关</h3>
+<p>设置好网卡的 DHCP 以后，我的服务器能够 ping 通路由器网关了，但是仍然无法 ping 通外网，显然，这是由于服务器本机的网关没有配置好，后来我又上网去搜索，发现了<a href="http://askubuntu.com/questions/522420/how-to-get-default-gateway-with-a-dhcp">Askubuntu 上一个类似的问题</a>，其中有个答案提到，<code>dhclient</code>只在当前服务器没有设置默认网关的时候，才会设置由 DHCP 服务器提供的路由器地址为默认网关。我通过<code>ip route</code>看了一下我的服务器的路由表，发现默认网关为网卡<code>lo</code>，所以 DHCP 服务器下发下来的网关地址并不会生效。我又在<code>/etc/network/interfaces</code>中添加了如下的配置：<code>post-up route del default dev lo</code>，删除掉默认走<code>lo</code>设备的路由配置。</p>
+<p>然后我再来重启电脑，就发现服务器一开机就能够正常 ping 通外网了。</p>
+<h3 id="设置路由器">设置路由器</h3>
+<p>看到这里，相信大家肯定都有一些疑惑，服务器不应该是默认设置为静态IP吗，为什么你要配置 DHCP 呢。原因就在这一小节，我用的路由器是华硕的RT - N12，它的 DHCP 服务器有一个功能，就是将MAC地址和IP地址进行绑定，所以，我只需要在路由器上配置好MAC地址和IP地址的绑定，这样就相当于起到了静态IP的作用了，而且更改起来也比较方便，不需要服务器和路由器两头改。</p>
+<h2 id="配置dns">配置DNS</h2>
+<p>由于我访问我的服务器的时候想通过域名来访问(方便以后添加HTTPS证书)，所以我需要在我的内网中自己搭建一个DNS服务器，来负责服务器的域名解析。</p>
+<h3 id="安装并设置dnsmasq">安装并设置dnsmasq</h3>
+<p>由于我的需求很简单，只需要进行一个域名解析就可以了，所以我选择了<a href="http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html">dnsmasq</a>，而不是比较复杂的bind9。</p>
+<p><code>dnsmasq</code>在Ubuntu的源中直接有deb安装包，所以我们直接通过<code>sudo apt install dnsmasq</code>命令安装即可。</p>
+<p><code>dnsmasq</code>的配置我参考了文章<a href="http://cjting.me/misc/2016-08-20-%E4%BD%BF%E7%94%A8Dnsmasq%E6%90%AD%E5%BB%BA%E5%86%85%E7%BD%91DNS%E6%9C%8D%E5%8A%A1%E5%99%A8.html">使用Dnsmasq搭建内网DNS服务器</a>。使用了如下的配置：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 设置服务器的监听地址为192.168.X.X和127.0.0.1</span>
+</span></span><span style="display:flex;"><span>listen-address<span style="color:#ce5c00;font-weight:bold">=</span>192.168.X.X,127.0.0.1
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 所有没有.号的域名(plain names)都不会向上游DNS Server转发，只查询hosts文件</span>
+</span></span><span style="display:flex;"><span>domain-needed
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 所有保留IP地址段内的反向查询都不会向上游DNS Server转发，只查询hosts文件</span>
+</span></span><span style="display:flex;"><span>bogus-priv
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 不要读取/etc/resolver中的DNS Server的配置</span>
+</span></span><span style="display:flex;"><span>no-resolv
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 不要poll /etc/resolver文件的更新</span>
+</span></span><span style="display:flex;"><span>no-poll
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 配置上游服务器为DNSPod的公共DNS</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">server</span><span style="color:#ce5c00;font-weight:bold">=</span>119.29.29.29
+</span></span><span style="display:flex;"><span><span style="color:#000">server</span><span style="color:#ce5c00;font-weight:bold">=</span>182.254.116.116
+</span></span></code></pre></div><p>配置好了以后，我们可以通过<code>dnsmasq --test</code>命令来检查<code>dnsmasq</code>的配置文件语法是否正确。</p>
+<p>然后我们在服务器的<code>/etc/hosts</code>中添加我们想要设置的解析记录，比如这台服务器我设置了如下的记录：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>192.168.X.X dev.bwangel.me
+</span></span></code></pre></div><p>然后通过<code>sudo systemctl enable dnsmasq &amp;&amp; sudo systemctl restart dnsmasq</code>命令启动<code>dnsmasq</code>服务即可。</p>
+<p>最后我们可以通过<code>dig</code>命令测试一下，运行如下命令: <code>dig dev.bwangel.me @localhost</code>，看返回的IP地址是否和我们设置的解析记录相同。</p>
+<h3 id="设置路由器-1">设置路由器</h3>
+<p>配置好了DNS服务器以后，我们再来修改路由器的 DHCP 策略，设置下发的DNS服务器IP地址为我们的DNS服务器地址，这样内网中所有的DNS查询都会先经过这台DNS服务器。而我们的<code>dev.bwangel.me</code>域名也就能够成功解析了。至此，我们的开发服务器就已经搭建好了，我们可以通过SSH连接上来，搭建我们想要的服务了。</p>
+<h2 id="遇到的一些小坑">遇到的一些小坑</h2>
+<h3 id="dnsmasq没有绑定本地地址">dnsmasq没有绑定本地地址</h3>
+<p>配置好了 DNS 服务器以后，我在服务器上 ping 百度的时候会一直卡着，但是 ping 公网 IP 却是可以 ping 通的，当时我第一反应就是DNS解析出错了，只是不知道是DNS服务器配置的有问题，还是DNS服务器的IP地址路由器没有正确地下发下来。</p>
+<p>接着我就利用dig来测试，发现使用<code>dig www.baidu.com @192.168.X.X</code>命令可以得到正常结果，而<code>dig www.baidu.com @127.0.0.1</code>就会卡着。然后我就觉得应该是dnsmasq没有监听<code>127.0.0.1</code>导致的问题。最后发现服务器DNS的配置文件<code>/etc/resolv.conf</code>中设置的默认DNS为<code>127.0.0.1</code>，而它去查询<code>127.0.0.1</code>的时候会卡着，也不报错，导致服务器不会使用备选的DNS服务器来查询域名，最终导致出现了 ping 百度卡着这种情况。我将dnsmasq的监听地址加上<code>127.0.0.1</code>之后就OK了。</p>
+<p>这里还有一点没有搞清楚，路由器的 DHCP 中配置的DNS服务器并没有正确地应用，服务器还是默认遵循<code>/etc/resolv.conf</code>文件中的配置，这个还需要进一步了解一下。</p>
+<h3 id="ssh出现locale报错">ssh出现locale报错</h3>
+<p>这个问题经常遇到了，在Mac上通过SSH连接到Ubuntu上之后，在安装更新的过程中，出现了如下的报错：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>perl: warning: Setting locale failed.
+</span></span><span style="display:flex;"><span>perl: warning: Please check that your locale settings:
+</span></span><span style="display:flex;"><span>    <span style="color:#000">LANGUAGE</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">unset</span><span style="color:#ce5c00;font-weight:bold">)</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#000">LC_ALL</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">unset</span><span style="color:#ce5c00;font-weight:bold">)</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#000">LC_MESSAGES</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;zh_CN.UTF-8&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#000">LANG</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;zh_CN.UTF-8&#34;</span>
+</span></span><span style="display:flex;"><span>    are supported and installed on your system.
+</span></span><span style="display:flex;"><span>perl: warning: Falling back to the standard locale <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;C&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>.
+</span></span></code></pre></div><p>这是由于终端SSH的时候，会将本地的locale配置传到服务端上去，我的本地设置的语系是<code>zh_CN.UTF-8</code>，但是服务器上只安装了<code>en_US.UTF-8</code>，所以就会报错提示说找不到语系<code>zh_CN.UTF-8</code>相关的文件。这里我们只需要修改一下服务器的<code>/etc/locale.gen</code>配置文件，将<code>zh_CN.UTF-8</code>相关的配置取消注释，然后再来运行<code>locale-gen</code>命令，就会安装上<code>zh_CN.UTF-8</code>语系相关的文件了，再来运行<code>perl</code>程序就不会报错了。</p>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-3b4ec5fedefcf82985dda74fa4bef98c">9 - 【非技术】 Arch 下的无线自动断开</h1>
+    
+	<p><strong>摘要</strong>:</p>
+<blockquote>
+<ol>
+<li>折腾 ThinkPad E430 在 Arch WiFi 自动断开的问题</li>
+<li>无线网卡型号推荐</li>
+</ol>
+</blockquote>
+<h2 id="问题描述">问题描述</h2>
+<p>首先说明，这个问题我最终还是没有解决，最后的办法就是去上网买了一块无线网卡，所以我在标题上写上非技术的字样，表明这篇文章技术含量并不大。</p>
+<p>先说我的硬件环境吧，电脑是 ThinkPad E430，无线网卡的芯片型号是瑞昱的RTL8188CE，系统内核版本是4.8.13。</p>
+<p>出现的问题就是无线连上一段时间以后，网络会自动断开，ping 不通任何网站。而系统却还显示网络已经连接，<code>ip address</code> 命令也能够看到无线网卡的IP地址。</p>
+<h2 id="尝试的解决方案">尝试的解决方案</h2>
+<h3 id="方案1更改etcpppoptions配置文件">方案1：更改<code>/etc/ppp/options</code>配置文件</h3>
+<p>遇到问题当然要先谷歌啦，首先我以<code>arch wifi auto disconnect</code>关键字来搜索，结果搜到了很多相关度不大的页面，后来又以<code>thinkpad e430 wifi auto disconnect</code>关键字来搜索，就搜索到了<a href="https://www.oschina.net/question/571626_234750">开源中国社区上的一个问题</a>，额，前两个回答看起来还是让人很不爽的，不禁让我想起来教主的这条<a href="http://weibo.com/1401527553/EirySEJV9?type=comment">微博</a>，然后果断举报了。</p>
+<p>接着我在下面看到有人回答说可以更改<code>/etc/ppp/options</code>文件中的一个配置项，我就照着去更改了，重启后发现该 WiFi 依旧抽风，方案1失败。</p>
+<h3 id="方案2更改rtl8192ce内核模块的选项">方案2：更改<code>rtl8192ce</code>内核模块的选项</h3>
+<p>后来我一想，是不是因为我的搜索关键字范围太广了，就把关键字搞得更精确一点。我就去以<code>RTL8188CE linux disconnect</code>和<code>RTL8188CE linux disconnect</code>着两个关键字去搜索，果然一下子发现了有价值的内容。</p>
+<p>首先找到了是这个帖子：<a href="https://forums.linuxmint.com/viewtopic.php?t=194086">【SOLVED】 wifi connection problems Realtek RTL8188CE</a>。发现这个帖子的时候，我感觉特别兴奋的，因为这位网友描述的问题，和我的几乎一模一样，它的网卡型号也和我的一模一样。
+然后照着下面的回复，给<code>rtl8192ce</code>模块添加了<code>fwlps=0 ips=0</code>这两个参数，重启后发现依然跪，好吧，真是大坑。后来又去尝试编译这篇帖子中提到了<code>backports-20150313.tar.xz</code>程序，直接出现了语法错误，好吧，果断放弃了。</p>
+<p>后来有搜索到了Arch论坛上有人讨论相关的问题，然后我就照着论坛里面人们的讨论，稀里糊涂地发现了 ThinkPad E430 在 Arch 上的 <a href="https://wiki.archlinux.org/index.php/Lenovo_ThinkPad_Edge_E430#Wireless">Wiki页面</a>。Wiki 中就提到了无线网络的问题，然后它给出的答案也是更改<code>RTL8188CE</code>这个内核模块的参数，不过是只需要添加一个<code>fwlps=0</code>就好了，如果不行的话，直接去买一块 Intel Centrino wlan/bluetooth 4.0 卡吧。
+我照着这个方案试了一下，果断不行，WiFi 依然跪，方案2也失败了。</p>
+<h3 id="方案3求助于-archlinux-的邮件列表">方案3：求助于 ArchLinux 的邮件列表</h3>
+<p>到此时，我已经感觉到山穷水尽了，好像真的没有办法了，于是乎就去 ArchLinux 邮件列表上发了一个<a href="https://groups.google.com/forum/#!topic/archlinux-cn/UgGVBn99UOs">求助帖</a>：一方面想看看还能不能找到解决办法，另一方面想请教一下如果要再买一个无线网卡的话，该买什么型号的？</p>
+<h2 id="原因分析">原因分析</h2>
+<p>最后，在邮件列表中，大家分析过后，认为很有可能网卡驱动有问题。</p>
+<p>因为在网络实际上已经断开的情况下，内核依然没有收到网络断开的消息，依然认为网络是连接着的。这种情况下可能的原因是：</p>
+<ol>
+<li>内核有 BUG 导致驱动报告的事件没有反应到其他部分。</li>
+<li>驱动有 BUG 没有正确地将网络断开事件报告给内核。</li>
+<li>驱动有 BUG 在网络已经断开的情况下没有报告网络已经断开这个事件。</li>
+</ol>
+<p>而一般看来，驱动是故障的高发区。</p>
+<p>后来我又用 Wireshark 抓了一下包，发现当WiFI自动断开后，有大量的 ARP 请求，此时应该就是因为驱动有问题导致网卡罢工了，内核让它发的包发布出去，它也接受不到任何的包。</p>
+<h2 id="网卡推荐">网卡推荐</h2>
+<p>至此，看来这个驱动问题我是没法解决了，只好去重新买一块无线网卡，为了一个操作系统花上几十块钱买块网卡，虽说听起来很2，但是自己觉得还是很划算的。</p>
+<p>目前无线网卡的芯片主要有这么几种：</p>
+<ul>
+<li>Ralink(雷凌，台湾)</li>
+</ul>
+<blockquote>
+<p>Ralink Technology公司成立于2001年，总部位于台湾新竹，并在美国加州Cupertino设有研发中心。目前已知的Edimax、Tenda、ASUS及D-link都有采用Ralink的产品。</p>
+</blockquote>
+<ul>
+<li>oroadcomd(博通，美国)</li>
+</ul>
+<blockquote>
+<p>Broadcom芯片是最成熟、最稳定的一种，而且还可以使用DD-WRT这种第三方开源固件改善性能，增加功能。</p>
+</blockquote>
+<ul>
+<li>Atheros(创锐讯，美国)</li>
+</ul>
+<blockquote>
+<p>Atheros 在1999年由斯坦福大学的Teresa Meng博士和斯坦福大学校长，MIPS创始人John Hennessy博士共同在硅谷创办。Atheros的芯片被各大厂商所广泛采用，Netgear、D-Link、Intel等厂商均为Atheros客户。</p>
+</blockquote>
+<ul>
+<li>Realtek(瑞昱，台湾)</li>
+</ul>
+<blockquote>
+<p>瑞昱半导体于1987年在台湾的新竹科学园区成立，我的电脑的无线网卡芯片就是这个牌子的。</p>
+</blockquote>
+<p>总的来说，无论是抓包，开热点还是兼容性(不仅针对 Linux)，Atheros 的 AR9271 都是比较合适的。据同事说，使用下来最稳定的 USB 网卡就是网件的 WNA1100，某宝上二手的洋垃圾也就十几块钱。</p>
+<h2 id="写在最后">写在最后</h2>
+<p>最终我还是去某宝上买了一块 USB 无线网卡。再此，要感谢邮件列表中的热心群众，感谢他们能够帮我解决问题和推荐网卡，我从中也学到了很多。</p>
+<p>最后附上我在解决问题的过程中参考到的页面：</p>
+<ul>
+<li><a href="https://www.oschina.net/question/571626_234750">ubuntu14.04 wifi频繁掉线</a></li>
+<li><a href="https://forums.linuxmint.com/viewtopic.php?t=194086">【SOLVED】wifi connection problems Realtek RTL8188CE</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Lenovo_ThinkPad_Edge_E430#Wireless">Lenovo ThinkPad Edge E430 - Arch Wiki</a></li>
+<li><a href="https://item.taobao.com/item.htm?spm=a230r.1.14.62.DbhWkt&amp;id=538494346626&amp;ns=1&amp;abbucket=19#detail">没错，你没有看错，这是一个淘宝页面，我参考了它的宝贝详情</a></li>
+<li><a href="https://groups.google.com/forum/#!topic/archlinux-cn/UgGVBn99UOs">ArchLinux 的邮件列表</a></li>
 </ul>
 </div>
 
