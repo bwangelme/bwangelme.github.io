@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – 编辑器</title>
-    <link>https://bwangelme.github.io/647/docs/editor/</link>
+    <link>https://bwangel.me/647/docs/editor/</link>
     <description>Recent content in 编辑器 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 09 Aug 2023 10:57:48 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangelme.github.io/647/docs/editor/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/647/docs/editor/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Pycharm</title>
-      <link>https://bwangelme.github.io/647/docs/editor/pycharm/</link>
+      <link>https://bwangel.me/647/docs/editor/pycharm/</link>
       <pubDate>Wed, 09 Aug 2023 10:57:42 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/editor/pycharm/</guid>
+      <guid>https://bwangel.me/647/docs/editor/pycharm/</guid>
       <description>
         
         
@@ -35,10 +35,10 @@
     
     <item>
       <title>Docs: Caps-lock mapping 成 Esc 在 vscode 中不生效</title>
-      <link>https://bwangelme.github.io/647/docs/editor/vscode-esc-not-work/</link>
+      <link>https://bwangel.me/647/docs/editor/vscode-esc-not-work/</link>
       <pubDate>Mon, 18 Oct 2021 11:27:39 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/editor/vscode-esc-not-work/</guid>
+      <guid>https://bwangel.me/647/docs/editor/vscode-esc-not-work/</guid>
       <description>
         
         

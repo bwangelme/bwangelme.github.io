@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.115.2">
-<link rel="canonical" type="text/html" href="https://bwangelme.github.io/647/docs/prometheus/">
-<link rel="alternate" type="application/rss&#43;xml" href="https://bwangelme.github.io/647/docs/prometheus/index.xml">
+<meta name="generator" content="Hugo 0.117.0">
+<link rel="canonical" type="text/html" href="https://bwangel.me/647/docs/prometheus/">
+<link rel="alternate" type="application/rss&#43;xml" href="https://bwangel.me/647/docs/prometheus/index.xml">
 <meta name="robots" content="noindex, nofollow">
 
 
@@ -25,7 +25,7 @@
 <meta property="og:title" content="Prometheus" />
 <meta property="og:description" content="宇宙很大，生活更大，也许以后还有缘相见" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://bwangelme.github.io/647/docs/prometheus/" /><meta property="og:site_name" content="647号宇宙" />
+<meta property="og:url" content="https://bwangel.me/647/docs/prometheus/" /><meta property="og:site_name" content="647号宇宙" />
 <meta itemprop="name" content="Prometheus">
 <meta itemprop="description" content="宇宙很大，生活更大，也许以后还有缘相见"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Prometheus"/>
@@ -335,7 +335,7 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// prometheus.DefaultRegisterer.Register(h)
 </span></span></span></code></pre></div><p><code>prometheus.Collector</code> 接口有一个 <code>Describe</code> 方法，它用于获取指标的信息。具体做法是传入一个 channel 参数，指标将 Desc 信息写入到 channel 中。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">type</span> <span style="color:#000">Collector</span> <span style="color:#204a87;font-weight:bold">interface</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a40000">#</span> <span style="color:#000">Desc</span> <span style="color:#a40000">包含指标名</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">help</span> <span style="color:#a40000">等信息</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a40000">#</span> <span style="color:#000">Desc</span> <span style="color:#000">包含指标名</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">help</span> <span style="color:#000">等信息</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#000">Describe</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">chan</span><span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">Desc</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">...</span><span style="color:#000;font-weight:bold">.</span>
 </span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
@@ -448,7 +448,7 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
        integrity="sha512-iWiuBS5nt6r60fCz26Nd0Zqe0nbk1ZTIQbl3Kv7kYsX+yKMUFHzjaH2+AnM6vp2Xs+gNmaBAVWJjSmuPw76Efg==" crossorigin="anonymous"
        onload='renderMathInElement(document.body, null);'>
 </script>
-<script src="/647/js/main.min.6f5832c0d01e88c997eeb57e6b773ea3e1ac128fdf53739b3c750242f2355881.js" integrity="sha256-b1gywNAeiMmX7rV&#43;a3c&#43;o&#43;GsEo/fU3ObPHUCQvI1WIE=" crossorigin="anonymous"></script>
+<script src="/647/js/main.min.4f6bdd3cd8cde411a9b8cc8c9f435ab27b7a07d49198bf6bc750cdcd26e6e429.js" integrity="sha256-T2vdPNjN5BGpuMyMn0Nasnt6B9SRmL9rx1DNzSbm5Ck=" crossorigin="anonymous"></script>
 <script src='/647/js/prism.js'></script>
 <script src='/647/js/tabpane-persist.js'></script>
 

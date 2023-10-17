@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Redis</title>
-    <link>https://bwangelme.github.io/647/docs/redis/</link>
+    <link>https://bwangel.me/647/docs/redis/</link>
     <description>Recent content in Redis on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 13 Sep 2023 09:46:21 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangelme.github.io/647/docs/redis/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/647/docs/redis/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Redis 备份恢复的正确步骤</title>
-      <link>https://bwangelme.github.io/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</link>
+      <link>https://bwangel.me/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</link>
       <pubDate>Sat, 23 Oct 2021 17:36:43 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</guid>
+      <guid>https://bwangel.me/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</guid>
       <description>
         
         
@@ -43,10 +43,10 @@
     
     <item>
       <title>Docs: Redis 主从同步细节</title>
-      <link>https://bwangelme.github.io/647/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</link>
+      <link>https://bwangel.me/647/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</link>
       <pubDate>Fri, 22 Oct 2021 21:57:55 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</guid>
+      <guid>https://bwangel.me/647/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</guid>
       <description>
         
         
@@ -190,10 +190,10 @@
     
     <item>
       <title>Docs: Redis 备份机制</title>
-      <link>https://bwangelme.github.io/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</link>
+      <link>https://bwangel.me/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</link>
       <pubDate>Fri, 22 Oct 2021 00:00:45 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</guid>
+      <guid>https://bwangel.me/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</guid>
       <description>
         
         
@@ -243,10 +243,10 @@ save 60 10000
     
     <item>
       <title>Docs: Redis 集群简介</title>
-      <link>https://bwangelme.github.io/647/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</link>
+      <link>https://bwangel.me/647/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Thu, 21 Oct 2021 23:40:12 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://bwangel.me/647/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</guid>
       <description>
         
         
@@ -274,10 +274,10 @@ save 60 10000
     
     <item>
       <title>Docs: Redis 源码阅读之 dict </title>
-      <link>https://bwangelme.github.io/647/docs/redis/redis-source-dict/</link>
+      <link>https://bwangel.me/647/docs/redis/redis-source-dict/</link>
       <pubDate>Wed, 14 Mar 2018 00:14:32 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/redis/redis-source-dict/</guid>
+      <guid>https://bwangel.me/647/docs/redis/redis-source-dict/</guid>
       <description>
         
         
@@ -439,10 +439,10 @@ idx = hash &amp;amp; d-&amp;gt;ht[table].sizemask
     
     <item>
       <title>Docs: Redis Sort 命令简介</title>
-      <link>https://bwangelme.github.io/647/docs/redis/redis-sort/</link>
+      <link>https://bwangel.me/647/docs/redis/redis-sort/</link>
       <pubDate>Wed, 21 Jun 2017 13:29:08 +0000</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/redis/redis-sort/</guid>
+      <guid>https://bwangel.me/647/docs/redis/redis-sort/</guid>
       <description>
         
         

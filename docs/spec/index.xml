@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – 规范</title>
-    <link>https://bwangelme.github.io/647/docs/spec/</link>
+    <link>https://bwangel.me/647/docs/spec/</link>
     <description>Recent content in 规范 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 09 Aug 2023 19:04:34 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangelme.github.io/647/docs/spec/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/647/docs/spec/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 日期和时间格式</title>
-      <link>https://bwangelme.github.io/647/docs/spec/datetime/</link>
+      <link>https://bwangel.me/647/docs/spec/datetime/</link>
       <pubDate>Wed, 26 Oct 2022 11:32:14 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/spec/datetime/</guid>
+      <guid>https://bwangel.me/647/docs/spec/datetime/</guid>
       <description>
         
         

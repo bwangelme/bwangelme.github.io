@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – K8S In Actions</title>
-    <link>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/</link>
+    <link>https://bwangel.me/647/docs/k8s/k8s-in-actions/</link>
     <description>Recent content in K8S In Actions on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Thu, 28 Sep 2023 11:06:47 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/647/docs/k8s/k8s-in-actions/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 11-architecture</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-11/</link>
+      <link>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-11/</link>
       <pubDate>Wed, 26 Jan 2022 23:08:47 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-11/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-11/</guid>
       <description>
         
         
@@ -86,10 +86,10 @@
     
     <item>
       <title>Docs: 10-statefulset</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-10/</link>
+      <link>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-10/</link>
       <pubDate>Tue, 18 Jan 2022 10:11:27 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-10/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-10/</guid>
       <description>
         
         
@@ -279,10 +279,10 @@
     
     <item>
       <title>Docs: 7-configmap-secert</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-7/</link>
+      <link>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-7/</link>
       <pubDate>Fri, 08 Jan 2021 07:51:51 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-7/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-7/</guid>
       <description>
         
         
@@ -420,10 +420,10 @@
     
     <item>
       <title>Docs: 6-volume</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-6/</link>
+      <link>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-6/</link>
       <pubDate>Sun, 11 Oct 2020 14:47:13 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-6/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-6/</guid>
       <description>
         
         
@@ -802,10 +802,10 @@ Volumes:
     
     <item>
       <title>Docs: 5-service</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-5/</link>
+      <link>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-5/</link>
       <pubDate>Wed, 22 Apr 2020 21:44:44 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-5/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-5/</guid>
       <description>
         
         
@@ -1528,10 +1528,10 @@ Volumes:
     
     <item>
       <title>Docs: 4-pod-replicaset</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-4/</link>
+      <link>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-4/</link>
       <pubDate>Wed, 01 Apr 2020 21:21:52 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-4/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-4/</guid>
       <description>
         
         
@@ -2279,10 +2279,10 @@ GET 容器的 HTTP 地址，检查响应码是否是 2xx 或 3xx&lt;/li&gt;
     
     <item>
       <title>Docs: 3-Pod</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-3/</link>
+      <link>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-3/</link>
       <pubDate>Thu, 19 Mar 2020 00:03:01 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/k8s-in-actions-3/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/k8s-in-actions/k8s-in-actions-3/</guid>
       <description>
         
         

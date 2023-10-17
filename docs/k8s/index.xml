@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – K8S</title>
-    <link>https://bwangelme.github.io/647/docs/k8s/</link>
+    <link>https://bwangel.me/647/docs/k8s/</link>
     <description>Recent content in K8S on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Mon, 11 Sep 2023 10:41:32 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangelme.github.io/647/docs/k8s/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/647/docs/k8s/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: K8S In Actions</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/</link>
+      <link>https://bwangel.me/647/docs/k8s/k8s-in-actions/</link>
       <pubDate>Thu, 28 Sep 2023 11:06:47 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/k8s-in-actions/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/k8s-in-actions/</guid>
       <description>
         
         
@@ -30,10 +30,10 @@
     
     <item>
       <title>Docs: Pod Tips</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/pod-tips/</link>
+      <link>https://bwangel.me/647/docs/k8s/pod-tips/</link>
       <pubDate>Thu, 02 Mar 2023 09:31:14 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/pod-tips/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/pod-tips/</guid>
       <description>
         
         
@@ -108,10 +108,10 @@
     
     <item>
       <title>Docs: Deployment Tips</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/deployment-tips/</link>
+      <link>https://bwangel.me/647/docs/k8s/deployment-tips/</link>
       <pubDate>Thu, 15 Sep 2022 10:31:16 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/deployment-tips/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/deployment-tips/</guid>
       <description>
         
         
@@ -139,10 +139,10 @@ Type     Reason            Age                From                   Message
     
     <item>
       <title>Docs: K8S 中观察 CPU Throttling 情况的指标</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/k8s-cpu-throttle-prom-metric/</link>
+      <link>https://bwangel.me/647/docs/k8s/k8s-cpu-throttle-prom-metric/</link>
       <pubDate>Tue, 16 Aug 2022 23:14:25 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/k8s-cpu-throttle-prom-metric/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/k8s-cpu-throttle-prom-metric/</guid>
       <description>
         
         
@@ -242,10 +242,10 @@ sum(
     
     <item>
       <title>Docs: 进程卡住如何 debug</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/process-block/</link>
+      <link>https://bwangel.me/647/docs/k8s/process-block/</link>
       <pubDate>Thu, 07 Jul 2022 19:56:13 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/process-block/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/process-block/</guid>
       <description>
         
         
@@ -269,10 +269,10 @@ sum(
     
     <item>
       <title>Docs: 使用 Buildkit 和 Containerd 构建运行容器</title>
-      <link>https://bwangelme.github.io/647/docs/k8s/buildkit/</link>
+      <link>https://bwangel.me/647/docs/k8s/buildkit/</link>
       <pubDate>Mon, 08 Nov 2021 12:43:04 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/k8s/buildkit/</guid>
+      <guid>https://bwangel.me/647/docs/k8s/buildkit/</guid>
       <description>
         
         

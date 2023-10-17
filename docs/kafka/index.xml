@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Kafka</title>
-    <link>https://bwangelme.github.io/647/docs/kafka/</link>
+    <link>https://bwangel.me/647/docs/kafka/</link>
     <description>Recent content in Kafka on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Mon, 11 Sep 2023 10:43:47 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangelme.github.io/647/docs/kafka/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/647/docs/kafka/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Consumer</title>
-      <link>https://bwangelme.github.io/647/docs/kafka/consumer/</link>
+      <link>https://bwangel.me/647/docs/kafka/consumer/</link>
       <pubDate>Mon, 11 Sep 2023 16:30:55 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/kafka/consumer/</guid>
+      <guid>https://bwangel.me/647/docs/kafka/consumer/</guid>
       <description>
         
         
@@ -71,10 +71,10 @@
     
     <item>
       <title>Docs: Broker</title>
-      <link>https://bwangelme.github.io/647/docs/kafka/broker/</link>
+      <link>https://bwangel.me/647/docs/kafka/broker/</link>
       <pubDate>Mon, 11 Sep 2023 16:27:26 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/kafka/broker/</guid>
+      <guid>https://bwangel.me/647/docs/kafka/broker/</guid>
       <description>
         
         
@@ -121,10 +121,10 @@
     
     <item>
       <title>Docs: 从源码安装 confluent-kafka-python</title>
-      <link>https://bwangelme.github.io/647/docs/kafka/confluent_python.md/</link>
+      <link>https://bwangel.me/647/docs/kafka/confluent_python.md/</link>
       <pubDate>Fri, 11 Mar 2022 14:34:44 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/kafka/confluent_python.md/</guid>
+      <guid>https://bwangel.me/647/docs/kafka/confluent_python.md/</guid>
       <description>
         
         

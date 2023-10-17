@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – 性能分析</title>
-    <link>https://bwangelme.github.io/647/docs/performance/</link>
+    <link>https://bwangel.me/647/docs/performance/</link>
     <description>Recent content in 性能分析 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sun, 13 Aug 2023 16:17:47 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangelme.github.io/647/docs/performance/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/647/docs/performance/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: QPS 和 RT 的关系</title>
-      <link>https://bwangelme.github.io/647/docs/performance/qps_rt/</link>
+      <link>https://bwangel.me/647/docs/performance/qps_rt/</link>
       <pubDate>Sun, 13 Aug 2023 16:17:52 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/performance/qps_rt/</guid>
+      <guid>https://bwangel.me/647/docs/performance/qps_rt/</guid>
       <description>
         
         

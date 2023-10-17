@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Ubuntu</title>
-    <link>https://bwangelme.github.io/647/docs/ubuntu/</link>
+    <link>https://bwangel.me/647/docs/ubuntu/</link>
     <description>Recent content in Ubuntu on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Fri, 29 Sep 2023 10:16:25 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangelme.github.io/647/docs/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/647/docs/ubuntu/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Ubuntu 下 alacritty 终端中安装 nvim-tree 插件</title>
-      <link>https://bwangelme.github.io/647/docs/ubuntu/nvim-web-devicons/</link>
+      <link>https://bwangel.me/647/docs/ubuntu/nvim-web-devicons/</link>
       <pubDate>Fri, 21 Oct 2022 15:43:43 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/ubuntu/nvim-web-devicons/</guid>
+      <guid>https://bwangel.me/647/docs/ubuntu/nvim-web-devicons/</guid>
       <description>
         
         
@@ -53,10 +53,10 @@
     
     <item>
       <title>Docs: Ubuntu 初始化</title>
-      <link>https://bwangelme.github.io/647/docs/ubuntu/ubuntu-init/</link>
+      <link>https://bwangel.me/647/docs/ubuntu/ubuntu-init/</link>
       <pubDate>Sun, 08 May 2022 10:42:22 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/ubuntu/ubuntu-init/</guid>
+      <guid>https://bwangel.me/647/docs/ubuntu/ubuntu-init/</guid>
       <description>
         
         
@@ -114,10 +114,10 @@
     
     <item>
       <title>Docs: Ubuntu 使用默认的 DNS Server 配置</title>
-      <link>https://bwangelme.github.io/647/docs/ubuntu/ubuntu-dns/</link>
+      <link>https://bwangel.me/647/docs/ubuntu/ubuntu-dns/</link>
       <pubDate>Wed, 20 Apr 2022 02:07:00 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/ubuntu/ubuntu-dns/</guid>
+      <guid>https://bwangel.me/647/docs/ubuntu/ubuntu-dns/</guid>
       <description>
         
         
@@ -143,10 +143,10 @@
     
     <item>
       <title>Docs: 修复 Ubuntu 中 chrome vimium-c 插件失效的问题</title>
-      <link>https://bwangelme.github.io/647/docs/ubuntu/chrome_key_event_missing/</link>
+      <link>https://bwangel.me/647/docs/ubuntu/chrome_key_event_missing/</link>
       <pubDate>Thu, 24 Feb 2022 22:20:23 +0800</pubDate>
       
-      <guid>https://bwangelme.github.io/647/docs/ubuntu/chrome_key_event_missing/</guid>
+      <guid>https://bwangel.me/647/docs/ubuntu/chrome_key_event_missing/</guid>
       <description>
         
         
