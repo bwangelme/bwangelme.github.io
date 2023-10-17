@@ -1,0 +1,148 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – containerd</title>
+    <link>https://bwangel.me/647/tags/containerd/</link>
+    <description>Recent content in containerd on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Tue, 23 Aug 2022 08:17:21 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/containerd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Ubuntu 下安装 Containerd 及配置代理</title>
+      <link>https://bwangel.me/647/docs/container/install-containerd/</link>
+      <pubDate>Tue, 23 Aug 2022 08:17:21 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/container/install-containerd/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;p&gt;介绍了安装 containerd 的方法&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;安装-containerd&#34;&gt;安装 containerd&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;卸载从 apt 源安装的 containerd&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt-get remove -y containerd docker.io
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rm -vf /etc/systemd/system/containerd.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rm -rvf /etc/systemd/system/containerd.service.d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;安装 containerd 二进制文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;从 &lt;a href=&#34;https://github.com/containerd/containerd/releases&#34;&gt;containerd release 页面&lt;/a&gt; 下载 &lt;code&gt;containerd-{version}-linux-amd64.tar.gz&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;将 containerd 的二进制文件解压到 /usr/local/bin 中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 我下载的是 1.6.8 版本&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar Cxzvf /usr/local containerd-1.6.8-linux-amd64.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;从 &lt;a href=&#34;https://github.com/containerd/containerd/blob/main/containerd.service&#34;&gt;containerd 仓库&lt;/a&gt; 中下载 systemd 配置文件, 并将其复制到 &lt;code&gt;/usr/local/lib/systemd/system/containerd.service&lt;/code&gt; 中&lt;/li&gt;
+&lt;li&gt;重启令 systemd 配置文件生效&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl daemon-reload
+systemctl enable --now containerd
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;安装 runc&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;从 &lt;a href=&#34;https://github.com/opencontainers/runc/releases&#34;&gt;runc release 页面&lt;/a&gt; 下载 &lt;code&gt;runc.amd64&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;安装 runc,&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;install -m 755 runc.amd64 /usr/local/sbin/runc
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;安装 CNI 插件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;从 &lt;a href=&#34;https://github.com/containernetworking/plugins/releases&#34;&gt;containernetworking release 页面&lt;/a&gt; 下载 &lt;code&gt;cni-plugins-linux-amd64-v{vesion}.tgz&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;将其解压到 &lt;code&gt;/opt/cni/bin&lt;/code&gt; 中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir -p /opt/cni/bin
+tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.1.1.tgz
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;containerd-客户端的说明&#34;&gt;containerd 客户端的说明&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Community&lt;/th&gt;
+&lt;th&gt;API&lt;/th&gt;
+&lt;th&gt;Target&lt;/th&gt;
+&lt;th&gt;Web site&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ctr&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;containerd&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;td&gt;For debugging only&lt;/td&gt;
+&lt;td&gt;(None, see &lt;code&gt;ctr --help&lt;/code&gt; to learn the usage)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;nerdctl&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;containerd (non-core)&lt;/td&gt;
+&lt;td&gt;Native&lt;/td&gt;
+&lt;td&gt;General-purpose&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/containerd/nerdctl&#34;&gt;https://github.com/containerd/nerdctl&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;crictl&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Kubernetes SIG-node&lt;/td&gt;
+&lt;td&gt;CRI&lt;/td&gt;
+&lt;td&gt;For debugging only&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md&#34;&gt;https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;一共有三种命令行工具可以和 containerd 交互:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctr&lt;/code&gt; 和 &lt;code&gt;nerdctl&lt;/code&gt; 都是 containerd 社区提供的工具, &lt;code&gt;ctr&lt;/code&gt; 是和 &lt;code&gt;containerd&lt;/code&gt; 一起安装的.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;crictl&lt;/code&gt; 是 k8s 社区提供的符合 CRI 接口的交互工具. 在 Ubuntu 下,可以通过 &lt;code&gt;sudo apt get install cri-tools&lt;/code&gt; 安装 &lt;code&gt;crictl&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;生成-containerd-配置文件&#34;&gt;生成 containerd 配置文件&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;containerd config default &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sudo tee /etc/containerd/config.toml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行以上命令可以生成 containerd 的默认配置文件, 我们可以做一些自定义的修改, 例如修改 &lt;code&gt;[plugins.&amp;quot;io.containerd.grpc.v1.cri&amp;quot;.containerd.runtimes.runc.options]&lt;/code&gt;, 令 &lt;code&gt;SystemdCgroup = true&lt;/code&gt;, 让 containerd 和 systemd 使用同一个 cgroups 控制器&lt;/p&gt;
+&lt;p&gt;crictl 默认连接的 service socket是 &lt;code&gt;unix:///var/run/dockershim.sock&lt;/code&gt;, 我们可以在 &lt;code&gt;/etc/crictl.yaml&lt;/code&gt; 中写入以下配置&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;runtime-endpoint: unix:///run/containerd/containerd.sock
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;让它默认连接 containerd 的 socket 接口&lt;/p&gt;
+&lt;h2 id=&#34;设置拉取镜像的-http-代理&#34;&gt;设置拉取镜像的 http 代理&lt;/h2&gt;
+&lt;p&gt;通过设置 &lt;code&gt;HTTP_PROXY&lt;/code&gt;, &lt;code&gt;HTTPS_PROXY&lt;/code&gt; 环境变量, 可以设置 http 代理.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctr pull ...&lt;/code&gt; 是在客户端进程中拉取镜像的, 环境变量需要设置到客户端中&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;crictl pull ...&lt;/code&gt; 是在 cri 插件中拉取镜像的, 它被集成到了 containerd 中, 所以需要在 server 端设置环境变量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;设置-server-端的环境变量&#34;&gt;设置 server 端的环境变量&lt;/h3&gt;
+&lt;p&gt;修改 &lt;code&gt;/usr/local/lib/systemd/system/containerd.service&lt;/code&gt; 文件, 在 &lt;code&gt;[Service]&lt;/code&gt; 段加入以下内容&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 设置拉取镜像的代理
+Environment=HTTP_PROXY=127.0.0.1:8118
+Environment=HTTPS_PROXY=127.0.0.1:8118
+Environment=NO_PROXY=localhost,127.0.0.1,172.17.0.0/16,192.168.56.0/24,10.96.0.0/16
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改完以上配置后, 重启 containerd , 环境变量就生效了&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl daemon-reload
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl restart containerd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此时再执行 &lt;code&gt;sudo crictl pull k8s.gcr.io/kube-controller-manager:v1.24.4&lt;/code&gt; 就可以成功拉取到 k8s 相关的镜像了, 也能够正常地和 &lt;code&gt;kubeadm&lt;/code&gt; 交互了&lt;/p&gt;
+&lt;h3 id=&#34;设置-client-侧的环境变量&#34;&gt;设置 client 侧的环境变量&lt;/h3&gt;
+&lt;p&gt;如果想通过 &lt;code&gt;ctr&lt;/code&gt; 拉取镜像, 需要在 client 侧设置环境变量&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo &lt;span style=&#34;color:#000&#34;&gt;HTTP_PROXY&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;127.0.0.1:8118 &lt;span style=&#34;color:#000&#34;&gt;HTTPS_PROXY&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;127.0.0.1:8118 ctr i pull k8s.gcr.io/kube-apiserver:v1.24.4
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样也能正常拉取镜像&lt;/p&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/containerd/containerd/blob/main/docs/getting-started.md&#34;&gt;https://github.com/containerd/containerd/blob/main/docs/getting-started.md&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/containerd/cri/issues/1169#issuecomment-501376676&#34;&gt;https://github.com/containerd/cri/issues/1169#issuecomment-501376676&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

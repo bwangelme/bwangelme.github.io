@@ -1,0 +1,113 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – glob</title>
+    <link>https://bwangel.me/647/tags/glob/</link>
+    <description>Recent content in glob on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Mon, 18 Oct 2021 11:38:23 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/glob/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Glob 语法解析</title>
+      <link>https://bwangel.me/647/docs/linux/glob-%E8%AF%AD%E6%B3%95/</link>
+      <pubDate>Mon, 18 Oct 2021 11:38:23 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/linux/glob-%E8%AF%AD%E6%B3%95/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Glob 语法&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;通配符&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;th&gt;例子&lt;/th&gt;
+&lt;th&gt;匹配&lt;/th&gt;
+&lt;th&gt;不匹配&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;*&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;匹配任意数量的任何字符，包括无&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;Law*&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Law, Laws, Lawyer&lt;/td&gt;
+&lt;td&gt;GrokLaw, La, aw&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;td&gt;匹配任何 单个 字符&lt;/td&gt;
+&lt;td&gt;?at&lt;/td&gt;
+&lt;td&gt;Cat, cat, Bat, bat&lt;/td&gt;
+&lt;td&gt;at&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[abc]&lt;/td&gt;
+&lt;td&gt;匹配括号中给出的一个字符&lt;/td&gt;
+&lt;td&gt;[CB]at&lt;/td&gt;
+&lt;td&gt;Cat, Bat&lt;/td&gt;
+&lt;td&gt;cat, bat&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[a-z]&lt;/td&gt;
+&lt;td&gt;匹配括号中给出的范围中的一个字符&lt;/td&gt;
+&lt;td&gt;Letter[0-9]&lt;/td&gt;
+&lt;td&gt;Letter0, Letter1 … Letter9&lt;/td&gt;
+&lt;td&gt;Letters, Letter, Letter10&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[!abc]&lt;/td&gt;
+&lt;td&gt;匹配括号中未给出的一个字符&lt;/td&gt;
+&lt;td&gt;[!C]at&lt;/td&gt;
+&lt;td&gt;Bat, bat, cat&lt;/td&gt;
+&lt;td&gt;Cat&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[!a-z]&lt;/td&gt;
+&lt;td&gt;匹配不在括号内给定范围内的一个字符&lt;/td&gt;
+&lt;td&gt;Letter[!3-5]&lt;/td&gt;
+&lt;td&gt;Letter1…&lt;/td&gt;
+&lt;td&gt;Letter3 … Letter5, Letterxx&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Gitignore&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;git 的 .gitignore 文件可以使用 glob 模式匹配， 另外还有一些规则：&lt;/p&gt;
+&lt;p&gt;所有空行或者以 # 开头的行都会被 Git 忽略
+匹配模式可以以 / 开头防止递归
+匹配模式可以以 / 结尾指定目录
+要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号 ! 取反&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Python&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Python 有进行 glob 匹配的标准库， 使用也很简单：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;glob&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# glob 只有两个函数， 功能差不多， 只不过一个返回列表， 一个返回迭代器&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;glob&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;glob&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;*.org&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 返回所有后缀名为 .org 的文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;glob&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;iglob&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;*/&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 返回匹配所有目录的迭代器&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://rgb-24bit.github.io/blog/2018/glob.html&#34;&gt;Glob 语法及解析&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

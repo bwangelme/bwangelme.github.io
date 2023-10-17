@@ -1,0 +1,89 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – dlv</title>
+    <link>https://bwangel.me/647/tags/dlv/</link>
+    <description>Recent content in dlv on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Wed, 12 Jan 2022 17:56:10 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/dlv/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Go gcflags/ldflags 的说明</title>
+      <link>https://bwangel.me/647/docs/golang/go_gcflags/</link>
+      <pubDate>Wed, 12 Jan 2022 17:56:10 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/golang/go_gcflags/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;p&gt;Go 链接选项和编译选项的说明&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;编译选项&#34;&gt;编译选项&lt;/h2&gt;
+&lt;p&gt;go build 时可以使用 &lt;code&gt;-gcflags&lt;/code&gt; 指定编译选项，&lt;code&gt;-gcflags&lt;/code&gt; 参数的格式是&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-gcflags=&amp;#34;pattern=arg list&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;pattern&#34;&gt;pattern&lt;/h3&gt;
+&lt;p&gt;pattern 是选择包的模式，它可以有以下几种定义:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;main&lt;/code&gt;: 表示 main 函数所在的顶级包路径&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;all&lt;/code&gt;: 表示 GOPATH 中的所有包。如果在 modules 模式下，则表示主模块和它所有的依赖，包括 test 文件的依赖&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;std&lt;/code&gt;: 表示 Go 标准库中的所有包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;...&lt;/code&gt;: &lt;code&gt;...&lt;/code&gt; 是一个通配符，可以匹配任意字符串(包括空字符串)。例如:
+&lt;ul&gt;
+&lt;li&gt;例如: &lt;code&gt;net/...&lt;/code&gt; 表示 net 模块和它的所有子模块&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;./...&lt;/code&gt; 表示当前主模块和所有子模块&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;注意:&lt;/strong&gt; 如果 pattern 中包含了 &lt;code&gt;/&lt;/code&gt; 和 &lt;code&gt;...&lt;/code&gt;，那么就不会匹配 &lt;code&gt;vendor&lt;/code&gt; 目录
+&lt;ul&gt;
+&lt;li&gt;例如: &lt;code&gt;./...&lt;/code&gt; 不会匹配 &lt;code&gt;./vendor&lt;/code&gt; 目录。可以使用 &lt;code&gt;./vendor/...&lt;/code&gt; 匹配 vendor 目录和它的子模块&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;更多的模式的说明请参考 &lt;code&gt;go help packages&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;arg-list&#34;&gt;arg list&lt;/h3&gt;
+&lt;p&gt;arg list 是空格分割的编译选项，如果编译选项中含有空格，可以使用引号包起来&lt;/p&gt;
+&lt;p&gt;下面介绍几种常用的编译选项:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-N&lt;/code&gt;: 禁止编译器优化&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-l&lt;/code&gt;: 关闭内联 (inline)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-c int&lt;/code&gt;: 编译过程中的并发数，默认是1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;更多编译选项请参考 &lt;code&gt;go tool compile --help&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;举例&#34;&gt;举例&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 为当前模块下的所有包关闭编译优化和内联&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;go build -gcflags&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;all=-N -l&amp;#34;&lt;/span&gt; .
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;链接选项&#34;&gt;链接选项&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;-ldflags&lt;/code&gt; 可以设置链接选项&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-w&lt;/code&gt; 不生成 DWARF 调试信息&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-s&lt;/code&gt; 关闭符号表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;-w&lt;/code&gt; 和 &lt;code&gt;-s&lt;/code&gt; 通常一起使用，用来减少可执行文件的体积。但删除了调试信息后，可执行文件将无法使用 gdb/dlv 调试&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; go build -ldflags&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;-w -s&amp;#34;&lt;/span&gt; ./abc.go
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; dlv &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; ./abc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;could not launch process: could not open debug info
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注意： 使用 &lt;code&gt;go run main.go&lt;/code&gt; 运行的进程，也无法用 &lt;code&gt;dlv attach ${pid}&lt;/code&gt; 调试，因为找不到代码的符号信息。&lt;/p&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;go help packages&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;go tool compile --help&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;go help build&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://studygolang.com/articles/22803&#34;&gt;https://studygolang.com/articles/22803&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://javasgl.github.io/go-build-args/&#34;&gt;https://javasgl.github.io/go-build-args/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/go-delve/delve/issues/1698&#34;&gt;https://github.com/go-delve/delve/issues/1698&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

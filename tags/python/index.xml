@@ -1,0 +1,62 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – python</title>
+    <link>https://bwangel.me/647/tags/python/</link>
+    <description>Recent content in python on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Fri, 11 Mar 2022 14:34:44 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: 从源码安装 confluent-kafka-python</title>
+      <link>https://bwangel.me/647/docs/kafka/confluent_python.md/</link>
+      <pubDate>Fri, 11 Mar 2022 14:34:44 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/kafka/confluent_python.md/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;h2 id=&#34;从源码安装-librdkafka&#34;&gt;从源码安装 librdkafka&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 安装 vcpkg&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; git clone https://github.com/microsoft/vcpkg ~/.local/vcpkg
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; ~/.local/vcpkg/bootstrap-vcpkg.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 安装 librdkafka&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; ~/.local/vcpkg/vcpkg install librdkafka
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;设置 include path 和 link path&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;CPATH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;~/.local/vcpkg/packages/librdkafka_x64-linux/include
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;LIBRARY_PATH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;~/.local/vcpkg/packages/librdkafka_x64-linux/lib
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;GCC uses the following environment variables:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;PATH: For searching the executables and run-time shared libraries (.dll, .so).&lt;/li&gt;
+&lt;li&gt;CPATH: For searching the include-paths for headers. It is searched after paths specified in &lt;code&gt;-I&amp;lt;dir&amp;gt;&lt;/code&gt; options. &lt;code&gt;C_INCLUDE_PATH&lt;/code&gt; and &lt;code&gt;CPLUS_INCLUDE_PATH&lt;/code&gt; can be used to specify C and C++ headers if the particular language was indicated in pre-processing.&lt;/li&gt;
+&lt;li&gt;LIBRARY_PATH: For searching library-paths for link libraries. It is searched after paths specified in &lt;code&gt;-L&amp;lt;dir&amp;gt;&lt;/code&gt; options. 程序编译期查找动态链接库的路径。&lt;/li&gt;
+&lt;li&gt;LD_LIBRARY_PATH: 程序运行期间查找动态链接库的路径。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;安装 librdkafka&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install -e ~/work/Douban/code/confluent-kafka-python/
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html#zz-1.9&#34;&gt;https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html#zz-1.9&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/microsoft/vcpkg&#34;&gt;https://github.com/microsoft/vcpkg&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

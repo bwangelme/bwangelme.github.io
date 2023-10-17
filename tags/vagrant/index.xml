@@ -1,0 +1,41 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – vagrant</title>
+    <link>https://bwangel.me/647/tags/vagrant/</link>
+    <description>Recent content in vagrant on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Thu, 02 Dec 2021 21:10:27 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/vagrant/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Vagrant 添加挂载目录</title>
+      <link>https://bwangel.me/647/docs/tools/vagrant_add_volume/</link>
+      <pubDate>Thu, 02 Dec 2021 21:10:27 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/tools/vagrant_add_volume/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;cfg.vm.synced_folder&lt;/code&gt; 可以设置挂载目录&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 第一个参数为宿主机目录，第二个参数是虚拟机目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      node.vm.synced_folder &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/Users/michaeltsui/Github/Golang/&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/code&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/a/18529697/5161084&#34;&gt;https://stackoverflow.com/a/18529697/5161084&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.vagrantup.com/docs/synced-folders/basic_usage&#34;&gt;https://www.vagrantup.com/docs/synced-folders/basic_usage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

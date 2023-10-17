@@ -1,0 +1,122 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – http</title>
+    <link>https://bwangel.me/647/tags/http/</link>
+    <description>Recent content in http on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Tue, 09 May 2023 22:40:29 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/http/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: HTTP 协议中带下划线的 header 说明</title>
+      <link>https://bwangel.me/647/docs/http/nginx-header-underline/</link>
+      <pubDate>Tue, 09 May 2023 22:40:29 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/http/nginx-header-underline/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;h2 id=&#34;http-header-名字的规范&#34;&gt;HTTP Header 名字的规范&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.rfc-editor.org/rfc/rfc9110.html#fields.registry&#34;&gt;RFC9110&lt;/a&gt; 中说，Field Name &lt;strong&gt;应该&lt;/strong&gt; 仅包含字母数字，连字符(&lt;code&gt;-&lt;/code&gt;), 第一个字符是字母，不区分大小写。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The requested field name. It MUST conform to the field-name syntax defined in Section 5.1, and it SHOULD be restricted to just letters, digits, and hyphen (&amp;rsquo;-&amp;rsquo;) characters, with the first character being a letter.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;自定义专用的标头之前可以与 &lt;code&gt;X-&lt;/code&gt; 前缀一起使用，但是这种用法被 IETF 在 2012 年 6 月发布的 &lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc6648&#34;&gt;RFC 6648&lt;/a&gt; 明确弃用，原因是其会在非标准字段成为标准时造成不便；&lt;/p&gt;
+&lt;p&gt;一个标准的 HTTP Header 诞生要经历漫长的过程，而且我们的 Header 中如果有业务前缀的话，基本不会和标准 HTTP Header 冲突，所以很多文章说使用 &lt;code&gt;X-&lt;/code&gt; 前缀也没有什么问题。&lt;/p&gt;
+&lt;p&gt;Nginx 的 &lt;a href=&#34;http://nginx.org/en/docs/http/ngx_http_core_module.html#ignore_invalid_headers&#34;&gt;ignore_invalid_headers&lt;/a&gt; 配置文档中说，Http Header 名称由字母数字，连字符组成，&lt;code&gt;underscores_in_headers&lt;/code&gt; 开启时可以包含下划线。&lt;/p&gt;
+&lt;p&gt;当在 Nginx 中设置了 &lt;code&gt;ignore_invalid_headers on;&lt;/code&gt; 时， Nginx 会自动丢弃名称无效的 Header 。&lt;/p&gt;
+&lt;h2 id=&#34;如何让-nginx-允许-header-名中带下划线&#34;&gt;如何让 Nginx 允许 Header 名中带下划线&lt;/h2&gt;
+&lt;p&gt;Nginx 的选项 &lt;a href=&#34;http://nginx.org/en/docs/http/ngx_http_core_module.html#underscores_in_headers&#34;&gt;underscores_in_headers&lt;/a&gt; 可以允许我们在 HTTP Header 的名字中带上下划线。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Enables or disables the use of underscores in client request header fields. When the use of underscores is disabled, request header fields whose names contain underscores are marked as invalid and become subject to the ignore_invalid_headers directive.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;实验&#34;&gt;实验&lt;/h2&gt;
+&lt;h3 id=&#34;使用-nc-启动一个-http-server&#34;&gt;使用 nc 启动一个 http server&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;/tmp/index.http&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+Content-Length: 77
+Server: netcat!
+
+&amp;lt;!doctype html&amp;gt;
+&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&amp;lt;h1&amp;gt;A webpage served by netcat&amp;lt;/h1&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;使用 nc 启动 web server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;while true;do cat /tmp/index.http| nc -l -p 8090 ;done
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 不能使用 flask 作为后端&lt;/p&gt;
+&lt;p&gt;Python 的 wsgi 解析器或 Flask 中会自动丢掉名字中带下划线的 header, 使用 flask 作为后端，就算 Nginx 传了下划线 Header 我们也看不到。&lt;/p&gt;
+&lt;p&gt;使用 nc 作为后端 Web Server, 它会原样输出 nginx 传输给它的内容。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我们使用 curl 命令给 Nginx Server 发送带下划线的 Header&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;curl -H &amp;#39;Some_Header: V1&amp;#39; -s flask.bwangel.me
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;默认不会传输带下划线的-header&#34;&gt;默认不会传输带下划线的 Header&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;server&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;listen&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;80&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;server_name&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;flask.bwangel.me&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;proxy_set_header&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;Nginx-Host&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;flask&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;http://127.0.0.1:8090&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://github.com/bwangelme/bwangelme.github.io/assets/11701497/419ee40b-ffc6-4c69-9955-4358d6e8ac36&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;图中上半部分是 nc web server 输出的内容，可以看到 &lt;code&gt;Some_Header&lt;/code&gt; 没有被 Nginx 传输给后端.&lt;/p&gt;
+&lt;h3 id=&#34;关闭-ignore_invalid_headers&#34;&gt;关闭 ignore_invalid_headers&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;server&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;listen&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;80&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;server_name&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;flask.bwangel.me&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ignore_invalid_headers&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;off&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;proxy_set_header&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;Nginx-Host&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;flask&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;http://127.0.0.1:8090&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;关闭了 &lt;code&gt;ignore_invalid_headers&lt;/code&gt; 之后，无效的 header 也会被 Nginx 传输给后端了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/bwangelme/bwangelme.github.io/assets/11701497/95b9f397-c1d7-4782-afd2-9971b45fa402&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;上图中，可以看到 &lt;code&gt;Some_Header&lt;/code&gt; 被 Nginx 传输给了后端&lt;/p&gt;
+&lt;h3 id=&#34;开启-underscores_in_headers&#34;&gt;开启 underscores_in_headers&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;server {
+    listen 80;
+
+    server_name flask.bwangel.me;
+    underscores_in_headers on;
+    ignore_invalid_headers on;
+
+    location / {
+        proxy_set_header Nginx-Host &amp;#34;flask&amp;#34;;
+        proxy_pass http://127.0.0.1:8090;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://github.com/bwangelme/bwangelme.github.io/assets/11701497/2bfeda6c-0c4e-4bc9-a1d7-9eb00a15fa3c&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;可以看到，开启了 &lt;code&gt;underscores_in_headers&lt;/code&gt; 之后，带下划线的 header 就是有效的 header 了，就算开着 &lt;code&gt;ignore_invalid_headers&lt;/code&gt;, nginx 也会将 &lt;code&gt;Some_Header&lt;/code&gt; 传输给后端。&lt;/p&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/?highlight=underscores#missing-disappearing-http-headers&#34;&gt;Missing (disappearing) HTTP Headers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://nginx.org/en/docs/http/ngx_http_core_module.html#ignore_invalid_headers&#34;&gt;ignore_invalid_headers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://nginx.org/en/docs/http/ngx_http_core_module.html#underscores_in_headers&#34;&gt;underscores_in_headers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://trac.nginx.org/nginx/ticket/2251&#34;&gt;#2251 closed defect (worksforme) &amp;ldquo;underscores_in_headers on&amp;rdquo; didn&amp;rsquo;t work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.rfc-editor.org/rfc/rfc9110.html#fields.registry&#34;&gt;rfc9110.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc6648&#34;&gt;RFC 6648&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers&#34;&gt;MDN HTTP 标头（header）&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

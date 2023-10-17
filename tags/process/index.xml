@@ -1,0 +1,46 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – process</title>
+    <link>https://bwangel.me/647/tags/process/</link>
+    <description>Recent content in process on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Thu, 07 Jul 2022 19:56:13 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/process/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: 进程卡住如何 debug</title>
+      <link>https://bwangel.me/647/docs/k8s/process-block/</link>
+      <pubDate>Thu, 07 Jul 2022 19:56:13 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/k8s/process-block/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;h2 id=&#34;进程卡住如何-debug&#34;&gt;进程卡住如何 Debug&lt;/h2&gt;
+&lt;h3 id=&#34;查看-cpu&#34;&gt;查看 CPU&lt;/h3&gt;
+&lt;p&gt;利用 prom 指标查看 CPU 使用率，如果从某个时间点后就降低了，说明是阻塞在 IO 上了。&lt;/p&gt;
+&lt;h3 id=&#34;查看-io&#34;&gt;查看 IO&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;查看进程当前建立的网络连接 (进入容器内执行)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lsof -i -a -p 1 | grep ESTABLISHED
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;利用-strace&#34;&gt;利用 strace&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;查看所有的 open, read 系统调用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo strace -e trace=open,read -p {pid}
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

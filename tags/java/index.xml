@@ -1,0 +1,41 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – java</title>
+    <link>https://bwangel.me/647/tags/java/</link>
+    <description>Recent content in java on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Mon, 18 Oct 2021 23:55:58 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Java 抛出UnsupportedEncodingException</title>
+      <link>https://bwangel.me/647/docs/tools/java-unsupportedencodingexception/</link>
+      <pubDate>Mon, 18 Oct 2021 23:55:58 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/tools/java-unsupportedencodingexception/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
+&lt;p&gt;这个异常表示当前系统不支持此编码。大部分系统是支持的，所以没必要抛出这个异常。&lt;/p&gt;
+&lt;p&gt;当我们调用 &lt;code&gt;String.getBytes()&lt;/code&gt; 传入一个 &lt;code&gt;Charset&lt;/code&gt; 参数时，就会调用其重载方法&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;getBytes&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Charset&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;charset&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样就不会抛出异常了&lt;/p&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://skyao.github.io/2016/01/13/java-string-practice/&#34;&gt;java中String和byte数组转换的小技巧&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>
