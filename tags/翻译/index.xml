@@ -5,7 +5,7 @@
     <description>Recent content in 翻译 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Fri, 17 Dec 2021 14:38:59 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 31 Dec 2021 11:01:25 +0800</lastBuildDate>
     
 	  <atom:link href="https://bwangel.me/647/tags/%E7%BF%BB%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,6 +14,211 @@
         
       
     
+    
+    <item>
+      <title>Docs: Review 《Don’t use Go’s default HTTP client (in production)》</title>
+      <link>https://bwangel.me/647/docs/golang/go-http-client/</link>
+      <pubDate>Fri, 31 Dec 2021 11:01:25 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/golang/go-http-client/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&#34;&gt;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;p&gt;编写通过 HTTP 与服务对话的 Go 程序很容易，也很有趣。
+我已经写了无数的 API 客户端包，我发现这是一项令人愉快的任务。然而，我遇到了一个很容易落入的陷阱，它可以让你的程序很快崩溃：&lt;strong&gt;默认的HTTP客户端&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;本文内容的一句话概括:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Go 的 http 包默认没有指定请求超时，允许外部服务劫持你的 goroutine 。在连接外部服务时，一定要指定一个自定义的 http.Client 。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;问题示例&#34;&gt;问题示例&lt;/h2&gt;
+&lt;p&gt;假设你想通过漂亮的 JSON REST API与 &lt;code&gt;spacely-sprockets.com&lt;/code&gt; 对话，并查看可用 &lt;code&gt;sprockets&lt;/code&gt; 的列表。在 Go 语言中，你可以这样做:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 为了简洁省略了错误检查
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sprockets&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;SprocketsResponse&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;response&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;http&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Get&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;spacely-sprockets.com/api/sprockets&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;buf&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ioutil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ReadAll&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;response&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Body&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;json&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Unmarshal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;buf&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sprockets&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;编写你的代码（请有适当的错误处理），编译，然后运行。
+一切都很顺利。现在，你拿着你的API包，把它加入一个网络应用程序中。你的应用程序的一个页面通过调用 API 向用户显示 Spacely Sprockets 的库存列表。&lt;/p&gt;
+&lt;p&gt;一切都很顺利，直到有一天你的应用程序停止响应了。
+你查看了日志，但没有任何迹象表明有问题。你检查了你的监控工具，但是 CPU、内存和 I/O 在故障发生前都看起来很正常。
+你启动了一个沙盒，它似乎工作正常。怎么会这样呢？&lt;/p&gt;
+&lt;p&gt;沮丧之余，你查看了 Twitter，发现 Spacely Sprockets 开发团队发了一条推文，说他们经历了一次短暂的中断，但现在一切都恢复正常了。
+你检查了他们的API状态页面，发现中断是在你之前几分钟开始的。
+这似乎是一个不太可能的巧合，但你不能完全弄清楚这之间有什么关系，因为你的代码处理错误的方式很优雅。你仍然没有找到问题的答案。&lt;/p&gt;
+&lt;h2 id=&#34;go-http-包&#34;&gt;Go HTTP 包&lt;/h2&gt;
+&lt;p&gt;客户端是并发安全的对象，包含配置、管理 TCP 状态、处理 cookies 等。
+当你使用 &lt;code&gt;http.Get(url)&lt;/code&gt; 时，你正在使用 &lt;code&gt;http.DefaultClient&lt;/code&gt; ，这是一个定义了客户端默认配置的包变量。它的声明是:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;DefaultClient&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Client&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;除此之外，&lt;code&gt;http.Client&lt;/code&gt; 配置了一个超时时间用来熔断长期运行的连接。这个值的默认值是0，它被解释为 &amp;ldquo;没有超时&amp;rdquo;。
+这对软件包来说可能是一个合理的默认值，但它是一个讨厌的陷阱，也是我们的应用程序在上述例子中停止响应的原因。
+事实证明，Spacely Sprockets 的 API 中断导致 &lt;strong&gt;连接尝试&lt;/strong&gt; 阻塞住（这并不总是发生，但在我们的例子中确实如此）。只要故障的服务器不响应，它就会一直阻塞着。
+因为正在进行 API 调用服务于用户请求，这导致服务于用户请求的 goroutines 也挂起。
+一旦有足够多的用户点击此页面，应用程序就会停止响应，很可能是由于达到了资源限制。&lt;/p&gt;
+&lt;p&gt;这里有一个简单的代码演示了这个问题:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;net/http&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;net/http/httptest&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;svr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;httptest&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;NewServer&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;http&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;HandlerFunc&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;w&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;http&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ResponseWriter&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;r&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;http&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Request&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Sleep&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Hour&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;defer&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;svr&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Close&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;fmt&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;making request&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;http&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Get&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;svr&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;URL&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;fmt&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;finished request&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;启动之后，这个程序会请求一个 sleep 1小时的接口。随后，这个程序也会阻塞一个小时，然后退出。&lt;/p&gt;
+&lt;h2 id=&#34;解决方案&#34;&gt;解决方案&lt;/h2&gt;
+&lt;p&gt;解决这个问题的方法是你的场景中定义一个带有合理超时的 &lt;code&gt;http.Client&lt;/code&gt; 。下面是一个例子。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;netClient&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;http&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Client&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Timeout&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Second&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;response&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;netClient&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Get&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;url&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这为向 API 发出的请求设置了10秒的超时。如果服务器响应的时间超过了超时时间，Get()将返回错误。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;httpError&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;     &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Error&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34; (Client.Timeout exceeded while awaiting headers)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;timeout&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果你需要对请求生命周期进行更精细的控制，你可以另外指定一个自定义的 &lt;code&gt;net.Transport&lt;/code&gt; 和 &lt;code&gt;net.Dialer&lt;/code&gt;。
+&lt;code&gt;Transport&lt;/code&gt; 是一个客户端用来管理底层TCP连接的结构，它的 &lt;code&gt;Dialer&lt;/code&gt; 是一个管理建立连接的结构。
+Go 的 net 包也有一个默认的 Transport 和 Dialer 。下面是一个使用自定义结构的例子。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;netTransport&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;http&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Transport&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Dial&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;net&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Dialer&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;Timeout&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Second&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}).&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Dial&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TLSHandshakeTimeout&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Second&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;netClient&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;http&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Client&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Timeout&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Second&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Transport&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;netTransport&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;response&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;netClient&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Get&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;url&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这段代码将为 TCP 连接和 TLS 握手设置超时上限，还设置了一个端到端的请求超时。如果需要的话，你还可以使用其他配置选项，如 &lt;code&gt;keep-alive&lt;/code&gt; 超时。&lt;/p&gt;
+&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
+&lt;p&gt;Go 的 net 和 http 包是一个经过深思熟虑的、方便通过 HTTP(S) 进行通信的基础包。
+然而，由于该包提供了 &lt;code&gt;http.Get(url)&lt;/code&gt; 这样的方便方法，因此缺乏对请求的默认超时是一个容易陷入的陷阱。
+有些语言（如Java）有同样的问题，其他语言（如Ruby有默认的60秒读取超时）则没有。
+在联系远程服务时不设置请求超时，会使你的应用程序受到该服务的摆布。
+一个故障的或恶意的服务可以永远阻塞你的连接，可能会使你的应用程序陷入内存不足的困境。&lt;/p&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Review 《How eBPF will solve Service Mesh - Goodbye Sidecars》</title>
+      <link>https://bwangel.me/647/docs/k8s/ebpf-service-mesh/</link>
+      <pubDate>Mon, 20 Dec 2021 19:41:20 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/k8s/ebpf-service-mesh/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://isovalent.com/blog/post/2021-12-08-ebpf-servicemesh&#34;&gt;https://isovalent.com/blog/post/2021-12-08-ebpf-servicemesh&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;p&gt;Service Mesh (服务网格) 是一个概念，描述了现代云原生应用在通信、可见性和安全性方面的要求。目前这个概念的实现涉及到在每个workload 或 pod 中运行 sidecar 代理。这是一种相当低效的方式。在这篇文章中，我们将探讨一个替代 sidecar 模型的方法，在eBPF的帮助下，提供一个透明的 Service Mesh，在低复杂度下具有很高的效率。&lt;/p&gt;
+&lt;h2 id=&#34;what-is-service-mesh&#34;&gt;What is Service Mesh?&lt;/h2&gt;
+&lt;p&gt;随着分布式应用的引入，额外的可见性、连接性和安全性要求也浮现出来(have surfaced)。应用程序组件在跨越云和城市边界的不受信任的网络中通信，负载均衡需要理解应用协议，弹性(resiliency)变得至关重要(crucial)，安全性必须发展(evolve)到发送者和接收者可以验证彼此身份的模式。在分布式应用的早期，这些要求是通过直接将所需的逻辑嵌入到应用中来解决的。Service Mesh 将这些功能从应用程序中提取出来，作为基础设施的一部分提供给所有应用程序使用，因此不再需要修改每个应用程序。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com//2021-12-20-200012.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;纵观 Service Mesh 今天的特点，可以总结为以下几点:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;弹性链接: 服务与服务之间的通信必须能够跨越边界，例如云服务，集群和城市。通信必须是弹性且可容错的。&lt;/li&gt;
+&lt;li&gt;L7 流量管理: 负载均衡，频率限制器，弹性都必须在 L7 层(能够理解 HTTP, REST, gRPC, WebSocket 等协议)&lt;/li&gt;
+&lt;li&gt;基于身份的安全: 基于网络标识符来实现安全已经不够了，发送和接收服务必须能够基于身份标识认证对方，而不是通过网络标识认证。&lt;/li&gt;
+&lt;li&gt;可观察性和可追踪性: 追踪和指标形式的观察，对于理解，监控，调试应用程序的稳定性，性能和可用性至关重要。&lt;/li&gt;
+&lt;li&gt;透明性：该功能必须以透明的形式提供给应用程序，即不需要改变应用程序的代码。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在早期，Service Mesh 功能通常以库的形式实现，需要网格中的每个应用程序链接到以对应语言编写的库中。同样的事情也在互联网早期发生过，在那些日子里，应用程序需要维护自己的 TCP/IP 栈。就像我们在这篇文章里讨论的一样，Service Mesh 正在发展成为一种内核职责，就像 TCP/IP 网络栈一样。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com//2021-12-20-201812.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在今天，Service Mesh 通常是用一种称为 sidecar 模型的架构实现的。这种架构将实现了上述功能的代码封装到4层代理中，然后将应用接收和发送的流量重定向到被称为 sidecar 的代理中。它之所以被成为 Sidecar，是因为每个应用程序都有一个代理，就像摩托车上的挎斗一样。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com//2021-12-20-202330.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这种架构的优点是应用服务自身不再需要实现 Service Mesh 中的功能。如果许多应用服务使用不同语言编写，或者你运行的服务是一个不可变的第三方应用程序，这种架构就很方便。&lt;/p&gt;
+&lt;p&gt;这种模型的缺点是有大量的代理，许多额外的网络连接和复杂的重定向逻辑将应用的网络流量送入到代理中。除此之外，四层代理能够传输的网络流量的类型也有限制(四层代理无法理解 HTTP/Thrift 等七层协议)。代理在其能够支持的网络协议上是被限制的。&lt;/p&gt;
+&lt;h2 id=&#34;a-history-of-connectivity-moving-into-the-kernel&#34;&gt;A history of connectivity moving into the Kernel&lt;/h2&gt;
+&lt;p&gt;几十年来，在应用程序之间提供安全可靠的连接一直是操作系统的责任。你们中的一些人可能还记得早期 Unix 和 Linux 时代的 &lt;a href=&#34;https://en.wikipedia.org/wiki/TCP_Wrappers&#34;&gt;TCP Wrapper&lt;/a&gt; 和 tcpd。它可以被认为是原始的 sidecar ，tcpd 允许用户透明地添加日志，访问控制，主机名验证，欺骗保护功能到应用程序中，而不需要修改应用程序。
+它使用了 libwrap 库，而且，在一个有趣的平行与服务网格历史的故事中，这个库也是以前的应用程序提供这些功能的链接对象。tcpd 带来的是能够在不修改现有应用程序的情况下将这些功能透明地添加到现有应用程序中。最终，所有这些功能都进入了 Linux 本身，并以一种更有效，更强大的方式提供给应用程序。今天，这已经演变成了我们熟知的 iptables。&lt;/p&gt;
+&lt;p&gt;然而，iptables 显然不适合解决现代网络的连接性，安全性和可观察性要求，因为它在网络层面上运行，缺少对应用协议层的任何理解。自然，阻力最小的路径是回到库模型，然后是 sidecar 模式。现在，我们正处于这样一个阶段：为了最佳的透明度、效率性和安全性，在操作系统中原生地支持这种模式是有意义的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-111200.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在曾经的 TCPD 时代使用的 &lt;code&gt;连接记录 (connection logging back)&lt;/code&gt;，现在变成了&lt;code&gt;追踪 (tracing)&lt;/code&gt;。在 IP 层的访问控制已经进化成了在应用层的授权(例如使用 JWT 进行授权)。主机名验证已经被更强大的认证所取代，例如双端 TLS 认证。网络负载均衡已经扩展到 L7 层的流量管理功能。HTTP 重试是新的 TCP 重传。过去使用黑洞路由解决的问题今天被称为 熔断(circuit breaking)。这些都不是根本性的新问题，但所需的环境和控制都已经发生了变化。&lt;/p&gt;
+&lt;h2 id=&#34;extending-the-kernel-namespace-concept&#34;&gt;Extending the Kernel Namespace Concept&lt;/h2&gt;
+&lt;p&gt;Linux 内核已经有一个概念，可以共享相同的功能，并使其对系统上运行的许多应用程序可用。这个概念被称为命名空间，它构成了我们今天所熟知的容器技术的基础。命名空间(内核的概念)存在于各种抽象中，包括文件系统、用户管理，挂载设备，进程，网络等。这就是允许独立的容器用 不同的文件系统视图、不同的用户集存在，以及允许多个容器绑定到同一台主机上的同一个端口。在 cgroups 的帮助下，这个概念得到了扩展，可以对 CPU、内存和网络等资源进行资源管理和有限排序。从云原生应用开发者的角度来看，cgroups 和 资源被紧密地整合到了我们熟知的 “容器” 概念中。&lt;/p&gt;
+&lt;p&gt;符合逻辑的是，如果我们认为服务网格是操作系统的责任，那么它必须遵循并集成命名空间和 cgroups 的概念。这看起来是这样的:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-113330.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;不出所料，这看起来非常自然，而且可能是大多数用户从简单的角度所期望的。应用程序保持不变，它们就像以前一样继续使用网络套接字进行通信。理想的服务网络功能是作为 Linux 的一部分透明地提供的。它就在那里，就像今天的 TCP 一样。&lt;/p&gt;
+&lt;h2 id=&#34;the-cost-of-sidecar-injection&#34;&gt;The Cost of Sidecar Injection&lt;/h2&gt;
+&lt;p&gt;如果我们仔细研究一下 sidecar 模型，我们会发现它实际上是在试图模仿这种模型。应用程序继续使用套接字，一切都被塞进 Linux 内核的网络命名空间。然而，这让它比看起来要复杂许多，需要许多额外的步骤来透明地注入 sidecar 代理:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-114543.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这种额外的复杂性在延迟和额外资源消耗方面付出了巨大的代价。早期的基准测试表明，这让延迟增加了3到4倍，而且所有的代理都需要大量的额外内存。在本文的后面，我们将研究这两点，因为我们将要将它和 eBPF 模型比较。&lt;/p&gt;
+&lt;h2 id=&#34;unlocking-the-kernel-service-mesh-with-ebpf&#34;&gt;Unlocking the Kernel Service Mesh with eBPF&lt;/h2&gt;
+&lt;p&gt;为什么我们以前在内核中没有创建一个服务网格？有些人半开玩笑地说，kube-proxy 是最初的服务网格(See &lt;a href=&#34;https://www.youtube.com/watch?v=lUF88T16YqY&amp;amp;ab_channel=CloudNativeRejekts&#34;&gt;We&amp;rsquo;ve Made Quite A Mesh  - Tim Hockin, Google&lt;/a&gt;)。这句话是有一定道理的。kube-proxy 是一个很好的例子，说明了 Linux 内核在依靠传统的基于网络的 iptables 功能实现服务网格时，可以达到多么接近。然而，这还不够，L7 的上下文是缺失的。kube-proxy 完全在数据包层面操作，现代应用程序需要 L7 层的流量管理，追踪，认证和额外的可靠性保证。kube-proxy 不能在网络层面上提供这些。&lt;/p&gt;
+&lt;p&gt;eBPF 改变了这个等式( equation )，它允许动态地扩展 Linux 内核的功能。我们已经使用 eBPF 为 Cilium 构建了一个高效的网络，安全和可观察的数据通路。并将其直接嵌入到 Linux 内核。应用这个相同的概念，我们也可以在内核层面上解决服务网格的需求。事实上，Cilium 已经实现了各种所需的概念，例如基于身份的安全，L3-L7可观察性和授权，加密，负载均衡。缺少的部分 Cilium 正在添加中。在本文的莫问，你会发现如何加入有 Cilium 社区推动的 Cilium 服务网格 beta 项目的细节。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-141203.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;你们中的一些人可能想知道为什么Linux内核社区没有直接解决这些需求。eBPF有一个巨大的优势，eBPF代码可以在运行时插入到现有的Linux内核中，类似于Linux内核模块，但与内核模块不同，它可以以安全和可移植的方式进行。这使得eBPF的实现能够随着服务网状结构社区的发展而继续发展。新的内核版本需要几年时间才能进入用户手中。eBPF是一项关键技术，它使Linux内核能够跟上快速发展的云原生技术栈。&lt;/p&gt;
+&lt;h2 id=&#34;ebpf-based-l7-tracing--metrics-without-sidecars&#34;&gt;eBPF-based L7 Tracing &amp;amp; Metrics without Sidecars&lt;/h2&gt;
+&lt;p&gt;让我们以 L7 层的追踪和指标可观察性作为一个具体的例子，来说明基于 eBPF 的服务网格在保持低延迟和保持低可观察成本上有巨大的作用。应用程序团队依靠应用程序的可见性和可监控作为基本要求，这包括了请求跟踪，HTTP 响应率，服务延迟信息等。然而，这些观察不应该有明显的成本(延迟，复杂性，资源等成本)。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-142614.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在下面的基准测试中，我们可以看到早期的测量结果，即通过eBPF或sidecar方法实现HTTP可见性对延迟的影响。
+该测试是在两个不同节点上运行的两个pod之间，通过固定数量的连接每秒稳定地执行 10K 个HTTP请求，并测量请求的平均延迟。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-143216.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;我们故意不提这些测量中使用的具体代理，因为它并不重要。对于我们测试过的所有代理，结果几乎都是一样的。要明确的是，这不是关于Envoy、Linkerd、Nginx或其他代理是否更快的实验。所提到的代理有差异，但与首先注入代理的成本相比，它们是微不足道的。几乎没有开销是来自代理本身的逻辑。开销是通过注入代理、将网络流量重定向到它、终止连接和启动新连接而增加的。&lt;/p&gt;
+&lt;p&gt;这些早期的测量结果表明，基于 eBPF 的内核方法是非常有前途的，可以实现完全透明的服务网状结构的愿望，而且没有明显的开销。&lt;/p&gt;
+&lt;h2 id=&#34;ebpf-accelerated-per-node-proxy&#34;&gt;eBPF Accelerated Per-Node Proxy&lt;/h2&gt;
+&lt;p&gt;越来越多的用例可以用这种仅有eBPF的方法来覆盖，从而完全取消L4代理。对于一些用例，仍然需要一个代理。例如，当连接需要拼接时，当TLS终止被执行时，或对于某些形式的HTTP授权。&lt;/p&gt;
+&lt;p&gt;我们的eBPF服务网格工作将继续关注那些从性能角度可以获得最大收益的领域。如果你必须执行TLS终止，你可能不介意在流量流入集群时终止一次与代理的连接。然而，你会更关心在每个连接的路径中注入两个代理的影响，只是为了提取HTTP指标和跟踪数据。&lt;/p&gt;
+&lt;p&gt;当一个用例不能用纯eBPF的方法来实现时，服务网格可以 fallback 到 per-node 的代理模型，直接将代理与内核的套接字层结合起来。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-144528.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;eBPF不依赖网络层的重定向，而是直接在套接字级别注入代理，保持短路径。在 Cilium 的案例中，正在使用 Envoy，尽管从架构的角度来看，任何代理都可以被整合到这个模型。从概念上讲，这允许将Linux内核网络命名空间的概念直接扩展到Envoy监听器配置的概念，并将Envoy变成一个多用户代理。&lt;/p&gt;
+&lt;h2 id=&#34;sidecar-vs-per-node-proxy&#34;&gt;Sidecar vs per-Node Proxy&lt;/h2&gt;
+&lt;p&gt;即使需要代理，代理的成本也会根据部署的架构而有所不同。让我们来看看 per-node 的代理模式与 sidecar 模式的比较，看看它们是如何比较的。&lt;/p&gt;
+&lt;h3 id=&#34;proxies-per-connection&#34;&gt;Proxies per Connection&lt;/h3&gt;
+&lt;p&gt;所需的网络连接数将会根据图片上的代理模式发生变化。最简单的场景是 sidecar-free 模型，这意味着网络连接的数量没有变化。一个连接就能够 serve 请求，eBPF 将会在已有的连接上提供追踪，负载均衡等服务网格的能力。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-150117.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;用 sidecar 模型实现同样的功能，需要在连接中注入两次代理，这就导致了需要维护三个连接。进一步导致开销的增加和套接字缓冲区所需的内存倍增，表现为更高的服务到服务的延迟。这就是我们之前在无 sidecar L7 可见性部分看到的 sidecar 开销。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-150455.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;切换到 per-node 的代理模式使我们能够摆脱其中一个代理，因为我们不再依赖在每个工作负载中运行一个sidecar。比起不需要额外的连接，这还是不够理想，但比起总是需要两个额外的连接要好。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-150625.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;total-number-of-proxies-required&#34;&gt;Total number of proxies required&lt;/h3&gt;
+&lt;p&gt;在每个工作负载中运行一个 sidecar 会导致大量的代理。即使每个单独的代理实例在其内存占用方面是相当优化的，但实例的数量之多将导致总的影响很大。此外，每个代理维护的数据结构，如路由和端点表，随着集群的增长而增长，所以集群越大，每个代理的内存消耗就越高。今天，一些服务网格试图通过将部分路由表推送给单个代理来解决这个问题，限制他们可以路由到哪里。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-151028.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;让我们假设在一个500个节点的集群中，每一个节点有30个pod，一个基于sidecar的架构将需要运行15K个proxy。在每个代理消耗70MB内存的情况下（已经假设了严重优化的路由表），这仍然导致集群中所有sidecar消耗1TB内存。在 per-node 模型中，假设每个代理的内存足迹相同，500个代理将消耗不超过34GB的内存。&lt;/p&gt;
+&lt;h3 id=&#34;multi-tenancy&#34;&gt;Multi-Tenancy&lt;/h3&gt;
+&lt;p&gt;当我们从 sidecar 模型转向 per-node 模型时，代理将为多个应用程序提供连接。代理必须有多租户意识。这与我们从使用单个虚拟机转向使用容器时发生的过渡完全相同。由于我们不再使用在每个虚拟机中运行的完全独立的操作系统副本，而开始与多个应用程序共享操作系统，Linux 必须有多租户意识。这就是命名空间和 cgroup 存在的原因。如果没有它们，一个容器可能会消耗一个系统的所有资源，容器可能会以不受控制的方式访问对方的文件系统。&lt;/p&gt;
+&lt;p&gt;如果在服务网格级别的网络资源上表现得完全一样，那不是很好吗？Envoy已经有了命名空间的初步概念，它们被称为监听器。监听器可以携带单独的配置并独立运行。这将开启全新的可能性：突然间，我们可以很容易地控制资源消耗，建立公平的排队规则，并将可用的资源平等地分配给所有的应用程序，或者按照指定的规则分配。这可以而且应该与我们今天在 Kubernetes 中定义应用程序的CPU和内存约束的方式完全一样。如果你想了解这个话题，我曾在EnvoyCon上讲过这个问题（&lt;a href=&#34;https://www.youtube.com/watch?v=08opgZkdYIw&#34;&gt;Envoy Namespaces - Operating an Envoy-based Service Mesh at a Fraction of the Cost, Thomas Graf, EnvoyCon 2019&lt;/a&gt;）。&lt;/p&gt;
+&lt;h2 id=&#34;want-to-get-involved---join-the-cilium-service-mesh-beta&#34;&gt;Want to get Involved? - Join the Cilium Service Mesh Beta&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-01-29-151704.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;伴随着即将发布的Cilium 1.11，Cilium社区正在举办一个新的Cilium Service Mesh测试项目。它的特点是，新的构建将使以下功能可用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;L7流量管理和负载平衡（HTTP、gRPC&amp;hellip;)&lt;/li&gt;
+&lt;li&gt;跨集群、云和场所的拓扑感知路由&lt;/li&gt;
+&lt;li&gt;TLS终结&lt;/li&gt;
+&lt;li&gt;通过Envoy配置的金丝雀展开、重试、速率限制、断路等。&lt;/li&gt;
+&lt;li&gt;通过OpenTelemetry和Jaeger集成进行追踪&lt;/li&gt;
+&lt;li&gt;内置Kubernetes入口支持&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上述所有功能都可在 &lt;a href=&#34;https://github.com/cilium/cilium&#34;&gt;github.com/cilium/cilium&lt;/a&gt; 上的功能分支中找到。测试计划允许 Cilium 维护者直接与用户接触，了解他们的需求。要注册，你可以直接填写这个&lt;a href=&#34;https://forms.gle/j9fwhAC6HnHRJQKeA&#34;&gt;表格&lt;/a&gt;，或者你可以在 Cilium 社区的&lt;a href=&#34;https://cilium.io/blog/2021/12/01/cilium-service-mesh-beta/&#34;&gt;公告&lt;/a&gt;中阅读更多关于该计划的信息。&lt;/p&gt;
+&lt;h2 id=&#34;结论&#34;&gt;结论&lt;/h2&gt;
+&lt;p&gt;eBPF是提供本地和高效的服务网格实现的答案。它将把我们从 sidecar 模型中解放出来，并允许将现有的代理技术整合到现有的内核命名概念中，使它们成为我们每天都在使用的美丽容器抽象的一部分。除此之外，eBPF将能够卸载越来越多的目前由代理执行的功能，以进一步减少开销和复杂性。通过能够整合几乎任何现有的代理，该架构也允许与大多数现有的服务服务网格（Istio、SMI、Linkerd&amp;hellip;）整合。这将使eBPF的好处提供给广大的终端用户，同时将数据通路的效率和开销讨论与控制平面方面的问题相分离。&lt;/p&gt;
+&lt;p&gt;如果你对探索这一领域感兴趣，我们很愿意听到你的意见。请随时通过 Twitter 或eBPF &amp;amp; Cilium Slack联系我们。&lt;/p&gt;
+&lt;h2 id=&#34;further-reading&#34;&gt;Further Reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://thenewstack.io/how-ebpf-streamlines-the-service-mesh/&#34;&gt;How eBPF Streamlines the Service Mesh&lt;/a&gt;, Liz Rice, The New Stack&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cilium.io/blog/2021/12/01/cilium-service-mesh-beta/&#34;&gt;Cilium Service Mesh Beta Program&lt;/a&gt;, Cilium Community&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cilium.io/learn/&#34;&gt;Learn more about Cilium&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
     
     <item>
       <title>Docs: 翻译《Chapter 1. Introduction to Apache Thrift》</title>
@@ -83,6 +288,591 @@ struct MusicTrack {
 &lt;li&gt;&lt;strong&gt;Modular serialization&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Apache Thrift提供了可插拔的序列化器，被称为协议，允许你使用几种序列化格式中的任何一种进行数据交换，包括 Binary (速度快)，compact(体积小)，以及JSON(可读性好)。即使你改变了序列化协议，同样的契约（IDL）也可以保持原样。这种模块化的方法也允许添加自定义的序列化协议。由于Apache Thrift是社区管理和开源的，你可以很容易地改变或增强功能，并在需要时向上游推送（Apache Thrift项目始终欢迎补丁）。&lt;/p&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Review 《File Descriptor Transfer over Unix Domain Sockets》</title>
+      <link>https://bwangel.me/647/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</link>
+      <pubDate>Tue, 30 Nov 2021 11:58:56 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;使用 Unix 域套接字传输文件描述符&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec&#34;&gt;https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;12/31/2020 更新&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果你使用的是较新的内核（Linux 5.6以上），随着一个新的系统调用 &lt;code&gt;pidfd_getfd&lt;/code&gt; 的引入，这种复杂性大部分已经被消除了。更多细节请参考 2020年 12-31 发表的文章&lt;a href=&#34;https://copyconstruct.medium.com/seamless-file-descriptor-transfer-between-processes-with-pidfd-and-pidfd-getfd-816afcd19ed4&#34;&gt;《用 pidfd 和 pidfd_getfd 在进程间无缝传输文件描述符》&lt;/a&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;昨天，我读了一篇惊人的论文，介绍了使用不同协议而且服务许多不同类型请求（长寿的TCP/UDP会话，涉及大块数据的请求等）的服务在Facebook是如何免中断发布的。&lt;/p&gt;
+&lt;p&gt;Facebook 使用的一种它们叫做 &lt;code&gt;Socket Takeover&lt;/code&gt; 的技术。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Socket Takeover&lt;/code&gt; 实现了 Proxygen 的零停机重启，它以并行方式启动了一个更新的实例，接管了监听的套接字，当旧的实例进入了优雅关闭阶段。新实例负责为新连接提供服务，并响应来自 L4LB Katran 的健康检查探针。老的连接由老的实例提供服务，直到完全关闭，之后其他机制（例如下游连接重用）开始发挥作用。&lt;/p&gt;
+&lt;p&gt;当我们把一个打开的FD从旧的进程传递给新的进程时，传递和接收的进程都共享监听套接字的同一个文件表项，并各自独立地处理接收的连接，在这些连接上提供连接级事务。我们利用了以下Linux内核的特性来实现这一点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;CMSG&lt;/strong&gt;：&lt;code&gt;sendmsg()&lt;/code&gt; 的一个功能允许在本地进程之间发送控制信息（通常被称为辅助数据）。在 Level7 LB 进程的重启过程中，我们使用这一机制将所有 VIP ( Virtual IP of service) 的活动的监听套接字的 FD 集合从活动的实例发送至新启动的实例。这些数据是通过 &lt;code&gt;sendmsg&lt;/code&gt; 和 &lt;code&gt;recvmsg&lt;/code&gt; 在 UNIX 域套接字上交换的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SCM_RIGHTS&lt;/strong&gt;: 我们设置这个选项来发送打开的文件描述符，其数据部分包含一个打开的FD的整数数组。在接收方，这些 文件描述符的行为就像它们是用 &lt;code&gt;dup(2)&lt;/code&gt; 创建的一样。&lt;/p&gt;
+&lt;p&gt;我在 Twitter 上收到了一些人的回复，他们对这竟然是可能的表示惊讶。事实上，如果你对Unix域套接字的一些特性不是很熟悉，那么论文中的上述段落可能就很难理解了。&lt;/p&gt;
+&lt;p&gt;实际上，在 Unix 域套接字上传输 TCP 套接字是一种久经考验的方法，来实现 &lt;strong&gt;热重启&lt;/strong&gt; 或 &lt;strong&gt;零停机时间重启&lt;/strong&gt; 。流行的代理，如 HAProxy 和 Envoy ，使用非常类似的机制，将连接从代理的一个实例引流到另一个实例，而不丢弃任何连接。然而，许多类似的功能却并不广为人知。&lt;/p&gt;
+&lt;p&gt;在这篇文章中，我想探讨 Unix 域套接字的一些特性，这些特性使它成为这些场景下的合适候选者，特别是将套接字（或任何文件描述符）从一个进程转移到另一个进程，在这两个进程之间不一定存在父子关系。&lt;/p&gt;
+&lt;h2 id=&#34;unix-域套接字&#34;&gt;Unix 域套接字&lt;/h2&gt;
+&lt;p&gt;众所周知，Unix 域套接字允许同一主机系统上的进程之间进行通信。Unix域套接字在许多流行的系统中都有使用。HAProxy、Envoy、AWS的 Firecracker 虚拟机监视器、Kubernetes、Docker和 Istio 等等。&lt;/p&gt;
+&lt;h3 id=&#34;一个简短的教程&#34;&gt;一个简短的教程&lt;/h3&gt;
+&lt;p&gt;就像网络套接字一样，Unix 域套接字也支持流和数据报文类型。然而，与采用 IP 和端口作为地址的网络套接字不同，Unix域套接字使用路径名作为地址。与网络套接字不同，Unix域套接字的 I/O 不涉及对底层设备的操作（这使得Unix域套接字与网络套接字相比，在同一主机上执行IPC要快很多）。&lt;/p&gt;
+&lt;p&gt;用 &lt;code&gt;bind(2)&lt;/code&gt; 将一个名字绑定到一个Unix域套接字，在文件系统中创建一个名为 &lt;code&gt;pathname&lt;/code&gt; 的套接字文件。然而，这个文件与你可能创建的任何普通文件不同。&lt;/p&gt;
+&lt;p&gt;一个简单的Go程序在 Unix 域套接字上创建一个监听的 &amp;ldquo;Echo 服务器&amp;rdquo;，如下所示:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;io&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;log&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;net&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;syscall&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;addr&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/tmp/uds.sock&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;syscall&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Unlink&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;addr&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;l&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;net&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Listen&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;unix&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;addr&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000&#34;&gt;log&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Fatal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;defer&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;l&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Close&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;l&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Accept&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#000&#34;&gt;log&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Fatal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;net&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Conn&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#000&#34;&gt;io&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Copy&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Close&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果你建立并运行这个程序，可以观察到几个有趣的事实。&lt;/p&gt;
+&lt;h3 id=&#34;socket-文件--普通文件&#34;&gt;Socket 文件 != 普通文件&lt;/h3&gt;
+&lt;p&gt;首先，套接字文件 &lt;code&gt;/tmp/uds.sock&lt;/code&gt; 被标记为一个套接字。当使用 &lt;code&gt;stat()&lt;/code&gt; 调用查看这个路径名时，它在stat结构的&lt;code&gt;st_mode&lt;/code&gt;字段的文件类型部分返回值 &lt;code&gt;S_IFSOCK&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;当用&lt;code&gt;ls -l&lt;/code&gt;查看时，UNIX 域套接字在第一列显示为s类型，而 &lt;code&gt;ls -F&lt;/code&gt; 在套接字路径名上附加一个等号（=）。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;root@1fd53621847b:~/uds# ./uds
+^C
+root@1fd53621847b:~/uds# ls -ls /tmp
+total 0
+0 srwxr-xr-x 1 root root 0 Aug  5 01:45 uds.sock
+root@1fd53621847b:~/uds# stat /tmp/uds.sock
+File: /tmp/uds.sock
+Size: 0          Blocks: 0          IO Block: 4096   socket
+Device: 71h/113d Inode: 1835567     Links: 1
+Access: (0755/srwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2020-08-05 01:45:41.650709000 +0000
+Modify: 2020-08-05 01:45:41.650709000 +0000
+Change: 2020-08-05 01:45:41.650709000 +0000
+
+Birth: -
+
+root@5247072fc542:~/uds# ls -F /tmp
+uds.sock=
+root@5247072fc542:~/uds#
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;对文件起作用的普通系统调用在套接字文件上不起作用：这意味着像 &lt;code&gt;open()&lt;/code&gt; 、&lt;code&gt;close()&lt;/code&gt; 、&lt;code&gt;read()&lt;/code&gt; 这样的系统调用不能用于套接字文件。相反，像 &lt;code&gt;socket()&lt;/code&gt; 、&lt;code&gt;bind()&lt;/code&gt; 、&lt;code&gt;recv()&lt;/code&gt; 、&lt;code&gt;sendmsg()&lt;/code&gt; 、&lt;code&gt;recvmsg()&lt;/code&gt; 等套接字相关的系统调用可以在 Unix域套接字上工作。&lt;/p&gt;
+&lt;p&gt;另一个关于套接字的有趣事实是，它不是在套接字被关闭的时候删除，而是通过系统调用来删除&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在 MacOS 上调用 &lt;code&gt;unlink(2)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在 Linux 上调用 &lt;code&gt;remove()&lt;/code&gt; 或使用地更普遍的 &lt;code&gt;unlink(2)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在 Linux 上，Unix 域套接字的地址通过如下的结构来表示:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct sockaddr_un {
+      sa_family_t sun_family; /* Always AF_UNIX */
+      char sun_path[108]; /* Pathname */
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在 MacOS 上，地址通过如下的结构表示:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct sockaddr_un {
+     u_char  sun_len;
+     u_char  sun_family;
+     char    sun_path[104];
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;使用-bind2-绑定一个已经存在的路径将会失败&#34;&gt;使用 bind(2) 绑定一个已经存在的路径将会失败&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;SO_REUSEPORT&lt;/code&gt; 选项允许任何指定主机上的多个网络套接字连接到同一地址和端口。第一个试图绑定给定端口的套接字需要设置 &lt;code&gt;SO_REUSEPORT&lt;/code&gt; 选项，任何后续的套接字都可以绑定到同一端口。&lt;/p&gt;
+&lt;p&gt;对 &lt;code&gt;SO_REUSEPORT&lt;/code&gt; 的支持是在 Linux 3.9及以上版本中引入的。然而，在 Linux 上，所有想共享同一地址和端口组合的套接字必须属于共享同一有效UID的进程。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;socket&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;domain&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;socktype&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;optval&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;setsockopt&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sfd&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;SOL_SOCKET&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;SO_REUSEPORT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;optval&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;optval&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;bind&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sfd&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sockaddr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;addr&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;addrlen&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然而，两个 Unix 域套接字无法绑定相同的路径。&lt;/p&gt;
+&lt;h2 id=&#34;socketpair&#34;&gt;SOCKETPAIR&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;socketpair()&lt;/code&gt; 函数创建了两个套接字，然后将其连接在一起。从某种程度上说，这与 &lt;strong&gt;管道&lt;/strong&gt; 非常相似，只是它支持数据的双向传输。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;socketpair&lt;/code&gt; 只对 Unix 域套接字起作用。它返回两个已经连接在一起的文件描述符（所以我们不必在开始传输数据之前
+, 执行 &lt;code&gt;socket&lt;/code&gt; -&amp;gt; &lt;code&gt;bind&lt;/code&gt; -&amp;gt; &lt;code&gt;listen&lt;/code&gt; -&amp;gt; &lt;code&gt;accept&lt;/code&gt;的流程来建立一个监听套接字。也不必在开始传输数据之前，执行 &lt;code&gt;socket&lt;/code&gt; -&amp;gt; &lt;code&gt;connect&lt;/code&gt; 的流程创建一个连接到监听套接字的客户端）。&lt;/p&gt;
+&lt;h2 id=&#34;在-unux-域套接字上传输数据&#34;&gt;在 Unux 域套接字上传输数据&lt;/h2&gt;
+&lt;p&gt;现在我们已经确定 Unix 域套接字允许同一主机上的两个进程进行通信，现在是时候探索什么样的数据可以通过 Unix 域套接字传输。&lt;/p&gt;
+&lt;p&gt;由于Unix域套接字在许多方面与网络套接字相似，任何通常可以通过网络套接字发送的数据都可以通过Unix域套接字发送。&lt;/p&gt;
+&lt;p&gt;此外，特殊的系统调用 &lt;code&gt;sendmsg&lt;/code&gt; 和 &lt;code&gt;recvmsg&lt;/code&gt; 允许在Unix域套接字上发送一个特殊的消息。这个消息由内核特别处理，它允许从发送者向接收者传递打开的 &lt;strong&gt;File Descriptions&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;file-descriptors文件描述符-vs-file-description-文件描述&#34;&gt;File Descriptors(文件描述符) VS File Description (文件描述)&lt;/h3&gt;
+&lt;p&gt;注意上一段我使用了术语 文件描述(&lt;code&gt;File descripTION&lt;/code&gt;)，而不是文件描述符 (&lt;strong&gt;file descripTOR&lt;/strong&gt;)。它们两者的区别是微妙的而且往往不被人理解。&lt;/p&gt;
+&lt;p&gt;文件描述符实际上只是一个进程内(不可跨进程使用)指向底层内核数据结构的指针，该结构被称为文件描述（&lt;strong&gt;File Description&lt;/strong&gt;）。内核维护着一个所有打开的文件描述的表格，称为打开文件表(&lt;strong&gt;open file table&lt;/strong&gt;)。如果两个进程（A和B）试图打开同一个文件，这两个进程可能有自己独立的文件描述符，它们指向开放文件表中的同一个文件描述。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com//2021-11-30-142542.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;所以，在 Unix 域套接字上使用 &lt;code&gt;sendmsg&lt;/code&gt; 发送文件描述符实际上意味着发送 &lt;strong&gt;文件描述&lt;/strong&gt; 的引用。如果进程 A 向 进程 B 发送文件描述符 0 (fd0)，该文件描述符在进程 B 中很可能被数字3(fd3) 所引用。&lt;/p&gt;
+&lt;p&gt;发送进程在 Unix 域套接字上调用 &lt;code&gt;sendmsg&lt;/code&gt; 发送文件描述符，接收进程在 Unix 域套接字上调用 &lt;code&gt;recvmsg&lt;/code&gt; 来接受文件描述符。&lt;/p&gt;
+&lt;p&gt;发送进程通过 &lt;code&gt;sendmsg&lt;/code&gt; 发送文件描述给接收进程，接收进程通过 &lt;code&gt;recvmsg&lt;/code&gt; 接收该文件描述。即使发送进程在发送完成后关闭了该文件描述所对应的文件描述符，而接收进程还未调用 &lt;code&gt;recvmsg&lt;/code&gt; 接收它，该文件描述依然对接收进程保持打开状态。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;发送文件描述符时，文件描述的引用次数会+1,直到文件描述的引用次数下降到0, 内核才会将文件描述从 &lt;code&gt;打开文件表(open file table)&lt;/code&gt; 中删除该文件描述。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;即使发送进程在接收进程调用 recvmsg 之前关闭了引用通过 sendmsg 传递的文件描述的文件描述符，该文件描述符仍然对接收进程开放。发送描述符时，描述符的引用次数会增加1。内核只有在引用计数下降到0时才会从其开放文件表中删除文件描述。&lt;/p&gt;
+&lt;h3 id=&#34;sendmsg-和-recvmsg&#34;&gt;sendmsg 和 recvmsg&lt;/h3&gt;
+&lt;p&gt;在 Linux 中 &lt;code&gt;sendmsg&lt;/code&gt; 函数的签名如下:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ssize_t&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sendmsg&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;socket&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;msghdr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;flags&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;与 &lt;code&gt;sendmsg&lt;/code&gt; 对应的是 &lt;code&gt;recvmsg&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ssize_t&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;recvmsg&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sockfd&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;msghdr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;flags&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;人们可以用 &lt;code&gt;sendmsg&lt;/code&gt; 在 Unix 域套接字上传输的特殊消息是由 &lt;code&gt;msghdr&lt;/code&gt; 指定的。希望将文件描述发送给另一个进程的进程创建一个 &lt;code&gt;msghdr&lt;/code&gt; 结构，其中包含要传递的描述。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;msghdr&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;void&lt;/span&gt;            &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg_name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;      &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* optional address */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;socklen_t&lt;/span&gt;       &lt;span style=&#34;color:#000&#34;&gt;msg_namelen&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* size of address */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt;          &lt;span style=&#34;color:#000&#34;&gt;iovec&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg_iov&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* scatter/gather array */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt;             &lt;span style=&#34;color:#000&#34;&gt;msg_iovlen&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;     &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* # elements in msg_iov */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;void&lt;/span&gt;            &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg_control&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* ancillary data, see below */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;socklen_t&lt;/span&gt;       &lt;span style=&#34;color:#000&#34;&gt;msg_controllen&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* ancillary data buffer len */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt;             &lt;span style=&#34;color:#000&#34;&gt;msg_flags&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;      &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* flags on received message */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;msghdr&lt;/code&gt; 结构的 &lt;code&gt;msg_control&lt;/code&gt; 成员，其长度为 &lt;code&gt;msg_controllen&lt;/code&gt; ，指向一个如下形式的消息缓冲区:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;cmsghdr&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;socklen_t&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;cmsg_len&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* data byte count, including header */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt;       &lt;span style=&#34;color:#000&#34;&gt;cmsg_level&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* originating protocol */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt;       &lt;span style=&#34;color:#000&#34;&gt;cmsg_type&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* protocol-specific type */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* followed by */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;cmsg_data&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在 POSIX 中，带有附加数据的 &lt;code&gt;cmsghdr&lt;/code&gt; 结构的缓冲区被称为辅助数据(ancillary data)。在 Linux 上，每个套接字允许的最大缓冲区大小可以通过修改 &lt;code&gt;/proc/sys/net/core/optmem_max&lt;/code&gt; 来设置。&lt;/p&gt;
+&lt;h2 id=&#34;辅助数据传输&#34;&gt;辅助数据传输&lt;/h2&gt;
+&lt;p&gt;虽然这种数据传输有大量的陷阱，但如果使用得当，它可以成为一个相当强大的机制来实现一些目标。&lt;/p&gt;
+&lt;p&gt;在Linux上，有三种类型的辅助数据可以在两个Unix域套接字之间共享。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;SCM_RIGHTS&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SCM_CREDENTIALS&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SCM_SECURITY&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这三种类型的辅助数组仅应该通过下面的宏定义来访问，而不应该直接使用&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;cmsghdr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CMSG_FIRSTHDR&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;msghdr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msgh&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;cmsghdr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CMSG_NXTHDR&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;msghdr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msgh&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;cmsghdr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cmsg&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;size_t&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;CMSG_ALIGN&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;size_t&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;size_t&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;CMSG_SPACE&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;size_t&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;size_t&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;CMSG_LEN&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;size_t&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CMSG_DATA&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;cmsghdr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cmsg&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我从来没有使用后两者的需要，&lt;code&gt;SCM_RIGHTS&lt;/code&gt; 是我希望在这篇文章中进一步探讨的。&lt;/p&gt;
+&lt;h3 id=&#34;scm_rights&#34;&gt;SCM_RIGHTS&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;SCM_RIGHTS&lt;/code&gt; 允许进程使用 &lt;code&gt;sendmsg/recvmsg&lt;/code&gt; 从另一个进程发送/接收一组打开的文件描述符。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cmsghdr&lt;/code&gt; 结构体的成员 &lt;code&gt;cmsg_data&lt;/code&gt; 可以包含一个进程想要发送的文件描述符的数组。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct cmsghdr {
+    socklen_t cmsg_len;    /* data byte count, including header */
+    int       cmsg_level;  /* originating protocol */
+    int       cmsg_type;   /* protocol-specific type */
+    /* followed by */
+    unsigned char cmsg_data[];
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;接收进程使用 &lt;code&gt;recvmsg&lt;/code&gt; 接收数据。&lt;/p&gt;
+&lt;p&gt;《Linux Programming Interface》有一个使用 &lt;code&gt;sendmsg&lt;/code&gt; 和 &lt;code&gt;recvmsg&lt;/code&gt; 函数的&lt;a href=&#34;https://man7.org/tlpi/code/online/dist/sockets/scm_rights_send.c.html&#34;&gt;良好示例&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;scm_rights-的陷阱&#34;&gt;SCM_RIGHTS 的陷阱&lt;/h2&gt;
+&lt;p&gt;正如上文所讲，使用 Unix 域套接字传输辅助数据有很多的陷阱。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Need to send some “real” data along with the ancillary message&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;需要在发送辅助数据的同时发送一些真实的数据&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在 Linux 上，如果想要成功地在 &lt;strong&gt;流式(stream)&lt;/strong&gt; Unix 域套接字上发送辅助数据，至少要发送一个字节的真实数据。&lt;/p&gt;
+&lt;p&gt;然而，如果想要在 &lt;strong&gt;数据报式(datagram)&lt;/strong&gt; 的 Unix 域套接字上发送辅助数据，不需要发送任何附带的真实数据。也就是说，在通过数据报套接字发送辅助数据时，便携式应用程序还应该包括至少一个字节的真实数据。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;File Descriptors can be dropped&lt;/p&gt;
+&lt;p&gt;文件描述符可以被丢弃&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果用于接收包含文件描述符的辅助数据的缓冲区 &lt;code&gt;cmsg_data&lt;/code&gt; 太小（或没有），那么辅助数据被截断（或丢弃），多余的文件描述符在接收进程中被自动关闭。&lt;/p&gt;
+&lt;p&gt;如果在辅助数据中收到的文件描述符的数量导致进程超过其 &lt;code&gt;RLIMIT_NOFILE&lt;/code&gt; 资源限制，则多余的文件描述符将在接收进程中自动关闭。不能在多个 &lt;code&gt;recvmsg&lt;/code&gt; 调用中分割列表。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;recvmsg quirks&lt;/p&gt;
+&lt;p&gt;recvmsg 的怪异情况&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;sendmsg&lt;/code&gt; 和 &lt;code&gt;recvmsg&lt;/code&gt; 的作用类似于 &lt;code&gt;send&lt;/code&gt; 和 &lt;code&gt;recv&lt;/code&gt; 系统调用，在每个 &lt;code&gt;send&lt;/code&gt; 调用和每个 &lt;code&gt;recv&lt;/code&gt; 调用之间没有1：1的映射。&lt;/p&gt;
+&lt;p&gt;一个 &lt;code&gt;recvmsg&lt;/code&gt; 调用可以从多个 &lt;code&gt;sendmsg&lt;/code&gt; 调用中读取数据。同样地，它可能需要多个&lt;code&gt;recvmsg&lt;/code&gt;调用来消耗一个&lt;code&gt;sendmsg&lt;/code&gt; 调用所发送的数据。这有严重的、令人惊讶的影响，其中一些已经在这里报告。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Limit on the number of File Descriptions&lt;/p&gt;
+&lt;p&gt;文件描述符的数量限制&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;内核常量 &lt;code&gt;SCM_MAX_FD&lt;/code&gt; ( 253 (或者在2.6.38之前的内核中为255))定义了数组中文件描述符的数量限制。&lt;/p&gt;
+&lt;p&gt;试图发送一个大于这个限制的数组会导致 &lt;code&gt;sendmsg&lt;/code&gt; 失败，错误是 &lt;code&gt;EINVAL&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;什么时候发送文件描述符是有用的&#34;&gt;什么时候发送文件描述符是有用的&lt;/h2&gt;
+&lt;p&gt;一个非常具体的现实世界的使用案例是零停机时间的代理重载。&lt;/p&gt;
+&lt;p&gt;任何曾经使用过HAProxy的人都可以证明，&amp;ldquo;零停机时间的配置重载 &amp;ldquo;在很长一段时间内并不是一个真正的东西。通常，大量的&lt;a href=&#34;https://engineeringblog.yelp.com/2015/04/true-zero-downtime-haproxy-reloads.html&#34;&gt;Rube Goldberg-esque&lt;/a&gt; Hack 被用来实现这一目标。&lt;/p&gt;
+&lt;p&gt;在2017年底，HAProxy 1.8 支持无中断重载，通过将监听套接字文件描述符从旧的 HAProxy 进程转移到新的进程中来实现。Envoy使用 &lt;a href=&#34;https://blog.envoyproxy.io/envoy-hot-restart-1d16b14555b5&#34;&gt;类似的机制&lt;/a&gt; 进行热重启，文件描述符通过Unix域套接字传递。&lt;/p&gt;
+&lt;p&gt;2018年底，Cloudflare 在&lt;a href=&#34;https://blog.cloudflare.com/know-your-scm_rights/&#34;&gt;博客&lt;/a&gt; 中介绍了其使用的将文件描述符从nginx转移到Go TLS 1.3代理。&lt;/p&gt;
+&lt;p&gt;促使我写下这篇博文的关于Facebook如何实现零停机发布的论文，使用了与 &lt;code&gt;CMSG + SCM_RIGHTS&lt;/code&gt; 相同的技巧，将活的文件描述符从将要结束的进程传递到新发布的进程。&lt;/p&gt;
+&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
+&lt;p&gt;如果使用得当，通过Unix域套接字传输文件描述符可以被证明是非常强大的。我希望这篇文章能让你对Unix域套接字和它的功能有一个更好的理解。&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.man7.org/linux/man-pages/man7/unix.7.html&#34;&gt;https://www.man7.org/linux/man-pages/man7/unix.7.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.cloudflare.com/know-your-scm_rights/&#34;&gt;https://blog.cloudflare.com/know-your-scm_rights/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;LWN.net has an interesting article on creating cycles when passing file descriptions over a Unix domain socket and implications for the fabulous new io_uring kernel API. &lt;a href=&#34;https://lwn.net/Articles/779472/&#34;&gt;https://lwn.net/Articles/779472/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The Linux Programming Interface &lt;a href=&#34;https://learning.oreilly.com/library/view/the-linux-programming/9781593272203/&#34;&gt;https://learning.oreilly.com/library/view/the-linux-programming/9781593272203/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;UNIX Network Programming: The Sockets Networking API &lt;a href=&#34;https://learning.oreilly.com/library/view/the-sockets-networking/0131411551/&#34;&gt;https://learning.oreilly.com/library/view/the-sockets-networking/0131411551/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Review 《github.com/stretchr/testify》</title>
+      <link>https://bwangel.me/647/docs/golang/review-testify/</link>
+      <pubDate>Sun, 02 Jun 2019 22:41:59 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/golang/review-testify/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://github.com/stretchr/testify&#34;&gt;https://github.com/stretchr/testify&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;p&gt;testify 是一组工具包，它里面的很多工具可以让你更舒适地写 Go 测试代码。&lt;/p&gt;
+&lt;p&gt;它包含以下特征:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/stretchr/testify#assert-package&#34;&gt;更好用的 assert&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/stretchr/testify#mock-package&#34;&gt;Mocking&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/stretchr/testify#suite-package&#34;&gt;Testing suite 的接口和函数&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;知识索引:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用&lt;a href=&#34;https://github.com/stretchr/testify#installation&#34;&gt;一行代码安装 testify&lt;/a&gt;,使用&lt;a href=&#34;https://github.com/stretchr/testify#staying-up-to-date&#34;&gt;另一行代码&lt;/a&gt;来更新它&lt;/li&gt;
+&lt;li&gt;在 Go 中写测试代码的相关介绍, 请参考 &lt;a href=&#34;http://golang.org/doc/code.html#Testing&#34;&gt;http://golang.org/doc/code.html#Testing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;在 &lt;a href=&#34;http://godoc.org/github.com/stretchr/testify&#34;&gt;http://godoc.org/github.com/stretchr/testify&lt;/a&gt; 查看我们的 API 文档&lt;/li&gt;
+&lt;li&gt;为了让你的测试生活更简单一些，建议使用我们开发的测试工具 &lt;a href=&#34;http://github.com/stretchr/gorc&#34;&gt;gorc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;关于 &lt;a href=&#34;http://en.wikipedia.org/wiki/Test-driven_development&#34;&gt;Test-Driven Development (TDD)&lt;/a&gt; 的一点点介绍&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;asserthttpgodocorggithubcomstretchrtestifyassert-包&#34;&gt;&lt;a href=&#34;http://godoc.org/github.com/stretchr/testify/assert&#34;&gt;assert&lt;/a&gt; 包&lt;/h2&gt;
+&lt;p&gt;assert 包提供了一些有用的方法，可以让你写出更友好的测试代码。它具有以下特性:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;打印友好，很容易去阅读错误信息&lt;/li&gt;
+&lt;li&gt;可以开发出易阅读的代码&lt;/li&gt;
+&lt;li&gt;可以在每个&lt;code&gt;assert&lt;/code&gt;后添加一个可选的注解信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;让我们通过一个实际例子来了解它:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;testify_exam&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;testing&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;github.com/stretchr/testify/assert&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TestSomething&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testing&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;T&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 测试相等
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Equal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;they should be equal&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 测试不相等
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;NotEqual&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;456&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;they should not be equal&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;obj&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 测试 nil，常用于错误值的判断
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Nil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;obj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;obj2&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000&#34;&gt;Value&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;string&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000&#34;&gt;Value&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Something&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 测试不为 nil，常用于你希望返回的结果值拥有某些东西的时候
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;NotNil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;obj2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 现在我们知道 obj2 的值不是 nil了，我们可以在这个基础上**安全地**访问它的字段。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Equal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Something&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;obj2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Value&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;每个&lt;code&gt;assert&lt;/code&gt;函数都使用 &lt;code&gt;testing.T&lt;/code&gt; 来作为它的第一个参数，这就是它通过正常的 go 测试功能将错误输出写出来的方式。&lt;/li&gt;
+&lt;li&gt;每个&lt;code&gt;assert&lt;/code&gt;函数返回了一个布尔值，表示这个断言成功与否，如果你想在某个断言结果的基础上做出更多的断言，可以用到它的返回值。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你使用断言很多次，可以使用如下的代码:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;testify_exam&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;testing&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;github.com/stretchr/testify/assert&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TestEasyAssert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testing&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;T&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;New&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Equal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;they should be equal&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;NotEqual&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;456&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;they should not be equal&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;obj&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Nil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;obj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;obj2&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000&#34;&gt;Value&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;string&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000&#34;&gt;Value&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Something&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;NotNil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;obj2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Equal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Something&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;obj2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Value&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;requirehttpgodocorggithubcomstretchrtestifyrequire-包&#34;&gt;&lt;a href=&#34;http://godoc.org/github.com/stretchr/testify/require&#34;&gt;require&lt;/a&gt; 包&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;require&lt;/code&gt;包中拥有和&lt;code&gt;assert&lt;/code&gt;包相同的全局函数，它和&lt;code&gt;assert&lt;/code&gt;的不同在于，它不会再返回一个布尔值表示测试运行成功与否，而是直接结束当前测试&lt;/p&gt;
+&lt;p&gt;可以参考 &lt;a href=&#34;http://golang.org/pkg/testing/#T.FailNow&#34;&gt;t.FailNow&lt;/a&gt; 函数了解更多的信息&lt;/p&gt;
+&lt;p&gt;下面是一个&lt;code&gt;require&lt;/code&gt;包和&lt;code&gt;assert&lt;/code&gt;包的比较示例:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;testify_exam&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;sync/atomic&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;testing&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;github.com/stretchr/testify/assert&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;github.com/stretchr/testify/require&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// `require.True` 失败后会将测试 TestEx1 停掉，不会再执行后面的 require.Equal 断言
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// `assert.True` 失败后并不会将 TestEx2 停掉，在后面的断言中，Add 依然会被执行，
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 所以 Add 会在 TestEx2 中执行一次， count 的最终结果是1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;count&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int32&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Add&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;atomic&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;AddInt32&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TestEx1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testing&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;T&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;require&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;True&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;require&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Equal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Add&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TestEx2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testing&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;T&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;True&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Equal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Add&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Equal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;count&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;int32&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 下面是程序的运行结果
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//&amp;gt;&amp;gt;&amp;gt; go test -v testify_exam/require_test.go                                                                                                                      23:30:19 (06-02)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//=== RUN   TestEx1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//--- FAIL: TestEx1 (0.00s)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//Error Trace:    require_test.go:19
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//Error:          Should be true
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//=== RUN   TestEx2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//--- FAIL: TestEx2 (0.00s)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//Error Trace:    require_test.go:24
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//Error:          Should be true
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//FAIL
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//FAIL    command-line-arguments  0.018s
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;mockhttpsgodocorggithubcomstretchrtestifymock-包&#34;&gt;&lt;a href=&#34;https://godoc.org/github.com/stretchr/testify/mock&#34;&gt;mock&lt;/a&gt; 包&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;mock&lt;/code&gt;提供了一种机制，可以在编写测试代码的时候轻松编写可用于替代实际对象的模拟对象。&lt;/p&gt;
+&lt;p&gt;下面是一段示例代码，它测试了一段依赖于外部对象&lt;code&gt;testObj&lt;/code&gt;的代码，并且能够设置期望(&lt;code&gt;testify&lt;/code&gt;)且断言他们确实发生了。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;yours&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;testing&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;github.com/stretchr/testify/mock&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/*
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;  Test objects
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;*/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// MyMockedObject is a mocked object that implements an interface
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// that describes an object that the code I am testing relies on.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;MyMockedObject&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;mock&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Mock&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// DoSomething is a method on MyMockedObject that implements some interface
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// and just records the activity, and returns what the Mock object tells it to.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// In the real object, this method would do something useful, but since this
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// is a mocked object - we&amp;#39;re just going to stub it out.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// NOTE: This method is not being tested here, code that uses this object is.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;m&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;MyMockedObject&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;DoSomething&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;number&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;bool&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;error&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;args&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;m&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Called&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;number&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Bool&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Error&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/*
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;  Actual test functions
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;*/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// TestSomething is an example of how to use our test object to
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// make assertions about some target code we are testing.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TestSomething&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testing&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;T&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// create an instance of our test object
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;new&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;MyMockedObject&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// set up expectations
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;On&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;DoSomething&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Return&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// call the code we are testing
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;targetFuncThatDoesSomethingWithObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// assert that the expectations were met
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;AssertExpectations&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// TestSomethingWithPlaceholder is a second example of how to use our test object to
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// make assertions about some target code we are testing.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// This time using a placeholder. Placeholders might be used when the
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// data being passed in is normally dynamically generated and cannot be
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// predicted beforehand (eg. containing hashes that are time sensitive)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TestSomethingWithPlaceholder&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testing&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;T&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// create an instance of our test object
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;new&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;MyMockedObject&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// set up expectations with a placeholder in the argument list
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;On&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;DoSomething&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;mock&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Anything&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Return&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// call the code we are testing
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;targetFuncThatDoesSomethingWithObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// assert that the expectations were met
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;AssertExpectations&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// TestSomethingElse2 is a third example that shows how you can use
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// the Unset method to cleanup handlers and then add new ones.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TestSomethingElse2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testing&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;T&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// create an instance of our test object
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;new&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;MyMockedObject&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// set up expectations with a placeholder in the argument list
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;mockCall&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;On&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;DoSomething&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;mock&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Anything&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Return&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// call the code we are testing
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;targetFuncThatDoesSomethingWithObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// assert that the expectations were met
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;AssertExpectations&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// remove the handler now so we can add another one that takes precedence
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;mockCall&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Unset&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// return false now instead of true
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;On&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;DoSomething&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;mock&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Anything&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Return&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;testObj&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;AssertExpectations&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Review 《Golang Trick: Export unexport method for test》</title>
+      <link>https://bwangel.me/647/docs/golang/golang-trick-export-for-test/</link>
+      <pubDate>Sat, 27 Apr 2019 17:33:52 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/golang/golang-trick-export-for-test/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&#34;&gt;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在 Go 语言中， 导出的标识符是以大写字母开头的，小写字母开头的标识符只可以在它所在的包中使用。我们在开发过程中，仅仅应该导出真正需要的标识符给调用者， 来让我们的API易于使用且易于维护。&lt;/p&gt;
+&lt;h2 id=&#34;go-测试&#34;&gt;Go 测试&lt;/h2&gt;
+&lt;p&gt;Go 中的测试代码通常写在源代码的旁边， 以&lt;code&gt;xxx_test.go&lt;/code&gt;命名。例如我们的源码文件叫做&lt;code&gt;sum.go&lt;/code&gt;，测试代码应该写 在&lt;code&gt;sum_test.go&lt;/code&gt; 中。&lt;/p&gt;
+&lt;p&gt;在测试代码中命名&lt;code&gt;package&lt;/code&gt;的时候，我们有两个选择。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使用和源码文件相同的&lt;code&gt;package&lt;/code&gt;名，例如源码文件和测试文件都是&lt;code&gt;package math&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;使用和源码文件不同的&lt;code&gt;package&lt;/code&gt;名，通常是&lt;code&gt;xxx_test&lt;/code&gt;。例如源码文件是&lt;code&gt;package math&lt;/code&gt;，测试文件是&lt;code&gt;package math_test&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;通常情况下，我们会选择第二种命名方式。因为测试文件和源码文件使用不同的&lt;code&gt;package&lt;/code&gt;，被测代码就是一个黑盒，能够让我们专注地基于其 API(以大写字母开头的__导出标识符__) 进行开发，以帮助我们设计出更易用的 API 出来。&lt;/p&gt;
+&lt;h2 id=&#34;export_testgo&#34;&gt;export_test.go&lt;/h2&gt;
+&lt;p&gt;源码文件和测试文件使用不同的&lt;code&gt;package&lt;/code&gt;名称，通常情况都是可以的，但在一些特殊 TestCase 下我们可能需要使用未导出的标识符，此时就需要&lt;code&gt;export_test.go&lt;/code&gt;文件登场了。&lt;/p&gt;
+&lt;p&gt;整理一下，我们的需求是这样的:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;不将未导出标识符导出到生产代码中&lt;/li&gt;
+&lt;li&gt;将一些未导出标识符导出到测试代码中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;此时我们就可以将一些未__导出标识符__包裹成__导出标识符__，放到&lt;code&gt;export_test.go&lt;/code&gt;文件中，供测试代码使用。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;export_test.go&lt;/em&gt; 文件仅仅在运行&lt;code&gt;go test&lt;/code&gt;命令的时候会被包括进来，所以它不会污染包所提供的API，用户也无法访问到它(不像 Java 中的&lt;code&gt;@VisibleForTesting&lt;/code&gt;)。&lt;/p&gt;
+&lt;p&gt;它建立了一座桥梁，让测试代码能够访问到未导出的标识符。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;export_test.go&lt;/code&gt;这个名字不是限定死的，也可以使用其他名字，但注意必须以&lt;code&gt;_test.go&lt;/code&gt;结尾。&lt;/p&gt;
+&lt;h2 id=&#34;使用-export_testgo-的实例&#34;&gt;使用 export_test.go 的实例&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;包&lt;code&gt;math&lt;/code&gt;的目录结构如下:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;math
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├── export_test.go
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├── math.go
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└── math_test.go
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sum.go&lt;/code&gt;文件中有未导出标识符&lt;code&gt;sum&lt;/code&gt;函数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//sum.go
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;math&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sum&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;export_test.go&lt;/code&gt;文件命名了&lt;code&gt;Sum&lt;/code&gt;函数作为&lt;code&gt;sum&lt;/code&gt;函数的副本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//export_test.go
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;math&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Sum&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sum&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sum_test.go&lt;/code&gt;测试文件使用的包名是&lt;code&gt;package math_test&lt;/code&gt;，它通过&lt;code&gt;export_test.go&lt;/code&gt;访问到了&lt;code&gt;math&lt;/code&gt;未导出的标识符&lt;code&gt;Sum&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//sum_test.go
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;math_test&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;github.com/d5/tengo/assert&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;testing&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;xxx/math&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TestName&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testing&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;T&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;assert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Equal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;math&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Sum&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;go-标准库中的应用&#34;&gt;Go 标准库中的应用&lt;/h2&gt;
+&lt;p&gt;在 Go 1.12的 strings 库中，存在以下定义&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;search.go&lt;/code&gt;中定义的函数&lt;code&gt;makeStringFinder&lt;/code&gt;是未导出的。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;search_test.go&lt;/code&gt;和&lt;code&gt;search.go&lt;/code&gt;使用了不同的&lt;code&gt;package&lt;/code&gt;名称，分别是&lt;code&gt;strings&lt;/code&gt;和&lt;code&gt;strings_test&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;为了让&lt;code&gt;search_test.go&lt;/code&gt;中能够使用到&lt;code&gt;makeStringFinder&lt;/code&gt;函数，在&lt;code&gt;export_test.go&lt;/code&gt;中定义了&lt;code&gt;StringFind&lt;/code&gt;函数，供其使用。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以下是代码链接，大家可以参考阅读。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;(https://github.com/golang/go/tree/release-branch.go1.12/src/strings)&#34;&gt;strings 目录&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/golang/go/blob/release-branch.go1.12/src/strings/search.go#L5&#34;&gt;search.go&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/golang/go/blob/release-branch.go1.12/src/strings/search_test.go#L5&#34;&gt;search_test.go&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/golang/go/blob/release-branch.go1.12/src/strings/export_test.go#L40-L42&#34;&gt;export_test.go&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
       </description>
     </item>
     

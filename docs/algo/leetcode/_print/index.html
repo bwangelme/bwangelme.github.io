@@ -100,7 +100,7 @@
     
     
 	
-<li>1: <a href="#pg-301653e9504d9bc0694f178fe07fe36e">Leetcode 第343题</a></li>
+<li>1: <a href="#pg-5c761828d342b91f1c7dda6244083aee">Leetcode 142: 环形链表 II</a></li>
 
 
     
@@ -108,7 +108,7 @@
     
     
 	
-<li>2: <a href="#pg-2a81c7b01891dea88626767b1b355c10">Leetcode 第342题</a></li>
+<li>2: <a href="#pg-301653e9504d9bc0694f178fe07fe36e">Leetcode 第343题</a></li>
 
 
     
@@ -116,7 +116,7 @@
     
     
 	
-<li>3: <a href="#pg-1aeb2a9eda376ee95c011157b6dd23c3">Leetcode 第65题</a></li>
+<li>3: <a href="#pg-2a81c7b01891dea88626767b1b355c10">Leetcode 第342题</a></li>
 
 
     
@@ -124,7 +124,7 @@
     
     
 	
-<li>4: <a href="#pg-c8534acc911cdb888d719d03fe686713">Leetcode 第2题</a></li>
+<li>4: <a href="#pg-1aeb2a9eda376ee95c011157b6dd23c3">Leetcode 第65题</a></li>
 
 
     
@@ -132,7 +132,7 @@
     
     
 	
-<li>5: <a href="#pg-17e3d91069e260357770bce2053503eb">Leetcode 第3题</a></li>
+<li>5: <a href="#pg-c8534acc911cdb888d719d03fe686713">Leetcode 第2题</a></li>
 
 
     
@@ -140,7 +140,7 @@
     
     
 	
-<li>6: <a href="#pg-fa655b923d49cb69e575a767af9184d1">Leetcode 第29题</a></li>
+<li>6: <a href="#pg-17e3d91069e260357770bce2053503eb">Leetcode 第3题</a></li>
 
 
     
@@ -148,7 +148,7 @@
     
     
 	
-<li>7: <a href="#pg-dd111fb175ed5ffbd5348eb2329617bd">Leetcode 第191题</a></li>
+<li>7: <a href="#pg-fa655b923d49cb69e575a767af9184d1">Leetcode 第29题</a></li>
 
 
     
@@ -156,7 +156,7 @@
     
     
 	
-<li>8: <a href="#pg-99b32d044faa3fce9f3f75a3429e0a8a">Leetcode 第338题</a></li>
+<li>8: <a href="#pg-dd111fb175ed5ffbd5348eb2329617bd">Leetcode 第191题</a></li>
 
 
     
@@ -164,7 +164,7 @@
     
     
 	
-<li>9: <a href="#pg-080b2406352b570ddfdaa5988aac5880">Leetcode 第151题</a></li>
+<li>9: <a href="#pg-99b32d044faa3fce9f3f75a3429e0a8a">Leetcode 第338题</a></li>
 
 
     
@@ -172,7 +172,7 @@
     
     
 	
-<li>10: <a href="#pg-84ffa092ec053720f155e2f5a14b7b11">Leetcode[258]. Add Digits</a></li>
+<li>10: <a href="#pg-080b2406352b570ddfdaa5988aac5880">Leetcode 第151题</a></li>
 
 
     
@@ -180,7 +180,7 @@
     
     
 	
-<li>11: <a href="#pg-34baac9a2ee283b8630219993a8f5dfd">Leetcode 第8题</a></li>
+<li>11: <a href="#pg-84ffa092ec053720f155e2f5a14b7b11">Leetcode[258]. Add Digits</a></li>
 
 
     
@@ -188,7 +188,15 @@
     
     
 	
-<li>12: <a href="#pg-e8f4ac0e603f47c82bb66534cf70181c">Leetcode 661题</a></li>
+<li>12: <a href="#pg-34baac9a2ee283b8630219993a8f5dfd">Leetcode 第8题</a></li>
+
+
+    
+  
+    
+    
+	
+<li>13: <a href="#pg-e8f4ac0e603f47c82bb66534cf70181c">Leetcode 661题</a></li>
 
 
     
@@ -219,7 +227,110 @@
 
 <div class="td-content" style="">
     
-	<h1 id="pg-301653e9504d9bc0694f178fe07fe36e">1 - Leetcode 第343题</h1>
+	<h1 id="pg-5c761828d342b91f1c7dda6244083aee">1 - Leetcode 142: 环形链表 II</h1>
+    
+	<hr>
+<h2 id="题目">题目</h2>
+<p>给定一个链表的头节点  head ，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。</p>
+<p>链表节点的定义如下</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">type</span> <span style="color:#000">ListNode</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">Val</span>  <span style="color:#204a87;font-weight:bold">int</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">Next</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">ListNode</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h2 id="解题思路">解题思路</h2>
+<h3 id="判断链表是否有环">判断链表是否有环</h3>
+<p>判断链表是否有环就使用简单的双指针法。</p>
+<p>定义两个指针，slow, fast, 它们一起从 head 开始往前移动，slow 每次移动一步，fast 每次移动两步。</p>
+<p>因为每次移动后 fast 比 slow 多一步，如果链表有环的话，它们一定会相遇。代码如下</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 判断链表中是否有环，并返回 slow 指针
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">getCycleSlow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">head</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">ListNode</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">ListNode</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">head</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#204a87;font-weight:bold">nil</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">fast</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">head</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">slow</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">head</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 注意这里的判断条件，先判断 fast 再判断 fast.Next
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">fast</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#000">fast</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#000">slow</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">fast</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">fast</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">slow</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">slow</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">fast</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">slow</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#8f5902;font-style:italic">// 快慢指针重合
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>			<span style="color:#8f5902;font-style:italic">// s = nb
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>			<span style="color:#8f5902;font-style:italic">// f = 2nb
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>			<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">slow</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 链表中没有环，此时 slow == nil
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#204a87;font-weight:bold">nil</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>我们假设链表中存在环，环的长度是 <code>b</code>。那么当 <code>getCycleSlow</code> 结束时，我们可以得到以下结论</p>
+<ul>
+<li>fast 移动的步数是 slow 的两倍</li>
+</ul>
+
+<div class="math">$$fast = 2 * slow$$</div><ul>
+<li>fast 比 slow 多走了 n 次环的长度</li>
+</ul>
+
+<div class="math">$$fast = slow + n * b$$</div><p>将上述两式相减，可以得到</p>
+
+<div class="math">$$slow = n * b$$</div>
+<div class="math">$$fast = 2 * n * b$$</div><h3 id="寻找环的入口">寻找环的入口</h3>
+<p>我们令 <code>a</code> 为从起点 head 到 环入口的距离，任意一个节点，从起点 head 走到环入口的距离为 k 步，可得:</p>
+
+<div class="math">$$k = a + n * b$$</div><p>\(b\) 表示环的长度，任意一个节点从 head 开始，走 \(a\) 步后可以到达环入口，在环中再走 \(n\) 圈后，又到达了环入口。</p>
+<p>此时我们继续用双指针法，</p>
+<ol>
+<li>定义一个追赶者 <code>pursuer</code>，让它从 head 开始往前走 \(a\) 步。</li>
+<li>同时让 \(slow\) 开始往前走 \(a\) 步。</li>
+</ol>
+<p>因为 \(slow\) 已经走了 \(n * b\) 步了，所以当 \(slow\) 走了 \(a + n * b\) 步后，<code>pursuer</code> 走了 \(a\) 步之后，\(slow\) 和 <code>pursuer</code> 就会在环的入口相遇。</p>
+<p>代码如下</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">detectCycle</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">head</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">ListNode</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">ListNode</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">pursuer</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">head</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 判断有环的同时，返回 slow 的位置
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">slow</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">getCycleSlow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">head</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">slow</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#204a87;font-weight:bold">nil</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 因为链表中有环，slow 和 pursuer 一定能够相遇
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 需要先判断 pursuer == slow，因为 slow 可能正好停在环入口
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">pursuer</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">slow</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">pursuer</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">pursuer</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">pursuer</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">slow</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">slow</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://leetcode.cn/problems/linked-list-cycle-ii/solution/linked-list-cycle-ii-kuai-man-zhi-zhen-shuang-zhi-/">环形链表 II（双指针法，清晰图解）</a></li>
+</ul>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-301653e9504d9bc0694f178fe07fe36e">2 - Leetcode 第343题</h1>
     
 	<blockquote>
 <ul>
@@ -283,7 +394,7 @@
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-2a81c7b01891dea88626767b1b355c10">2 - Leetcode 第342题</h1>
+	<h1 id="pg-2a81c7b01891dea88626767b1b355c10">3 - Leetcode 第342题</h1>
     
 	<blockquote>
 <ul>
@@ -333,7 +444,7 @@
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-1aeb2a9eda376ee95c011157b6dd23c3">3 - Leetcode 第65题</h1>
+	<h1 id="pg-1aeb2a9eda376ee95c011157b6dd23c3">4 - Leetcode 第65题</h1>
     
 	<blockquote>
 <ul>
@@ -396,7 +507,7 @@ The signature of the C++ function had been updated. If you still see your functi
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-c8534acc911cdb888d719d03fe686713">4 - Leetcode 第2题</h1>
+	<h1 id="pg-c8534acc911cdb888d719d03fe686713">5 - Leetcode 第2题</h1>
     
 	<blockquote>
 <ul>
@@ -477,7 +588,7 @@ Explanation: 342 + 465 = 807.
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-17e3d91069e260357770bce2053503eb">5 - Leetcode 第3题</h1>
+	<h1 id="pg-17e3d91069e260357770bce2053503eb">6 - Leetcode 第3题</h1>
     
 	<blockquote>
 <ul>
@@ -520,7 +631,7 @@ Explanation: 342 + 465 = 807.
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-fa655b923d49cb69e575a767af9184d1">6 - Leetcode 第29题</h1>
+	<h1 id="pg-fa655b923d49cb69e575a767af9184d1">7 - Leetcode 第29题</h1>
     
 	<blockquote>
 <ul>
@@ -649,7 +760,7 @@ $$</p>
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-dd111fb175ed5ffbd5348eb2329617bd">7 - Leetcode 第191题</h1>
+	<h1 id="pg-dd111fb175ed5ffbd5348eb2329617bd">8 - Leetcode 第191题</h1>
     
 	<blockquote>
 <ul>
@@ -774,7 +885,7 @@ $$</p>
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-99b32d044faa3fce9f3f75a3429e0a8a">8 - Leetcode 第338题</h1>
+	<h1 id="pg-99b32d044faa3fce9f3f75a3429e0a8a">9 - Leetcode 第338题</h1>
     
 	<blockquote>
 <ul>
@@ -869,7 +980,7 @@ $$</p>
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-080b2406352b570ddfdaa5988aac5880">9 - Leetcode 第151题</h1>
+	<h1 id="pg-080b2406352b570ddfdaa5988aac5880">10 - Leetcode 第151题</h1>
     
 	<blockquote>
 <ul>
@@ -996,7 +1107,7 @@ You need to reduce multiple spaces between two words to a single space in the re
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-84ffa092ec053720f155e2f5a14b7b11">10 - Leetcode[258]. Add Digits</h1>
+	<h1 id="pg-84ffa092ec053720f155e2f5a14b7b11">11 - Leetcode[258]. Add Digits</h1>
     
 	<blockquote>
 <ul>
@@ -1101,7 +1212,7 @@ Could you do it without any loop/recursion in O(1) runtime?</p>
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-34baac9a2ee283b8630219993a8f5dfd">11 - Leetcode 第8题</h1>
+	<h1 id="pg-34baac9a2ee283b8630219993a8f5dfd">12 - Leetcode 第8题</h1>
     
 	<blockquote>
 <p><a href="https://leetcode.com/problems/string-to-integer-atoi/submissions/">https://leetcode.com/problems/string-to-integer-atoi/submissions/</a></p>
@@ -1361,7 +1472,7 @@ Output: -2147483648
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-e8f4ac0e603f47c82bb66534cf70181c">12 - Leetcode 661题</h1>
+	<h1 id="pg-e8f4ac0e603f47c82bb66534cf70181c">13 - Leetcode 661题</h1>
     
 	<blockquote>
 <ul>

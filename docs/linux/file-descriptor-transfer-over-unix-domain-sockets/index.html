@@ -1,0 +1,917 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="cn" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.117.0">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/647/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/647/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/647/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/647/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/647/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/647/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/647/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/647/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/647/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/647/favicons/android-192x192.png" sizes="192x192">
+
+<title>Review 《File Descriptor Transfer over Unix Domain Sockets》 | 647 Universe</title>
+<meta name="description" content=" 使用 Unix 域套接字传输文件描述符 原文地址: https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec ">
+<meta property="og:title" content="Review 《File Descriptor Transfer over Unix Domain Sockets》" />
+<meta property="og:description" content="
+
+使用 Unix 域套接字传输文件描述符
+原文地址: https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bwangel.me/647/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/" /><meta property="article:section" content="docs" />
+<meta property="article:published_time" content="2021-11-30T11:58:56+08:00" />
+<meta property="article:modified_time" content="2023-10-18T09:36:48+08:00" /><meta property="og:site_name" content="647号宇宙" />
+<meta itemprop="name" content="Review 《File Descriptor Transfer over Unix Domain Sockets》">
+<meta itemprop="description" content="
+
+使用 Unix 域套接字传输文件描述符
+原文地址: https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec
+
+"><meta itemprop="datePublished" content="2021-11-30T11:58:56+08:00" />
+<meta itemprop="dateModified" content="2023-10-18T09:36:48+08:00" />
+<meta itemprop="wordCount" content="816">
+<meta itemprop="keywords" content="翻译,linux,blog," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Review 《File Descriptor Transfer over Unix Domain Sockets》"/>
+<meta name="twitter:description" content="
+
+使用 Unix 域套接字传输文件描述符
+原文地址: https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec
+
+"/>
+
+
+
+
+<link rel="preload" href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" as="style">
+<link href="/647/scss/main.min.291c723daa8f2fb6b09f56ac9a2ca71406607a4268e1fe586dddad1a8583b4e7.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/647/css/prism.css"/>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar navbar-dark js-navbar-scroll">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/647/"><span class="navbar-brand__logo navbar-logo"><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500" style="enable-background:new 0 0 500 500"><g><path style="fill:#fff" d="M116.8525 421.9722c-5.7041.0-10.3442-4.3127-10.3442-9.6129V88.183c0-5.3002 4.6401-9.6117 10.3442-9.6117H320.858c3.0347.0 9.3959.5498 11.7506 2.6302l.3545.3442 58.905 63.2912c2.3101 2.491 2.9202 8.4928 2.9202 11.3184v256.2039c0 5.3002-4.6407 9.6129-10.3436 9.6129H116.8525z"/><g><g><g><path style="fill:#767676" d="M384.4445 423.2066H116.852c-6.3839.0-11.5786-4.8658-11.5786-10.8474V88.1831c0-5.9804 5.1947-10.8461 11.5786-10.8461h204.0062c.377.0 9.2786.0329 12.568 2.9389l.3947.3833 58.9508 63.337c3.2135 3.4652 3.2514 11.7924 3.2514 12.1593v256.2036C396.0231 418.3408 390.8284 423.2066 384.4445 423.2066zM116.5079 411.9189c.0848.0278.1999.0531.3441.0531h267.5925c.1442.0.2581-.0253.3441-.0531V156.1556c-.0076-.9033-.3593-3.7347-.7034-5.0037l-57.6527-61.9416c-1.4651-.3176-4.4533-.6389-5.5742-.6389H116.852c-.143.0-.2594.024-.3441.0531V411.9189zm267.4533-261.149zM327.0321 89.371v.0013V89.371z"/></g></g></g><g><g><path style="fill:#5b7fc0" d="M189.0874 210.1754l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.025 2.454-11.4897 6.4116-15.4473C177.5953 212.627 183.0601 210.1742 189.0874 210.1754zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403S197.0816 234.1722 197.0804 232.033z"/><path style="opacity:.3;fill:#fff" d="M189.0898 210.176c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 212.6276 183.0612 210.176 189.0898 210.176zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 236.239 197.0839 234.2399 197.0839 232.0372z"/><g><defs><path id="SVGID_1_" d="M194.7376 237.6875c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.999 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 234.2399 196.1861 236.239 194.7376 237.6875z"/></defs><clipPath id="SVGID_2_"><use xlink:href="#SVGID_1_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_2_);fill:#fff" d="M190.0704 225.0237c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 225.7247 191.9774 225.0237 190.0704 225.0237z"/><path style="opacity:.13;clip-path:url(#SVGID_2_);fill:#020202" d="M190.0704 225.0237c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 225.7247 191.9774 225.0237 190.0704 225.0237z"/></g><g><defs><path id="SVGID_3_" d="M189.0898 210.176c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 212.6276 183.0612 210.176 189.0898 210.176zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 236.239 197.0839 234.2399 197.0839 232.0372z"/></defs><clipPath id="SVGID_4_"><use xlink:href="#SVGID_3_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_4_);fill:#5b7fc0" d="M172.6595 215.6045c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8612 12.0547.0024 21.8636-9.797 21.8613-21.8612.0024-3.8475-1.0151-7.6326-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 209.1953 176.6171 211.647 172.6595 215.6045z"/></g></g><rect x="198.8952" y="225.1043" style="fill:#5b7fc0" width="122.6266" height="13.8671"/></g><g><path style="fill:#d95140" d="M189.0874 155.7611l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.0249 2.454-11.4897 6.4116-15.4473C177.5953 158.2128 183.0601 155.7599 189.0874 155.7611zm7.993 21.8577c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403C196.2508 181.7667 197.0816 179.758 197.0804 177.6188z"/><path style="opacity:.3;fill:#fff" d="M189.0898 155.7617c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 158.2134 183.0612 155.7617 189.0898 155.7617zm7.9941 21.8613c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 181.8248 197.0839 179.8256 197.0839 177.623z"/><g><defs><path id="SVGID_5_" d="M194.7376 183.2733c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.9989 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 179.8256 196.1861 181.8248 194.7376 183.2733z"/></defs><clipPath id="SVGID_6_"><use xlink:href="#SVGID_5_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_6_);fill:#fff" d="M190.0704 170.6095c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 171.3104 191.9774 170.6095 190.0704 170.6095z"/><path style="opacity:.13;clip-path:url(#SVGID_6_);fill:#020202" d="M190.0704 170.6095c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 171.3104 191.9774 170.6095 190.0704 170.6095z"/></g><g><defs><path id="SVGID_7_" d="M189.0898 155.7617c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 158.2134 183.0612 155.7617 189.0898 155.7617zm7.9941 21.8613c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 181.8248 197.0839 179.8256 197.0839 177.623z"/></defs><clipPath id="SVGID_8_"><use xlink:href="#SVGID_7_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_8_);fill:#d95140" d="M172.6595 161.1903c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8613 12.0547.0024 21.8636-9.797 21.8613-21.8613.0024-3.8474-1.0151-7.6326-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 154.7811 176.6171 157.2327 172.6595 161.1903z"/></g><rect x="198.8952" y="170.69" style="fill:#d95140" width="122.6266" height="13.8671"/></g><g><g><path style="fill:#56a55c" d="M189.5379 264.6147l.0012-.0012c7.7751.0012 15.0294 4.1862 18.932 10.9235 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032-5.8394.0-11.3281-2.2733-15.458-6.4032-4.13-4.13-6.4032-9.6186-6.4056-15.4628.0012-6.0249 2.454-11.4897 6.4116-15.4472C178.0458 267.0663 183.5105 264.6135 189.5379 264.6147zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6538 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403C196.7013 290.6202 197.5321 288.6115 197.5309 286.4723z"/><path style="opacity:.3;fill:#fff" d="M189.5403 264.6153c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8065-21.8612-21.8613.0-6.0285 2.4516-11.492 6.4116-15.452C178.0482 267.0669 183.5117 264.6153 189.5403 264.6153zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.6366 290.6783 197.5344 288.6792 197.5344 286.4765z"/><g><defs><path id="SVGID_9_" d="M195.1881 292.1268c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.9989 7.9942-7.9941 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.5344 288.6792 196.6366 290.6783 195.1881 292.1268z"/></defs><clipPath id="SVGID_10_"><use xlink:href="#SVGID_9_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_10_);fill:#fff" d="M190.5209 279.463c-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7446-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9941 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C194.239 280.164 192.4279 279.463 190.5209 279.463z"/><path style="opacity:.13;clip-path:url(#SVGID_10_);fill:#020202" d="M190.5209 279.463c-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7446-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9941 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C194.239 280.164 192.4279 279.463 190.5209 279.463z"/></g><g><defs><path id="SVGID_11_" d="M189.5403 264.6153c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8065-21.8612-21.8613.0-6.0285 2.4516-11.492 6.4116-15.452C178.0482 267.0669 183.5117 264.6153 189.5403 264.6153zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.6366 290.6783 197.5344 288.6792 197.5344 286.4765z"/></defs><clipPath id="SVGID_12_"><use xlink:href="#SVGID_11_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_12_);fill:#56a55c" d="M173.11 270.0439c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8613 12.0547.0024 21.8636-9.797 21.8613-21.8613.0024-3.8474-1.0151-7.6326-2.9353-10.9462-3.8977-6.7325-11.1497-10.9151-18.926-10.9151C182.5311 263.6346 177.0676 266.0863 173.11 270.0439z"/></g></g><rect x="199.3456" y="279.5436" style="fill:#56a55c" width="122.6266" height="13.8671"/></g><g><g><path style="fill:#f1bc42" d="M189.0874 318.7208l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3305-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.025 2.454-11.4897 6.4116-15.4472C177.5953 321.1724 183.0601 318.7196 189.0874 318.7208zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403S197.0816 342.7176 197.0804 340.5784z"/><path style="opacity:.3;fill:#fff" d="M189.0898 318.7214c7.7763.0 15.0283 4.1826 18.926 10.915 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8612-12.0547.0024-21.8636-9.8065-21.8612-21.8612.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 321.173 183.0612 318.7214 189.0898 318.7214zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 344.7844 197.0839 342.7853 197.0839 340.5826z"/><g><defs><path id="SVGID_13_" d="M194.7376 346.2329c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.999 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 342.7853 196.1861 344.7844 194.7376 346.2329z"/></defs><clipPath id="SVGID_14_"><use xlink:href="#SVGID_13_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_14_);fill:#fff" d="M190.0704 333.5691c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0834 6.1218 2.8788C193.7885 334.2701 191.9774 333.5691 190.0704 333.5691z"/><path style="opacity:.13;clip-path:url(#SVGID_14_);fill:#020202" d="M190.0704 333.5691c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0834 6.1218 2.8788C193.7885 334.2701 191.9774 333.5691 190.0704 333.5691z"/></g><g><defs><path id="SVGID_15_" d="M189.0898 318.7214c7.7763.0 15.0283 4.1826 18.926 10.915 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8612-12.0547.0024-21.8636-9.8065-21.8612-21.8612.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 321.173 183.0612 318.7214 189.0898 318.7214zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 344.7844 197.0839 342.7853 197.0839 340.5826z"/></defs><clipPath id="SVGID_16_"><use xlink:href="#SVGID_15_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_16_);fill:#f1bc42" d="M172.6595 324.15c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8612 12.0547.0024 21.8636-9.797 21.8613-21.8612.0024-3.8474-1.0151-7.6327-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 317.7407 176.6171 320.1924 172.6595 324.15z"/></g></g><rect x="198.8952" y="333.6497" style="fill:#f1bc42" width="122.6266" height="13.8671"/></g></g></svg></span><span class="navbar-brand__name">647 Universe</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="/647/docs/"><span>Docs</span></a>
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-647docs-li">
+  <a href="/647/docs/" title="Documentation" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-647docs"><span class="">Docs</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docspython-li">
+  <a href="/647/docs/python/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docspython"><span class="">Python</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docspythonre-ascii-print-li">
+  <a href="/647/docs/python/re-ascii-print/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docspythonre-ascii-print"><span class="">匹配所有可打印 Ascii 字符的正则</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docspythonpython-upgrade-importerror-li">
+  <a href="/647/docs/python/python-upgrade-importerror/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docspythonpython-upgrade-importerror"><span class="">Python Upgrade Importerror</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docspythondjango-override-settings-li">
+  <a href="/647/docs/python/django-override-settings/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docspythondjango-override-settings"><span class="">Django的override_settings修饰器浅析</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docspythondjango-import-string-li">
+  <a href="/647/docs/python/django-import-string/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docspythondjango-import-string"><span class="">Django中import_string的实现</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docslife-li">
+  <a href="/647/docs/life/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docslife"><span class="">Life</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslifelanguage-li">
+  <a href="/647/docs/life/language/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslifelanguage"><span class="">编程语言很重要</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsliferead-li">
+  <a href="/647/docs/life/read/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsliferead"><span class="">如何阅读网络上的小作文</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docstools-li">
+  <a href="/647/docs/tools/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docstools"><span class="">Tools</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docstoolsmac-tips-li">
+  <a href="/647/docs/tools/mac-tips/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docstoolsmac-tips"><span class="">Mac OSX 使用技巧</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docstoolsvagrant_add_volume-li">
+  <a href="/647/docs/tools/vagrant_add_volume/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docstoolsvagrant_add_volume"><span class="">Vagrant 添加挂载目录</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docstoolsgh-search-github-li">
+  <a href="/647/docs/tools/gh-search-github/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docstoolsgh-search-github"><span class="">Github 客户端 gh 添加搜索仓库的命令</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docstoolsjava-unsupportedencodingexception-li">
+  <a href="/647/docs/tools/java-unsupportedencodingexception/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docstoolsjava-unsupportedencodingexception"><span class="">Java 抛出UnsupportedEncodingException</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docstoolsrabbitmq-tutorial-li">
+  <a href="/647/docs/tools/rabbitmq-tutorial/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docstoolsrabbitmq-tutorial"><span class="">Rabbitmq Tutorial 学习笔记</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docstcp_ip-li">
+  <a href="/647/docs/tcp_ip/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docstcp_ip"><span class="">TCP/IP</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docstcp_ippromisc-li">
+  <a href="/647/docs/tcp_ip/promisc/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docstcp_ippromisc"><span class="">混杂模式</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docstcp_iptcp-naggle-li">
+  <a href="/647/docs/tcp_ip/tcp-naggle/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docstcp_iptcp-naggle"><span class="">TCP Naggle 算法</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docstcp_iptcp-ip-notes-li">
+  <a href="/647/docs/tcp_ip/tcp-ip-notes/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docstcp_iptcp-ip-notes"><span class="">TCP/IP 读书笔记</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsmysql-li">
+  <a href="/647/docs/mysql/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsmysql"><span class="">MySQL</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsmysqlmysql-password-li">
+  <a href="/647/docs/mysql/mysql-password/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsmysqlmysql-password"><span class="">MySQL 修改 root 密码</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsmysqlinnodb-lock-li">
+  <a href="/647/docs/mysql/innodb-lock/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsmysqlinnodb-lock"><span class="">InnoDB 锁机制</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsmysqlinnodb-row-li">
+  <a href="/647/docs/mysql/innodb-row/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsmysqlinnodb-row"><span class="">InnoDB 行记录格式</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsmysqlmysql-character-set-support-li">
+  <a href="/647/docs/mysql/mysql-character-set-support/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsmysqlmysql-character-set-support"><span class="">MySQL Character Set support</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsubuntu-li">
+  <a href="/647/docs/ubuntu/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsubuntu"><span class="">Ubuntu</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsubuntunvim-web-devicons-li">
+  <a href="/647/docs/ubuntu/nvim-web-devicons/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsubuntunvim-web-devicons"><span class="">Ubuntu 下 alacritty 终端中安装 nvim-tree 插件</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsubuntuubuntu-init-li">
+  <a href="/647/docs/ubuntu/ubuntu-init/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsubuntuubuntu-init"><span class="">Ubuntu 初始化</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsubuntuubuntu-dns-li">
+  <a href="/647/docs/ubuntu/ubuntu-dns/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsubuntuubuntu-dns"><span class="">Ubuntu 使用默认的 DNS Server 配置</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsubuntuchrome_key_event_missing-li">
+  <a href="/647/docs/ubuntu/chrome_key_event_missing/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsubuntuchrome_key_event_missing"><span class="">修复 Ubuntu 中 chrome vimium-c 插件失效的问题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsubuntuubuntue7bca9e5b08fe7a381e79b98e58886e58cbae5a4a7e5b08f-li">
+  <a href="/647/docs/ubuntu/ubuntu%E7%BC%A9%E5%B0%8F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsubuntuubuntue7bca9e5b08fe7a381e79b98e58886e58cbae5a4a7e5b08f"><span class="">Ubuntu缩小磁盘分区大小</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsalgo-li">
+  <a href="/647/docs/algo/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsalgo"><span class="">算法</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgobinary_search-li">
+  <a href="/647/docs/algo/binary_search/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgobinary_search"><span class="">二分查找</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-647docsalgoleetcode-li">
+  <a href="/647/docs/algo/leetcode/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsalgoleetcode"><span class="">LeetCode</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-142-li">
+  <a href="/647/docs/algo/leetcode/leetcode-142/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-142"><span class="">Leetcode 142: 环形链表 II</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-343-li">
+  <a href="/647/docs/algo/leetcode/leetcode-343/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-343"><span class="">Leetcode 第343题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-342-li">
+  <a href="/647/docs/algo/leetcode/leetcode-342/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-342"><span class="">Leetcode 第342题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-65-li">
+  <a href="/647/docs/algo/leetcode/leetcode-65/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-65"><span class="">Leetcode 第65题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-2-li">
+  <a href="/647/docs/algo/leetcode/leetcode-2/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-2"><span class="">Leetcode 第2题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-3-li">
+  <a href="/647/docs/algo/leetcode/leetcode-3/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-3"><span class="">Leetcode 第3题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-29-li">
+  <a href="/647/docs/algo/leetcode/leetcode-29/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-29"><span class="">Leetcode 第29题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-191-li">
+  <a href="/647/docs/algo/leetcode/leetcode-191/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-191"><span class="">Leetcode 第191题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-338-li">
+  <a href="/647/docs/algo/leetcode/leetcode-338/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-338"><span class="">Leetcode 第338题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-151-li">
+  <a href="/647/docs/algo/leetcode/leetcode-151/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-151"><span class="">Leetcode 第151题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-258-li">
+  <a href="/647/docs/algo/leetcode/leetcode-258/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-258"><span class="">Leetcode[258]. Add Digits</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-8-li">
+  <a href="/647/docs/algo/leetcode/leetcode-8/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-8"><span class="">Leetcode 第8题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoleetcodeleetcode-661-li">
+  <a href="/647/docs/algo/leetcode/leetcode-661/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoleetcodeleetcode-661"><span class="">Leetcode 661题</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgohash-li">
+  <a href="/647/docs/algo/hash/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgohash"><span class="">哈希表学习笔记</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgojump-stairs-li">
+  <a href="/647/docs/algo/jump-stairs/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgojump-stairs"><span class="">变态跳台阶问题的解题思路</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgogo-binarysearchtree-li">
+  <a href="/647/docs/algo/go-binarysearchtree/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgogo-binarysearchtree"><span class="">Go与数据结构之二叉搜索树</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsalgoalgorithm-complexity-li">
+  <a href="/647/docs/algo/algorithm-complexity/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgoalgorithm-complexity"><span class="">算法复杂度小记</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsredis-li">
+  <a href="/647/docs/redis/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsredis"><span class="">Redis</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsredisredise5a487e4bbbde681a2e5a48d-li">
+  <a href="/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsredisredise5a487e4bbbde681a2e5a48d"><span class="">Redis 备份恢复的正确步骤</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsredisredise5908ce6ada5e7bb86e88a82-li">
+  <a href="/647/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsredisredise5908ce6ada5e7bb86e88a82"><span class="">Redis 主从同步细节</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsredisredise5a487e4bbbde69cbae588b6-li">
+  <a href="/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsredisredise5a487e4bbbde69cbae588b6"><span class="">Redis 备份机制</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsredisredise99b86e7bea4e9858de7bdae-li">
+  <a href="/647/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsredisredise99b86e7bea4e9858de7bdae"><span class="">Redis 集群简介</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsredisredis-source-dict-li">
+  <a href="/647/docs/redis/redis-source-dict/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsredisredis-source-dict"><span class="">Redis 源码阅读之 dict </span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsredisredis-sort-li">
+  <a href="/647/docs/redis/redis-sort/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsredisredis-sort"><span class="">Redis Sort 命令简介</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docskafka-li">
+  <a href="/647/docs/kafka/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docskafka"><span class="">Kafka</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docskafkaconsumer-li">
+  <a href="/647/docs/kafka/consumer/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docskafkaconsumer"><span class="">Consumer</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docskafkabroker-li">
+  <a href="/647/docs/kafka/broker/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docskafkabroker"><span class="">Broker</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docskafkaconfluent_pythonmd-li">
+  <a href="/647/docs/kafka/confluent_python.md/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docskafkaconfluent_pythonmd"><span class="">从源码安装 confluent-kafka-python</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsk8s-li">
+  <a href="/647/docs/k8s/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsk8s"><span class="">K8S</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-647docsk8sk8s-in-actions-li">
+  <a href="/647/docs/k8s/k8s-in-actions/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsk8sk8s-in-actions"><span class="">K8S In Actions</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sk8s-in-actionsk8s-in-actions-11-li">
+  <a href="/647/docs/k8s/k8s-in-actions/k8s-in-actions-11/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sk8s-in-actionsk8s-in-actions-11"><span class="">11-architecture</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sk8s-in-actionsk8s-in-actions-10-li">
+  <a href="/647/docs/k8s/k8s-in-actions/k8s-in-actions-10/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sk8s-in-actionsk8s-in-actions-10"><span class="">10-statefulset</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sk8s-in-actionsk8s-in-actions-7-li">
+  <a href="/647/docs/k8s/k8s-in-actions/k8s-in-actions-7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sk8s-in-actionsk8s-in-actions-7"><span class="">7-configmap-secert</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sk8s-in-actionsk8s-in-actions-6-li">
+  <a href="/647/docs/k8s/k8s-in-actions/k8s-in-actions-6/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sk8s-in-actionsk8s-in-actions-6"><span class="">6-volume</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sk8s-in-actionsk8s-in-actions-5-li">
+  <a href="/647/docs/k8s/k8s-in-actions/k8s-in-actions-5/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sk8s-in-actionsk8s-in-actions-5"><span class="">5-service</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sk8s-in-actionsk8s-in-actions-4-li">
+  <a href="/647/docs/k8s/k8s-in-actions/k8s-in-actions-4/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sk8s-in-actionsk8s-in-actions-4"><span class="">4-pod-replicaset</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sk8s-in-actionsk8s-in-actions-3-li">
+  <a href="/647/docs/k8s/k8s-in-actions/k8s-in-actions-3/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sk8s-in-actionsk8s-in-actions-3"><span class="">3-Pod</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8spod-tips-li">
+  <a href="/647/docs/k8s/pod-tips/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8spod-tips"><span class="">Pod Tips</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sdeployment-tips-li">
+  <a href="/647/docs/k8s/deployment-tips/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sdeployment-tips"><span class="">Deployment Tips</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sk8s-cpu-throttle-prom-metric-li">
+  <a href="/647/docs/k8s/k8s-cpu-throttle-prom-metric/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sk8s-cpu-throttle-prom-metric"><span class="">K8S 中观察 CPU Throttling 情况的指标</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sprocess-block-li">
+  <a href="/647/docs/k8s/process-block/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sprocess-block"><span class="">进程卡住如何 debug</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sebpf-service-mesh-li">
+  <a href="/647/docs/k8s/ebpf-service-mesh/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sebpf-service-mesh"><span class="">Review 《How eBPF will solve Service Mesh - Goodbye Sidecars》</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsk8sbuildkit-li">
+  <a href="/647/docs/k8s/buildkit/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsk8sbuildkit"><span class="">使用 Buildkit 和 Containerd 构建运行容器</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docscontainer-li">
+  <a href="/647/docs/container/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docscontainer"><span class="">Container</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docscontainerdocker-dns-li">
+  <a href="/647/docs/container/docker-dns/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docscontainerdocker-dns"><span class="">Ubuntu 中 Docker 设置容器中 DNS 服务器的地址</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docscontainerdocker-none-network-li">
+  <a href="/647/docs/container/docker-none-network/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docscontainerdocker-none-network"><span class="">从 none 开始，用网桥模式启动容器的网络</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docscontainerinstall-containerd-li">
+  <a href="/647/docs/container/install-containerd/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docscontainerinstall-containerd"><span class="">Ubuntu 下安装 Containerd 及配置代理</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docscontainerdocker-registry-li">
+  <a href="/647/docs/container/docker-registry/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docscontainerdocker-registry"><span class="">Ubuntu 下 Docker 设置 Registry</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docscontainerdocker-client-remote-server-li">
+  <a href="/647/docs/container/docker-client-remote-server/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docscontainerdocker-client-remote-server"><span class="">Docker 客户端连接远程 Docker Daemon</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docshttp-li">
+  <a href="/647/docs/http/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docshttp"><span class="">HTTP</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docshttpnginx-header-underline-li">
+  <a href="/647/docs/http/nginx-header-underline/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docshttpnginx-header-underline"><span class="">HTTP 协议中带下划线的 header 说明</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docshttpnginx-proxy-set-header-li">
+  <a href="/647/docs/http/nginx-proxy-set-header/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docshttpnginx-proxy-set-header"><span class="">Nginx proxy_set_header 默认会覆盖上一层的设置</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docshttphttps-generate-cert-li">
+  <a href="/647/docs/http/https-generate-cert/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docshttphttps-generate-cert"><span class="">如何生成自签名 HTTPS 证书</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docshttphttp-chunked-li">
+  <a href="/647/docs/http/http-chunked/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docshttphttp-chunked"><span class="">HTTP 协议中的分块传输编码</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docshttpletsencrypt-dns-txt-li">
+  <a href="/647/docs/http/letsencrypt-dns-txt/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docshttpletsencrypt-dns-txt"><span class="">Letsencrypt通过DNS TXT记录来验证域名有效性</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docshttpnginx_install-li">
+  <a href="/647/docs/http/nginx_install/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docshttpnginx_install"><span class="">CentOS 下编译安装 Nginx</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsprometheus-li">
+  <a href="/647/docs/prometheus/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsprometheus"><span class="">Prometheus</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsprometheusstatsd-exporter-unchecked-metric-li">
+  <a href="/647/docs/prometheus/statsd-exporter-unchecked-metric/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsprometheusstatsd-exporter-unchecked-metric"><span class="">Statsd Exporter 如何跳过 prom 的指标检查</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsencoding-li">
+  <a href="/647/docs/encoding/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsencoding"><span class="">编码</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsencodingvariant_zigzag-li">
+  <a href="/647/docs/encoding/variant_zigzag/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsencodingvariant_zigzag"><span class="">ZigZag 变长整数编码</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docswireshark-li">
+  <a href="/647/docs/wireshark/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docswireshark"><span class="">WireShark</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docswiresharkvbox-linux-wireshark-li">
+  <a href="/647/docs/wireshark/vbox-linux-wireshark/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docswiresharkvbox-linux-wireshark"><span class="">利用 VirtualBox 和 Ubuntu 22 重现抓包实验</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsgolang-li">
+  <a href="/647/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsgolang"><span class="">Golang</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggeneric-li">
+  <a href="/647/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggeneric"><span class="">泛型</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolangyaml-li">
+  <a href="/647/docs/golang/yaml/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolangyaml"><span class="">YAML</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanglogrus-formatter-li">
+  <a href="/647/docs/golang/logrus-formatter/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanglogrus-formatter"><span class="">Logrus 添加预设字段</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-build-vcsmap-li">
+  <a href="/647/docs/golang/go-build-vcsmap/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-build-vcsmap"><span class="">Golang Build 出错: error obtaining VCS status: exit status 128</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggolang-err-li">
+  <a href="/647/docs/golang/golang-err/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggolang-err"><span class="">pkg/errors 和 go1.13 中 errors 库发展历史</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-release-li">
+  <a href="/647/docs/golang/go-release/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-release"><span class="">Golang 的版本发布计划</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo_gcflags-li">
+  <a href="/647/docs/golang/go_gcflags/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo_gcflags"><span class="">Go gcflags/ldflags 的说明</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-http-client-li">
+  <a href="/647/docs/golang/go-http-client/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-http-client"><span class="">Review 《Don’t use Go’s default HTTP client (in production)》</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggoproxy-li">
+  <a href="/647/docs/golang/goproxy/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggoproxy"><span class="">Go proxy 的说明</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-array-and-nil-li">
+  <a href="/647/docs/golang/go-array-and-nil/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-array-and-nil"><span class="">Golang 中空数组是否是 nil</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-build-variable-li">
+  <a href="/647/docs/golang/go-build-variable/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-build-variable"><span class="">Golang 链接时注入额外信息</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggolang_error-li">
+  <a href="/647/docs/golang/golang_error/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggolang_error"><span class="">《Golang Error》学习笔记</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-schedule-li">
+  <a href="/647/docs/golang/go-schedule/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-schedule"><span class="">Go 的调度模型学习笔记</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolangintro-servemux-li">
+  <a href="/647/docs/golang/intro-servemux/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolangintro-servemux"><span class="">Golang 中的 ServeMux 路由简介</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolangreview-testify-li">
+  <a href="/647/docs/golang/review-testify/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolangreview-testify"><span class="">Review 《github.com/stretchr/testify》</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-pubsub-li">
+  <a href="/647/docs/golang/go-pubsub/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-pubsub"><span class="">Go 并发模式之发布订阅模型</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolangbyte-vs-builder-li">
+  <a href="/647/docs/golang/byte-vs-builder/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolangbyte-vs-builder"><span class="">strings.Builder 转换字符串的时候为什么比 bytes.Buffer 要快</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggolang-trick-export-for-test-li">
+  <a href="/647/docs/golang/golang-trick-export-for-test/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggolang-trick-export-for-test"><span class="">Review 《Golang Trick: Export unexport method for test》</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-cli-li">
+  <a href="/647/docs/golang/go-cli/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-cli"><span class="">urfave/cli 学习笔记</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-sync-channel-li">
+  <a href="/647/docs/golang/go-sync-channel/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-sync-channel"><span class="">关于线程同步操作的一道面试题</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-scheduler-pitfall-li">
+  <a href="/647/docs/golang/go-scheduler-pitfall/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-scheduler-pitfall"><span class="">Go 调度器的一个无法执行陷阱</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-panic-li">
+  <a href="/647/docs/golang/go-panic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-panic"><span class="">Go Panic 的触发及恢复过程</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-lock-li">
+  <a href="/647/docs/golang/go-lock/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-lock"><span class="">线程同步操作面试题使用锁的解法</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-test-li">
+  <a href="/647/docs/golang/go-test/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-test"><span class="">Go 的测试</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-dep-inject-li">
+  <a href="/647/docs/golang/go-dep-inject/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-dep-inject"><span class="">Dependency injection in Golang using higher order functions</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-template-li">
+  <a href="/647/docs/golang/go-template/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-template"><span class="">Go 模板</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo_mod-li">
+  <a href="/647/docs/golang/go_mod/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo_mod"><span class="">Go mod 说明</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolangprime-generator-li">
+  <a href="/647/docs/golang/prime-generator/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolangprime-generator"><span class="">素数生成器</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggolang-type-switch-li">
+  <a href="/647/docs/golang/golang-type-switch/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggolang-type-switch"><span class="">Go 语言的 Type Switch 语句解析</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggo-concurrency-li">
+  <a href="/647/docs/golang/go-concurrency/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggo-concurrency"><span class="">Go的并发编程简述</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggolang-reflect-li">
+  <a href="/647/docs/golang/golang-reflect/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggolang-reflect"><span class="">Go 的反射包浅析</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsgolanggotour-notes-li">
+  <a href="/647/docs/golang/gotour-notes/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsgolanggotour-notes"><span class="">Go 学习笔记</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsperformance-li">
+  <a href="/647/docs/performance/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsperformance"><span class="">性能分析</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsperformanceqps_rt-li">
+  <a href="/647/docs/performance/qps_rt/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsperformanceqps_rt"><span class="">QPS 和 RT 的关系</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsthrift-li">
+  <a href="/647/docs/thrift/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsthrift"><span class="">Thrift</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftgolang-client-timeout-li">
+  <a href="/647/docs/thrift/golang-client-timeout/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftgolang-client-timeout"><span class="">Thrift golang client 如何设置超时时间</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftthrift-protocol-li">
+  <a href="/647/docs/thrift/thrift-protocol/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftthrift-protocol"><span class="">Thrift 协议学习笔记</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftthrift-concept-li">
+  <a href="/647/docs/thrift/thrift-concept/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftthrift-concept"><span class="">Thrft</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftintroduction-to-apache-thrift-li">
+  <a href="/647/docs/thrift/introduction-to-apache-thrift/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftintroduction-to-apache-thrift"><span class="">翻译《Chapter 1. Introduction to Apache Thrift》</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsspec-li">
+  <a href="/647/docs/spec/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsspec"><span class="">规范</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsspecdatetime-li">
+  <a href="/647/docs/spec/datetime/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsspecdatetime"><span class="">日期和时间格式</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docseditor-li">
+  <a href="/647/docs/editor/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docseditor"><span class="">编辑器</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docseditorpycharm-li">
+  <a href="/647/docs/editor/pycharm/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docseditorpycharm"><span class="">Pycharm</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docseditorvscode-esc-not-work-li">
+  <a href="/647/docs/editor/vscode-esc-not-work/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docseditorvscode-esc-not-work"><span class="">Caps-lock mapping 成 Esc 在 vscode 中不生效</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-647docslinux-li">
+  <a href="/647/docs/linux/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docslinux"><span class="">Linux</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxcurl-li">
+  <a href="/647/docs/linux/curl/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxcurl"><span class="">curl</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxlsof-li">
+  <a href="/647/docs/linux/lsof/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxlsof"><span class="">lsof</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxdns-li">
+  <a href="/647/docs/linux/dns/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxdns"><span class="">DNS</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxnfs-server-li">
+  <a href="/647/docs/linux/nfs-server/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxnfs-server"><span class="">在 Ubuntu 22.04 上搭建 NFS Server</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxls-tipsmd-li">
+  <a href="/647/docs/linux/ls-tips.md/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxls-tipsmd"><span class="">ls Tips</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxstty-li">
+  <a href="/647/docs/linux/stty/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxstty"><span class="">查看信号的快捷键</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-647docslinuxfile-descriptor-transfer-over-unix-domain-sockets-li">
+  <a href="/647/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-647docslinuxfile-descriptor-transfer-over-unix-domain-sockets"><span class="td-sidebar-nav-active-item">Review 《File Descriptor Transfer over Unix Domain Sockets》</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxglob-e8afade6b395-li">
+  <a href="/647/docs/linux/glob-%E8%AF%AD%E6%B3%95/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxglob-e8afade6b395"><span class="">Glob 语法解析</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxflex-li">
+  <a href="/647/docs/linux/flex/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxflex"><span class="">词法分析器生成工具 Lex 简介</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxlaptop-server-li">
+  <a href="/647/docs/linux/laptop-server/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxlaptop-server"><span class="">【流水账】利用闲置笔记本搭建自己的开发服务器</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docslinuxarch-wireless-adapter-li">
+  <a href="/647/docs/linux/arch-wireless-adapter/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxarch-wireless-adapter"><span class="">【非技术】 Arch 下的无线自动断开</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            
+<div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+<a href="https://github.com/bwangelme/647/tree/master/content/cn/docs/linux/file-descriptor-transfer-over-unix-domain-sockets.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines fa-fw"></i> </a>
+  <a href="https://github.com/bwangelme/647/edit/master/content/cn/docs/linux/file-descriptor-transfer-over-unix-domain-sockets.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> </a>
+  <a href="https://github.com/bwangelme/647/new/master/content/cn/docs/linux/file-descriptor-transfer-over-unix-domain-sockets.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> </a>
+  <a href="https://github.com/bwangelme/647/issues/new?title=Review%20%e3%80%8aFile%20Descriptor%20Transfer%20over%20Unix%20Domain%20Sockets%e3%80%8b" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> </a>
+  <a href="https://github.com/bwangelme/647/issues/new" class="td-page-meta--project-issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> </a>
+  <a id="print" href="https://bwangel.me/647/docs/linux/_print/"><i class="fa-solid fa-print fa-fw"></i> </a>
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#unix-域套接字">Unix 域套接字</a>
+      <ul>
+        <li><a href="#一个简短的教程">一个简短的教程</a></li>
+        <li><a href="#socket-文件--普通文件">Socket 文件 != 普通文件</a></li>
+        <li><a href="#使用-bind2-绑定一个已经存在的路径将会失败">使用 bind(2) 绑定一个已经存在的路径将会失败</a></li>
+      </ul>
+    </li>
+    <li><a href="#socketpair">SOCKETPAIR</a></li>
+    <li><a href="#在-unux-域套接字上传输数据">在 Unux 域套接字上传输数据</a>
+      <ul>
+        <li><a href="#file-descriptors文件描述符-vs-file-description-文件描述">File Descriptors(文件描述符) VS File Description (文件描述)</a></li>
+        <li><a href="#sendmsg-和-recvmsg">sendmsg 和 recvmsg</a></li>
+      </ul>
+    </li>
+    <li><a href="#辅助数据传输">辅助数据传输</a>
+      <ul>
+        <li><a href="#scm_rights">SCM_RIGHTS</a></li>
+      </ul>
+    </li>
+    <li><a href="#scm_rights-的陷阱">SCM_RIGHTS 的陷阱</a></li>
+    <li><a href="#什么时候发送文件描述符是有用的">什么时候发送文件描述符是有用的</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#references">References:</a></li>
+  </ul>
+</nav>
+      </div>
+    
+            <div class="taxonomy taxonomy-terms-cloud taxo-tags">
+      <h5 class="taxonomy-title">Tag Cloud</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/algo/" data-taxonomy-term="algo"><span class="taxonomy-label">algo</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/algorithm/" data-taxonomy-term="algorithm"><span class="taxonomy-label">Algorithm</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/arch/" data-taxonomy-term="arch"><span class="taxonomy-label">Arch</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/atomicinteger/" data-taxonomy-term="atomicinteger"><span class="taxonomy-label">AtomicInteger</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span><span class="taxonomy-count">59</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">buildkit</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/channel/" data-taxonomy-term="channel"><span class="taxonomy-label">Channel</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">cli</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/containerd/" data-taxonomy-term="containerd"><span class="taxonomy-label">containerd</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/c%E8%AF%AD%E8%A8%80/" data-taxonomy-term="c%E8%AF%AD%E8%A8%80"><span class="taxonomy-label">C语言</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">datetime</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">dig</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/django/" data-taxonomy-term="django"><span class="taxonomy-label">Django</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/dlv/" data-taxonomy-term="dlv"><span class="taxonomy-label">dlv</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">dns</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">docker</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/flex/" data-taxonomy-term="flex"><span class="taxonomy-label">Flex</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/gh/" data-taxonomy-term="gh"><span class="taxonomy-label">gh</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">git</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">glob</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span><span class="taxonomy-count">34</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">gomod</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">HTTP</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">java</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">k8s</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">kafka</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">kubernetes</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">language</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">12</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">life</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">lsof</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">mariadb</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">network</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">nfs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">nginx</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/notes/" data-taxonomy-term="notes"><span class="taxonomy-label">Notes</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/nvim/" data-taxonomy-term="nvim"><span class="taxonomy-label">nvim</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">performance</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/process/" data-taxonomy-term="process"><span class="taxonomy-label">process</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">prom</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">prometheus</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/pubsub/" data-taxonomy-term="pubsub"><span class="taxonomy-label">PubSub</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/rabbitmq/" data-taxonomy-term="rabbitmq"><span class="taxonomy-label">RabbitMQ</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/redis/" data-taxonomy-term="redis"><span class="taxonomy-label">redis</span><span class="taxonomy-count">6</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">stty</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">tcp</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/template/" data-taxonomy-term="template"><span class="taxonomy-label">Template</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/test/" data-taxonomy-term="test"><span class="taxonomy-label">Test</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">41</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">tombkeeper</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">vagrant</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">vimium-c</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">vscode</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">wireshark</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">zigzag</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-taxonomy-term="%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="taxonomy-label">并发编程</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E6%8A%98%E8%85%BE/" data-taxonomy-term="%E6%8A%98%E8%85%BE"><span class="taxonomy-label">折腾</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" data-taxonomy-term="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="taxonomy-label">文件系统</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E6%9D%82%E8%AE%B0/" data-taxonomy-term="%E6%9D%82%E8%AE%B0"><span class="taxonomy-label">杂记</span><span class="taxonomy-count">7</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-taxonomy-term="%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="taxonomy-label">正则表达式</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E7%AC%94%E8%AE%B0/" data-taxonomy-term="%E7%AC%94%E8%AE%B0"><span class="taxonomy-label">笔记</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E7%BC%96%E7%A0%81/" data-taxonomy-term="%E7%BC%96%E7%A0%81"><span class="taxonomy-label">编码</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" data-taxonomy-term="%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86"><span class="taxonomy-label">编译原理</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E7%BF%BB%E8%AF%91/" data-taxonomy-term="%E7%BF%BB%E8%AF%91"><span class="taxonomy-label">翻译</span><span class="taxonomy-count">6</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E9%94%81/" data-taxonomy-term="%E9%94%81"><span class="taxonomy-label">锁</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E9%9A%8F%E6%83%B3/" data-taxonomy-term="%E9%9A%8F%E6%83%B3"><span class="taxonomy-label">随想</span><span class="taxonomy-count">1</span></a></li>
+        </ul>
+    </div>
+  
+	
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="https://bwangel.me/647/docs/">Docs</a></li>
+  <li class="breadcrumb-item">
+    <a href="https://bwangel.me/647/docs/linux/">Linux</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    Review 《File Descriptor Transfer over Unix Domain Sockets》</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>Review 《File Descriptor Transfer over Unix Domain Sockets》</h1>
+	
+	<header class="article-meta">
+		<div class="taxonomy taxonomy-terms-article taxo-tags">
+  <h5 class="taxonomy-title">Tags:</h5>
+  <ul class="taxonomy-terms">
+    <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E7%BF%BB%E8%AF%91/" data-taxonomy-term="%E7%BF%BB%E8%AF%91"><span class="taxonomy-label">翻译</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span></a></li>
+    </ul>
+</div>
+
+  </header>
+	<blockquote>
+<ul>
+<li><strong>使用 Unix 域套接字传输文件描述符</strong></li>
+<li>原文地址: <a href="https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec">https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec</a></li>
+</ul>
+</blockquote>
+<hr>
+<blockquote>
+<p><strong>12/31/2020 更新</strong></p>
+<p>如果你使用的是较新的内核（Linux 5.6以上），随着一个新的系统调用 <code>pidfd_getfd</code> 的引入，这种复杂性大部分已经被消除了。更多细节请参考 2020年 12-31 发表的文章<a href="https://copyconstruct.medium.com/seamless-file-descriptor-transfer-between-processes-with-pidfd-and-pidfd-getfd-816afcd19ed4">《用 pidfd 和 pidfd_getfd 在进程间无缝传输文件描述符》</a>。</p>
+</blockquote>
+<p>昨天，我读了一篇惊人的论文，介绍了使用不同协议而且服务许多不同类型请求（长寿的TCP/UDP会话，涉及大块数据的请求等）的服务在Facebook是如何免中断发布的。</p>
+<p>Facebook 使用的一种它们叫做 <code>Socket Takeover</code> 的技术。</p>
+<p><code>Socket Takeover</code> 实现了 Proxygen 的零停机重启，它以并行方式启动了一个更新的实例，接管了监听的套接字，当旧的实例进入了优雅关闭阶段。新实例负责为新连接提供服务，并响应来自 L4LB Katran 的健康检查探针。老的连接由老的实例提供服务，直到完全关闭，之后其他机制（例如下游连接重用）开始发挥作用。</p>
+<p>当我们把一个打开的FD从旧的进程传递给新的进程时，传递和接收的进程都共享监听套接字的同一个文件表项，并各自独立地处理接收的连接，在这些连接上提供连接级事务。我们利用了以下Linux内核的特性来实现这一点。</p>
+<p><strong>CMSG</strong>：<code>sendmsg()</code> 的一个功能允许在本地进程之间发送控制信息（通常被称为辅助数据）。在 Level7 LB 进程的重启过程中，我们使用这一机制将所有 VIP ( Virtual IP of service) 的活动的监听套接字的 FD 集合从活动的实例发送至新启动的实例。这些数据是通过 <code>sendmsg</code> 和 <code>recvmsg</code> 在 UNIX 域套接字上交换的。</p>
+<p><strong>SCM_RIGHTS</strong>: 我们设置这个选项来发送打开的文件描述符，其数据部分包含一个打开的FD的整数数组。在接收方，这些 文件描述符的行为就像它们是用 <code>dup(2)</code> 创建的一样。</p>
+<p>我在 Twitter 上收到了一些人的回复，他们对这竟然是可能的表示惊讶。事实上，如果你对Unix域套接字的一些特性不是很熟悉，那么论文中的上述段落可能就很难理解了。</p>
+<p>实际上，在 Unix 域套接字上传输 TCP 套接字是一种久经考验的方法，来实现 <strong>热重启</strong> 或 <strong>零停机时间重启</strong> 。流行的代理，如 HAProxy 和 Envoy ，使用非常类似的机制，将连接从代理的一个实例引流到另一个实例，而不丢弃任何连接。然而，许多类似的功能却并不广为人知。</p>
+<p>在这篇文章中，我想探讨 Unix 域套接字的一些特性，这些特性使它成为这些场景下的合适候选者，特别是将套接字（或任何文件描述符）从一个进程转移到另一个进程，在这两个进程之间不一定存在父子关系。</p>
+<h2 id="unix-域套接字">Unix 域套接字</h2>
+<p>众所周知，Unix 域套接字允许同一主机系统上的进程之间进行通信。Unix域套接字在许多流行的系统中都有使用。HAProxy、Envoy、AWS的 Firecracker 虚拟机监视器、Kubernetes、Docker和 Istio 等等。</p>
+<h3 id="一个简短的教程">一个简短的教程</h3>
+<p>就像网络套接字一样，Unix 域套接字也支持流和数据报文类型。然而，与采用 IP 和端口作为地址的网络套接字不同，Unix域套接字使用路径名作为地址。与网络套接字不同，Unix域套接字的 I/O 不涉及对底层设备的操作（这使得Unix域套接字与网络套接字相比，在同一主机上执行IPC要快很多）。</p>
+<p>用 <code>bind(2)</code> 将一个名字绑定到一个Unix域套接字，在文件系统中创建一个名为 <code>pathname</code> 的套接字文件。然而，这个文件与你可能创建的任何普通文件不同。</p>
+<p>一个简单的Go程序在 Unix 域套接字上创建一个监听的 &ldquo;Echo 服务器&rdquo;，如下所示:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">package</span> <span style="color:#000">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;net&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;syscall&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">const</span> <span style="color:#000">addr</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;/tmp/uds.sock&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">syscall</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Unlink</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">addr</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">l</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Listen</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;unix&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">addr</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Fatal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">defer</span> <span style="color:#000">l</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Close</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">c</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">l</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Accept</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Fatal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">go</span> <span style="color:#204a87;font-weight:bold">func</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">c</span> <span style="color:#000">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Conn</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">io</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Copy</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">c</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Close</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}(</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>如果你建立并运行这个程序，可以观察到几个有趣的事实。</p>
+<h3 id="socket-文件--普通文件">Socket 文件 != 普通文件</h3>
+<p>首先，套接字文件 <code>/tmp/uds.sock</code> 被标记为一个套接字。当使用 <code>stat()</code> 调用查看这个路径名时，它在stat结构的<code>st_mode</code>字段的文件类型部分返回值 <code>S_IFSOCK</code> 。</p>
+<p>当用<code>ls -l</code>查看时，UNIX 域套接字在第一列显示为s类型，而 <code>ls -F</code> 在套接字路径名上附加一个等号（=）。</p>
+<pre tabindex="0"><code>root@1fd53621847b:~/uds# ./uds
+^C
+root@1fd53621847b:~/uds# ls -ls /tmp
+total 0
+0 srwxr-xr-x 1 root root 0 Aug  5 01:45 uds.sock
+root@1fd53621847b:~/uds# stat /tmp/uds.sock
+File: /tmp/uds.sock
+Size: 0          Blocks: 0          IO Block: 4096   socket
+Device: 71h/113d Inode: 1835567     Links: 1
+Access: (0755/srwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2020-08-05 01:45:41.650709000 +0000
+Modify: 2020-08-05 01:45:41.650709000 +0000
+Change: 2020-08-05 01:45:41.650709000 +0000
+
+Birth: -
+
+root@5247072fc542:~/uds# ls -F /tmp
+uds.sock=
+root@5247072fc542:~/uds#
+</code></pre><p>对文件起作用的普通系统调用在套接字文件上不起作用：这意味着像 <code>open()</code> 、<code>close()</code> 、<code>read()</code> 这样的系统调用不能用于套接字文件。相反，像 <code>socket()</code> 、<code>bind()</code> 、<code>recv()</code> 、<code>sendmsg()</code> 、<code>recvmsg()</code> 等套接字相关的系统调用可以在 Unix域套接字上工作。</p>
+<p>另一个关于套接字的有趣事实是，它不是在套接字被关闭的时候删除，而是通过系统调用来删除</p>
+<ul>
+<li>在 MacOS 上调用 <code>unlink(2)</code></li>
+<li>在 Linux 上调用 <code>remove()</code> 或使用地更普遍的 <code>unlink(2)</code></li>
+</ul>
+<p>在 Linux 上，Unix 域套接字的地址通过如下的结构来表示:</p>
+<pre tabindex="0"><code>struct sockaddr_un {
+      sa_family_t sun_family; /* Always AF_UNIX */
+      char sun_path[108]; /* Pathname */
+};
+</code></pre><p>在 MacOS 上，地址通过如下的结构表示:</p>
+<pre tabindex="0"><code>struct sockaddr_un {
+     u_char  sun_len;
+     u_char  sun_family;
+     char    sun_path[104];
+};
+</code></pre><h3 id="使用-bind2-绑定一个已经存在的路径将会失败">使用 bind(2) 绑定一个已经存在的路径将会失败</h3>
+<p><code>SO_REUSEPORT</code> 选项允许任何指定主机上的多个网络套接字连接到同一地址和端口。第一个试图绑定给定端口的套接字需要设置 <code>SO_REUSEPORT</code> 选项，任何后续的套接字都可以绑定到同一端口。</p>
+<p>对 <code>SO_REUSEPORT</code> 的支持是在 Linux 3.9及以上版本中引入的。然而，在 Linux 上，所有想共享同一地址和端口组合的套接字必须属于共享同一有效UID的进程。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">fd</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">socket</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">domain</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">socktype</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">optval</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">setsockopt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sfd</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">SOL_SOCKET</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">SO_REUSEPORT</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">optval</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">sizeof</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">optval</span><span style="color:#000;font-weight:bold">));</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">bind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sfd</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">sockaddr</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">addr</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">addrlen</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>然而，两个 Unix 域套接字无法绑定相同的路径。</p>
+<h2 id="socketpair">SOCKETPAIR</h2>
+<p><code>socketpair()</code> 函数创建了两个套接字，然后将其连接在一起。从某种程度上说，这与 <strong>管道</strong> 非常相似，只是它支持数据的双向传输。</p>
+<p><code>socketpair</code> 只对 Unix 域套接字起作用。它返回两个已经连接在一起的文件描述符（所以我们不必在开始传输数据之前
+, 执行 <code>socket</code> -&gt; <code>bind</code> -&gt; <code>listen</code> -&gt; <code>accept</code>的流程来建立一个监听套接字。也不必在开始传输数据之前，执行 <code>socket</code> -&gt; <code>connect</code> 的流程创建一个连接到监听套接字的客户端）。</p>
+<h2 id="在-unux-域套接字上传输数据">在 Unux 域套接字上传输数据</h2>
+<p>现在我们已经确定 Unix 域套接字允许同一主机上的两个进程进行通信，现在是时候探索什么样的数据可以通过 Unix 域套接字传输。</p>
+<p>由于Unix域套接字在许多方面与网络套接字相似，任何通常可以通过网络套接字发送的数据都可以通过Unix域套接字发送。</p>
+<p>此外，特殊的系统调用 <code>sendmsg</code> 和 <code>recvmsg</code> 允许在Unix域套接字上发送一个特殊的消息。这个消息由内核特别处理，它允许从发送者向接收者传递打开的 <strong>File Descriptions</strong>。</p>
+<h3 id="file-descriptors文件描述符-vs-file-description-文件描述">File Descriptors(文件描述符) VS File Description (文件描述)</h3>
+<p>注意上一段我使用了术语 文件描述(<code>File descripTION</code>)，而不是文件描述符 (<strong>file descripTOR</strong>)。它们两者的区别是微妙的而且往往不被人理解。</p>
+<p>文件描述符实际上只是一个进程内(不可跨进程使用)指向底层内核数据结构的指针，该结构被称为文件描述（<strong>File Description</strong>）。内核维护着一个所有打开的文件描述的表格，称为打开文件表(<strong>open file table</strong>)。如果两个进程（A和B）试图打开同一个文件，这两个进程可能有自己独立的文件描述符，它们指向开放文件表中的同一个文件描述。</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com//2021-11-30-142542.png" alt="img"></p>
+<p>所以，在 Unix 域套接字上使用 <code>sendmsg</code> 发送文件描述符实际上意味着发送 <strong>文件描述</strong> 的引用。如果进程 A 向 进程 B 发送文件描述符 0 (fd0)，该文件描述符在进程 B 中很可能被数字3(fd3) 所引用。</p>
+<p>发送进程在 Unix 域套接字上调用 <code>sendmsg</code> 发送文件描述符，接收进程在 Unix 域套接字上调用 <code>recvmsg</code> 来接受文件描述符。</p>
+<p>发送进程通过 <code>sendmsg</code> 发送文件描述给接收进程，接收进程通过 <code>recvmsg</code> 接收该文件描述。即使发送进程在发送完成后关闭了该文件描述所对应的文件描述符，而接收进程还未调用 <code>recvmsg</code> 接收它，该文件描述依然对接收进程保持打开状态。</p>
+<p><strong>发送文件描述符时，文件描述的引用次数会+1,直到文件描述的引用次数下降到0, 内核才会将文件描述从 <code>打开文件表(open file table)</code> 中删除该文件描述。</strong></p>
+<p>即使发送进程在接收进程调用 recvmsg 之前关闭了引用通过 sendmsg 传递的文件描述的文件描述符，该文件描述符仍然对接收进程开放。发送描述符时，描述符的引用次数会增加1。内核只有在引用计数下降到0时才会从其开放文件表中删除文件描述。</p>
+<h3 id="sendmsg-和-recvmsg">sendmsg 和 recvmsg</h3>
+<p>在 Linux 中 <code>sendmsg</code> 函数的签名如下:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">ssize_t</span> <span style="color:#000">sendmsg</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">socket</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">msghdr</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">message</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">flags</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>与 <code>sendmsg</code> 对应的是 <code>recvmsg</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">ssize_t</span> <span style="color:#000">recvmsg</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">sockfd</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">msghdr</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">msg</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">flags</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>人们可以用 <code>sendmsg</code> 在 Unix 域套接字上传输的特殊消息是由 <code>msghdr</code> 指定的。希望将文件描述发送给另一个进程的进程创建一个 <code>msghdr</code> 结构，其中包含要传递的描述。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">msghdr</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">void</span>            <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">msg_name</span><span style="color:#000;font-weight:bold">;</span>      <span style="color:#8f5902;font-style:italic">/* optional address */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">socklen_t</span>       <span style="color:#000">msg_namelen</span><span style="color:#000;font-weight:bold">;</span>    <span style="color:#8f5902;font-style:italic">/* size of address */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">struct</span>          <span style="color:#000">iovec</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">msg_iov</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#8f5902;font-style:italic">/* scatter/gather array */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">int</span>             <span style="color:#000">msg_iovlen</span><span style="color:#000;font-weight:bold">;</span>     <span style="color:#8f5902;font-style:italic">/* # elements in msg_iov */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">void</span>            <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">msg_control</span><span style="color:#000;font-weight:bold">;</span>   <span style="color:#8f5902;font-style:italic">/* ancillary data, see below */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">socklen_t</span>       <span style="color:#000">msg_controllen</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#8f5902;font-style:italic">/* ancillary data buffer len */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">int</span>             <span style="color:#000">msg_flags</span><span style="color:#000;font-weight:bold">;</span>      <span style="color:#8f5902;font-style:italic">/* flags on received message */</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">};</span>
+</span></span></code></pre></div><p><code>msghdr</code> 结构的 <code>msg_control</code> 成员，其长度为 <code>msg_controllen</code> ，指向一个如下形式的消息缓冲区:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">cmsghdr</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">socklen_t</span> <span style="color:#000">cmsg_len</span><span style="color:#000;font-weight:bold">;</span>    <span style="color:#8f5902;font-style:italic">/* data byte count, including header */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">int</span>       <span style="color:#000">cmsg_level</span><span style="color:#000;font-weight:bold">;</span>  <span style="color:#8f5902;font-style:italic">/* originating protocol */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">int</span>       <span style="color:#000">cmsg_type</span><span style="color:#000;font-weight:bold">;</span>   <span style="color:#8f5902;font-style:italic">/* protocol-specific type */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">/* followed by */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">unsigned</span> <span style="color:#204a87;font-weight:bold">char</span> <span style="color:#000">cmsg_data</span><span style="color:#000;font-weight:bold">[];</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">};</span>
+</span></span></code></pre></div><p>在 POSIX 中，带有附加数据的 <code>cmsghdr</code> 结构的缓冲区被称为辅助数据(ancillary data)。在 Linux 上，每个套接字允许的最大缓冲区大小可以通过修改 <code>/proc/sys/net/core/optmem_max</code> 来设置。</p>
+<h2 id="辅助数据传输">辅助数据传输</h2>
+<p>虽然这种数据传输有大量的陷阱，但如果使用得当，它可以成为一个相当强大的机制来实现一些目标。</p>
+<p>在Linux上，有三种类型的辅助数据可以在两个Unix域套接字之间共享。</p>
+<ul>
+<li><code>SCM_RIGHTS</code></li>
+<li><code>SCM_CREDENTIALS</code></li>
+<li><code>SCM_SECURITY</code></li>
+</ul>
+<p>这三种类型的辅助数组仅应该通过下面的宏定义来访问，而不应该直接使用</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">cmsghdr</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">CMSG_FIRSTHDR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">msghdr</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">msgh</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">cmsghdr</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">CMSG_NXTHDR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">msghdr</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">msgh</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">cmsghdr</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">cmsg</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">size_t</span> <span style="color:#000">CMSG_ALIGN</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">size_t</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">size_t</span> <span style="color:#000">CMSG_SPACE</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">size_t</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">size_t</span> <span style="color:#000">CMSG_LEN</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">size_t</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">unsigned</span> <span style="color:#204a87;font-weight:bold">char</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">CMSG_DATA</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">cmsghdr</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">cmsg</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>我从来没有使用后两者的需要，<code>SCM_RIGHTS</code> 是我希望在这篇文章中进一步探讨的。</p>
+<h3 id="scm_rights">SCM_RIGHTS</h3>
+<p><code>SCM_RIGHTS</code> 允许进程使用 <code>sendmsg/recvmsg</code> 从另一个进程发送/接收一组打开的文件描述符。</p>
+<p><code>cmsghdr</code> 结构体的成员 <code>cmsg_data</code> 可以包含一个进程想要发送的文件描述符的数组。</p>
+<pre tabindex="0"><code>struct cmsghdr {
+    socklen_t cmsg_len;    /* data byte count, including header */
+    int       cmsg_level;  /* originating protocol */
+    int       cmsg_type;   /* protocol-specific type */
+    /* followed by */
+    unsigned char cmsg_data[];
+};
+</code></pre><p>接收进程使用 <code>recvmsg</code> 接收数据。</p>
+<p>《Linux Programming Interface》有一个使用 <code>sendmsg</code> 和 <code>recvmsg</code> 函数的<a href="https://man7.org/tlpi/code/online/dist/sockets/scm_rights_send.c.html">良好示例</a>。</p>
+<h2 id="scm_rights-的陷阱">SCM_RIGHTS 的陷阱</h2>
+<p>正如上文所讲，使用 Unix 域套接字传输辅助数据有很多的陷阱。</p>
+<blockquote>
+<p><strong>Need to send some “real” data along with the ancillary message</strong></p>
+<p>需要在发送辅助数据的同时发送一些真实的数据</p>
+</blockquote>
+<p>在 Linux 上，如果想要成功地在 <strong>流式(stream)</strong> Unix 域套接字上发送辅助数据，至少要发送一个字节的真实数据。</p>
+<p>然而，如果想要在 <strong>数据报式(datagram)</strong> 的 Unix 域套接字上发送辅助数据，不需要发送任何附带的真实数据。也就是说，在通过数据报套接字发送辅助数据时，便携式应用程序还应该包括至少一个字节的真实数据。</p>
+<blockquote>
+<p>File Descriptors can be dropped</p>
+<p>文件描述符可以被丢弃</p>
+</blockquote>
+<p>如果用于接收包含文件描述符的辅助数据的缓冲区 <code>cmsg_data</code> 太小（或没有），那么辅助数据被截断（或丢弃），多余的文件描述符在接收进程中被自动关闭。</p>
+<p>如果在辅助数据中收到的文件描述符的数量导致进程超过其 <code>RLIMIT_NOFILE</code> 资源限制，则多余的文件描述符将在接收进程中自动关闭。不能在多个 <code>recvmsg</code> 调用中分割列表。</p>
+<blockquote>
+<p>recvmsg quirks</p>
+<p>recvmsg 的怪异情况</p>
+</blockquote>
+<p><code>sendmsg</code> 和 <code>recvmsg</code> 的作用类似于 <code>send</code> 和 <code>recv</code> 系统调用，在每个 <code>send</code> 调用和每个 <code>recv</code> 调用之间没有1：1的映射。</p>
+<p>一个 <code>recvmsg</code> 调用可以从多个 <code>sendmsg</code> 调用中读取数据。同样地，它可能需要多个<code>recvmsg</code>调用来消耗一个<code>sendmsg</code> 调用所发送的数据。这有严重的、令人惊讶的影响，其中一些已经在这里报告。</p>
+<blockquote>
+<p>Limit on the number of File Descriptions</p>
+<p>文件描述符的数量限制</p>
+</blockquote>
+<p>内核常量 <code>SCM_MAX_FD</code> ( 253 (或者在2.6.38之前的内核中为255))定义了数组中文件描述符的数量限制。</p>
+<p>试图发送一个大于这个限制的数组会导致 <code>sendmsg</code> 失败，错误是 <code>EINVAL</code>。</p>
+<h2 id="什么时候发送文件描述符是有用的">什么时候发送文件描述符是有用的</h2>
+<p>一个非常具体的现实世界的使用案例是零停机时间的代理重载。</p>
+<p>任何曾经使用过HAProxy的人都可以证明，&ldquo;零停机时间的配置重载 &ldquo;在很长一段时间内并不是一个真正的东西。通常，大量的<a href="https://engineeringblog.yelp.com/2015/04/true-zero-downtime-haproxy-reloads.html">Rube Goldberg-esque</a> Hack 被用来实现这一目标。</p>
+<p>在2017年底，HAProxy 1.8 支持无中断重载，通过将监听套接字文件描述符从旧的 HAProxy 进程转移到新的进程中来实现。Envoy使用 <a href="https://blog.envoyproxy.io/envoy-hot-restart-1d16b14555b5">类似的机制</a> 进行热重启，文件描述符通过Unix域套接字传递。</p>
+<p>2018年底，Cloudflare 在<a href="https://blog.cloudflare.com/know-your-scm_rights/">博客</a> 中介绍了其使用的将文件描述符从nginx转移到Go TLS 1.3代理。</p>
+<p>促使我写下这篇博文的关于Facebook如何实现零停机发布的论文，使用了与 <code>CMSG + SCM_RIGHTS</code> 相同的技巧，将活的文件描述符从将要结束的进程传递到新发布的进程。</p>
+<h2 id="总结">总结</h2>
+<p>如果使用得当，通过Unix域套接字传输文件描述符可以被证明是非常强大的。我希望这篇文章能让你对Unix域套接字和它的功能有一个更好的理解。</p>
+<h2 id="references">References:</h2>
+<ul>
+<li><a href="https://www.man7.org/linux/man-pages/man7/unix.7.html">https://www.man7.org/linux/man-pages/man7/unix.7.html</a></li>
+<li><a href="https://blog.cloudflare.com/know-your-scm_rights/">https://blog.cloudflare.com/know-your-scm_rights/</a></li>
+<li>LWN.net has an interesting article on creating cycles when passing file descriptions over a Unix domain socket and implications for the fabulous new io_uring kernel API. <a href="https://lwn.net/Articles/779472/">https://lwn.net/Articles/779472/</a></li>
+<li>The Linux Programming Interface <a href="https://learning.oreilly.com/library/view/the-linux-programming/9781593272203/">https://learning.oreilly.com/library/view/the-linux-programming/9781593272203/</a></li>
+<li>UNIX Network Programming: The Sockets Networking API <a href="https://learning.oreilly.com/library/view/the-sockets-networking/0131411551/">https://learning.oreilly.com/library/view/the-sockets-networking/0131411551/</a></li>
+</ul>
+	<div class="text-muted mt-5 pt-3 border-top">
+   October 18, 2023: <a href="https://github.com/bwangelme/647/commit/6a44170165f16c4b6e0bc7413968e0e050e8664b">add post (6a44170)</a>
+</div>
+
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-end text-xs-center order-sm-3">
+        
+        
+        
+<ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
+    <a target="_blank" rel="noopener" href="https://github.com/bwangelme/" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="td-footer__copyright-etc col-12 col-sm-4 text-center py-2 order-sm-2">
+        <span>&copy; 2023 力行近乎仁，好问近乎智，知耻近乎勇 </span>
+        <span class="ms-1"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener"></a></span>
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+      integrity="sha512-mQwom8Ns4op+H29oDkD/LXO/OsXPvCFfkgZkFAVrhhePzRLU8NUI3Nkm43NhWUSmj3p5Cca2HTEkMQmXQRwDQQ==" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+        integrity="sha512-sHSNLECRJSK+BFs7E8DiFc6pf6n90bLI85Emiw1jhreduZhK3VXgq9l4kAt9eTIHYAcuQBKHL01QKs4/3Xgl8g=="
+        crossorigin="anonymous">
+</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+       integrity="sha512-iWiuBS5nt6r60fCz26Nd0Zqe0nbk1ZTIQbl3Kv7kYsX+yKMUFHzjaH2+AnM6vp2Xs+gNmaBAVWJjSmuPw76Efg==" crossorigin="anonymous"
+       onload='renderMathInElement(document.body, null);'>
+</script>
+<script src="/647/js/main.min.4f6bdd3cd8cde411a9b8cc8c9f435ab27b7a07d49198bf6bc750cdcd26e6e429.js" integrity="sha256-T2vdPNjN5BGpuMyMn0Nasnt6B9SRmL9rx1DNzSbm5Ck=" crossorigin="anonymous"></script>
+<script src='/647/js/prism.js'></script>
+<script src='/647/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

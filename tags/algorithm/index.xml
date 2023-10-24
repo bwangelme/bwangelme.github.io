@@ -5,7 +5,7 @@
     <description>Recent content in Algorithm on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Fri, 08 Sep 2017 00:24:12 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 29 Aug 2018 23:34:29 +0800</lastBuildDate>
     
 	  <atom:link href="https://bwangel.me/647/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,6 +14,159 @@
         
       
     
+    
+    <item>
+      <title>Docs: 哈希表学习笔记</title>
+      <link>https://bwangel.me/647/docs/algo/hash/</link>
+      <pubDate>Wed, 29 Aug 2018 23:34:29 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/algo/hash/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;解决冲突的两种方法&#34;&gt;解决冲突的两种方法&lt;/h2&gt;
+&lt;h3 id=&#34;分离连接法&#34;&gt;分离连接法&lt;/h3&gt;
+&lt;p&gt;散列表的装填因子（load factor）为散列表中元素的个数与散列表大小的比值。表的大小并不重要，装填因子才是最重要的。
+分离连接散列的一般法则是使得表的大小尽量与预料的元素个数差不多（换句话说，装填因子 ≈ 1）&lt;/p&gt;
+&lt;h3 id=&#34;开放定址法&#34;&gt;开放定址法&lt;/h3&gt;
+&lt;p&gt;在开放定址散列算法系统中，如果有冲突发生，那么就要尝试选择另外的单元。&lt;code&gt;h0(x)&lt;/code&gt;, &lt;code&gt;h1(x)&lt;/code&gt;, &amp;hellip; 逐个尝试&lt;/p&gt;
+&lt;p&gt;其中 &lt;code&gt;hi(x) = (hash(x) + F(i)) mod tableSize&lt;/code&gt;，其中F(i)是解决冲突的方法。一般来说，开放定址法的散列算法其装填因子 lambda &amp;lt;= 0.5&lt;/p&gt;
+&lt;h2 id=&#34;定理证明&#34;&gt;定理证明&lt;/h2&gt;
+&lt;h3 id=&#34;将乘法运算转换成位运算&#34;&gt;将乘法运算转换成位运算&lt;/h3&gt;
+&lt;p&gt;令 $F(0) = 0$ 且 $F(i) = F(i - 1) + 2 \cdot i - 1$，则 $F(i) = i ^ 2$。&lt;/p&gt;
+&lt;p&gt;证明过程:&lt;/p&gt;
+&lt;p&gt;$$
+F(0) = 0
+$$
+$$
+F(1) = F(0) + (2 \cdot 1) - 1
+$$
+$$
+F(0) + F(1) + F(2) + &amp;hellip; + F(i) = 0 + F(0) + (2 \cdot 1) - 1 + (2 \cdot 2) - 1 + &amp;hellip; + F(i-1) + (2 \cdot i) - 1
+$$
+$$
+F(i) = (2 \cdot 1) - 1 + (2 \cdot 2) - 1 + &amp;hellip; + (2 \cdot i) - 1
+$$
+$$
+F(i) = 1 + 3 + 5 + &amp;hellip; + 2 \cdot i - 1
+$$
+$$
+F(i) = \frac{1+2 \cdot i-1}{2} = i^2
+$$&lt;/p&gt;
+&lt;p&gt;这样就将一个乘法运算转换成了一个位移运算，提高了效率。&lt;/p&gt;
+&lt;h3 id=&#34;平方探测法总可向空间大于12的哈希表中插入元素&#34;&gt;平方探测法总可向空间大于1/2的哈希表中插入元素&lt;/h3&gt;
+&lt;h4 id=&#34;相关定理&#34;&gt;相关定理：&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;$(a+b) \mod n = (a \mod n + b \mod n) \mod n$&lt;/li&gt;
+&lt;li&gt;$(a \mod n) \mod n = a \mod n$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;定理说明&#34;&gt;定理说明&lt;/h4&gt;
+&lt;p&gt;如果使用平方探测，且表的大小是素数，那么当表至少有一半为空的时候，总能够插入一个新的元素&lt;/p&gt;
+&lt;h4 id=&#34;证明&#34;&gt;证明&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;前提说明&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;哈希表大小为&lt;code&gt;ts&lt;/code&gt;，我们向其中插入了两个冲突的元素x和y。这两个元素冲突重试的次数分别是&lt;code&gt;i&lt;/code&gt;和&lt;code&gt;j&lt;/code&gt;。其中：&lt;/p&gt;
+&lt;p&gt;$$
+0 &amp;lt; i, j &amp;lt; \frac{ts}{2}  (小于 \frac{ts}{2} 意味着表中还有多余一半的空间可以使用)
+$$
+$$
+P_x = (Hash(x) + i^2) \mod ts (x位置)
+$$
+$$
+P_y = (Hash(y) + j^2) \mod ts (y位置)
+$$
+$$
+Hash(x) \mod {ts} = Hash(y) \mod {ts} =&amp;gt; (Hash(x) - Hash(y)) \mod ts = 0
+$$
+$$
+ts 是素数
+$$&lt;/p&gt;
+&lt;p&gt;试证明，如果$i \neq j$，那么$P_x \neq P_y$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;证明过程&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;假设上述定理是不成立的，则$i \neq j$时，$P_x = P_y$&lt;/p&gt;
+&lt;p&gt;$$
+P_x = P_y
+$$
+$$
+(Hash(x) + i^2) \mod ts = (Hash(y) + j^2) \mod ts
+$$
+$$
+(Hash(x) + i^2) \mod ts - (Hash(y) + j^2) \mod ts = 0 \mod ts
+$$
+$$
+(Hash(x) + i^2 - Hash(y) - j^2) \mod ts = 0
+$$
+$$
+[(Hash(x) - Hash(y)) \mod ts + (i^2 - j^2) \mod ts] \mod ts = 0
+$$
+$$
+(i^2 - j^2) \mod ts = 0
+$$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;因为$i, j &amp;lt; \frac{ts}{2}$，所以$(i^2 - j^2) &amp;lt;= \frac{(ts-1)^2}{4} - \frac{(ts-2)^2}{4} &amp;lt;= \frac{ts}{2} - \frac{3}{4} &amp;lt; ts$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;因为&lt;code&gt;ts是素数&lt;/code&gt;，所以$(i^2 - j^2) = 0$，可得$i=\pm j$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;因为$0 &amp;lt; i, j$，所以$i = j$&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;与已知矛盾，故可得当$i \neq j$时，$P_x \neq P_y$。&lt;/p&gt;
+&lt;p&gt;可证明 &lt;strong&gt;如果使用平方探测，且表的大小是素数，那么当表至少有一半为空的时候，总能够插入一个新的元素&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;额外说明&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;根据 $K^2 \cdot [(ts - 1)^2 - (ts - 2)^2] &amp;lt; ts$可得$ K &amp;lt; \frac{\sqrt{3} \cdot ts}{3}$，&lt;code&gt;i, j&lt;/code&gt;更精确的范围是$0 &amp;lt; i, j &amp;lt; \frac{\sqrt{3} \cdot ts}{3}$。&lt;/p&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 变态跳台阶问题的解题思路</title>
+      <link>https://bwangel.me/647/docs/algo/jump-stairs/</link>
+      <pubDate>Sun, 08 Jul 2018 14:46:42 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/algo/jump-stairs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;简介：本文主要记录了 变态跳台阶问题 的推导过程&lt;/p&gt;
+&lt;h2 id=&#34;题目描述&#34;&gt;题目描述&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;解题思路&#34;&gt;解题思路&lt;/h2&gt;
+&lt;h3 id=&#34;问题转换&#34;&gt;问题转换&lt;/h3&gt;
+&lt;p&gt;这个问题我们可以转换思路，将其转换成求树的节点个数的题目。&lt;/p&gt;
+&lt;p&gt;假设存在一棵树，它的根节点是N，它的子节点从左往右依次为 n-1, n-2, &amp;hellip; 直到0。同理，根节点子节点的子节点也遵循这样的规律，0节点没有子节点。请问在这棵树中，0节点一共有多少个？
+根节点为3的树如下图所示:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2018-04-08-100136.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;答案推导&#34;&gt;答案推导&lt;/h3&gt;
+&lt;p&gt;如上所示，我们已经将问题转换成了求树中0节点的个数，根据树的递归定义，我们可以得到如下的定义:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$f(1) = 1$&lt;/li&gt;
+&lt;li&gt;$f(n) = f(n-1) + f(n-2) + &amp;hellip; + f(1) + 1$&lt;/li&gt;
+&lt;li&gt;$f(n-1) = \space \space \space \space \space \space \space \space \space \space \space f(n-2) + &amp;hellip; + f(1) + 1$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;令$f(n) - f(n-1)$，可得：$f(n) = 2 * f(n-1)$。&lt;/p&gt;
+&lt;p&gt;根据$f(1) = 1$和$f(n) = 2 * f(n-1)$，我们最终可以得到，$f(n) = 2^{n-1}$。&lt;/p&gt;
+&lt;h3 id=&#34;最终答案&#34;&gt;最终答案&lt;/h3&gt;
+&lt;p&gt;有了上面的推导过程，最终的编程实现很简单，我们只需要返回$2^{n-1}$即可，答案如下:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&amp;lt;cmath&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Solution&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;jumpFloorII&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;number&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;pow&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;number&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
     
     <item>
       <title>Docs: 算法复杂度小记</title>

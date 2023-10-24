@@ -105,6 +105,30 @@
 
     
   
+    
+    
+	
+<li>2: <a href="#pg-dd6b8c93984d98fe6f8c5851846c88d9">Python Upgrade Importerror</a></li>
+
+
+    
+  
+    
+    
+	
+<li>3: <a href="#pg-958da66e5791d6c739afd62fdccfea9d">Django的override_settings修饰器浅析</a></li>
+
+
+    
+  
+    
+    
+	
+<li>4: <a href="#pg-aca9b1506e43349a065aee60cb29920c">Django中import_string的实现</a></li>
+
+
+    
+  
 
     </ul>
 
@@ -148,6 +172,305 @@ In [5]: p.match(&#39;^&amp;#^&amp;@#abcdefdjskla&#39;)
 Out[5]: &lt;re.Match object; span=(0, 1), match=&#39;^&#39;&gt;
 </code></pre><p>它的原理就是匹配 ASCII 码表中所有从 <code>空格(0x20)</code> 到 <code>-(0x7E)</code> 的字符</p>
 <p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com//2021-12-15-191941.png" alt=""></p>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-dd6b8c93984d98fe6f8c5851846c88d9">2 - Python Upgrade Importerror</h1>
+    
+	<blockquote>
+<ul>
+<li>记一次因 Python 升级导致的 ImportError</li>
+</ul>
+</blockquote>
+<p>我们有一个 Django 应用通过 uwsgi 跑在阿里云的 ECS 上，所用的系统是 Ubuntu 16.04，uwsgi 是通过 supervisord 来管理的，每个应用都在单独的 virtualenv 中运行，这就是大概的软件运行环境。</p>
+<p>因为一些软件没有升级，阿里云一直提示存在安全漏洞，所以我就想把 ECS 上的系统升级一下。升级的过程并没有什么什么问题，毕竟用的阿里云自己维护的源，基本上不会出现什么版本依赖之类的问题。</p>
+<h1 id="出错场景">出错场景</h1>
+<p>升级完成后重新启动 Django 应用，发现应用启动不起来，uwsgi 报错</p>
+<pre tabindex="0"><code>from _ssl import HAS_SNI, HAS_ECDH, HAS_NPN, HAS_ALPN, HAS_TLSv1_3
+ImportError: cannot import name &#39;HAS_TLSv1_3&#39;
+</code></pre><h1 id="原因分析">原因分析</h1>
+<h2 id="从异常入手查找原因">从异常入手查找原因</h2>
+<p>抛出的异常意思是在<code>_ssl</code>模块中没有<code>HAS_TLSv1_3</code>的属性，于是我就去Python 文档中查询了一下这个属性，它的解释是这样的：</p>
+<pre tabindex="0"><code>ssl.HAS_TLSv1_3
+Whether the OpenSSL library has built-in support for the TLS 1.3 protocol.
+
+New in version 3.6.3.
+</code></pre><p>看到<code>New in version 3.6.3.</code>的字样，再去查系统的升级记录，我发现刚刚执行的升级中就把宿主机的 Python 从3.6.2升级到了3.6.3，此时我隐隐约约觉得就是因为此次升级导致了 uwsgi 启动时的报错。</p>
+<p>但我升级的是宿主机的 Python，它又是如何影响到了 Virtualenv 中的 Python 呢？各位别急，我们接着往下挖。</p>
+<h2 id="has_tlsv1_3的定义"><code>HAS_TLSv1_3</code>的定义</h2>
+<p>我们接着再去看抛出异常的那行代码，它在 Python 的标准库的<code>ssl.py</code>的<a href="https://github.com/python/cpython/blob/v3.6.3/Lib/ssl.py#L118">118行</a>，具体内容如下：</p>
+<pre tabindex="0"><code>from _ssl import HAS_SNI, HAS_ECDH, HAS_NPN, HAS_ALPN, HAS_TLSv1_3
+</code></pre><p>我们可以看到，抛出异常就是因为Python解释器从<code>_ssl</code>模块中导入<code>HAS_TLSv1_3</code>时，出现了导入异常。</p>
+<p>而<code>_ssl</code>模块是用C语言编写的，它被编译进入了Python解释器中，它的代码位于 Python 源码的 <a href="https://github.com/python/cpython/blob/v3.6.3/Lib/ssl.py">Modules/_ssl.c</a> 文件中。</p>
+<p>在它的<a href="https://github.com/python/cpython/blob/v3.6.3/Modules/_ssl.c#L5154-L5206">5154-5206</a>行，我们可以看到它对于<code>_ssl</code>模块的定义：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">static</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">PyModuleDef</span> <span style="color:#000">_sslmodule</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">PyModuleDef_HEAD_INIT</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;_ssl&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">module_doc</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">PySSL_methods</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">NULL</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">NULL</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">NULL</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">NULL</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">};</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">PyMODINIT_FUNC</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">PyInit__ssl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">void</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">PyObject</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">m</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">d</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">r</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// _ssl 模块在这里定义，指针m代表了_ssl模块
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">m</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">PyModule_Create</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">_sslmodule</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">m</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#204a87">NULL</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#204a87">NULL</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">...</span>
+</span></span></code></pre></div><p>而在它的<a href="https://github.com/python/cpython/blob/v3.6.3/Modules/_ssl.c#L5462-L5468">5642-5468</a>行，我们可以看到<code>_ssl</code>模块中对于<code>HAS_TLSv1_3</code>属性的定义：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#if defined(TLS1_3_VERSION) &amp;&amp; !defined(OPENSSL_NO_TLS1_3)
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">r</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Py_True</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#else
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">r</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Py_False</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">Py_INCREF</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">r</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// 下面这条语句向_ssl模块中添加了布尔值 HAS_TLSv1_3
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">PyModule_AddObject</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">m</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;HAS_TLSv1_3&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">r</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>上述的代码主要就是判断当前系统是否支持 TLS 1.3版本，并向<code>_ssl</code>模块添加了一个布尔值<code>HAS_TLSv1_3</code>来表明当前系统是否支持 TLS 1.3版本。</p>
+<h2 id="错误复现">错误复现</h2>
+<p>从上面的分析中我们可以看出，我们可以知道三件事情，</p>
+<ol>
+<li><code>HAS_TLSv1_3</code>这个布尔值是被编译进 Python 解释器中的，</li>
+<li>根据 <a href="https://docs.python.org/3/library/ssl.html#ssl.HAS_TLSv1_3">Python 文档</a> 的说明，<code>HAS_TLSv1_3</code>是在 Python 3.6.3中新添加的。</li>
+<li>我们将宿主机的 Python 从3.6.2升级到了3.6.3，但是我们的 Virtualenv 仍然使用着 3.6.2 版本的 Python 解释器。</li>
+</ol>
+<p>知道了以上三点，我们就可以复现出我们的错误场景，梳理出整个出错的流程：</p>
+<ul>
+<li>uwsgi 启动，使用的是 Virtualenv 中的 3.6.2版本的 Python 解释器</li>
+<li>Python 3.6.2 的解释器在某些第三方库中执行了<code>import ssl</code>的语句</li>
+<li>由于 Virtualenv 创建的时候并没有将标准库的<code>ssl.py</code>文件一并复制过来，所以 Python 3.6.2 的解释器去系统目录下寻找<code>ssl.py</code>文件并执行</li>
+<li>Python 3.6.2 的解释器找到了系统目录下的<code>ssl.py</code>文件，也就是 Python 3.6.3 的系统库文件。</li>
+<li>Python 3.6.2 的解释器执行了 Python 3.6.3的库文件<code>ssl.py</code>中的一条导入语句：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">_ssl</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">HAS_SNI</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">HAS_ECDH</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">HAS_NPN</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">HAS_ALPN</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">HAS_TLSv1_3</span>
+</span></span></code></pre></div><ul>
+<li>Python 3.6.2 的解释器从解释器內建的模块<code>_ssl</code>中导入<code>HAS_TLSv1_3</code></li>
+<li>由于 Python 3.6.2 的解释器中并没有定义<code>HAS_TLSv1_3</code>这个布尔值，程序抛出<code>ImportError</code></li>
+</ul>
+<p>上面这个出错流程也可以用下面这张图来概括:</p>
+<p><img src="https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2019-02-18-2017-10-14-080329.jpg" alt="Import Error"></p>
+<h1 id="错误总结">错误总结</h1>
+<p>看到这里，我想 Virtualenv 创建时没有复制系统库文件<code>ssl.py</code>过来，是不是因为我没有指定它的 <a href="https://virtualenv.pypa.io/en/stable/reference/#cmdoption-always-copy">&ndash;always-copy</a> 属性，我特意指定了这个属性又来创建了一遍 Virtualenv，发现它还是没有复制<code>ssl.py</code>文件过来。</p>
+<p>关于这个问题，我请教了公司的一位大佬。大佬说这样设计其实复合 Virtualenv 的定位，它只是做 Python 第三方库的隔离，并不做 Python 版本的隔离。</p>
+<p>所以如果我们以后需要在同一个系统上安装多个 Python 版本的话，还是需要使用 <a href="https://github.com/pyenv/pyenv">pyenv</a> 这样的工具，而不能指望 Virutalenv 的 <a href="https://virtualenv.pypa.io/en/stable/reference/#cmdoption-p">&ndash;python</a> 选项。</p>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-958da66e5791d6c739afd62fdccfea9d">3 - Django的override_settings修饰器浅析</h1>
+    
+	<blockquote>
+<ol>
+<li>Django的Settings模块代码说明</li>
+<li>Django的<code>override_settings</code>修饰器分析</li>
+</ol>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>前两天刚刚看了Django settings的实现，今天又发现了测试工具中有个<code>override_settings</code>修饰器，于是就想从它下手来分析一下Django的<code>settings</code>。</p>
+<p>本篇文章主要分析的是<code>override_settings</code>作为修饰器的实现，其作为上下文管理器的部分并未详细分析。</p>
+<h2 id="django的settings说明">Django的settings说明</h2>
+<p>在分析这个修饰器之前，我们先来了解一下Django的<code>settings</code>是如何实现的， Django的<code>settings</code>的代码存放在<code>django/conf/__init__.py</code>中，其中主要有三个类，<code>LazySettings</code>，<code>Settings</code>和<code>UserSettingsHolder</code>。</p>
+<h3 id="settings">Settings</h3>
+<p><code>Settings</code>类实现了Django配置的载入和存储功能，在它的<code>__init__</code>函数中，首先从<code>django/conf/global_settings.py</code>文件中导入Django默认的配置，然后再从<code>DJANGO_SETTINGS_MODULE</code>环境变量所指定的配置文件中导入我们项目自定义的配置，然后逐项地检查并添加配置。</p>
+<p>需要注意的是，<code>Settings</code>会把我们自定义的配置的名称存放到<code>Settings._explicit_settings</code>集合中，<code>Settings.is_overriden</code>函数就是通过检查<code>Settings._explicit_settings</code>集合，来查看某项配置是否被我们自定义的配置给覆盖掉了。</p>
+<h3 id="lazysettings">LazySettings</h3>
+<p><code>LazySettings</code>是<code>Settings</code>类的一个代理，或者可以认为是对<code>Settings</code>的一层包裹，它的主要功能就是<code>Lazy</code>，或者叫做懒载入。它把<code>Settings</code>类的实例存放在它的私有变量<code>_wrapped</code>中，初始化的时候，它默认将<code>_wrapped</code>设置为空，只有当从<code>LazySettings</code>中取值的时候(会调用<code>LazySettings.__getattr__</code>函数)，它才会调用<code>_setup</code>函数，实例化一个<code>Settings</code>对象，并从中取出对应的配置项。</p>
+<p>我们平常在代码中使用的<code>django.conf.settings</code>对象，就是这个类的实例。</p>
+<h3 id="usersettingsholder">UserSettingsHolder</h3>
+<p><code>UserSettingsHolder</code>类和上面两个类有些不同，它也是用来存储用户的配置项的，只不过它并不会从<code>django/conf/global_settings.py</code>文件中读取Django默认的配置，它只是单纯地将用户传入的配置存储起来，以供读取。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">default_settings</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    Requests for configuration variables not in this class are satisfied
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    from the module specified in default_settings (if possible).
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">__dict__</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;_deleted&#39;</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">set</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">default_settings</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">default_settings</span>
+</span></span></code></pre></div><p>上面就是<code>UserSettingsHolder</code>构造函数，从中我们可以看到，它接收一个<code>default_settings</code>参数，它主要就是从这个参数中获取并存储用户要设置的配置，并不存储Django默认的配置。</p>
+<h2 id="override_settings修饰器的分析">override_settings修饰器的分析</h2>
+<p>了解完Django的<code>settings</code>的实现以后，我们再来看一下<code>override_settings</code>修饰器。</p>
+<p>我们在使用<code>override_settings</code>作为修饰器的时候，通常的形式是这样的:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#5c35cc;font-weight:bold">@override_settings</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">DEBUG</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">False</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">test_some_feature</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">pass</span>
+</span></span></code></pre></div><p>上面的代码中修饰器的部分，我们可以使用下面这种方式来理解它:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#000">test_some_feature</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">override_settings</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">DEBUG</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">False</span><span style="color:#000;font-weight:bold">)(</span><span style="color:#000">test_some_feature</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>从上面的形式可以看出，修饰器语法真正调用的是<code>override_settings</code>类的<code>__call__</code>方法，所以我们需要去关注一下<code>override_settings</code>的<code>__call__</code>方法。但是这个方法在<code>override_settings</code>类中并没有实现，它是在它的父类<code>TestContextDecorator</code>中实现的。</p>
+<h3 id="testcontextdecorator">TestContextDecorator</h3>
+<h4 id="__call__方法"><code>__call__</code>方法</h4>
+<p><code>TestContextDecorator</code>类的<code>__call__</code>方法如下所示:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">__call__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">decorated</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#204a87">isinstance</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">decorated</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">type</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">decorate_class</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">decorated</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#000">callable</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">decorated</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">decorate_callable</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">decorated</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">raise</span> <span style="color:#c00;font-weight:bold">TypeError</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;Cannot decorate object of type </span><span style="color:#4e9a06">%s</span><span style="color:#4e9a06">&#39;</span> <span style="color:#ce5c00;font-weight:bold">%</span> <span style="color:#204a87">type</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">decorated</span><span style="color:#000;font-weight:bold">))</span>
+</span></span></code></pre></div><p>从代码中我们可以看出，这个函数的功能主要就是对被修饰的对象进行了一下鉴别，如果修饰的是类，则调用<code>decorate_class</code>函数，如果修饰的是其他的可调用对象，则调用<code>decorate_callable</code>函数。</p>
+<h4 id="decorate_class">decorate_class</h4>
+<p>接着我们来看一下<code>decorate_class</code>函数，它的代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">decorate_class</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#3465a4">cls</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#204a87">issubclass</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">cls</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">TestCase</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">decorated_setUp</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">cls</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">setUp</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">decorated_tearDown</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">cls</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">tearDown</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">setUp</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">inner_self</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">-&gt;</span> <span style="color:#000">context</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">enable</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">-&gt;</span> <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">attr_name</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">-&gt;</span>     <span style="color:#204a87">setattr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">inner_self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">attr_name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">decorated_setUp</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">inner_self</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">tearDown</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">inner_self</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">decorated_tearDown</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">inner_self</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">-&gt;</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">disable</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">cls</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">setUp</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">setUp</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">cls</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">tearDown</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">tearDown</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#3465a4">cls</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">raise</span> <span style="color:#c00;font-weight:bold">TypeError</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;Can only decorate subclasses of unittest.TestCase&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>从上面的代码可以看出，<code>decorate_class</code>函数的针对<code>TestCase</code>类的<code>setUp</code>和<code>tearDown</code>函数添加了一些额外的代码，即我用<code>-&gt;</code>符号标记的部分。</p>
+<p>这些代码的主要功能就是在<code>TestCase</code>类初始化的时候调用<code>TestContextDecorator.enable</code>函数，再以<code>self.attr_name</code>的值作为名称，把<code>enable</code>函数的返回值插入到<code>TestCase</code>类的实例中。同时在<code>TestCase</code>类销毁的时候调用<code>TestContextDecorator.disable</code>函数。</p>
+<p>我们接着再去查看<code>TestContextDecorator.enable</code>和<code>TestContextDecorator.disable</code>函数，我们发现它们是在<code>override_settings</code>子类中实现的，那我们对于<code>decorate_class</code>的分析就到这里，<code>enable</code>和<code>disable</code>函数在后面分析到<code>override_settings</code>子类的时候会继续分析。</p>
+<h4 id="decorate_callable">decorate_callable</h4>
+<blockquote>
+<p><strong>注意</strong>:
+这个函数的代码涉及到了Python的上下文管理器(<code>with</code>语句)的部分知识，如果你可以自己动手写一个上下文管理器的话，继续阅读即可。
+如果你对于上下文管理器还有些疑问的话，请参考我的另一篇文章: <a href="/2016/04/25/python%E7%9A%84with%E8%AF%AD%E5%8F%A5/">PEP 343: Python的with语句</a></p>
+</blockquote>
+<p>分析完了<code>decorate_class</code>函数，我们接着回到<code>TestContextDecorator.__call__</code>方法，接着分析被修饰对象是可调用对象的那一种情况，也就是<code>TestContextDecorator.decorate_callable</code>函数。<code>decorate_callable</code>函数的代码如下所示:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">decorate_callable</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">func</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#5c35cc;font-weight:bold">@wraps</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">func</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">inner</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">args</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#ce5c00;font-weight:bold">**</span><span style="color:#000">kwargs</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">with</span> <span style="color:#3465a4">self</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">kwarg_name</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000">kwargs</span><span style="color:#000;font-weight:bold">[</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">kwarg_name</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">context</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">func</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">args</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#ce5c00;font-weight:bold">**</span><span style="color:#000">kwargs</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">inner</span>
+</span></span></code></pre></div><p>可以看到，<code>decorate_callable</code>函数其实就是一个修饰器，它的主要功能就是将<code>TestContextDecorator</code>的实例作为一个上下文管理器进行了调用，需要注意的是，<code>return</code>语句是被包裹在<code>with</code>语句内的，也就是说，被修饰的函数执行完了以后，才会接着执行上下文管理器的<code>__exit__</code>函数。同时，它还会使用<code>self.kwarg_name</code>的值作为参数名字，将上下文管理器的返回值(也就是<code>__enter__</code>函数的返回值)传入被修饰的函数中。</p>
+<p>既然<code>decorate_callable</code>将<code>TestContextDecorator</code>当做一个上下文管理器来使用，我们就需要关注一下它的<code>__enter__</code>和<code>__exit__</code>函数，这两个函数的代码如下所示:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">__enter__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">enable</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">__exit__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">exc_type</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">exc_value</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">traceback</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">disable</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><p>可以看到，这两个函数的功能，基本上也是调用<code>enable</code>和<code>disable</code>函数。</p>
+<h3 id="override_settings">override_settings</h3>
+<p>分析完了<code>override_settings</code>的父类，我们接着来分析这个类本身。从上面的分析中我们可以看到，<code>override_settings</code>对于被修饰的类或者函数基本上就是做两件事，类或者函数初始化之前调用<code>enable</code>函数，并将<code>enable</code>函数的返回值传递到被修饰的类或者函数中。然后再在被修饰的类或者函数退出的时候调用<code>disable</code>函数。所以，我们将关注点集中到<code>override_settings</code>类的<code>enable</code>和<code>disable</code>函数上就好了。</p>
+<p>首先来说<code>override_settings.enable</code>函数，它的代码如下所示:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">enable</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Keep this code at the beginning to leave the settings unchanged</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># in case it raises an exception because INSTALLED_APPS is invalid.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># 注意self.options其实就是`override_settings`类的构造函数中传入的关键字参数kwargs</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#4e9a06">&#39;INSTALLED_APPS&#39;</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">options</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">try</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">apps</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">set_installed_apps</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">options</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;INSTALLED_APPS&#39;</span><span style="color:#000;font-weight:bold">])</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">except</span> <span style="color:#c00;font-weight:bold">Exception</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">apps</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">unset_installed_apps</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">raise</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># 这个settings._wrapped就是真实保存的设置</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># UserSettingsHolder就是</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">override</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">UserSettingsHolder</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">settings</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">_wrapped</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">key</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">new_value</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">options</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">items</span><span style="color:#000;font-weight:bold">():</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">setattr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">override</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">key</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">new_value</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">wrapped</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">settings</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">_wrapped</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">settings</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">_wrapped</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">key</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">new_value</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">options</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">items</span><span style="color:#000;font-weight:bold">():</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">setting_changed</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">send</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sender</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">settings</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">_wrapped</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">__class__</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                              <span style="color:#000">setting</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">key</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">value</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">new_value</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">enter</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">True</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>可以看到<code>enable</code>函数的功能就是在原有的<code>settings</code>配置上，用我们在<code>options</code>中传入的配置覆盖掉原来的配置，并针对修改的配置项发出信号。同时将原来的配置保存到<code>self.wrapped</code>变量中。</p>
+<p>接着我们再来看<code>override_settings.disable</code>函数，它的代码如下:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">disable</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#4e9a06">&#39;INSTALLED_APPS&#39;</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">options</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">apps</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">unset_installed_apps</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">settings</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">_wrapped</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">wrapped</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">del</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">wrapped</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">key</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">options</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">new_value</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">getattr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">settings</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">key</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">None</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">setting_changed</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">send</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sender</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">settings</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">_wrapped</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">__class__</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                              <span style="color:#000">setting</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">key</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">value</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">new_value</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">enter</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">False</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>这个函数的功能也很简单，将<code>self.wrapped</code>中保存的配置还原，并针对更改的配置发出信号。</p>
+<h2 id="总结">总结</h2>
+<p>OK，至此，对于<code>override_settings</code>的分析就结束了，它的功能也比较简单，就是在一个作用域中修改配置，并在这个作用域结束的时候将配置还原，如果它修饰的作用域是一个函数的话，由于函数不像类有构造和析构函数，它就使用Python的上下文管理器来实现类的构造和析构函数的功能。</p>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-aca9b1506e43349a065aee60cb29920c">4 - Django中import_string的实现</h1>
+    
+	<blockquote>
+<p><strong>摘要</strong>:</p>
+<ol>
+<li>importlib.import_module 函数的功能</li>
+<li>import_string 函数的实现</li>
+</ol>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>今天开始来读 Django 的代码，首先想在 Django 内部设置一个logger用来打印调试日志，结果发现在Django内部，DEBUG日志显示不出来，然后我就想这肯定是Django配置日志的时候，根据logger的名字，来确定了一定的日志级别。</p>
+<p>于是我就想看看Django的日志是如何配置的，顺着<code>manage.py</code>中的<code>execute_from_command_line</code>一路往下找，就找到了<code>django.utils.log.configure_logging</code>函数，在这个函数中，第一个就遇到了<code>import_string</code>函数，虽然一眼就能看出，这个函数的功能就是通过字符串来导入相应的函数的，但还是忍不住想要看一下它的实现，千里之行，始于足下，阅读Django源码的过程，就从这个11行的函数开始吧。</p>
+<h2 id="python的import_module函数">Python的<code>import_module</code>函数</h2>
+<p>函数声明: <code>importlib.import_module(name, package=None)</code></p>
+<ol>
+<li>从<a href="https://docs.python.org/3/library/importlib.html#importlib.import_module">文档</a>中可以看出，这个函数的主要功能就是导入指定的包或者模块,它并不能导入模块中的类或者函数。</li>
+<li>这个函数还支持相对导入，如果要使用相对导入的话，需要设置第二个参数<code>package</code>来确认执行相对导入时的当前路径。</li>
+<li>如果你想要在运行时动态导入的话，比如新创建一个Python文件再来导入，需要调用<code>importlib.invalidate_caches</code>函数，来确保让导入系统能够发现新的模块。</li>
+</ol>
+<h2 id="django的import_string函数">Django的<code>import_string</code>函数</h2>
+<p><code>import_string</code>函数的代码如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">import_string</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dotted_path</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">try</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">module_path</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">class_name</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">dotted_path</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">rsplit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;.&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">except</span> <span style="color:#c00;font-weight:bold">ValueError</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">err</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">raise</span> <span style="color:#c00;font-weight:bold">ImportError</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">%s</span><span style="color:#4e9a06"> doesn&#39;t look like a module path&#34;</span> <span style="color:#ce5c00;font-weight:bold">%</span> <span style="color:#000">dotted_path</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">err</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">module</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">import_module</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">module_path</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">try</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#204a87">getattr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">module</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">class_name</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">except</span> <span style="color:#c00;font-weight:bold">AttributeError</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">err</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">raise</span> <span style="color:#c00;font-weight:bold">ImportError</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;Module &#34;</span><span style="color:#4e9a06">%s</span><span style="color:#4e9a06">&#34; does not define a &#34;</span><span style="color:#4e9a06">%s</span><span style="color:#4e9a06">&#34; attribute/class&#39;</span> <span style="color:#ce5c00;font-weight:bold">%</span> <span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">module_path</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">class_name</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">err</span>
+</span></span></code></pre></div><p>从代码中我们可以看出，这个函数其实很简单，就是首先将要导入的路径名分割成模块名和类名，然后再来从模块中获得到类这个属性，然后就完成了。照着这个思路来看，其实我们导入一个函数也是可以的。</p>
 </div>
 
 

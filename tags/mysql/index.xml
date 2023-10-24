@@ -853,5 +853,184 @@
       </description>
     </item>
     
+    <item>
+      <title>Docs: MySQL Character Set support</title>
+      <link>https://bwangel.me/647/docs/mysql/mysql-character-set-support/</link>
+      <pubDate>Thu, 22 Jun 2017 23:32:43 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/mysql/mysql-character-set-support/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;本文是对MySQL文档 &lt;a href=&#34;https://dev.mysql.com/doc/refman/5.7/en/charset.html&#34;&gt;Character Set Support&lt;/a&gt; 的翻译&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;!-- more --&gt;
+&lt;h2 id=&#34;字符集character-set和排序规则collation概要&#34;&gt;字符集(character set)和排序规则(collation)概要&lt;/h2&gt;
+&lt;p&gt;一个字符集是一组符号和编码的集合。一个排序规则是一组字符集中用来比较字符的规则的集合。让我们使用一个假想的字符集的例子来分别区分它们。&lt;/p&gt;
+&lt;p&gt;假设我们有四个字母：A, B, a, b。我们给每个字母赋值一个数字，A = 0, B = 1, a = 2, b = 3。字母 &lt;strong&gt;A&lt;/strong&gt; 是一个符号，数字0是字母 &lt;strong&gt;A&lt;/strong&gt; 的编码，四个字母和它们编码的集合叫做 &lt;strong&gt;字符集&lt;/strong&gt; (character set)。&lt;/p&gt;
+&lt;p&gt;假设我们想要比较两个字符串值，A 和 B。做这个最简单的方式就是去查看它们的编码，A 是0，B 是1。因为0比1小，所以我们说 A 比 B 小。刚刚我们所做的事情是将一个排序规则(collation)应用到我们的字符集上。排序规则(collation)是一组规则(比较编码)的集合(在这个例子中仅有一个规则)。我们称这个所有可能的排序规则中最简单的排序规则为二进制排序规则(binary collation)。&lt;/p&gt;
+&lt;p&gt;但是如果我们想说大写字母和小写字母是等价的，那该怎么排序呢？那么我们将会有至少两个规则：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;将小写字母 a 和 b 等价成大写字母 A 和 B。&lt;/li&gt;
+&lt;li&gt;然后比较它们的编码。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我们称这个为不区分大小写的排序规则。它比起二进制排序规则来要复杂一些。&lt;/p&gt;
+&lt;p&gt;在现实生活中，大多数的字符集都有许多字符；并不仅仅是 A 和 B 而是包括所有的字母，有时还会包括多字母和东方书写系统中成千上万个字符和许多相关的特殊字符和标点符号。同样在现实生活中，大多数的排序规则都有许多条规则，并不仅仅是区分大小写对于多字符映射(比如德语排序规则中的两个规则之一就是Ö = OE)也会区分口音(口音是和字符相关的一个标记例如德语中的Ö)。&lt;/p&gt;
+&lt;p&gt;MySQL 能为你做这些事情：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用各种各样的字符集来存储字符串。&lt;/li&gt;
+&lt;li&gt;使用各种各样的排序规则来比较字符串。&lt;/li&gt;
+&lt;li&gt;在同一台服务器上，在同一个的数据库，甚至是在同一个表中，混合使用不同字符集不同排序规则的字符串。&lt;/li&gt;
+&lt;li&gt;在任何等级上开启特殊的字符集和排序规则。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;为了能够有效地使用这些特性，你必须要知道哪些字符集和排序规则是可用的，如何改变默认的排序规则，以及它们是如何影响到字符串操作符和相关函数的行为的。&lt;/p&gt;
+&lt;h2 id=&#34;mysql中的字符集和排序规则&#34;&gt;MySQL中的字符集和排序规则&lt;/h2&gt;
+&lt;p&gt;MySQL 服务器支持多种字符集。使用__INFORMATION_SCHEMA.CHARACTER_SETS__表或者__SHOW CHARACTER_SET__语句能够列出所有的可用字符集。下面的例子列出了一部分字符集，如果想要查看完整的信息，请参看&lt;a href=&#34;https://dev.mysql.com/doc/refman/5.7/en/charset-charsets.html&#34;&gt; Section 11.1.14, “Character Sets and Collations Supported by MySQL” &lt;/a&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; SHOW CHARACTER SET;
++----------+---------------------------------+---------------------+--------+
+| Charset  | Description                     | Default collation   | Maxlen |
++----------+---------------------------------+---------------------+--------+
+| big5     | Big5 Traditional Chinese        | big5_chinese_ci     |      2 |
+...
+| latin1   | cp1252 West European            | latin1_swedish_ci   |      1 |
+| latin2   | ISO 8859-2 Central European     | latin2_general_ci   |      1 |
+...
+| utf8     | UTF-8 Unicode                   | utf8_general_ci     |      3 |
+| ucs2     | UCS-2 Unicode                   | ucs2_general_ci     |      2 |
+...
+| utf8mb4  | UTF-8 Unicode                   | utf8mb4_general_ci  |      4 |
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一个给定的字符集至少有一个排序规则，而大多数的字符集都有多个。通过__INFORMATION_SCHEMA.COLLATIONS__表或者__SHOW COLLATION__语句可以列出一个字符集所有可用的排序规则。例如，使用下面的语句可以列出 &lt;em&gt;latin1&lt;/em&gt; 字符集(cp1252 西欧)所有的排序规则。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; SHOW COLLATION WHERE Charset = &#39;latin1&#39;;
++-------------------+---------+----+---------+----------+---------+
+| Collation         | Charset | Id | Default | Compiled | Sortlen |
++-------------------+---------+----+---------+----------+---------+
+| latin1_german1_ci | latin1  |  5 |         | Yes      |       1 |
+| latin1_swedish_ci | latin1  |  8 | Yes     | Yes      |       1 |
+| latin1_danish_ci  | latin1  | 15 |         | Yes      |       1 |
+| latin1_german2_ci | latin1  | 31 |         | Yes      |       2 |
+| latin1_bin        | latin1  | 47 |         | Yes      |       1 |
+| latin1_general_ci | latin1  | 48 |         | Yes      |       1 |
+| latin1_general_cs | latin1  | 49 |         | Yes      |       1 |
+| latin1_spanish_ci | latin1  | 94 |         | Yes      |       1 |
++-------------------+---------+----+---------+----------+---------+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;latin1&lt;/em&gt; 的排序规则有如下含义。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Collation&lt;/th&gt;
+&lt;th&gt;Meaning&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;latin1_bin&lt;/td&gt;
+&lt;td&gt;根据 latin1 的编码进行二进制排序&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;latin_danish_ci&lt;/td&gt;
+&lt;td&gt;丹麦/挪威&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;latin1_general_ci&lt;/td&gt;
+&lt;td&gt;多语言(西欧)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;latin1_general_cs&lt;/td&gt;
+&lt;td&gt;多语言(ISO 西欧)，区分大小写&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;latin1_german1_ci&lt;/td&gt;
+&lt;td&gt;德语 DIN-1 (字典顺序)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;latin1_german2_ci&lt;/td&gt;
+&lt;td&gt;德语 DIN-2 (电话簿顺序)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;latin1_spanish_ci&lt;/td&gt;
+&lt;td&gt;现代西班牙语&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;latin1_swedish_ci&lt;/td&gt;
+&lt;td&gt;瑞典/芬兰&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;排序规则有如下的特点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;两个不同字符集不能有同样的排序规则&lt;/li&gt;
+&lt;li&gt;每个字符集有一个排序规则称为默认排序规则(&lt;em&gt;default collation&lt;/em&gt;)。例如，&lt;strong&gt;latin1&lt;/strong&gt; 和 &lt;strong&gt;utf8&lt;/strong&gt; 的默认排序规则分别是 &lt;strong&gt;latin1_swedish_ci&lt;/strong&gt; 和 &lt;strong&gt;utf8_general_ci&lt;/strong&gt; 。&lt;strong&gt;INFORMATION_SHCEMA.CHARACTER_SETS&lt;/strong&gt; 表和 &lt;strong&gt;SHOW CHARACTER_SET&lt;/strong&gt; 语句表明了每个字符集的默认排序规则。 &lt;strong&gt;INFORMATION_SHCEMA.COLLATIONS&lt;/strong&gt; 表和 &lt;strong&gt;SHOW COLLATION&lt;/strong&gt; 语句有一列表明每个排序规则是不是它所属字符集的默认排序规则。(是的话值为&lt;em&gt;YES&lt;/em&gt;，否则值为空)。&lt;/li&gt;
+&lt;li&gt;排序规则的名字是以它们相关联的字符集的名字作为起始值，后面跟着一个或多个的后缀来表明其他的排序规则特性。如果想要了解更多的排序规则命名规范，请参考&lt;a href=&#34;https://dev.mysql.com/doc/refman/5.7/en/charset-collation-names.html&#34;&gt; Section 11.1.3, “Collation Naming Conventions” &lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当一个字符集有多个排序规则的时候，对于一个给定的应用程序来说哪个排序规则是最适合的可能并不清晰。为了避免选择一个不合适的排序规则，请使用一些代表数据值来执行一些比较，来确认给定的排序规则将值排序的方式是否符合你的期望。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.collation-charts.org/&#34;&gt;Collation-Charts.Org&lt;/a&gt;是一个很有用的网站，用来展示一个排序规则和另外一个排序规则的比较信息。&lt;/p&gt;
+&lt;h2 id=&#34;排序规则命名规范&#34;&gt;排序规则命名规范&lt;/h2&gt;
+&lt;p&gt;MySQL 排序规则的命名遵循如下的规范：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个排序规则的名字使用和它相关联的那个字符集的名字作为开始，后面跟着一个或者多个后缀表示排序规则的其他特性。例如，&lt;em&gt;utf8_general_ci&lt;/em&gt; 和 &lt;em&gt;latin1_swedish_ci&lt;/em&gt; 分别是 &lt;em&gt;utf8&lt;/em&gt; 和 &lt;em&gt;latin1&lt;/em&gt; 字符集的排序规则。&lt;/li&gt;
+&lt;li&gt;某个语言特定的排序规则包括了语言名。例如，&lt;em&gt;utf8_turkish_ci&lt;/em&gt; 和 &lt;em&gt;utf8_hungarian_ci&lt;/em&gt; 分别使用土耳其和匈牙利的的规则来为 &lt;em&gt;utf8&lt;/em&gt; 字符集排序字符。&lt;/li&gt;
+&lt;li&gt;一个排序规则可能是区分大小写或者不区分大小写的，也有可能是二进制排序的。对于二进制排序的排序规则，字符比较基于字符的二进制编码值。下面的表格表示了这些排序特性使用的后缀。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;表格 11.1 排序规则大小写区分的后缀&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Suffix&lt;/th&gt;
+&lt;th&gt;Meaning&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;_ai&lt;/td&gt;
+&lt;td&gt;不区分口音&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;_as&lt;/td&gt;
+&lt;td&gt;区分口音&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;_ci&lt;/td&gt;
+&lt;td&gt;不区分大小写&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;_cs&lt;/td&gt;
+&lt;td&gt;区分大小写&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;_bin&lt;/td&gt;
+&lt;td&gt;二进制排序&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;对于没有指定口音的非二进制排序规则，它是由区分大小写来决定的。那就意味着，如果一个排序规则名字中没有包含 &lt;em&gt;_ai&lt;/em&gt; 或者 &lt;em&gt;_as&lt;/em&gt; ，名字中的 &lt;em&gt;_ci&lt;/em&gt; 就暗示着 &lt;em&gt;_ai&lt;/em&gt;，而 &lt;em&gt;_cs&lt;/em&gt; 就暗示着 &lt;em&gt;_as&lt;/em&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;例如，&lt;em&gt;latin1_general_ci&lt;/em&gt; 是不区分大小写的(同时也暗示着不区分口音)。&lt;em&gt;latin1_general_cs&lt;/em&gt; 是区分大小写的(同时也暗示着区分口音), &lt;em&gt;latin1_bin&lt;/em&gt; 使用二进制编码的值。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;对于 Unicode 字符集，排序规则名字中可能包含着一个版本号，用来表示这个排序规则基于的 UCA(Unicode Collation Algorithm) 的版本。基于 UCA 的排序规则的名字中没有版本号的话，意味着使用了 UCA 加权键 4.0.0 版本。例如：
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;utf8_unicode_520_ci&lt;/em&gt; 是基于 &lt;a href=&#34;http://www.unicode.org/Public/UCA/5.2.0/allkeys.txt&#34;&gt;UCA 5.2.0 加权键&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;utf8_unicode_ci&lt;/em&gt; (名字中不含版本号) 是基于 &lt;a href=&#34;http://www.unicode.org/Public/UCA/4.0.0/allkeys-4.0.0.txt&#34;&gt;UCA 4.0.0 加权键&lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;对于 Unicode 字符集来说，&lt;em&gt;xxx_general_mysql500_ci&lt;/em&gt; 排序规则保留了5.1.24之前的的原始排序规则 &lt;em&gt;xxx_general_ci&lt;/em&gt; ，同时也允许 MySQL 5.1.24 之前创建的表进行升级。想要了解更多信息，请参考 &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.7/en/checking-table-incompatibilities.html&#34;&gt; Section 2.11.3, “Checking Whether Tables or Indexes Must Be Rebuilt” &lt;/a&gt; 和 &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.7/en/rebuilding-tables.html&#34;&gt; Section 2.11.4, “Rebuilding or Repairing Tables or Indexes” &lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
   </channel>
 </rss>

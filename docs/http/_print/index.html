@@ -116,7 +116,31 @@
     
     
 	
-<li>3: <a href="#pg-b21d7a632564e90b6152ef79c335936f">CentOS 下编译安装 Nginx</a></li>
+<li>3: <a href="#pg-394cadd4f30bcd3b6e1d18482f78d518">如何生成自签名 HTTPS 证书</a></li>
+
+
+    
+  
+    
+    
+	
+<li>4: <a href="#pg-e441447b9eeecda48a04f52b3f5591d1">HTTP 协议中的分块传输编码</a></li>
+
+
+    
+  
+    
+    
+	
+<li>5: <a href="#pg-a84e3fde2477368f92e0571415ecdb25">Letsencrypt通过DNS TXT记录来验证域名有效性</a></li>
+
+
+    
+  
+    
+    
+	
+<li>6: <a href="#pg-b21d7a632564e90b6152ef79c335936f">CentOS 下编译安装 Nginx</a></li>
 
 
     
@@ -359,7 +383,360 @@ Server: netcat!
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-b21d7a632564e90b6152ef79c335936f">3 - CentOS 下编译安装 Nginx</h1>
+	<h1 id="pg-394cadd4f30bcd3b6e1d18482f78d518">3 - 如何生成自签名 HTTPS 证书</h1>
+    
+	<hr>
+<h2 id="ca-机构是什么">CA 机构是什么</h2>
+<p>Certificate Authority，是一个公司或者组织，用于为实体(网站，Email 地址，公司或个人等)提供证书。通过证书认证这些实体。</p>
+<p>数字证书提供三方面的验证:</p>
+<ol>
+<li>身份验证(Authentication): 通过提供认证服务，来验证他颁发证书的实体。</li>
+<li>加密(Encryption): 提供加密方式，让通信双方在不可信的信道上通信。</li>
+<li>完整性验证(Integrity): 可以对文档进行签名，这样可以确保传输过程中文档不会被修改。</li>
+</ol>
+<h3 id="ca-机构的证书分类">CA 机构的证书分类</h3>
+<table>
+<thead>
+<tr>
+<th>证书类型</th>
+<th>单域名</th>
+<th>多域名</th>
+<th>泛域名</th>
+<th>多泛域名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DV</td>
+<td>支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>OV</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>EV</td>
+<td>支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>举例</td>
+<td><a href="https://www.bwangel.me">www.bwangel.me</a></td>
+<td><code>www.bwangel.me</code>, <code>www.wbangel1.me</code>, <code>www.langel.me</code></td>
+<td>*.bwangel.me</td>
+<td>*.bwangel.me, *.fbangel2.me, *.wbngel.me</td>
+</tr>
+</tbody>
+</table>
+<p>不论是 DV，OV，还是EV证书，他们的加密效果都是一样的，其区别在于实体认证方式:</p>
+<ol>
+<li>DV(Domain Validation)，面向个体用户，认证方式为向 whois 信息中的邮箱发送邮件进行验证。</li>
+<li>OV(Origanization Validation)，面向企业用户，证书在 DV 证书验证的基础上，还需要公司授权，CA 通过拨打信息库中的公司电话来确认</li>
+<li>EV(Extended Validation)，这类证书除了上述两个确认外，还需要公司提供的金融机构的开户许可证，要求十分严格。</li>
+</ol>
+<p>OV 和 EV 证书相当昂贵，使用方可以为这些颁发出来的证书买保险，一旦 CA 提供的证书出现问题，一张证书的赔偿金可以达到 100w 刀以上。</p>
+<h2 id="什么是证书申请文件csr">什么是证书申请文件(CSR)</h2>
+<p>证书申请文件(Certificate Signing Request)，简写为 CSR。</p>
+<p>数字证书的核心，其实就是非对称加密，这需要开发者自己保护好私钥的安全。</p>
+<p>因此开发者在向 CA 申请证书的时候，开发者首先需要生成一个密钥对。开发者自己保管好私钥，然后将公钥和个人信息发送给 CA 机构，CA 机构通过公钥和你的个人信息最终签发数字证书。</p>
+<p>而 CSR 文件其实就是一个包含了用户公钥和个人信息的一个数据文件。用户产生出这个 CSR 文件，再把这个 CSR 文件发送给 CA 机构，CA 机构通过 CSR 中的内容来签发出数字证书。</p>
+<h2 id="san-是什么">SAN 是什么</h2>
+<p>证书中字段的说明，除了这些通用字段外，证书中还可以附加字段。SAN 就是附加的字段。</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/C=</td>
+<td>Country</td>
+<td>GB</td>
+</tr>
+<tr>
+<td>/ST=</td>
+<td>State</td>
+<td>London</td>
+</tr>
+<tr>
+<td>/L=</td>
+<td>Location</td>
+<td>London</td>
+</tr>
+<tr>
+<td>/O=</td>
+<td>Organization</td>
+<td>Global Security</td>
+</tr>
+<tr>
+<td>/OU=</td>
+<td>Organizational Unit</td>
+<td>IT Department</td>
+</tr>
+<tr>
+<td>/CN=</td>
+<td>Common Name</td>
+<td>example.com</td>
+</tr>
+</tbody>
+</table>
+<p>Subject Alternative Name ，多域名证书，令一个证书可以保护多个域名。</p>
+<p>Chrome 从58开始 只会检查证书的 SAN 字段，不再检查 Common Name 字段的域名，如果没有设置 SAN 字段，Chrome 连接时会报错 <code>net:ERR_CERT_COMMON_NAME_INVALID</code></p>
+<h2 id="chrome-连接-https-网站的常见错误">Chrome 连接 HTTPS 网站的常见错误</h2>
+<ol>
+<li><code>net:ERR_CERT_AUTHORITY_INVALID</code>: 浏览器不认服务器的证书，一般是因为给服务器签发证书的 CA 机构不在浏览器的信任列表中。</li>
+<li><code>net:ERR_CERT_COMMON_NAME_INVALID</code>: Common Name 不匹配，即访问的域名和证书中的域名不匹配</li>
+</ol>
+<h2 id="如何生成一张证书">如何生成一张证书</h2>
+<p>大致流程是:</p>
+<ol>
+<li>自定义配置文件，生成 CA 机构的证书</li>
+<li>生成申请证书的 CSR 文件和私钥文件*pem (注意，一定要在配置文件中指定 SAN，否则 chrome 不认这个证书)</li>
+<li>利用CA证书对 CSR 文件进行签名，生成证书文件。</li>
+</ol>
+<p>具体步骤见: <a href="https://github.com/bwangelme/Certs">https://github.com/bwangelme/Certs</a></p>
+<h2 id="如何设置浏览器信任-ca-机构">如何设置浏览器信任 CA 机构</h2>
+<ul>
+<li>基于Chrome 86.0.4240.198</li>
+</ul>
+<p>Settings -&gt; Privacy and security -&gt; Security -&gt; Manage certificates -&gt; Authorities -&gt; Import 导入 CA 机构的 pem 文件</p>
+<ul>
+<li>基于 Firefox 83.0</li>
+</ul>
+<p>Preferences -&gt; Privacy &amp; Security -&gt; Certificates -&gt; View Certificates -&gt; Authorities -&gt; Import</p>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="https://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/">细说 CA 和证书</a></li>
+<li><a href="https://www.jianshu.com/p/66d84ca65f41">什么是CSR文件</a></li>
+<li><a href="https://www.shellhacks.com/create-csr-openssl-without-prompt-non-interactive/">HowTo: Create CSR using OpenSSL Without Prompt</a></li>
+<li><a href="https://ningyu1.github.io/site/post/51-ssl-cert/">Openssl生成自签名证书，简单步骤</a></li>
+<li><a href="http://blog.ideawand.com/2017/11/22/build-certificate-that-support-Subject-Alternative-Name-SAN/">使用OpenSSL生成含有Subject Alternative Name(SAN)的证书</a></li>
+</ol>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-e441447b9eeecda48a04f52b3f5591d1">4 - HTTP 协议中的分块传输编码</h1>
+    
+	<p>说明了 HTTP 分块传输编码方式</p>
+<h2 id="http的持久连接和短连接">HTTP的持久连接和短连接</h2>
+<h3 id="基本概念">基本概念</h3>
+<p>在聊 HTTP 协议的分块传输编码之前，我们先来聊一下HTTP的连接方式。</p>
+<p>HTTP协议是应用层协议，它是建立在TCP协议之上的。TCP协议在传输数据之前，需要先通过三次握手建立连接，同时由于慢启动的特性，TCP协议的报文不会在一开始就满负荷传输。如果一个HTTP事务能够复用之前的TCP连接的话，将会节约很多的请求时间。</p>
+<p>但是在最开始的<code>HTTP/1.0</code>中是不支持复用TCP连接的，即一个HTTP事务结束后，底层的TCP连接也立刻关闭掉，这就是短连接。在<code>HTTP1/1.1</code>中，新加了<code>Connection</code>请求头用来定义TCP连接的使用方式。<code>Connection</code>请求头的值有两种</p>
+<ul>
+<li><code>close</code></li>
+</ul>
+<p>表示服务端或服务器在HTTP事务结束后将会关闭相应的TCP连接，即使使用短连接的方式</p>
+<ul>
+<li>任何<code>,</code>分离的HTTP请求头列表(通常是<code>keep-alive</code>)</li>
+</ul>
+<p>表示客户端在HTTP事务结束后将会继续保持这个TCP连接，即持久连接。在<code>HTTP/1.1</code>中，默认使用的就是这种持久连接的方式。<code>Connection</code>请求头的值可以是使用<code>,</code>分隔的请求头列表，这些请求头表示将会被第一个非传输性的代理或者缓存服务器给删除掉。这些请求头的定义应用在请求的发送方和第一个实体之间，而不会应用在请求发送方和目标服务器之间。</p>
+<h3 id="短连接例子">短连接例子</h3>
+<p>下面是使用短连接处理HTTP请求的例子，我们写完响应行后立刻将TCP连接关闭了，此时浏览器是能够正确处理这种请求的。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">handleClosedHttpReq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">conn</span> <span style="color:#000">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Conn</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">buffer</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87">make</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87;font-weight:bold">byte</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1024</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">n</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Read</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buffer</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Fatalln</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">string</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buffer</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;hello, world!&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;HTTP/1.1 200 OK\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Close</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">ln</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Listen</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;tcp&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;:8080&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Fatalln</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">ln</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Accept</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">go</span> <span style="color:#000">handleClosedHttpReq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">conn</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p><img src="https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2018-11-01-233404.png" alt="HTTP短连接"></p>
+<h3 id="持久连接例子">持久连接例子</h3>
+<p>在持久连接模式中，由于服务器不会立刻关闭TCP连接，所以需要在响应中加上一个<code>Content-Length</code>的响应头来表示响应体的长度，让浏览器判断HTTP响应是否结束。如果没有这个响应头的话，浏览器会处于<code>pending</code>的状态。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 没有添加 Content-Length 的响应，浏览器会处于 pending 的状态
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">handleKeepAliveHttpReq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">conn</span> <span style="color:#000">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Conn</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">buffer</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87">make</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87;font-weight:bold">byte</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1024</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">n</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Read</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buffer</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Fatalln</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">string</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buffer</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;hello, keel-alive!&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;HTTP/1.1 200 OK\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p><img src="https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2018-11-01-234251.png" alt="持久连接浏览器pending"></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 添加了 Content-Length，浏览器就可以正常处理响应了
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">handleKeepAliveHttpReq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">conn</span> <span style="color:#000">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Conn</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">buffer</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87">make</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87;font-weight:bold">byte</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1024</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">n</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Read</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buffer</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Fatalln</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">string</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buffer</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;hello, keel-alive!&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;HTTP/1.1 200 OK\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Sprintf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Content-Length: %d\r\n&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span><span style="color:#000;font-weight:bold">))))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p><img src="https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2018-11-01-234547.png" alt="持久连接"></p>
+<h2 id="分块传输编码">分块传输编码</h2>
+<h3 id="相关概念">相关概念</h3>
+<p>在长连接模式中，除了通过<code>Content-Length</code>指定响应体的长度外，还有另外一种传输方式。它就是本文的主角，分块传输编码。</p>
+<blockquote>
+<p>分块传输编码（Chunked transfer encoding）是超文本传输协议（HTTP）中的一种数据传输机制，允许HTTP由网页服务器发送给客户端应用（ 通常是网页浏览器）的数据可以分成多个部分。分块传输编码只在HTTP协议1.1版本（HTTP/1.1）中提供。</p>
+</blockquote>
+<p>如果需要使用分块传输编码的响应格式，我们需要在HTTP响应中设置响应头<code>Transfer-Encoding: chunked</code>。它的具体传输格式是这样的(注意HTTP响应中换行符是<code>\r\n</code>):</p>
+<pre tabindex="0"><code>HTTP/1.1 200 OK\r\n
+\r\n
+Transfer-Encoding: chunked\r\n
+...\r\n
+\r\n
+&lt;chunked 1 length&gt;\r\n
+&lt;chunked 1 content&gt;\r\n
+&lt;chunked 2 length&gt;\r\n
+&lt;chunked 2 content&gt;\r\n
+...\r\n
+0\r\n
+\r\n
+\r\n
+</code></pre><h3 id="分块传输编码例子">分块传输编码例子</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">handleChunkedHttpResp</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">conn</span> <span style="color:#000">net</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Conn</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">buffer</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87">make</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87;font-weight:bold">byte</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1024</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">n</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Read</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buffer</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Fatalln</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">string</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buffer</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;HTTP/1.1 200 OK\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Transfer-Encoding: chunked\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;6\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;hello,\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;8\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;chunked!\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;0\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">conn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Write</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\r\n&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p><img src="https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2018-11-02-000422.png" alt="HTTP chunked传输"></p>
+<p>通过 WireShark 抓包我们可以更清晰地看到响应中有两个 chunked。但由于这两个chunked的内容很少，TCP传输的时候将它们合并了。</p>
+<p><img src="https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2018-11-02-001330.png" alt="HTTP chunked wireshark抓包"></p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li>[https://imququ.com/post/transfer-encoding-header-in-http.html](HTTP 协议中的 Transfer-Encoding)</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Connection">MDN Connection</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%88%86%E5%9D%97%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81">维基百科 - 分块传输编码</a></li>
+</ul>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-a84e3fde2477368f92e0571415ecdb25">5 - Letsencrypt通过DNS TXT记录来验证域名有效性</h1>
+    
+	<blockquote>
+<p><strong>摘要</strong>:</p>
+<ol>
+<li>Letsencrypt 通过dns记录来验证域名</li>
+</ol>
+</blockquote>
+<h2 id="前言">前言</h2>
+<p>我们在使用<code>letsencrypt</code>获取免费的HTTPS证书的时候，<code>letsencrypt</code>需要对域名进行验证。默认情况下它的验证方式是这样的：</p>
+<ol>
+<li><code>certbot</code>程序在web目录的根目录下放置一个文件。</li>
+<li><code>letsencrypt</code>的服务器通过域名来访问这个文件，来验证你申请的域名是属于你的</li>
+</ol>
+<p>但有时候我们想为内网的某台主机设置HTTPS，因为内网的主机无法被<code>letsencrypt</code>的服务器访问到，<code>certbot --nginx certonly</code>就会出现<code>Connection refused</code>的错误。</p>
+<p>为了解决上述问题，我们可以更改验证方式，使用DNS记录来验证域名。</p>
+<h2 id="利用certbot获取证书">利用certbot获取证书</h2>
+<p>运行<code>sudo certbot --manual --preferred-challenges dns certonly</code>命令，输入域名并同意记录本机IP后开始获取证书，接着<code>certbot</code>就会弹出如下的提示：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>-------------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span>Please deploy a DNS TXT record under the name
+</span></span><span style="display:flex;"><span>_acme-challenge.example.com with the following value:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>IMdfdsfsJDqBRyRaaEgPPQlEuvtxJQAgWZTIVbLuzDi8U
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Once this is deployed,
+</span></span><span style="display:flex;"><span>-------------------------------------------------------------------------------
+</span></span><span style="display:flex;"><span>Press Enter to Continue
+</span></span></code></pre></div><p>此时<code>certbot</code>程序就会暂停，等待我们去添加DNS记录。</p>
+<h2 id="添加dns的txt记录">添加DNS的TXT记录</h2>
+<p>看到上述的提示后，修改域名的DNS记录，添加一条<code>TXT</code>记录，主机名为<code>_acme-challenge</code>，而其中的内容就是<code>letsencrypt</code>生成的随机字符串<code>IMdfdsfsJDqBRyRaaEgPPQlEuvtxJQAgWZTIVbLuzDi8U</code>。</p>
+<h2 id="验证成功">验证成功</h2>
+<p>添加好DNS记录后，我们可以通过<code>dig -t txt _acme-challenge.example.com</code>来查看域名的内容，域名生效以后，在<code>certbot</code>程序中下按下回车键，程序继续运行。<code>letsencrypt</code>对DNS记录验证成功，证书就申请成功了。</p>
+<h2 id="参考文献">参考文献</h2>
+<ol>
+<li><a href="https://certbot.eff.org/docs/using.html#manual">Certbot User Guide</a></li>
+<li><code>certbot -h certonly</code></li>
+</ol>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-b21d7a632564e90b6152ef79c335936f">6 - CentOS 下编译安装 Nginx</h1>
     
 	<p><strong>摘要</strong>:</p>
 <blockquote>
