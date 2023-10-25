@@ -1807,21 +1807,23 @@ $$</p>
 </blockquote>
 <h2 id="解题思路">解题思路</h2>
 <h3 id="问题转换">问题转换</h3>
-<p>这个问题我们可以转换思路，将其转换成求树的节点个数的题目。</p>
-<p>假设存在一棵树，它的根节点是N，它的子节点从左往右依次为 n-1, n-2, &hellip; 直到0。同理，根节点子节点的子节点也遵循这样的规律，0节点没有子节点。请问在这棵树中，0节点一共有多少个？
-根节点为3的树如下图所示:</p>
+<p>这个问题我们可以转换思路，将其转换成求树的节点0的个数的题目。</p>
+<p>假设存在一棵树，它的根节点是N，它的子节点从左往右依次为 n-1, n-2, &hellip; 直到0。</p>
+<p>同理，根节点子节点的子节点也遵循这样的规律，0节点没有子节点。请问在这棵树中，0节点一共有多少个？</p>
+<p>根节点为3的树如下图所示:</p>
 <p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2018-04-08-100136.png" alt=""></p>
+<p><strong>从 0 到 3 的路径可以认为是青蛙跳到三阶台阶上的路径，0 的个数就是跳法的个数</strong></p>
 <h3 id="答案推导">答案推导</h3>
 <p>如上所示，我们已经将问题转换成了求树中0节点的个数，根据树的递归定义，我们可以得到如下的定义:</p>
 <ul>
-<li>$f(1) = 1$</li>
-<li>$f(n) = f(n-1) + f(n-2) + &hellip; + f(1) + 1$</li>
-<li>$f(n-1) = \space \space \space \space \space \space \space \space \space \space \space f(n-2) + &hellip; + f(1) + 1$</li>
+<li>\(f(1) = 1\)</li>
+<li>\(f(n) = f(n-1) + f(n-2) + &hellip; + f(1) + 1\)</li>
+<li>\(f(n-1) = \space \space \space \space \space \space \space \space \space \space \space \space f(n-2) + &hellip; + f(1) + 1\)</li>
 </ul>
-<p>令$f(n) - f(n-1)$，可得：$f(n) = 2 * f(n-1)$。</p>
-<p>根据$f(1) = 1$和$f(n) = 2 * f(n-1)$，我们最终可以得到，$f(n) = 2^{n-1}$。</p>
+<p>令\(f(n) - f(n-1)\)，可得：\(f(n) = 2 * f(n-1)\)。</p>
+<p>根据\(f(1) = 1\)和\(f(n) = 2 * f(n-1)\)，我们最终可以得到，\(f(n) = 2^{n-1}\)。</p>
 <h3 id="最终答案">最终答案</h3>
-<p>有了上面的推导过程，最终的编程实现很简单，我们只需要返回$2^{n-1}$即可，答案如下:</p>
+<p>有了上面的推导过程，最终的编程实现很简单，我们只需要返回\(2^{n-1}\)即可，答案如下:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#include</span> <span style="color:#8f5902;font-style:italic">&lt;cmath&gt;</span><span style="color:#8f5902;font-style:italic">
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">Solution</span> <span style="color:#000;font-weight:bold">{</span>
