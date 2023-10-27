@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.115.2">
+<meta name="generator" content="Hugo 0.117.0">
 <meta name="robots" content="index, follow">
 
 
@@ -26,7 +26,7 @@ If a signal handler is invoked while a system call or library function call is b
 如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况
 在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。
 例如
-read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?">
+read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?">
 <meta property="og:title" content="Python2 使用 Thrift 为什么会出现 EINTR 错误" />
 <meta property="og:description" content="EINTR 错误是什么 在 man 7 signal 中写到，
 If a signal handler is invoked while a system call or library function call is blocked, then either:
@@ -35,11 +35,11 @@ If a signal handler is invoked while a system call or library function call is b
 如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况
 在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。
 例如
-read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?" />
+read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bwangel.me/647/docs/python/thrift-eintr/" /><meta property="article:section" content="docs" />
 <meta property="article:published_time" content="2023-10-27T09:22:30+08:00" />
-<meta property="article:modified_time" content="2023-10-27T17:01:47+08:00" /><meta property="og:site_name" content="647号宇宙" />
+<meta property="article:modified_time" content="2023-10-27T22:43:17+08:00" /><meta property="og:site_name" content="647号宇宙" />
 <meta itemprop="name" content="Python2 使用 Thrift 为什么会出现 EINTR 错误">
 <meta itemprop="description" content="EINTR 错误是什么 在 man 7 signal 中写到，
 If a signal handler is invoked while a system call or library function call is blocked, then either:
@@ -48,9 +48,9 @@ If a signal handler is invoked while a system call or library function call is b
 如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况
 在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。
 例如
-read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?"><meta itemprop="datePublished" content="2023-10-27T09:22:30+08:00" />
-<meta itemprop="dateModified" content="2023-10-27T17:01:47+08:00" />
-<meta itemprop="wordCount" content="1069">
+read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?"><meta itemprop="datePublished" content="2023-10-27T09:22:30+08:00" />
+<meta itemprop="dateModified" content="2023-10-27T22:43:17+08:00" />
+<meta itemprop="wordCount" content="1070">
 <meta itemprop="keywords" content="python,thrift,blog," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Python2 使用 Thrift 为什么会出现 EINTR 错误"/>
 <meta name="twitter:description" content="EINTR 错误是什么 在 man 7 signal 中写到，
@@ -60,7 +60,7 @@ If a signal handler is invoked while a system call or library function call is b
 如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况
 在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。
 例如
-read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?"/>
+read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?"/>
 
 
 
@@ -651,7 +651,7 @@ returns; or</p>
 <p>例如</p>
 <ul>
 <li><code>read</code>, <code>readv</code>, <code>wait</code>, 没有设置超时的 <code>recv</code> 和 <code>send</code> 等调用会受到 <code>SA_RESTART</code> 标记的控制，继续执行或返回 EINTR 错误</li>
-<li>设置了超时的 <code>send</code> 和 <code>recv</code>, <code>epoll_wait</code>, <code>poll</code> 等接口不会受到 <code>SA_RESTART</code>，都是直接返回 EINTR 错误码</li>
+<li>设置了超时的 <code>send</code> 和 <code>recv</code>, <code>epoll_wait</code>, <code>poll</code> 等接口不会受到 <code>SA_RESTART</code> 的影响，都是直接返回 EINTR 错误码</li>
 </ul>
 <h2 id="为什么要有-eintr-错误">为什么要有 EINTR 错误</h2>
 <p>从上面的 man 文档中可知，<code>EINTR</code> 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?</p>
@@ -808,7 +808,7 @@ Start thrift req
 Receive sig 10
 Receive sig 10
 get 2745109 bytes in 16.005424737930298
-</code></pre><p>EINTR 是什么错误，为什么 Python2 中抛异常，Python3不会抛异常呢，且听我慢慢讲解。</p>
+</code></pre><p>为什么 Python2 会抛异常，Python3 不会抛异常呢，且听我慢慢讲解。</p>
 <h2 id="为什么-python2-和-python3-的表现不同">为什么 Python2 和 Python3 的表现不同</h2>
 <h3 id="python-的原因">Python 的原因</h3>
 <p>Python 在 <a href="https://peps.python.org/pep-0475/">PEP 475</a> 中实现了，在系统调用遇到 EINTR 的时候自动重试。</p>

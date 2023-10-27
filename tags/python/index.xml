@@ -42,7 +42,7 @@ returns; or&lt;/p&gt;
 &lt;p&gt;例如&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;read&lt;/code&gt;, &lt;code&gt;readv&lt;/code&gt;, &lt;code&gt;wait&lt;/code&gt;, 没有设置超时的 &lt;code&gt;recv&lt;/code&gt; 和 &lt;code&gt;send&lt;/code&gt; 等调用会受到 &lt;code&gt;SA_RESTART&lt;/code&gt; 标记的控制，继续执行或返回 EINTR 错误&lt;/li&gt;
-&lt;li&gt;设置了超时的 &lt;code&gt;send&lt;/code&gt; 和 &lt;code&gt;recv&lt;/code&gt;, &lt;code&gt;epoll_wait&lt;/code&gt;, &lt;code&gt;poll&lt;/code&gt; 等接口不会受到 &lt;code&gt;SA_RESTART&lt;/code&gt;，都是直接返回 EINTR 错误码&lt;/li&gt;
+&lt;li&gt;设置了超时的 &lt;code&gt;send&lt;/code&gt; 和 &lt;code&gt;recv&lt;/code&gt;, &lt;code&gt;epoll_wait&lt;/code&gt;, &lt;code&gt;poll&lt;/code&gt; 等接口不会受到 &lt;code&gt;SA_RESTART&lt;/code&gt; 的影响，都是直接返回 EINTR 错误码&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;为什么要有-eintr-错误&#34;&gt;为什么要有 EINTR 错误&lt;/h2&gt;
 &lt;p&gt;从上面的 man 文档中可知，&lt;code&gt;EINTR&lt;/code&gt; 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?&lt;/p&gt;
@@ -199,7 +199,7 @@ Start thrift req
 Receive sig 10
 Receive sig 10
 get 2745109 bytes in 16.005424737930298
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;EINTR 是什么错误，为什么 Python2 中抛异常，Python3不会抛异常呢，且听我慢慢讲解。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;为什么 Python2 会抛异常，Python3 不会抛异常呢，且听我慢慢讲解。&lt;/p&gt;
 &lt;h2 id=&#34;为什么-python2-和-python3-的表现不同&#34;&gt;为什么 Python2 和 Python3 的表现不同&lt;/h2&gt;
 &lt;h3 id=&#34;python-的原因&#34;&gt;Python 的原因&lt;/h3&gt;
 &lt;p&gt;Python 在 &lt;a href=&#34;https://peps.python.org/pep-0475/&#34;&gt;PEP 475&lt;/a&gt; 中实现了，在系统调用遇到 EINTR 的时候自动重试。&lt;/p&gt;
