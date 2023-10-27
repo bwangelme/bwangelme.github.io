@@ -5,7 +5,7 @@
     <description>Recent content in thrift on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 05 Sep 2023 21:41:25 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 27 Oct 2023 09:22:30 +0800</lastBuildDate>
     
 	  <atom:link href="https://bwangel.me/647/tags/thrift/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,6 +14,276 @@
         
       
     
+    
+    <item>
+      <title>Docs: Python2 使用 Thrift 为什么会出现 EINTR 错误</title>
+      <link>https://bwangel.me/647/docs/python/thrift-eintr/</link>
+      <pubDate>Fri, 27 Oct 2023 09:22:30 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/python/thrift-eintr/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;eintr-错误是什么&#34;&gt;EINTR 错误是什么&lt;/h2&gt;
+&lt;p&gt;在 &lt;a href=&#34;https://man7.org/linux/man-pages/man7/signal.7.html&#34;&gt;man 7 signal&lt;/a&gt; 中写到，&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If a signal handler is invoked while a system call or library
+function call is blocked, then either:&lt;/p&gt;
+&lt;p&gt;•  the call is automatically restarted after the signal handler
+returns; or&lt;/p&gt;
+&lt;p&gt;•  the call fails with the error EINTR.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在信号处理函数执行完以后，系统调用或库函数调用继续执行&lt;/li&gt;
+&lt;li&gt;系统调用或库函数调用失败，返回错误码 EINTR&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;具体会发生哪种情况，取决于具体的系统调用接口和是否通过 &lt;a href=&#34;https://man7.org/linux/man-pages/man7/signal.7.html&#34;&gt;sigaction&lt;/a&gt; 设置了 &lt;code&gt;SA_RESTART&lt;/code&gt; 标记。&lt;/p&gt;
+&lt;p&gt;例如&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;read&lt;/code&gt;, &lt;code&gt;readv&lt;/code&gt;, &lt;code&gt;wait&lt;/code&gt;, 没有设置超时的 &lt;code&gt;recv&lt;/code&gt; 和 &lt;code&gt;send&lt;/code&gt; 等调用会受到 &lt;code&gt;SA_RESTART&lt;/code&gt; 标记的控制，继续执行或返回 EINTR 错误&lt;/li&gt;
+&lt;li&gt;设置了超时的 &lt;code&gt;send&lt;/code&gt; 和 &lt;code&gt;recv&lt;/code&gt;, &lt;code&gt;epoll_wait&lt;/code&gt;, &lt;code&gt;poll&lt;/code&gt; 等接口不会受到 &lt;code&gt;SA_RESTART&lt;/code&gt;，都是直接返回 EINTR 错误码&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;为什么要有-eintr-错误&#34;&gt;为什么要有 EINTR 错误&lt;/h2&gt;
+&lt;p&gt;从上面的 man 文档中可知，&lt;code&gt;EINTR&lt;/code&gt; 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?&lt;/p&gt;
+&lt;p&gt;在 &lt;a href=&#34;https://peps.python.org/pep-0475/&#34;&gt;PEP 475&lt;/a&gt; 中说&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Therefore, when a signal is received by a process during the execution of a system call,
+the system call can fail with the EINTR error to give the program an opportunity to handle the signal without the restriction on signal-safe functions.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;系统调用返回 &lt;code&gt;EINTR&lt;/code&gt; 的设计，让信号处理函数有机会能在不考虑信号安全的情况下编写。&lt;/p&gt;
+&lt;p&gt;光看这句话看不太明白，后来我又搜索了一下，看到了 StackOverflow 上的一篇回答。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://unix.stackexchange.com/a/253358/191858&#34;&gt;What is the rationale behind EINTR?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这里面说，信号处理函数因为要考虑可重入性，在函数中，很多系统调用都是不能使用的。这就决定了信号处理函数中不能编写复杂的逻辑。&lt;/p&gt;
+&lt;p&gt;大部分程序的逻辑是，在 signal handler 里面设置一个 flag, 然后主线程再检查 flag, 做出具体操作。&lt;/p&gt;
+&lt;p&gt;如果程序在系统调用上卡住了，那么 signal handler 设置了 flag 之后，主线程无法及时执行后续操作，相当于信号没有及时处理。&lt;/p&gt;
+&lt;p&gt;所以 unix 的设计者才定义了 EINTR 这个错误，让系统调用及时结束，将执行权交换给用户程序，及时处理信号。&lt;/p&gt;
+&lt;h2 id=&#34;复现一个-eintr-错误&#34;&gt;复现一个 EINTR 错误&lt;/h2&gt;
+&lt;p&gt;了解了 EINTR 错误的原理后，我们再来看一下 Python2 调用 Thrift 的时候，经常会出现的一个和 EINTR 有关的错误。&lt;/p&gt;
+&lt;p&gt;我们可以用以下代码复现一下这个错误&lt;/p&gt;
+&lt;h3 id=&#34;代码准备&#34;&gt;代码准备&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;从 &lt;a href=&#34;https://github.com/bwangelme/thrift-eintr&#34;&gt;github.com/bwangelme/thrift-eintr&lt;/a&gt; 克隆代码&lt;/li&gt;
+&lt;li&gt;在代码目录中，使用 virtualenv 分别创建 venv2 和 venv3 两个 Python 虚拟环境&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;~/.pyenv/versions/2.7.18/bin/virtualenv venv2
+~/.pyenv/versions/3.11.0/bin/virtualenv venv3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;服务端的代码比较简单，他就是提供了 &lt;code&gt;get_image&lt;/code&gt; 接口，读取图片文件并返回文件内容，这里就不过多赘述了。&lt;/p&gt;
+&lt;p&gt;客户端的代码中主要做了两件事情。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;处理 SIGUSR1 信号&lt;/li&gt;
+&lt;li&gt;调用 get_image 接口获取文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;signal_handler&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;signum&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;frame&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Receive sig &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;%s&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;signum&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;():&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 注册处理信号的 handler&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;signal&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;signal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;signal&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SIGUSR1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;signal_handler&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 打印进程 ID&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Start client @ &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;%s&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;os&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;getpid&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;transport&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TSocket&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;TSocket&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;9090&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;transport&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TTransport&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;TBufferedTransport&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;transport&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;protocol&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TBinaryProtocol&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;TBinaryProtocol&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;transport&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;client&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Calculator&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Client&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;protocol&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;transport&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 调用 thrift 接口&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Start thrift req&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;start&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;res&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;client&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;get_image&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;dur&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;start&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;get &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;%d&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; bytes in &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;%s&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;len&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;res&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;dur&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;__name__&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;try&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;except&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Thrift&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;TException&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;tx&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 遇到错误后打印异常和栈信息&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;tx&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;tx&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;inner&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;traceback&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;print_exc&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;复现错误&#34;&gt;复现错误&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;为了有时间能够发送信号，我们首先调慢 lo 网卡(即 localhost)的发包速度, 这样 &lt;code&gt;get_image&lt;/code&gt; 接口就会持续十几秒才结束。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 设置 lo 网卡上发出去的包都有 1000ms 的延迟
+ø&amp;gt; sudo tc qdisc add dev lo root netem delay 1000ms
+
+# 使用 list 可以看到我们刚刚创建的规则
+ø&amp;gt; sudo tc qdisc list
+qdisc netem 8001: dev lo root refcnt 2 limit 1000 delay 1s
+...
+
+# 执行完测试函数后，记得删掉这个规则
+# ø&amp;gt; sudo tc qdisc del dev lo root
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;首先使用 &lt;code&gt;./venv2/bin/python server.py&lt;/code&gt; 启动 server,&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; python server.py
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Starting the server...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后再启动 client&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; ./venv2/bin/python client.py
+
+Start client @ 241683
+Start thrift req
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;client 启动以后，会打印进程 id &lt;code&gt;241683&lt;/code&gt;, &lt;code&gt;Start thrift req&lt;/code&gt; 表示开始调用 &lt;code&gt;get_image&lt;/code&gt; 接口了。&lt;/p&gt;
+&lt;p&gt;由于网卡速度很慢，我们 client 会阻塞十几秒。此时我们可以给 client 发送一个 &lt;code&gt;SIGUSR1&lt;/code&gt; 信号:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kill -SIGUSR1 241683
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;client 在收到信号后会处理信号，并抛出一个异常&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 这句表示 SIGUSR1 信号已经处理完了
+Receive sig 10
+
+# 打印出来的异常的类型及其值
+(TTransportException(&amp;#39;unexpected exception&amp;#39;,), error(4, &amp;#39;Interrupted system call&amp;#39;))
+
+# 抛出异常的栈信息
+Traceback (most recent call last):
+      File &amp;#34;client.py&amp;#34;, line 50, in &amp;lt;module&amp;gt;
+          main()
+        File &amp;#34;client.py&amp;#34;, line 43, in main
+          res = client.get_image()
+        File &amp;#34;gen-py/tutorial/Calculator.py&amp;#34;, line 35, in get_image
+          return self.recv_get_image()
+        File &amp;#34;gen-py/tutorial/Calculator.py&amp;#34;, line 53, in recv_get_image
+          result.read(iprot)
+        File &amp;#34;gen-py/tutorial/Calculator.py&amp;#34;, line 178, in read
+          self.success = iprot.readBinary()
+        File &amp;#34;/home/xuyundong/Github/Python/thrift-eintr/venv2/lib/python2.7/site-packages/thrift/protocol/TBinaryProtocol.py&amp;#34;, line 234, in readBinary
+          s = self.trans.readAll(size)
+        File &amp;#34;/home/xuyundong/Github/Python/thrift-eintr/venv2/lib/python2.7/site-packages/thrift/transport/TTransport.py&amp;#34;, line 62, in readAll
+          chunk = self.read(sz - have)
+        File &amp;#34;/home/xuyundong/Github/Python/thrift-eintr/venv2/lib/python2.7/site-packages/thrift/transport/TTransport.py&amp;#34;, line 164, in read
+          self.__rbuf = BufferIO(self.__trans.read(max(sz, self.__rbuf_size)))
+        File &amp;#34;/home/xuyundong/Github/Python/thrift-eintr/venv2/lib/python2.7/site-packages/thrift/transport/TSocket.py&amp;#34;, line 164, in read
+          raise TTransportException(message=&amp;#34;unexpected exception&amp;#34;, inner=e)
+      TTransportException: unexpected exception
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;从栈信息我们可以知道，抛出异常的位置是 &lt;code&gt;thrift/transport/TSocket.py:164&lt;/code&gt;，它的代码如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;read&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#3465a4&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sz&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;try&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;buff&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#3465a4&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;handle&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;recv&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sz&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;except&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;socket&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;error&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;errno&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ECONNRESET&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;and&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sys&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;platform&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;darwin&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;or&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sys&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;platform&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;startswith&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;freebsd&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# freebsd and Mach don&amp;#39;t follow POSIX semantic of recv&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# and fail with ECONNRESET if peer performed shutdown.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# See corresponding comment and code in TSocket::read()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# in lib/cpp/src/transport/TSocket.cpp.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#3465a4&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Trigger the check to raise the END_OF_FILE exception below.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#000&#34;&gt;buff&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;errno&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ETIMEDOUT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;raise&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TTransportException&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;TTransportException&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;TIMED_OUT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;read timeout&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;inner&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 在这里抛出了异常&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;raise&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TTransportException&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;unexpected exception&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;inner&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;len&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;buff&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;raise&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;TTransportException&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;TTransportException&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;END_OF_FILE&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                      &lt;span style=&#34;color:#000&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;TSocket read 0 bytes&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;buff&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这段代码逻辑就是，client 已经发送完了请求，正在等待 server 返回响应的时候，收到了一个 &lt;code&gt;socket.error&lt;/code&gt;, 它的值是&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;error(4, &amp;#39;Interrupted system call&amp;#39;)
+
+# 在 python 标准库的 errno.py 文件中也可以看到 4 表示是 EINTR 错误
+EINTR = 4
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;python3-中无法复现&#34;&gt;python3 中无法复现&lt;/h3&gt;
+&lt;p&gt;如果我们使用 Python3 启动 client, 再往该进程发送 SIGUSR1 信号，它就不会抛出异常。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; ./venv3/bin/python client.py
+Start client @ 241720
+Start thrift req
+# 收到了两次信号
+Receive sig 10
+Receive sig 10
+get 2745109 bytes in 16.005424737930298
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;EINTR 是什么错误，为什么 Python2 中抛异常，Python3不会抛异常呢，且听我慢慢讲解。&lt;/p&gt;
+&lt;h2 id=&#34;为什么-python2-和-python3-的表现不同&#34;&gt;为什么 Python2 和 Python3 的表现不同&lt;/h2&gt;
+&lt;h3 id=&#34;python-的原因&#34;&gt;Python 的原因&lt;/h3&gt;
+&lt;p&gt;Python 在 &lt;a href=&#34;https://peps.python.org/pep-0475/&#34;&gt;PEP 475&lt;/a&gt; 中实现了，在系统调用遇到 EINTR 的时候自动重试。&lt;/p&gt;
+&lt;p&gt;而且它只在 signal handler 没有抛出异常的时候重试，这样确保信号能够中断程序的执行，不会阻塞在系统调用中。&lt;/p&gt;
+&lt;p&gt;以下是中断后能够自动重试的函数列表:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;open() 和 io.open();&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/library/faulthandler.html#module-faulthandler&#34;&gt;faulthandler&lt;/a&gt; 模块相关的函数;&lt;/li&gt;
+&lt;li&gt;os 模块的函数: fchdir(), fchmod(), fchown(), fdatasync(), fstat(), fstatvfs(), fsync(), ftruncate(), mkfifo(), mknod(), open(), posix_fadvise(), posix_fallocate(), pread(), pwrite(), read(), readv(), sendfile(), wait3(), wait4(), wait(), waitid(), waitpid(), write(), writev();&lt;/li&gt;
+&lt;li&gt;特例: os.close() 和 os.dup2() 会忽略 EINTR 错误，并且不会重试&lt;/li&gt;
+&lt;li&gt;select 函数: devpoll.poll(), epoll.poll(), kqueue.control(), poll.poll(), select();&lt;/li&gt;
+&lt;li&gt;socket 类相关的函数: accept(), connect() (except for non-blocking sockets), recv(), recvfrom(), recvmsg(), send(), sendall(), sendmsg(), sendto();&lt;/li&gt;
+&lt;li&gt;signal.sigtimedwait() 和 signal.sigwaitinfo();&lt;/li&gt;
+&lt;li&gt;time.sleep().&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;但是 PEP 475 仅在 Python 3.5 及之后的版本中生效，在 Python 2.7 的版本中，是没有这个处理逻辑的。&lt;/p&gt;
+&lt;h3 id=&#34;thrift-的原因&#34;&gt;Thrift 的原因&lt;/h3&gt;
+&lt;p&gt;在 Thrift 的 &lt;a href=&#34;https://issues.apache.org/jira/browse/THRIFT-617&#34;&gt;Issue-617&lt;/a&gt; 中，有人提到了在网络 IO 接口中忽略 EINTR 错误的建议。维护者的回答是，这个问题已经在 Python 3.5 中修了，没有提到 Python 2.7 该怎么办。&lt;/p&gt;
+&lt;p&gt;PEP 475 只管 Python3, thrift 没有针对 Python2 做特殊处理，这就导致了上述错误只会在 Python 2 出现，Python 3 不会出现。&lt;/p&gt;
+&lt;h2 id=&#34;thrift-在-python2-环境中忽略-eintr&#34;&gt;thrift 在 Python2 环境中忽略 EINTR&lt;/h2&gt;
+&lt;p&gt;目前 Python 和 Thrift 官方都无意去处理这个问题，我们可以修改一下 thrift 代码，手动处理 EINTR 错误。我的处理办法很简单，遇到 EINTR 错误，直接重试即可。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;--- a/lib/py/src/transport/TSocket.py
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+++ b/lib/py/src/transport/TSocket.py
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#800080;font-weight:bold&#34;&gt;@@ -149,22 +149,26 @@ class TSocket(TSocketBase):
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#800080;font-weight:bold&#34;&gt;&lt;/span&gt;         raise TTransportException(type=TTransportException.NOT_OPEN, message=msg)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     def read(self, sz):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-        try:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-            buff = self.handle.recv(sz)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-        except socket.error as e:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-            if (e.args[0] == errno.ECONNRESET and
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-                    (sys.platform == &amp;#39;darwin&amp;#39; or sys.platform.startswith(&amp;#39;freebsd&amp;#39;))):
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-                # freebsd and Mach don&amp;#39;t follow POSIX semantic of recv
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-                # and fail with ECONNRESET if peer performed shutdown.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-                # See corresponding comment and code in TSocket::read()
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-                # in lib/cpp/src/transport/TSocket.cpp.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-                self.close()
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-                # Trigger the check to raise the END_OF_FILE exception below.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-                buff = &amp;#39;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-            elif e.args[0] == errno.ETIMEDOUT:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-                raise TTransportException(type=TTransportException.TIMED_OUT, message=&amp;#34;read timeout&amp;#34;, inner=e)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-            else:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-                raise TTransportException(message=&amp;#34;unexpected exception&amp;#34;, inner=e)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+        while True:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+            try:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                buff = self.handle.recv(sz)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+            except socket.error as e:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                if e.args[0] == errno.EINTR:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                    pass
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                elif (e.args[0] == errno.ECONNRESET and
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                        (sys.platform == &amp;#39;darwin&amp;#39; or sys.platform.startswith(&amp;#39;freebsd&amp;#39;))):
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                    # freebsd and Mach don&amp;#39;t follow POSIX semantic of recv
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                    # and fail with ECONNRESET if peer performed shutdown.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                    # See corresponding comment and code in TSocket::read()
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                    # in lib/cpp/src/transport/TSocket.cpp.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                    self.close()
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                    # Trigger the check to raise the END_OF_FILE exception below.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                    buff = &amp;#39;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                elif e.args[0] == errno.ETIMEDOUT:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                    raise TTransportException(type=TTransportException.TIMED_OUT, message=&amp;#34;read timeout&amp;#34;, inner=e)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                else:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                    raise TTransportException(message=&amp;#34;unexpected exception&amp;#34;, inner=e)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;&lt;/span&gt;         if len(buff) == 0:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;             raise TTransportException(type=TTransportException.END_OF_FILE,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                       message=&amp;#39;TSocket read 0 bytes&amp;#39;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#800080;font-weight:bold&#34;&gt;@@ -185,7 +189,8 @@ class TSocket(TSocketBase):
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#800080;font-weight:bold&#34;&gt;&lt;/span&gt;                 sent += plus
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                 buff = buff[plus:]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;             except socket.error as e:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;-                raise TTransportException(message=&amp;#34;unexpected exception&amp;#34;, inner=e)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                if e.args[0] != errno.EINTR:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                    raise TTransportException(message=&amp;#34;unexpected exception&amp;#34;, inner=e)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     def flush(self):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         pass
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;吐槽&#34;&gt;吐槽&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;PEP 475 是 2014 年的提案，那一年 Python2 还没有停止维护，然后官方在这个 PEP 中直接忽略了 Python2 ，让 Python2 的开发者自己去捕获 EINTR 错误并重试。Python 社区真的不是一个好社区，如果你想开发一个能够维护10年以上的程序，不建议用 Python&lt;/li&gt;
+&lt;li&gt;Thrift 维护者也没有考虑 Python2 的情况，认为 Python3 已经修了，就万事大吉了，让 Python2 的 client 和 server 多了很多不必要的 TTransportException&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
     
     <item>
       <title>Docs: Thrift golang client 如何设置超时时间</title>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.117.0">
+<meta name="generator" content="Hugo 0.115.2">
 <link rel="canonical" type="text/html" href="https://bwangel.me/647/docs/">
 <link rel="alternate" type="application/rss&#43;xml" href="https://bwangel.me/647/docs/index.xml">
 <meta name="robots" content="noindex, nofollow">
@@ -115,7 +115,7 @@
     
     
 	
-<li>1.1: <a href="#pg-8ffc0b133015cfd66db7f485c8157c6b">匹配所有可打印 Ascii 字符的正则</a></li>
+<li>1.1: <a href="#pg-3174656f7062052451f0c9f528df376b">Python2 使用 Thrift 为什么会出现 EINTR 错误</a></li>
 
 
     
@@ -123,7 +123,7 @@
     
     
 	
-<li>1.2: <a href="#pg-dd6b8c93984d98fe6f8c5851846c88d9">Python Upgrade Importerror</a></li>
+<li>1.2: <a href="#pg-8ffc0b133015cfd66db7f485c8157c6b">匹配所有可打印 Ascii 字符的正则</a></li>
 
 
     
@@ -131,7 +131,7 @@
     
     
 	
-<li>1.3: <a href="#pg-958da66e5791d6c739afd62fdccfea9d">Django的override_settings修饰器浅析</a></li>
+<li>1.3: <a href="#pg-dd6b8c93984d98fe6f8c5851846c88d9">Python Upgrade Importerror</a></li>
 
 
     
@@ -139,7 +139,15 @@
     
     
 	
-<li>1.4: <a href="#pg-aca9b1506e43349a065aee60cb29920c">Django中import_string的实现</a></li>
+<li>1.4: <a href="#pg-958da66e5791d6c739afd62fdccfea9d">Django的override_settings修饰器浅析</a></li>
+
+
+    
+  
+    
+    
+	
+<li>1.5: <a href="#pg-aca9b1506e43349a065aee60cb29920c">Django中import_string的实现</a></li>
 
 
     
@@ -1617,7 +1625,281 @@
 
 <div class="td-content" style="">
     
-	<h1 id="pg-8ffc0b133015cfd66db7f485c8157c6b">1.1 - 匹配所有可打印 Ascii 字符的正则</h1>
+	<h1 id="pg-3174656f7062052451f0c9f528df376b">1.1 - Python2 使用 Thrift 为什么会出现 EINTR 错误</h1>
+    
+	<h2 id="eintr-错误是什么">EINTR 错误是什么</h2>
+<p>在 <a href="https://man7.org/linux/man-pages/man7/signal.7.html">man 7 signal</a> 中写到，</p>
+<blockquote>
+<p>If a signal handler is invoked while a system call or library
+function call is blocked, then either:</p>
+<p>•  the call is automatically restarted after the signal handler
+returns; or</p>
+<p>•  the call fails with the error EINTR.</p>
+</blockquote>
+<p>如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况</p>
+<ol>
+<li>在信号处理函数执行完以后，系统调用或库函数调用继续执行</li>
+<li>系统调用或库函数调用失败，返回错误码 EINTR</li>
+</ol>
+<p>具体会发生哪种情况，取决于具体的系统调用接口和是否通过 <a href="https://man7.org/linux/man-pages/man7/signal.7.html">sigaction</a> 设置了 <code>SA_RESTART</code> 标记。</p>
+<p>例如</p>
+<ul>
+<li><code>read</code>, <code>readv</code>, <code>wait</code>, 没有设置超时的 <code>recv</code> 和 <code>send</code> 等调用会受到 <code>SA_RESTART</code> 标记的控制，继续执行或返回 EINTR 错误</li>
+<li>设置了超时的 <code>send</code> 和 <code>recv</code>, <code>epoll_wait</code>, <code>poll</code> 等接口不会受到 <code>SA_RESTART</code>，都是直接返回 EINTR 错误码</li>
+</ul>
+<h2 id="为什么要有-eintr-错误">为什么要有 EINTR 错误</h2>
+<p>从上面的 man 文档中可知，<code>EINTR</code> 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?</p>
+<p>在 <a href="https://peps.python.org/pep-0475/">PEP 475</a> 中说</p>
+<blockquote>
+<p>Therefore, when a signal is received by a process during the execution of a system call,
+the system call can fail with the EINTR error to give the program an opportunity to handle the signal without the restriction on signal-safe functions.</p>
+</blockquote>
+<p>系统调用返回 <code>EINTR</code> 的设计，让信号处理函数有机会能在不考虑信号安全的情况下编写。</p>
+<p>光看这句话看不太明白，后来我又搜索了一下，看到了 StackOverflow 上的一篇回答。</p>
+<ul>
+<li><a href="https://unix.stackexchange.com/a/253358/191858">What is the rationale behind EINTR?</a></li>
+</ul>
+<p>这里面说，信号处理函数因为要考虑可重入性，在函数中，很多系统调用都是不能使用的。这就决定了信号处理函数中不能编写复杂的逻辑。</p>
+<p>大部分程序的逻辑是，在 signal handler 里面设置一个 flag, 然后主线程再检查 flag, 做出具体操作。</p>
+<p>如果程序在系统调用上卡住了，那么 signal handler 设置了 flag 之后，主线程无法及时执行后续操作，相当于信号没有及时处理。</p>
+<p>所以 unix 的设计者才定义了 EINTR 这个错误，让系统调用及时结束，将执行权交换给用户程序，及时处理信号。</p>
+<h2 id="复现一个-eintr-错误">复现一个 EINTR 错误</h2>
+<p>了解了 EINTR 错误的原理后，我们再来看一下 Python2 调用 Thrift 的时候，经常会出现的一个和 EINTR 有关的错误。</p>
+<p>我们可以用以下代码复现一下这个错误</p>
+<h3 id="代码准备">代码准备</h3>
+<ol>
+<li>从 <a href="https://github.com/bwangelme/thrift-eintr">github.com/bwangelme/thrift-eintr</a> 克隆代码</li>
+<li>在代码目录中，使用 virtualenv 分别创建 venv2 和 venv3 两个 Python 虚拟环境</li>
+</ol>
+<pre tabindex="0"><code>~/.pyenv/versions/2.7.18/bin/virtualenv venv2
+~/.pyenv/versions/3.11.0/bin/virtualenv venv3
+</code></pre><p>服务端的代码比较简单，他就是提供了 <code>get_image</code> 接口，读取图片文件并返回文件内容，这里就不过多赘述了。</p>
+<p>客户端的代码中主要做了两件事情。</p>
+<ol>
+<li>处理 SIGUSR1 信号</li>
+<li>调用 get_image 接口获取文件</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">signal_handler</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">signum</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">frame</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Receive sig </span><span style="color:#4e9a06">%s</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">%</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">signum</span><span style="color:#000;font-weight:bold">,))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">():</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># 注册处理信号的 handler</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">signal</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">signal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">signal</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">SIGUSR1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">signal_handler</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># 打印进程 ID</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Start client @ </span><span style="color:#4e9a06">%s</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">%</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">getpid</span><span style="color:#000;font-weight:bold">()))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">transport</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">TSocket</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">TSocket</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;localhost&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">9090</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">transport</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">TTransport</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">TBufferedTransport</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">transport</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">protocol</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">TBinaryProtocol</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">TBinaryProtocol</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">transport</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">client</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Calculator</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">Client</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">protocol</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">transport</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">open</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># 调用 thrift 接口</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Start thrift req&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">start</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">time</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">time</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">res</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">client</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">get_image</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">dur</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">time</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">time</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#000">start</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;get </span><span style="color:#4e9a06">%d</span><span style="color:#4e9a06"> bytes in </span><span style="color:#4e9a06">%s</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">%</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">dur</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">__name__</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#39;__main__&#39;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">try</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">except</span> <span style="color:#000">Thrift</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">TException</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">tx</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic"># 遇到错误后打印异常和栈信息</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">tx</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">tx</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">inner</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">traceback</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">print_exc</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><h3 id="复现错误">复现错误</h3>
+<ol>
+<li>为了有时间能够发送信号，我们首先调慢 lo 网卡(即 localhost)的发包速度, 这样 <code>get_image</code> 接口就会持续十几秒才结束。</li>
+</ol>
+<pre tabindex="0"><code># 设置 lo 网卡上发出去的包都有 1000ms 的延迟
+ø&gt; sudo tc qdisc add dev lo root netem delay 1000ms
+
+# 使用 list 可以看到我们刚刚创建的规则
+ø&gt; sudo tc qdisc list
+qdisc netem 8001: dev lo root refcnt 2 limit 1000 delay 1s
+...
+
+# 执行完测试函数后，记得删掉这个规则
+# ø&gt; sudo tc qdisc del dev lo root
+</code></pre><ol start="2">
+<li>首先使用 <code>./venv2/bin/python server.py</code> 启动 server,</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ø&gt; python server.py
+</span></span><span style="display:flex;"><span>Starting the server...
+</span></span></code></pre></div><p>然后再启动 client</p>
+<pre tabindex="0"><code>ø&gt; ./venv2/bin/python client.py
+
+Start client @ 241683
+Start thrift req
+</code></pre><p>client 启动以后，会打印进程 id <code>241683</code>, <code>Start thrift req</code> 表示开始调用 <code>get_image</code> 接口了。</p>
+<p>由于网卡速度很慢，我们 client 会阻塞十几秒。此时我们可以给 client 发送一个 <code>SIGUSR1</code> 信号:</p>
+<pre tabindex="0"><code>kill -SIGUSR1 241683
+</code></pre><p>client 在收到信号后会处理信号，并抛出一个异常</p>
+<pre tabindex="0"><code># 这句表示 SIGUSR1 信号已经处理完了
+Receive sig 10
+
+# 打印出来的异常的类型及其值
+(TTransportException(&#39;unexpected exception&#39;,), error(4, &#39;Interrupted system call&#39;))
+
+# 抛出异常的栈信息
+Traceback (most recent call last):
+      File &#34;client.py&#34;, line 50, in &lt;module&gt;
+          main()
+        File &#34;client.py&#34;, line 43, in main
+          res = client.get_image()
+        File &#34;gen-py/tutorial/Calculator.py&#34;, line 35, in get_image
+          return self.recv_get_image()
+        File &#34;gen-py/tutorial/Calculator.py&#34;, line 53, in recv_get_image
+          result.read(iprot)
+        File &#34;gen-py/tutorial/Calculator.py&#34;, line 178, in read
+          self.success = iprot.readBinary()
+        File &#34;/home/xuyundong/Github/Python/thrift-eintr/venv2/lib/python2.7/site-packages/thrift/protocol/TBinaryProtocol.py&#34;, line 234, in readBinary
+          s = self.trans.readAll(size)
+        File &#34;/home/xuyundong/Github/Python/thrift-eintr/venv2/lib/python2.7/site-packages/thrift/transport/TTransport.py&#34;, line 62, in readAll
+          chunk = self.read(sz - have)
+        File &#34;/home/xuyundong/Github/Python/thrift-eintr/venv2/lib/python2.7/site-packages/thrift/transport/TTransport.py&#34;, line 164, in read
+          self.__rbuf = BufferIO(self.__trans.read(max(sz, self.__rbuf_size)))
+        File &#34;/home/xuyundong/Github/Python/thrift-eintr/venv2/lib/python2.7/site-packages/thrift/transport/TSocket.py&#34;, line 164, in read
+          raise TTransportException(message=&#34;unexpected exception&#34;, inner=e)
+      TTransportException: unexpected exception
+</code></pre><p>从栈信息我们可以知道，抛出异常的位置是 <code>thrift/transport/TSocket.py:164</code>，它的代码如下</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">read</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sz</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">try</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">buff</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">handle</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">recv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sz</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">except</span> <span style="color:#000">socket</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">error</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">e</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">e</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">args</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">errno</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ECONNRESET</span> <span style="color:#204a87;font-weight:bold">and</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#000;font-weight:bold">(</span><span style="color:#000">sys</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">platform</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#39;darwin&#39;</span> <span style="color:#204a87;font-weight:bold">or</span> <span style="color:#000">sys</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">platform</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">startswith</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;freebsd&#39;</span><span style="color:#000;font-weight:bold">))):</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#8f5902;font-style:italic"># freebsd and Mach don&#39;t follow POSIX semantic of recv</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#8f5902;font-style:italic"># and fail with ECONNRESET if peer performed shutdown.</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#8f5902;font-style:italic"># See corresponding comment and code in TSocket::read()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#8f5902;font-style:italic"># in lib/cpp/src/transport/TSocket.cpp.</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">close</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#8f5902;font-style:italic"># Trigger the check to raise the END_OF_FILE exception below.</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000">buff</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#000">e</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">args</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">errno</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ETIMEDOUT</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#204a87;font-weight:bold">raise</span> <span style="color:#000">TTransportException</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">type</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">TTransportException</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">TIMED_OUT</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">message</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;read timeout&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">inner</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">e</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">else</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#8f5902;font-style:italic"># 在这里抛出了异常</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#204a87;font-weight:bold">raise</span> <span style="color:#000">TTransportException</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">message</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;unexpected exception&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">inner</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">e</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buff</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">raise</span> <span style="color:#000">TTransportException</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">type</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">TTransportException</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">END_OF_FILE</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                                      <span style="color:#000">message</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;TSocket read 0 bytes&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">buff</span>
+</span></span></code></pre></div><p>这段代码逻辑就是，client 已经发送完了请求，正在等待 server 返回响应的时候，收到了一个 <code>socket.error</code>, 它的值是</p>
+<pre tabindex="0"><code>error(4, &#39;Interrupted system call&#39;)
+
+# 在 python 标准库的 errno.py 文件中也可以看到 4 表示是 EINTR 错误
+EINTR = 4
+</code></pre><h3 id="python3-中无法复现">python3 中无法复现</h3>
+<p>如果我们使用 Python3 启动 client, 再往该进程发送 SIGUSR1 信号，它就不会抛出异常。</p>
+<pre tabindex="0"><code>ø&gt; ./venv3/bin/python client.py
+Start client @ 241720
+Start thrift req
+# 收到了两次信号
+Receive sig 10
+Receive sig 10
+get 2745109 bytes in 16.005424737930298
+</code></pre><p>EINTR 是什么错误，为什么 Python2 中抛异常，Python3不会抛异常呢，且听我慢慢讲解。</p>
+<h2 id="为什么-python2-和-python3-的表现不同">为什么 Python2 和 Python3 的表现不同</h2>
+<h3 id="python-的原因">Python 的原因</h3>
+<p>Python 在 <a href="https://peps.python.org/pep-0475/">PEP 475</a> 中实现了，在系统调用遇到 EINTR 的时候自动重试。</p>
+<p>而且它只在 signal handler 没有抛出异常的时候重试，这样确保信号能够中断程序的执行，不会阻塞在系统调用中。</p>
+<p>以下是中断后能够自动重试的函数列表:</p>
+<ul>
+<li>open() 和 io.open();</li>
+<li><a href="https://docs.python.org/3/library/faulthandler.html#module-faulthandler">faulthandler</a> 模块相关的函数;</li>
+<li>os 模块的函数: fchdir(), fchmod(), fchown(), fdatasync(), fstat(), fstatvfs(), fsync(), ftruncate(), mkfifo(), mknod(), open(), posix_fadvise(), posix_fallocate(), pread(), pwrite(), read(), readv(), sendfile(), wait3(), wait4(), wait(), waitid(), waitpid(), write(), writev();</li>
+<li>特例: os.close() 和 os.dup2() 会忽略 EINTR 错误，并且不会重试</li>
+<li>select 函数: devpoll.poll(), epoll.poll(), kqueue.control(), poll.poll(), select();</li>
+<li>socket 类相关的函数: accept(), connect() (except for non-blocking sockets), recv(), recvfrom(), recvmsg(), send(), sendall(), sendmsg(), sendto();</li>
+<li>signal.sigtimedwait() 和 signal.sigwaitinfo();</li>
+<li>time.sleep().</li>
+</ul>
+<p>但是 PEP 475 仅在 Python 3.5 及之后的版本中生效，在 Python 2.7 的版本中，是没有这个处理逻辑的。</p>
+<h3 id="thrift-的原因">Thrift 的原因</h3>
+<p>在 Thrift 的 <a href="https://issues.apache.org/jira/browse/THRIFT-617">Issue-617</a> 中，有人提到了在网络 IO 接口中忽略 EINTR 错误的建议。维护者的回答是，这个问题已经在 Python 3.5 中修了，没有提到 Python 2.7 该怎么办。</p>
+<p>PEP 475 只管 Python3, thrift 没有针对 Python2 做特殊处理，这就导致了上述错误只会在 Python 2 出现，Python 3 不会出现。</p>
+<h2 id="thrift-在-python2-环境中忽略-eintr">thrift 在 Python2 环境中忽略 EINTR</h2>
+<p>目前 Python 和 Thrift 官方都无意去处理这个问题，我们可以修改一下 thrift 代码，手动处理 EINTR 错误。我的处理办法很简单，遇到 EINTR 错误，直接重试即可。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#a40000">--- a/lib/py/src/transport/TSocket.py
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#00a000">+++ b/lib/py/src/transport/TSocket.py
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000"></span><span style="color:#800080;font-weight:bold">@@ -149,22 +149,26 @@ class TSocket(TSocketBase):
+</span></span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold"></span>         raise TTransportException(type=TTransportException.NOT_OPEN, message=msg)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     def read(self, sz):
+</span></span><span style="display:flex;"><span><span style="color:#a40000">-        try:
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-            buff = self.handle.recv(sz)
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-        except socket.error as e:
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-            if (e.args[0] == errno.ECONNRESET and
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                    (sys.platform == &#39;darwin&#39; or sys.platform.startswith(&#39;freebsd&#39;))):
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                # freebsd and Mach don&#39;t follow POSIX semantic of recv
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                # and fail with ECONNRESET if peer performed shutdown.
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                # See corresponding comment and code in TSocket::read()
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                # in lib/cpp/src/transport/TSocket.cpp.
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                self.close()
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                # Trigger the check to raise the END_OF_FILE exception below.
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                buff = &#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-            elif e.args[0] == errno.ETIMEDOUT:
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                raise TTransportException(type=TTransportException.TIMED_OUT, message=&#34;read timeout&#34;, inner=e)
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-            else:
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                raise TTransportException(message=&#34;unexpected exception&#34;, inner=e)
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#00a000">+        while True:
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+            try:
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                buff = self.handle.recv(sz)
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+            except socket.error as e:
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                if e.args[0] == errno.EINTR:
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    pass
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                elif (e.args[0] == errno.ECONNRESET and
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                        (sys.platform == &#39;darwin&#39; or sys.platform.startswith(&#39;freebsd&#39;))):
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    # freebsd and Mach don&#39;t follow POSIX semantic of recv
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    # and fail with ECONNRESET if peer performed shutdown.
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    # See corresponding comment and code in TSocket::read()
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    # in lib/cpp/src/transport/TSocket.cpp.
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    self.close()
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    # Trigger the check to raise the END_OF_FILE exception below.
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    buff = &#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                elif e.args[0] == errno.ETIMEDOUT:
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    raise TTransportException(type=TTransportException.TIMED_OUT, message=&#34;read timeout&#34;, inner=e)
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                else:
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    raise TTransportException(message=&#34;unexpected exception&#34;, inner=e)
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000"></span>         if len(buff) == 0:
+</span></span><span style="display:flex;"><span>             raise TTransportException(type=TTransportException.END_OF_FILE,
+</span></span><span style="display:flex;"><span>                                       message=&#39;TSocket read 0 bytes&#39;)
+</span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold">@@ -185,7 +189,8 @@ class TSocket(TSocketBase):
+</span></span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold"></span>                 sent += plus
+</span></span><span style="display:flex;"><span>                 buff = buff[plus:]
+</span></span><span style="display:flex;"><span>             except socket.error as e:
+</span></span><span style="display:flex;"><span><span style="color:#a40000">-                raise TTransportException(message=&#34;unexpected exception&#34;, inner=e)
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#00a000">+                if e.args[0] != errno.EINTR:
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    raise TTransportException(message=&#34;unexpected exception&#34;, inner=e)
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000"></span>
+</span></span><span style="display:flex;"><span>     def flush(self):
+</span></span><span style="display:flex;"><span>         pass
+</span></span></code></pre></div><h2 id="吐槽">吐槽</h2>
+<ul>
+<li>PEP 475 是 2014 年的提案，那一年 Python2 还没有停止维护，然后官方在这个 PEP 中直接忽略了 Python2 ，让 Python2 的开发者自己去捕获 EINTR 错误并重试。Python 社区真的不是一个好社区，如果你想开发一个能够维护10年以上的程序，不建议用 Python</li>
+<li>Thrift 维护者也没有考虑 Python2 的情况，认为 Python3 已经修了，就万事大吉了，让 Python2 的 client 和 server 多了很多不必要的 TTransportException</li>
+</ul>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-8ffc0b133015cfd66db7f485c8157c6b">1.2 - 匹配所有可打印 Ascii 字符的正则</h1>
     
 	<hr>
 <h2 id="tips">Tips</h2>
@@ -1648,7 +1930,7 @@ Out[5]: &lt;re.Match object; span=(0, 1), match=&#39;^&#39;&gt;
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-dd6b8c93984d98fe6f8c5851846c88d9">1.2 - Python Upgrade Importerror</h1>
+	<h1 id="pg-dd6b8c93984d98fe6f8c5851846c88d9">1.3 - Python Upgrade Importerror</h1>
     
 	<blockquote>
 <ul>
@@ -1751,7 +2033,7 @@ New in version 3.6.3.
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-958da66e5791d6c739afd62fdccfea9d">1.3 - Django的override_settings修饰器浅析</h1>
+	<h1 id="pg-958da66e5791d6c739afd62fdccfea9d">1.4 - Django的override_settings修饰器浅析</h1>
     
 	<blockquote>
 <ol>
@@ -1897,7 +2179,7 @@ New in version 3.6.3.
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-aca9b1506e43349a065aee60cb29920c">1.4 - Django中import_string的实现</h1>
+	<h1 id="pg-aca9b1506e43349a065aee60cb29920c">1.5 - Django中import_string的实现</h1>
     
 	<blockquote>
 <p><strong>摘要</strong>:</p>
@@ -4556,7 +4838,7 @@ The divisor will never be 0. Assume we are dealing with an environment which cou
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">sign</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#a40000">被除数</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">^</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#a40000">除数</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">?</span> <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">;</span>
 </span></span></code></pre></div><p>在 Go 语言中，布尔值执行异或运算，只需要判断两个布尔值是否相同即可以了</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">sign</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">除数</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">被除数</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#a40000">除数</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#a40000">被除数</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000">sign</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
 </span></span></code></pre></div><h3 id="溢出情况">溢出情况</h3>
@@ -11533,7 +11815,7 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// prometheus.DefaultRegisterer.Register(h)
 </span></span></span></code></pre></div><p><code>prometheus.Collector</code> 接口有一个 <code>Describe</code> 方法，它用于获取指标的信息。具体做法是传入一个 channel 参数，指标将 Desc 信息写入到 channel 中。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">type</span> <span style="color:#000">Collector</span> <span style="color:#204a87;font-weight:bold">interface</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a40000">#</span> <span style="color:#000">Desc</span> <span style="color:#000">包含指标名</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">help</span> <span style="color:#000">等信息</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a40000">#</span> <span style="color:#000">Desc</span> <span style="color:#a40000">包含指标名</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">help</span> <span style="color:#a40000">等信息</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#000">Describe</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">chan</span><span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">Desc</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">...</span><span style="color:#000;font-weight:bold">.</span>
 </span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
@@ -11787,10 +12069,10 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">private</span> <span style="color:#204a87;font-weight:bold">static</span> <span style="color:#204a87;font-weight:bold">final</span> <span style="color:#204a87;font-weight:bold">byte</span><span style="color:#ce5c00;font-weight:bold">[]</span> <span style="color:#000">HEX_ARRAY</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;0123456789ABCDEF&#34;</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">getBytes</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">StandardCharsets</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">UTF_8</span><span style="color:#ce5c00;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">public</span> <span style="color:#204a87;font-weight:bold">static</span> <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">main</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">String</span><span style="color:#ce5c00;font-weight:bold">[]</span> <span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">ByteBuffer</span> <span style="color:#000">buffer</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ByteBuffer</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">allocate</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">10</span><span style="color:#ce5c00;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">ByteBuffer</span> <span style="color:#000">buffer</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ByteBuffer</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">allocate</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">10</span><span style="color:#ce5c00;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#000">App</span> <span style="color:#000">a</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#000">App</span><span style="color:#ce5c00;font-weight:bold">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">a</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">writeVariant</span><span style="color:#ce5c00;font-weight:bold">(-</span><span style="color:#000">23</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">buffer</span><span style="color:#ce5c00;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">a</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">writeVariant</span><span style="color:#ce5c00;font-weight:bold">(-</span><span style="color:#0000cf;font-weight:bold">23</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">buffer</span><span style="color:#ce5c00;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#000">System</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">out</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">println</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;variant bytes is `&#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">bytesToHex</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">buffer</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">array</span><span style="color:#ce5c00;font-weight:bold">())</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34;`&#34;</span><span style="color:#ce5c00;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">a</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">readVariant</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">buffer</span><span style="color:#ce5c00;font-weight:bold">);</span>
@@ -11798,44 +12080,44 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
 </span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">public</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">readVariant</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">ByteBuffer</span> <span style="color:#000">buffer</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">throws</span> <span style="color:#000">RuntimeException</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">0</span><span style="color:#ce5c00;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">0</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">b</span><span style="color:#ce5c00;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// 此处重置 bytebuffer 的 pos，否则不会从第0个开始读起
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000">buffer</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">rewind</span><span style="color:#ce5c00;font-weight:bold">();</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// 从字节流中取出一个字节，如果第8位是0的话，表示读取整数结束
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#ce5c00;font-weight:bold">(((</span><span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">buffer</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">get</span><span style="color:#ce5c00;font-weight:bold">())</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">0x80</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000">0</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#ce5c00;font-weight:bold">(((</span><span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">buffer</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">get</span><span style="color:#ce5c00;font-weight:bold">())</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#0000cf;font-weight:bold">0x80</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#8f5902;font-style:italic">// 取出低7位，并左移 7 位放到 value 中
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">0x7f</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">i</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#0000cf;font-weight:bold">0x7f</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">i</span><span style="color:#ce5c00;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#000">System</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">out</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">println</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">b</span><span style="color:#ce5c00;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">|=</span> <span style="color:#000">b</span><span style="color:#ce5c00;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">+=</span> <span style="color:#000">7</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">+=</span> <span style="color:#0000cf;font-weight:bold">7</span><span style="color:#ce5c00;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#8f5902;font-style:italic">// 32 位整数最大编码结果是5个字节，在循环中最多只能读4次
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">28</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">28</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>                <span style="color:#204a87;font-weight:bold">throw</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#000">RuntimeException</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;illegal bytes&#34;</span><span style="color:#ce5c00;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// 最后一次在循环外读取，且由于最后一位最高位是0,也不需要进行去除最高位的操作
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">|=</span> <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">i</span><span style="color:#ce5c00;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#000">1</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">^</span> <span style="color:#ce5c00;font-weight:bold">-(</span><span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">1</span><span style="color:#ce5c00;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">^</span> <span style="color:#ce5c00;font-weight:bold">-(</span><span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">public</span> <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">writeVariant</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">value</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">ByteBuffer</span> <span style="color:#000">buffer</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// 将整数 value 进行 zigzag 编码, int 是 32 位，所以这里直接写死了 31
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">1</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">^</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">&gt;&gt;</span> <span style="color:#000">31</span><span style="color:#ce5c00;font-weight:bold">);</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">^</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">&gt;&gt;</span> <span style="color:#0000cf;font-weight:bold">31</span><span style="color:#ce5c00;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// 判断 v 的低7位是否是0
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#ce5c00;font-weight:bold">((</span><span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">0xffffff80</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000">0L</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#ce5c00;font-weight:bold">((</span><span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#0000cf;font-weight:bold">0xffffff80</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000">L</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#8f5902;font-style:italic">// 取出 v 的低7位，并在最高位上加上1
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#204a87;font-weight:bold">byte</span> <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">byte</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">((</span><span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">0x7f</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">|</span> <span style="color:#000">0x80</span><span style="color:#ce5c00;font-weight:bold">);</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#204a87;font-weight:bold">byte</span> <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">byte</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">((</span><span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#0000cf;font-weight:bold">0x7f</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">|</span> <span style="color:#0000cf;font-weight:bold">0x80</span><span style="color:#ce5c00;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#8f5902;font-style:italic">// 放到 buffer 中
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#8f5902;font-style:italic">// 因为是先放整数的低字节位，所以这里实现了小端字节序
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#000">buffer</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">put</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">b</span><span style="color:#ce5c00;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#8f5902;font-style:italic">// 将 v 无符号右移 7 位，最高位补 0
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;=</span> <span style="color:#000">7</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;=</span> <span style="color:#0000cf;font-weight:bold">7</span><span style="color:#ce5c00;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// 最后取出的 7 位最高位一定是0,且它位于 variant 编码的最后一个字节，需要设置成0
@@ -11843,12 +12125,12 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
 </span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">public</span> <span style="color:#204a87;font-weight:bold">static</span> <span style="color:#000">String</span> <span style="color:#000">bytesToHex</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">byte</span><span style="color:#ce5c00;font-weight:bold">[]</span> <span style="color:#000">bytes</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">byte</span><span style="color:#ce5c00;font-weight:bold">[]</span> <span style="color:#000">hexChars</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#204a87;font-weight:bold">byte</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">bytes</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">length</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">3</span><span style="color:#ce5c00;font-weight:bold">];</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">0</span><span style="color:#ce5c00;font-weight:bold">;</span> <span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#000">bytes</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">length</span><span style="color:#ce5c00;font-weight:bold">;</span> <span style="color:#000">j</span><span style="color:#ce5c00;font-weight:bold">++)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">bytes</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">j</span><span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">0xFF</span><span style="color:#ce5c00;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">hexChars</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">3</span><span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">HEX_ARRAY</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#000">4</span><span style="color:#ce5c00;font-weight:bold">];</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">hexChars</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">3</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">1</span><span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">HEX_ARRAY</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">0x0F</span><span style="color:#ce5c00;font-weight:bold">];</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">hexChars</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">3</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">2</span><span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39; &#39;</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">byte</span><span style="color:#ce5c00;font-weight:bold">[]</span> <span style="color:#000">hexChars</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#204a87;font-weight:bold">byte</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">bytes</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">length</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#ce5c00;font-weight:bold">];</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#ce5c00;font-weight:bold">;</span> <span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#000">bytes</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">length</span><span style="color:#ce5c00;font-weight:bold">;</span> <span style="color:#000">j</span><span style="color:#ce5c00;font-weight:bold">++)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">bytes</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">j</span><span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#0000cf;font-weight:bold">0xFF</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">hexChars</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">HEX_ARRAY</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#ce5c00;font-weight:bold">];</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">hexChars</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">3</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">HEX_ARRAY</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">v</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#0000cf;font-weight:bold">0x0F</span><span style="color:#ce5c00;font-weight:bold">];</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">hexChars</span><span style="color:#ce5c00;font-weight:bold">[</span><span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">3</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39; &#39;</span><span style="color:#ce5c00;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#000">String</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">hexChars</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">StandardCharsets</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">UTF_8</span><span style="color:#ce5c00;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">}</span>

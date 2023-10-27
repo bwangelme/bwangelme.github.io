@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.117.0">
+<meta name="generator" content="Hugo 0.115.2">
 <link rel="canonical" type="text/html" href="https://bwangel.me/647/docs/prometheus/">
 <link rel="alternate" type="application/rss&#43;xml" href="https://bwangel.me/647/docs/prometheus/index.xml">
 <meta name="robots" content="noindex, nofollow">
@@ -335,7 +335,7 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// prometheus.DefaultRegisterer.Register(h)
 </span></span></span></code></pre></div><p><code>prometheus.Collector</code> 接口有一个 <code>Describe</code> 方法，它用于获取指标的信息。具体做法是传入一个 channel 参数，指标将 Desc 信息写入到 channel 中。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">type</span> <span style="color:#000">Collector</span> <span style="color:#204a87;font-weight:bold">interface</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a40000">#</span> <span style="color:#000">Desc</span> <span style="color:#000">包含指标名</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">help</span> <span style="color:#000">等信息</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a40000">#</span> <span style="color:#000">Desc</span> <span style="color:#a40000">包含指标名</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">help</span> <span style="color:#a40000">等信息</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#000">Describe</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">chan</span><span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">Desc</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">...</span><span style="color:#000;font-weight:bold">.</span>
 </span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
