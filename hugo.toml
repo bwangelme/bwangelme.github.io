@@ -58,13 +58,18 @@ anchor = "smart"
 # Language configuration
 
 [languages]
+
 [languages.cn]
+
 languageName ="中文"
 # Weight used for sorting.
 weight = 1
+
 [languages.cn.params]
 title = "647号宇宙"
 description = "宇宙很大，生活更大，也许以后还有缘相见"
+time_format_default = "2006年01月02日 / 15:04"
+
 [markup]
   [markup.goldmark]
     [markup.goldmark.parser.attribute]
