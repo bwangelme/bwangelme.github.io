@@ -37,7 +37,7 @@ In [4]: p.match(&amp;#39;ドウバン&amp;#39;)
 
 In [5]: p.match(&amp;#39;^&amp;amp;#^&amp;amp;@#abcdefdjskla&amp;#39;)
 Out[5]: &amp;lt;re.Match object; span=(0, 1), match=&amp;#39;^&amp;#39;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;它的原理就是匹配 ASCII 码表中所有从 &lt;code&gt;空格(0x20)&lt;/code&gt; 到 &lt;code&gt;-(0x7E)&lt;/code&gt; 的字符&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;它的原理就是匹配 ASCII 码表中所有从 &lt;code&gt;空格(0x20)&lt;/code&gt; 到 &lt;code&gt;~(0x7E)&lt;/code&gt; 的字符&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com//2021-12-15-191941.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
       </description>
     </item>
