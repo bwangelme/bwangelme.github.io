@@ -690,7 +690,9 @@ New in version 3.6.3.
 <p>看到这里，我想 Virtualenv 创建时没有复制系统库文件<code>ssl.py</code>过来，是不是因为我没有指定它的 <a href="https://virtualenv.pypa.io/en/stable/reference/#cmdoption-always-copy">&ndash;always-copy</a> 属性，我特意指定了这个属性又来创建了一遍 Virtualenv，发现它还是没有复制<code>ssl.py</code>文件过来。</p>
 <p>关于这个问题，我请教了公司的一位大佬。大佬说这样设计其实复合 Virtualenv 的定位，它只是做 Python 第三方库的隔离，并不做 Python 版本的隔离。</p>
 <p>所以如果我们以后需要在同一个系统上安装多个 Python 版本的话，还是需要使用 <a href="https://github.com/pyenv/pyenv">pyenv</a> 这样的工具，而不能指望 Virutalenv 的 <a href="https://virtualenv.pypa.io/en/stable/reference/#cmdoption-p">&ndash;python</a> 选项。</p>
-	
+	<div class="text-muted mt-5 pt-3 border-top">
+   2017年12月05日 / 22:33</div>
+
 </div>
 
 

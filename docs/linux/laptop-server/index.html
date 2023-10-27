@@ -699,7 +699,9 @@
 </span></span><span style="display:flex;"><span>    are supported and installed on your system.
 </span></span><span style="display:flex;"><span>perl: warning: Falling back to the standard locale <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;C&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>.
 </span></span></code></pre></div><p>这是由于终端SSH的时候，会将本地的locale配置传到服务端上去，我的本地设置的语系是<code>zh_CN.UTF-8</code>，但是服务器上只安装了<code>en_US.UTF-8</code>，所以就会报错提示说找不到语系<code>zh_CN.UTF-8</code>相关的文件。这里我们只需要修改一下服务器的<code>/etc/locale.gen</code>配置文件，将<code>zh_CN.UTF-8</code>相关的配置取消注释，然后再来运行<code>locale-gen</code>命令，就会安装上<code>zh_CN.UTF-8</code>语系相关的文件了，再来运行<code>perl</code>程序就不会报错了。</p>
-	
+	<div class="text-muted mt-5 pt-3 border-top">
+   2017年03月27日 / 16:41</div>
+
 </div>
 
 

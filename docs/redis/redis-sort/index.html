@@ -692,7 +692,9 @@ sort命令是Redis中最强大的命令之一，本文试图通过一些例子�
 </span></span></code></pre></div><p>在上面的例子中，我们根据用户年龄对用户ID进行了排序，同时为排序结果设置了一个过期时间，这样我们就可以将排序结果缓存起来了。
 然后每回获取排序结果的时候，我们可以先查缓存，如果缓存不存在的话，则进行排序。
 需要注意的是，为了避免多个客户端同时操作排序结果，我们需要使用<code>SETNX</code>命令来为缓存结果设置一个锁，详见<a href="https://redis.io/commands/setnx">SETNX key value</a></p>
-	
+	<div class="text-muted mt-5 pt-3 border-top">
+   2017年06月21日 / 13:29</div>
+
 </div>
 
 

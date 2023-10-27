@@ -748,7 +748,9 @@ Django的override_settings修饰器分析
 </span></span></code></pre></div><p>这个函数的功能也很简单，将<code>self.wrapped</code>中保存的配置还原，并针对更改的配置发出信号。</p>
 <h2 id="总结">总结</h2>
 <p>OK，至此，对于<code>override_settings</code>的分析就结束了，它的功能也比较简单，就是在一个作用域中修改配置，并在这个作用域结束的时候将配置还原，如果它修饰的作用域是一个函数的话，由于函数不像类有构造和析构函数，它就使用Python的上下文管理器来实现类的构造和析构函数的功能。</p>
-	
+	<div class="text-muted mt-5 pt-3 border-top">
+   2017年06月25日 / 20:17</div>
+
 </div>
 
 

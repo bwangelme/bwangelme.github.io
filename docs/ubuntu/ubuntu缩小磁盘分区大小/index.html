@@ -690,7 +690,9 @@
 </span></span><span style="display:flex;"><span>sr0     11:0    <span style="color:#0000cf;font-weight:bold">1</span> 1024M  <span style="color:#0000cf;font-weight:bold">0</span> rom
 </span></span></code></pre></div><h2 id="注意">注意</h2>
 <p>最后需要注意的是调整磁盘分区大小以后，磁盘分区的UUID可能会改变，<code>mount -a</code>命令可能会失败，此时我们需要通过<code>blkid</code>命令来查看/home分区的大小，并相应地更改<code>/etc/fstab</code>配置文件中指定的/home分区的UUID。</p>
-	
+	<div class="text-muted mt-5 pt-3 border-top">
+   2016年07月17日 / 16:38</div>
+
 </div>
 
 

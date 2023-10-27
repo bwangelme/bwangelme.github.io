@@ -776,7 +776,9 @@
 <p>这是我之前写的旧文，<a href="/2019/03/26/go-lock/">线程同步操作面试题使用锁的解法</a>，个人觉得某些地方还有一些参考价值，请大家酌情阅读。</p>
 <h2 id="使用-atomicinteger-的解决方案">使用 AtomicInteger 的解决方案</h2>
 <p>使用<code>AtomicInteger</code>并不是一种好的解决方案(因为这个解法让 CPU 持续空转)，但是通过这个解法我们可以了解到 Go 调度器阻塞的一个陷阱，所以也把这种解法放了上来，感兴趣的朋友可以查看我的另一篇文章 <a href="/2019/04/10/go-scheduler-pitfall/">Go 调度器的一个无法执行陷阱</a>。</p>
-	
+	<div class="text-muted mt-5 pt-3 border-top">
+   2019年04月13日 / 17:27</div>
+
 </div>
 
 

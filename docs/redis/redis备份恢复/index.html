@@ -604,7 +604,9 @@
 <p>必须要关闭 appendonly 后，rdb 备份才能正确回复，否则恢复出来的数据是空的</p>
 <h2 id="原因">原因</h2>
 <p>redis server 启动后会生成 appendonly.aof 文件，在 dump.rdb 和 appendonly.aof 文件同时存在的时候，会优先恢复 appendonly.aof 文件，由于 appendonly.aof 是空的，redis server 中的数据也会变成空的。</p>
-	
+	<div class="text-muted mt-5 pt-3 border-top">
+   2021年10月23日 / 17:36</div>
+
 </div>
 
 

@@ -751,7 +751,9 @@ idx = hash &amp; d-&gt;ht[table].sizemask
 <p>所以当字典中存在安全迭代器的时候，是不能进行 rehash 操作的。</p>
 <p>而对于非安全迭代器，Redis 规定在非安全迭代器的生命周期内只能执行<code>dictNext()</code>操作，不能执行其他操作，从而避免了 rehash 操作。</p>
 <p>同时 Redis 在创建非安全迭代器的时候会获取 dict 的指纹，在释放非安全迭代器的时候重新获取指纹，检查两次指纹是否相同。如果不同，证明 dict 被修改过，Redis 就会抛出异常。</p>
-	
+	<div class="text-muted mt-5 pt-3 border-top">
+   2018年03月14日 / 00:14</div>
+
 </div>
 
 

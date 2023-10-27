@@ -610,7 +610,9 @@
 <p>Redis 集群做持久化的时候，需要配置 Master 节点的持久化。因为以下原因：</p>
 <p>假设我们配置了 Slave 节点的持久化，而没有配置 Master 节点。当 Master 节点宕机重启后，它会直接认为自己的数据是空的，同时将这个状态同步到 Slave，从而导致集群的数据消失。</p>
 <p>尽管 Master 挂掉以后，Sentinel 会切换 Master，但这有时间成本，如果在 Sentinel 发现之前 Master 就重启了，一样会造成数据丢失。</p>
-	
+	<div class="text-muted mt-5 pt-3 border-top">
+   2021年10月21日 / 23:40</div>
+
 </div>
 
 
