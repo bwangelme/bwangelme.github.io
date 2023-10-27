@@ -80,8 +80,8 @@ description = "宇宙很大，生活更大，也许以后还有缘相见"
 # Everything below this are Site Params
 
 # Comment out if you don't want the "print entire section" link enabled.
-[outputs]
-section = ["HTML", "print", "RSS"]
+# [outputs]
+# section = ["HTML", "print", "RSS"]
 
 [params]
 copyright = "力行近乎仁，好问近乎智，知耻近乎勇"
@@ -109,9 +109,9 @@ version = "0.0"
 url_latest_version = "https://example.com"
 
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
-github_repo = "https://github.com/bwangelme/647"
+# github_repo = "https://github.com/bwangelme/647"
 # An optional link to a related project repo. For example, the sibling repository where your product code lives.
-github_project_repo = "https://github.com/bwangelme/647"
+# github_project_repo = "https://github.com/bwangelme/647"
 
 # Specify a value here if your content directory is not in your repo's root directory
 # github_subdir = ""
