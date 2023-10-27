@@ -28,7 +28,7 @@ author: "bwangel"
 例如 
 
 - `read`, `readv`, `wait`, 没有设置超时的 `recv` 和 `send` 等调用会受到 `SA_RESTART` 标记的控制，继续执行或返回 EINTR 错误
-- 设置了超时的 `send` 和 `recv`, `epoll_wait`, `poll` 等接口不会受到 `SA_RESTART`，都是直接返回 EINTR 错误码
+- 设置了超时的 `send` 和 `recv`, `epoll_wait`, `poll` 等接口不会受到 `SA_RESTART` 的影响，都是直接返回 EINTR 错误码
 
 ## 为什么要有 EINTR 错误
 
@@ -233,7 +233,7 @@ Receive sig 10
 get 2745109 bytes in 16.005424737930298
 ```
 
-EINTR 是什么错误，为什么 Python2 中抛异常，Python3不会抛异常呢，且听我慢慢讲解。
+为什么 Python2 会抛异常，Python3 不会抛异常呢，且听我慢慢讲解。
 
 ## 为什么 Python2 和 Python3 的表现不同
 
