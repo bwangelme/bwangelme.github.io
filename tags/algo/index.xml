@@ -5,7 +5,7 @@
     <description>Recent content in algo on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 10 Oct 2023 09:31:53 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 03 Nov 2023 08:45:11 +0800</lastBuildDate>
     
 	  <atom:link href="https://bwangel.me/647/tags/algo/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,6 +14,76 @@
         
       
     
+    
+    <item>
+      <title>Docs: Leetcode第96题</title>
+      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-96/</link>
+      <pubDate>Fri, 03 Nov 2023 08:45:11 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-96/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;题目&#34;&gt;题目&lt;/h2&gt;
+&lt;p&gt;给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-11-03-084706.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;示例 1：&lt;/p&gt;
+&lt;p&gt;输入：n = 3
+输出：5&lt;/p&gt;
+&lt;p&gt;示例 2：&lt;/p&gt;
+&lt;p&gt;输入：n = 1
+输出：1&lt;/p&gt;
+&lt;p&gt;提示：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1 &amp;lt;= n &amp;lt;= 19
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;解题思路&#34;&gt;解题思路&lt;/h2&gt;
+&lt;p&gt;这个题目主要的难度在公式推导上，我们可以用动态规划的思路来求解。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;令 \( G(N) \) 表示 n 互不相同的整数组成的二叉搜索树的数量。&lt;/li&gt;
+&lt;li&gt;\( F(i, N) \) 表示由 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量&lt;/li&gt;
+&lt;li&gt;可得, \( G(N) \) 是由每个 i 作为根节点的互不相同的二叉搜索树的数量的总和，此公式记做公式(1)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$G(N) = \sum_{i=1}^{N} F(i, N) \tag{1}$$&lt;/div&gt;&lt;p&gt;接着，我们需要再推导出 \( F(i, N) \) 和 \( G(N) \) 的关系，就可以得到我们的递推公式了。&lt;/p&gt;
+&lt;p&gt;要想求 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量，我们可以先求出左右两个子树的数量，左右两个子树相乘，即是总的数量。&lt;/p&gt;
+&lt;p&gt;例如，对于 1-7 组成, 3 作为根节点的二叉搜索树，左子树是 1-2 组成的二叉搜索树，右子树是 4-7 组成的二叉搜索树。&lt;/p&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$F(3, 7) =  G([1-2]) * G([4-7])$$&lt;/div&gt;&lt;p&gt;又由于 5-7 和 1-3 都是三个节点，它们组成的二叉搜索树虽然值不同，但是树的数量是相同的。可得&lt;/p&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$F(4, 7) = G(3) * G(3)$$&lt;/div&gt;&lt;p&gt;进一步推广，我们可以得到公式(2)&lt;/p&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$F(i, N) = G(i-1) * G(N-i) \tag{2}$$&lt;/div&gt;&lt;p&gt;结合公式1和公式2, 我们可以得到递推公式&lt;/p&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$G(N) = \sum_{i=1}^{N} G(i-1) * G(N-1)$$&lt;/div&gt;&lt;p&gt;递推出口，也非常容易得到，树是0个或1个节点的时候，它的数量都是 1, 即&lt;/p&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$G(0) = 1
+
+\\
+
+G(1) = 1$$&lt;/div&gt;&lt;p&gt;题目要求的 &lt;strong&gt;由 n 个节点组成且节点值从 1 到 n 互不相同的二叉搜索树的数量&lt;/strong&gt; 即是 \( G(N) \)&lt;/p&gt;
+&lt;h2 id=&#34;代码及复杂度&#34;&gt;代码及复杂度&lt;/h2&gt;
+&lt;p&gt;有了递推公式和递推出口之后，代码编写起来就非常容易了&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;numTrees&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;n&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;G&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;make&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;([]&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;n&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;G&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;G&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;N&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;N&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;n&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;N&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;++&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;N&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;++&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#000&#34;&gt;G&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;N&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;G&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;G&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;N&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;G&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;n&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上述代码的复杂度也非常容易分析&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;N 表示输入的整数&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;时间复杂度&lt;/strong&gt; 是看循环执行的次数，这是一个等差数列，所以时间复杂度是 \( O(N^2) \)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;空间复杂度&lt;/strong&gt; 是看 G 数组的长度, 空间复杂度是 \( O(N) \)&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
     
     <item>
       <title>Docs: 二分查找</title>

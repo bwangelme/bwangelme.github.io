@@ -54,6 +54,24 @@ right = mid - 1
     </item>
     
     <item>
+      <title>Docs: 算法中常用的哨兵变量(TODO)</title>
+      <link>https://bwangel.me/647/docs/algo/algo-sentry/</link>
+      <pubDate>Sun, 11 Sep 2022 10:52:23 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/algo/algo-sentry/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;插入排序使用了哨兵变量&lt;/li&gt;
+&lt;li&gt;合并有序列表使用了哨兵变量&lt;/li&gt;
+&lt;li&gt;循环链表也使用了哨兵变量 (TODO: 待讨论)&lt;/li&gt;
+&lt;/ol&gt;
+      </description>
+    </item>
+    
+    <item>
       <title>Docs: 哈希表学习笔记</title>
       <link>https://bwangel.me/647/docs/algo/hash/</link>
       <pubDate>Wed, 29 Aug 2018 23:34:29 +0800</pubDate>
@@ -205,6 +223,49 @@ $$&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;};&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: 完全二叉树与满二叉树</title>
+      <link>https://bwangel.me/647/docs/algo/binary-tree/</link>
+      <pubDate>Sat, 31 Mar 2018 22:42:53 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/algo/binary-tree/</guid>
+      <description>
+        
+        
+        &lt;p&gt;本文主要讲述了完全二叉树和满二叉树的定义及一些特性&lt;/p&gt;
+&lt;h2 id=&#34;定义&#34;&gt;定义&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;满二叉树：深度为 k 且有 \(2^k-1\) 个结点的二叉树称为满二叉树。&lt;/li&gt;
+&lt;li&gt;完全二叉树：设二叉树的深度为h，除第 h 层外，其它各层 (1～h-1) 的结点数都达到最大个数，第 h 层所有的结点都连续集中在最左边。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;满二叉树&#34;&gt;满二叉树&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;n&lt;/code&gt; 表示总节点数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;深度&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$k = log_2{n+1}$$&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;它是叶子节点最多的二叉树，叶子节点个数是&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$(n+1) / 2$$&lt;/div&gt;&lt;h2 id=&#34;完全二叉树&#34;&gt;完全二叉树&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;n&lt;/code&gt; 表示总节点数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;深度&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$log_2{n} + 1 向下取整$$&lt;/div&gt;
       </description>
     </item>
     

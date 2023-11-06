@@ -350,5 +350,39 @@ Mon Sep 28 16:42:16 CST 2015
       </description>
     </item>
     
+    <item>
+      <title>Docs: Git-submodule</title>
+      <link>https://bwangel.me/647/docs/tools/git-submodule/</link>
+      <pubDate>Mon, 11 Apr 2016 07:18:43 +0000</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/tools/git-submodule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git submodule&lt;/code&gt;就是git主仓库在本仓库的配置中记录着子模块仓库对应的名字，路径，远端url，然后创建一个特殊文件去记录子模块仓库目前的&lt;code&gt;commit-id&lt;/code&gt;，每次更新子模块就是通过远端路径和&lt;code&gt;commit-id&lt;/code&gt;来进行更新&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;参考文章&#34;&gt;参考文章&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.kafeitu.me/git/2012/03/27/git-submodule.html&#34;&gt;Git Submodule使用完整教程 - 咖啡兔 - HenryYan&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;git-子模块的原理&#34;&gt;Git 子模块的原理&lt;/h2&gt;
+&lt;p&gt;在&lt;code&gt;.git/config&lt;/code&gt;和&lt;code&gt;.gitmodules&lt;/code&gt;中记录的子模块仓库的远端地址和路径，然后使用一个特殊的模式为&lt;code&gt;160000&lt;/code&gt;的文件来记录子模块仓库当前的&lt;code&gt;commit id&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;git-子模块的添加&#34;&gt;Git 子模块的添加&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git submodule add origin:/submd/repos/lib2.git libs/lib2 &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 添加远端origin上的仓库lib2到当前仓库的libs/lib2位置&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;git-子模块的初始化及更新&#34;&gt;Git 子模块的初始化及更新&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;git submodule init&lt;/code&gt;会初始化当前仓库中存在的子模块(根据.gitmodules文件去查找子模块)。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git submodule update&lt;/code&gt;就是更新当前仓库存在子模块，拉取最新代码。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git submodule update&lt;/code&gt;是根据父仓库中记录的子模块仓库的&lt;code&gt;commit-id&lt;/code&gt;去更新子模块仓库，如果子模块仓库commit了但是父仓库并没有&lt;code&gt;add&lt;/code&gt;，那么&lt;code&gt;git submodule update&lt;/code&gt;会还原子模块仓库的提交。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git submodule foreach &amp;lt;command&amp;gt;&lt;/code&gt; 进入到每个子模块，然后执行&lt;code&gt;&amp;lt;command&amp;gt;&lt;/code&gt;命令&lt;/p&gt;
+&lt;h2 id=&#34;git-子模块的移除&#34;&gt;Git 子模块的移除&lt;/h2&gt;
+&lt;p&gt;执行以下命令删除 Git 子模块，相关内容请参考&lt;a href=&#34;http://stackoverflow.com/questions/1260748/how-do-i-remove-a-submodule/21211232#21211232&#34;&gt;Stack Overflow&lt;/a&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git rm the_submodule
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rm -rf .git/modules/the_submodule
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
   </channel>
 </rss>
