@@ -12,13 +12,17 @@ comment: true
 ```sh
 sed -i 's/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 sudo apt update
-sudo apt install zsh git ripgrep vim curl build-essential
+sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump
 ```
 
 - [github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
 - [vagrant](https://www.vagrantup.com/downloads)
 - [google chrome](https://www.google.com/chrome/)
 - [chrome download](https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb)
+- [alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md)
+- [gvm](https://github.com/moovweb/gvm)
+- [rustup](https://rustup.rs/)
+- [nerdfont DejaVuSansMono](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/DejaVuSansMono.zip)
 
 ## Ubuntu 将 capslock 映射成 esc
 
