@@ -6,10 +6,6 @@ tags: [MySQL, blog]
 
 __摘要__:
 
-> 这是一篇关于MySQL的文章，主要介绍MySQL索引
-
-
-<!--more-->
 MySQL索引
 =========
 
@@ -134,8 +130,6 @@ mysql> create table t3 select * from t2;
 mysql> create table t4 select * from t2 where 1=2;
 mysql> create table t5 like t2;
 ```
-
-
 ## 4. 管理索引
 
 查看索引
@@ -148,7 +142,31 @@ mysql> create table t5 like t2;
 `DROP INDEX 索引名 ON 表名`
 删除索引
 
-## 5. 扩展
+## explain 语句解释
 
-- [Sphinx](http://zh-sphinx-doc.readthedocs.org/en/latest/contents.html) 一个全文检索引擎，但是不支持中文。
-- [Coreseek](http://www.coreseek.cn/) 是一个可供企业使用的，基于Sphinx(可独立于Sphinx原始版本运行)的中文全文检索引擎
+表 T 的结构及索引
+
+```
+Create Table: CREATE TABLE `T` (
+  `ID` int NOT NULL,
+  `k` int NOT NULL DEFAULT '0',
+  `s` varchar(16) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ID`),
+  KEY `k` (`k`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+```
+
+回表表示用二级索引查到主键 ID 后，再用主键ID去主键索引中查找行数据，这个过程称为回表。
+
+explain 输出的 rows 表示 mysql server 从 InnoDB 引擎中拿到的行数。
+
+```
+mysql> explain select s from T where k between 3 and 5;
++----+-------------+-------+------------+-------+---------------+------+---------+------+------+----------+-----------------------+
+| id | select_type | table | partitions | type  | possible_keys | key  | key_len | ref  | rows | filtered | Extra                 |
++----+-------------+-------+------------+-------+---------------+------+---------+------+------+----------+-----------------------+
+|  1 | SIMPLE      | T     | NULL       | range | k             | k    | 4       | NULL |    2 |   100.00 | Using index condition |
++----+-------------+-------+------------+-------+---------------+------+---------+------+------+----------+-----------------------+
+1 row in set, 1 warning (0.00 sec)
+```
+

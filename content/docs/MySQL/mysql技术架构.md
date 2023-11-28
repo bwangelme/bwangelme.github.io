@@ -14,8 +14,7 @@ __摘要__:
 
 ## MySQL 逻辑架构
 
-<iframe id="embed_dom" name="embed_dom" frameborder="0" style="border:1px solid #000;display:block;width:500px; height:400px;" src="https://www.processon.com/embed/57e696f4e4b091465ae113e0">
-</iframe>
+![](https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-11-28-231324.png)
 
 ## MySQL锁机制
 
