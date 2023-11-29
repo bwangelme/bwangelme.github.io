@@ -1,0 +1,105 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – Bash</title>
+    <link>https://bwangel.me/647/tags/bash/</link>
+    <description>Recent content in Bash on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Sun, 13 Aug 2017 14:10:48 +0000</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: 说说Bash中的几个重定向</title>
+      <link>https://bwangel.me/647/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</link>
+      <pubDate>Sun, 13 Aug 2017 14:10:48 +0000</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;p&gt;摘要:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;Bash中&lt;code&gt;&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;amp;&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;gt;&amp;amp;&lt;/code&gt;三者的区别&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最近看脚本的时候，发现了有的地方使用了类似&lt;code&gt;some-command &amp;amp;&amp;gt; /dev/null&lt;/code&gt;这样的命令，然后不禁想起来还有一种重定向的语法是&lt;code&gt;&amp;gt;&amp;amp;&lt;/code&gt;，突然就觉得有点混乱了，特来捋一捋。&lt;/p&gt;
+&lt;h1 id=&#34;-和-操作符&#34;&gt;&amp;gt;、&amp;amp;&amp;gt; 和 &amp;gt;&amp;amp;操作符&lt;/h1&gt;
+&lt;h2 id=&#34;语法说明&#34;&gt;语法说明&lt;/h2&gt;
+&lt;p&gt;这三个操作符的语法分别如下所示：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;gt;&lt;/code&gt; Syntax: &lt;code&gt;file_descriptor(可选)&amp;gt;file_name&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这里的&lt;code&gt;file_descriptor&lt;/code&gt;是可选的，如果没有的话，默认是1(stdout)。它的作用是将某个命令的某个输出(file_descriptor所代表的输出)重定向到一个文件，例如&lt;code&gt;find / &amp;gt; file&lt;/code&gt;和&lt;code&gt;find / 2&amp;gt; file&lt;/code&gt;这两个命令就分别是将stdout和stderr输出到文件&lt;code&gt;file&lt;/code&gt;中去。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;gt;&amp;amp;&lt;/code&gt; Syntax: &lt;code&gt;file_descriptor1(可选)&amp;gt;&amp;amp;file_descriptor2&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这里的&lt;code&gt;file_descriptor1&lt;/code&gt;是可选的，如果没有的话，默认是1(stdout)。它的作用是将某个命令的&lt;code&gt;file_descriptor1&lt;/code&gt;描述符的输出(例如1代表标准输出)重定向到此命令的描述符&lt;code&gt;file_descriptor2&lt;/code&gt;中。例如&lt;code&gt;find / 1&amp;gt;file 2&amp;gt;&amp;amp;1 &lt;/code&gt;这条命令就是将find命令的stderr(2)重定向到stdout(1)，然后再将stdout输出到文件&lt;code&gt;file&lt;/code&gt;中。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;amp;&amp;gt;&lt;/code&gt; Syntax: &lt;code&gt;&amp;amp;&amp;gt; file_name&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这种形式的重定向，在语义上等价于&lt;code&gt;&amp;gt;filename 2&amp;gt;&amp;amp;1&lt;/code&gt;(参见&lt;a href=&#34;https://superuser.com/questions/335396/what-is-the-difference-between-and-in-bash&#34;&gt;参考链接3&lt;/a&gt;)。例如&lt;code&gt;find / &amp;amp;&amp;gt; file&lt;/code&gt;等价于&lt;code&gt;find / &amp;gt;file 2&amp;gt;&amp;amp;1&lt;/code&gt;。&lt;/p&gt;
+&lt;h1 id=&#34;参考链接&#34;&gt;参考链接&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://stackoverflow.com/questions/24793069/what-does-do-in-bash/24793436#24793436&#34;&gt;What does &amp;amp;&amp;gt; do in bash? [duplicate]&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.tldp.org/LDP/abs/html/io-redirection.html&#34;&gt;I/O Redirection&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://superuser.com/questions/335396/what-is-the-difference-between-and-in-bash&#34;&gt;What is the difference between &amp;amp;&amp;gt; and &amp;gt;&amp;amp; in bash?&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: More advanced if usage</title>
+      <link>https://bwangel.me/647/docs/linux/more-advanced-if-usage/</link>
+      <pubDate>Mon, 03 Oct 2016 09:52:51 +0000</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/linux/more-advanced-if-usage/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;本文是对&lt;a href=&#34;http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_02.html&#34;&gt;More advanced if usage&lt;/a&gt;的翻译&lt;/li&gt;
+&lt;li&gt;主要讲述了 Bash 中 if 的一些高级用法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;ifthenelse-结构体&#34;&gt;if/then/else 结构体&lt;/h2&gt;
+&lt;h3 id=&#34;虚构的例子&#34;&gt;虚构的例子&lt;/h3&gt;
+&lt;p&gt;这是一个结构体，在 if 运行结果为真的时候执行一个动作过程，如果 if 运行结果为假则执行另外一个动作过程。下面是一个例子:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;freddy scripts&amp;gt; &lt;span style=&#34;color:#000&#34;&gt;gender&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;male&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;freddy scripts&amp;gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$gender&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;f*&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;More input&amp;gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Pleasure to meet you, Madame.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;More input&amp;gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;How come the lady hasn&amp;#39;t got a drink yet?&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;More input&amp;gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;How come the lady hasn&lt;span style=&#34;color:#a40000&#34;&gt;&amp;#39;&lt;/span&gt;t got a drink yet?
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;freddy scripts&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;:
+和 &lt;em&gt;[&lt;/em&gt; 相反，&lt;em&gt;[[&lt;/em&gt; 阻止变量值的单词分割。所以，如果&lt;code&gt;VAR=&amp;quot;var with spaces&amp;quot;&lt;/code&gt;，你不需要在 test 的过程中在&lt;code&gt;$VAR&lt;/code&gt;周围使用双引号 - 即使使用引号仍然是一个好习惯。 &lt;em&gt;[[&lt;/em&gt; 阻止了文件路径名的扩展，所以如果一个文件字符串中含有通配符的话，它不会去扩展成文件名。使用*[[&lt;em&gt;，&lt;/em&gt;==* 和 &lt;em&gt;!=&lt;/em&gt; 会将右边的值解释为 shell 的 &lt;a href=&#34;http://tldp.org/LDP/GNU-Linux-Tools-Summary/html/x11655.htm&#34;&gt;glob&lt;/a&gt; 模式，而不是左边的值。例如：&lt;code&gt;[[ &amp;quot;value&amp;quot; == val* ]]&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;就像下面 then 语句块中列出的连续命令列表一样，else 语句块中可替换的连续命令列表能够拥有任何 Unix 风格的命令来返回一个退出状态。&lt;/p&gt;
+&lt;p&gt;另一个例子，从 &lt;a href=&#34;http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html#sect_07_01_02_01&#34;&gt; Section 7.1.2.1&lt;/a&gt; 扩展而来：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;anny ~&amp;gt; su -
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Password:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;root@elegance root&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# if ! grep ^$USER /etc/passwd 1&amp;gt; /dev/null&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;your user account is not managed locally&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;your account is managed from the local /etc/passwd file&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;your account is managed from the &lt;span style=&#34;color:#204a87&#34;&gt;local&lt;/span&gt; /etc/passwd file
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;root@elegance root&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们切换到 root 账户去演示 else 语句的效果 - 你的 root 通常是一个本地账户，而你自己的账户可能通过一个中央系统来管理，就比如一个 LDAP 服务器。&lt;/p&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

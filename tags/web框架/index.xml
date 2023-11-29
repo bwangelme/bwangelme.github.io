@@ -1,0 +1,100 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – web框架</title>
+    <link>https://bwangel.me/647/tags/web%E6%A1%86%E6%9E%B6/</link>
+    <description>Recent content in web框架 on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Sun, 10 Apr 2016 10:56:54 +0000</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/web%E6%A1%86%E6%9E%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: web框架要素</title>
+      <link>https://bwangel.me/647/docs/http/web%E6%A1%86%E6%9E%B6%E8%A6%81%E7%B4%A0/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/http/web%E6%A1%86%E6%9E%B6%E8%A6%81%E7%B4%A0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;h1 id=&#34;文章来源&#34;&gt;文章来源&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://lutaf.com/148.htm&#34;&gt;5天学会一种 web 开发框架&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;web框架学习列表&#34;&gt;web框架学习列表&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;如何定义 url route&lt;/li&gt;
+&lt;li&gt;如何组织 request handler 函数
+&lt;ul&gt;
+&lt;li&gt;写一个最简单的request handler 函数&lt;/li&gt;
+&lt;li&gt;如何从get/post请求中取出参数&lt;/li&gt;
+&lt;li&gt;如何定义全局url 拦截函数&lt;/li&gt;
+&lt;li&gt;如何获取/修改/存储 cookie,session数据&lt;/li&gt;
+&lt;li&gt;如何修改/输出 http header 数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;如何部部署app 程序
+&lt;ul&gt;
+&lt;li&gt;服务器部署可以参考读python web 程序的9种部署方式&lt;/li&gt;
+&lt;li&gt;如何配置开发环境&lt;/li&gt;
+&lt;li&gt;如何配置静态文件访问&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;如何访问数据库
+&lt;ul&gt;
+&lt;li&gt;是否支持ORM
+&lt;ul&gt;
+&lt;li&gt;支持orm
+&lt;ul&gt;
+&lt;li&gt;如何维护表结构的变更&lt;/li&gt;
+&lt;li&gt;如何定义/组织/初始化 数据表&lt;/li&gt;
+&lt;li&gt;如何对接orm系统和现有的表结构&lt;/li&gt;
+&lt;li&gt;掌握最基本的add/delete/按字段查询/count/slice/order by&lt;/li&gt;
+&lt;li&gt;如何直接使用sql 访问数据库&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;不支持orm (这样的web框架，不用也罢)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;如何使用模板系统
+&lt;ul&gt;
+&lt;li&gt;如何组织/访问 模板文件的目录结构&lt;/li&gt;
+&lt;li&gt;如何在模板中嵌入代码&lt;/li&gt;
+&lt;li&gt;模板是否支持继承结构&lt;/li&gt;
+&lt;li&gt;模板之间如何include&lt;/li&gt;
+&lt;li&gt;如何自定义模板函数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;如何通过http get/post 获取远程数据&lt;/li&gt;
+&lt;li&gt;如何parse json&lt;/li&gt;
+&lt;li&gt;如何parse xml&lt;/li&gt;
+&lt;li&gt;如何输出为 json&lt;/li&gt;
+&lt;li&gt;如何处理状态码:404和50x&lt;/li&gt;
+&lt;li&gt;如何处理文件上传&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;可选的学习项目&#34;&gt;可选的学习项目&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;发送email&lt;/li&gt;
+&lt;li&gt;log&lt;/li&gt;
+&lt;li&gt;图片处理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;误区&#34;&gt;误区&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;表单验证辅助函数，&lt;strong&gt;很多框架的表单验证部分实现的特别复杂&lt;/strong&gt;，初学者完全不需要，手写代码处理就够用&lt;/li&gt;
+&lt;li&gt;ORM中的hasone,manytomany,onetomany关系,概念很复杂，其实只是多写/少写一个查询字段的关系，学习成本太高，初学者完全不需要理会，直接跳过&lt;/li&gt;
+&lt;/ul&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

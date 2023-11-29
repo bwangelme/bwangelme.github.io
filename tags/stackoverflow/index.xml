@@ -1,0 +1,106 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – stackoverflow</title>
+    <link>https://bwangel.me/647/tags/stackoverflow/</link>
+    <description>Recent content in stackoverflow on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Wed, 14 Sep 2016 15:21:40 +0000</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/stackoverflow/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Gevent 的 KeyError</title>
+      <link>https://bwangel.me/647/docs/python/gevent-keyerror/</link>
+      <pubDate>Wed, 14 Sep 2016 15:21:40 +0000</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/python/gevent-keyerror/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;本文翻译自 StackOverFlow 上的一篇&lt;a href=&#34;http://stackoverflow.com/questions/8774958/keyerror-in-module-threading-after-a-successful-py-test-run&#34;&gt;答案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;本文主要解释了&lt;code&gt;gevent&lt;/code&gt;的猴子补丁和一个&lt;code&gt;KeyError&lt;/code&gt;之间的关系&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;错误描述&#34;&gt;错误描述&lt;/h2&gt;
+&lt;p&gt;在包含有&lt;code&gt;gevent.monkey.patch_thread()&lt;/code&gt;( gevent 的猴子补丁)的程序中，运行时会报出下面的错误：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#c00;font-weight:bold&#34;&gt;Exception&lt;/span&gt; &lt;span style=&#34;color:#c00;font-weight:bold&#34;&gt;KeyError&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#c00;font-weight:bold&#34;&gt;KeyError&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;140468381321488&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,)&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;module&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;threading&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/usr/lib/python2.7/threading.pyc&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ignored&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;解决答案: &lt;a href=&#34;http://stackoverflow.com/questions/8774958/keyerror-in-module-threading-after-a-successful-py-test-run&#34;&gt;KeyError in module &amp;rsquo;threading&amp;rsquo; after a successful py.test run&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;原文翻译&#34;&gt;原文翻译&lt;/h2&gt;
+&lt;p&gt;我观察了同样的主题，然后决定去精确地描述一下到底发生了什么。让我们一起来看一下我的发现，我希望这在以后能够帮助到其他人。&lt;/p&gt;
+&lt;h3 id=&#34;简短的回答&#34;&gt;简短的回答&lt;/h3&gt;
+&lt;p&gt;它的确和&lt;code&gt;threading&lt;/code&gt;模块的猴子补丁有关。事实上，我能够轻易地开启这个异常，通过在猴子补丁线程之前导入&lt;code&gt;threading&lt;/code&gt;模块。下面这两行代码就足够了：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;threading&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;gevent.monkey&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;gevent&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;monkey&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;patch_thread&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面的代码执行的时候，就报出了 &amp;ldquo;忽略了一个&lt;code&gt;KeyError&lt;/code&gt;&amp;rdquo; 的信息：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;env&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;czajnik@autosan: python test.py
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Exception KeyError: KeyError&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;139924387112272,&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; in &amp;lt;module &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;threading&amp;#39;&lt;/span&gt; from &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/usr/lib/python2.7/threading.pyc&amp;#39;&lt;/span&gt;&amp;gt; ignored
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果你交换一下&lt;code&gt;import&lt;/code&gt;行的顺序，这个错误信息就会消失了。&lt;/p&gt;
+&lt;h3 id=&#34;详细的回答&#34;&gt;详细的回答&lt;/h3&gt;
+&lt;p&gt;我可以在这里停止我的调试，但是我觉得它值得让我去了解，造成问题的准确的原因是什么？&lt;/p&gt;
+&lt;p&gt;第一步是去寻找打印这个忽略了异常的信息的代码。这对于我来说找到这个有点困难（在 python 标准库中 grep 查找&lt;code&gt;Exception .*ignored&lt;/code&gt;没有返回任何东西），但是 grep CPython 的源码，我最终在&lt;a href=&#34;http://svn.python.org/projects/python/tags/r27/Python/errors.c&#34;&gt; Python/error.c &lt;/a&gt;文件中找到了一个函数叫做&lt;code&gt;void PyErr_WriteUnraisable(PyObject *obj)&lt;/code&gt;，它的注释非常有趣，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;/* Call when an exception has occurred but there is no way for Python
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;   to handle it.  Examples: exception in __del__ or during GC. */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我决定去检查谁调用了它，这个利用了&lt;code&gt;gdb&lt;/code&gt;的一点功能来实现的，最终得到了如下的C调用栈，&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#0  0x0000000000542c40 in PyErr_WriteUnraisable ()
+#1  0x00000000004af2d3 in Py_Finalize ()
+#2  0x00000000004aa72e in Py_Main ()
+#3  0x00007ffff68e576d in __libc_start_main (main=0x41b980 &amp;lt;main&amp;gt;, argc=2,
+    ubp_av=0x7fffffffe5f8, init=&amp;lt;optimized out&amp;gt;, fini=&amp;lt;optimized out&amp;gt;,
+    rtld_fini=&amp;lt;optimized out&amp;gt;, stack_end=0x7fffffffe5e8) at libc-start.c:226
+#4  0x000000000041b9b1 in _start ()
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;现在我们可以清楚地看到异常是在&lt;a href=&#34;https://docs.python.org/3/c-api/init.html#Py_Finalize&#34;&gt;Py_Finalize&lt;/a&gt;执行的时候抛出的，这个调用负责关闭Python解释器，释放已经申请的内存等等。它仅仅在退出前调用。&lt;/p&gt;
+&lt;p&gt;下一步是去查看&lt;code&gt;Py_Finalize()&lt;/code&gt;的代码（它存放在&lt;a href=&#34;http://svn.python.org/projects/python/tags/r27/Python/pythonrun.c&#34;&gt; Python/pythonrun.c &lt;/a&gt;）。  它做的非常靠前的一个调用是&lt;code&gt;wait_for_thread_shutdown()&lt;/code&gt;，这个函数非常值得去看一下，因为我们知道问题是关于线程的。&lt;/p&gt;
+&lt;p&gt;这个函数反过来调用了&lt;code&gt;threading&lt;/code&gt;模块中的&lt;code&gt;_shutdown()&lt;/code&gt;可调用对象，非常好，我们现在可以返回Python代码了。&lt;/p&gt;
+&lt;p&gt;查看&lt;code&gt;threading.py&lt;/code&gt; ,我发现了如下有趣的部分：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;_MainThread&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Thread&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;_exitfunc&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#3465a4&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#3465a4&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;_Thread__stop&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;_pickSomeNonDaemonThrad&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;__debug__&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#3465a4&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;_note&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;%s&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;: waiting for other threads&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#3465a4&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;join&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;_pickSomeNonDaemonThread&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;__debug__&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#3465a4&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;_note&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;%s&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;: exiting&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#3465a4&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#3465a4&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;_Thread__delete&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Create the main thread object,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# and make it available for the interpreter&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# (Py_Main) as threading._shutdown.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;_shutdown&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;_MainThread&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;exitfunc&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;很明显，&lt;code&gt;threading._shutdown()&lt;/code&gt;函数调用的作用就是join所有的非服务化(non daemon)的线程，然后删除主线程（这意味着它确切做了什么）。我决定去给&lt;code&gt;threading.py&lt;/code&gt;打一点补丁，用&lt;code&gt;try / except&lt;/code&gt;包裹整个&lt;code&gt;_exitfunc()&lt;/code&gt;函数体，用&lt;code&gt;traceback&lt;/code&gt;模块来打印出系统调用栈。这个给出了如下的追踪情况：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Traceback (most recent call last):
+  File &amp;#34;/usr/lib/python2.7/threading.py&amp;#34;, line 785, in _exitfunc
+    self._Thread__delete()
+  File &amp;#34;/usr/lib/python2.7/threading.py&amp;#34;, line 639, in __delete
+    del _active[_get_ident()]
+KeyError: 26805584
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;现在我们知道了异常抛出的精确位置了，在&lt;code&gt;Thread__delete()&lt;/code&gt;方法内。&lt;/p&gt;
+&lt;p&gt;接下来的故事在阅读一会&lt;code&gt;threading.py&lt;/code&gt;的代码后就变得很明显。&lt;code&gt;_active&lt;/code&gt;字典将所有已创建的线程的线程ID(由&lt;code&gt;_get_indent()&lt;/code&gt;函数返回)映射到对应的线程实例上。当&lt;code&gt;threading&lt;/code&gt;模块载入的时候，&lt;code&gt; _MainThread&lt;/code&gt;类的实例总是会被创建，而且会被添加到&lt;code&gt;_active&lt;/code&gt;字典中。（甚至没有创建其他线程的时候主线程实例也会创建）。&lt;/p&gt;
+&lt;p&gt;问题是当一个&lt;code&gt;_get_ident()&lt;/code&gt;方法被&lt;code&gt;gevent&lt;/code&gt;的猴子补丁打过补丁，原来映射的方法&lt;code&gt;thread.get_ident()&lt;/code&gt;被猴子补丁替换成了&lt;code&gt;green_thread.get_ident()&lt;/code&gt;。明显两个函数调用返回的主线程ID并不相同。&lt;/p&gt;
+&lt;p&gt;现在，如果一个&lt;code&gt;threading&lt;/code&gt;模块在猴子补丁之前被载入，调用&lt;code&gt;_get_ident()&lt;/code&gt;会返回主线程实例创建的时候添加到&lt;code&gt;_active&lt;/code&gt;中的ID。而打上猴子补丁以后就会返回另外一个值，在调用&lt;code&gt;_eixtfunc()&lt;/code&gt;的时候，就会在&lt;code&gt;del _active[_get_ident()]&lt;/code&gt;语句上抛出异常。&lt;/p&gt;
+&lt;p&gt;与上面的情况相反，如果猴子补丁在&lt;code&gt;threading&lt;/code&gt;模块载入之前被打上了，所有的就都会正常。因为&lt;code&gt;_MainThread&lt;/code&gt;实例被添加到&lt;code&gt;_active&lt;/code&gt;中和&lt;code&gt;_get_ident()&lt;/code&gt;都是在打补丁之后调用的，这样在清理线程的时候就会返回同样的线程ID。就是这样了。&lt;/p&gt;
+&lt;p&gt;为了确保以正确的顺序导入模块，我在我的电脑中添加了如下的代码片段，仅仅在打上猴子补丁之前调用：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sys&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;threading&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sys&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;modules&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;raise&lt;/span&gt; &lt;span style=&#34;color:#c00;font-weight:bold&#34;&gt;Exception&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;threading module loadded before patching!&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;gevent.monkey&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;gevent&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;monkey&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;patch_thread&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;希望我的调试经历能够对你有用！&lt;/p&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

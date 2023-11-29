@@ -1,0 +1,32 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>647 Universe – Tag1</title>
+    <link>https://bwangel.me/647/tags/tag1/</link>
+    <description>Recent content in Tag1 on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language>
+    <lastBuildDate>Thu, 23 Nov 2023 17:27:03 +0800</lastBuildDate>
+    
+	  <atom:link href="https://bwangel.me/647/tags/tag1/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Thrift Python Client 解析负数 field id 失败</title>
+      <link>https://bwangel.me/647/docs/thrift/python-fastbinary-negative-field-id-error/</link>
+      <pubDate>Thu, 23 Nov 2023 17:27:03 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/thrift/python-fastbinary-negative-field-id-error/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

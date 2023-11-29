@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.115.2">
+<meta name="generator" content="Hugo 0.117.0">
 <meta name="robots" content="index, follow">
 
 
@@ -18,27 +18,51 @@
 <link rel="icon" type="image/png" href="/647/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/647/favicons/android-192x192.png" sizes="192x192">
 
-<title>算法中常用的哨兵变量(TODO) | 647 Universe</title>
-<meta name="description" content="">
-<meta property="og:title" content="算法中常用的哨兵变量(TODO)" />
-<meta property="og:description" content="" />
+<title>算法中使用哨兵变量(TODO) | 647 Universe</title>
+<meta name="description" content="背景 哨兵，现实中是用于解决国家之间的边界问题。
+在算法程序中，我们设置一些冗余的变量，让算法程序处理边界问题时更加容易，这些变量就被称为哨兵。
+本文将会举例说明，哨兵变量在算法程序中的应用。
+插入排序 插入排序是一种常用的排序算法，它的思路是
+用 i 从 1 开始遍历数组中每个元素 从后往前遍历 1-i 的每个元素，找到第一个比当前元素小的元素，将其插入到该元素之后 Note: 先挪位置，循环结束后再在 j 指示的索引中(第一个比当前元素小的元素)插入当前值 func InsertSort[T ttypes.Number](arr []T) []T { res := make([]T, len(arr)) copy(res, arr) for i := 1; i &amp;lt; len(res); i&#43;&#43; { j := i current := res[i] for j &amp;gt; 0 &amp;amp;&amp;amp; res[j-1] &amp;gt; current { res[j] = res[j-1] j-- } res[j] = current } return res } 演示图:
+哨兵模式 哨兵模式的代码如下，它在数组的前面添加一个元素。
+每次开始遍历前，它将当前需要插入的元素放到数组头部(res[0])。这样就算 1-i 中没有比 res[i] 小的元素，但循环到最后还是会触发条件 not (res[0] &amp;gt; current), 达到跳出循环的目的。">
+<meta property="og:title" content="算法中使用哨兵变量(TODO)" />
+<meta property="og:description" content="背景 哨兵，现实中是用于解决国家之间的边界问题。
+在算法程序中，我们设置一些冗余的变量，让算法程序处理边界问题时更加容易，这些变量就被称为哨兵。
+本文将会举例说明，哨兵变量在算法程序中的应用。
+插入排序 插入排序是一种常用的排序算法，它的思路是
+用 i 从 1 开始遍历数组中每个元素 从后往前遍历 1-i 的每个元素，找到第一个比当前元素小的元素，将其插入到该元素之后 Note: 先挪位置，循环结束后再在 j 指示的索引中(第一个比当前元素小的元素)插入当前值 func InsertSort[T ttypes.Number](arr []T) []T { res := make([]T, len(arr)) copy(res, arr) for i := 1; i &lt; len(res); i&#43;&#43; { j := i current := res[i] for j &gt; 0 &amp;&amp; res[j-1] &gt; current { res[j] = res[j-1] j-- } res[j] = current } return res } 演示图:
+哨兵模式 哨兵模式的代码如下，它在数组的前面添加一个元素。
+每次开始遍历前，它将当前需要插入的元素放到数组头部(res[0])。这样就算 1-i 中没有比 res[i] 小的元素，但循环到最后还是会触发条件 not (res[0] &gt; current), 达到跳出循环的目的。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bwangel.me/647/docs/algo/algo-sentry/" /><meta property="article:section" content="docs" />
 <meta property="article:published_time" content="2022-09-11T10:52:23+08:00" />
-<meta property="article:modified_time" content="2023-11-06T11:03:48+08:00" /><meta property="og:site_name" content="647号宇宙" />
-<meta itemprop="name" content="算法中常用的哨兵变量(TODO)">
-<meta itemprop="description" content=""><meta itemprop="datePublished" content="2022-09-11T10:52:23+08:00" />
-<meta itemprop="dateModified" content="2023-11-06T11:03:48+08:00" />
-<meta itemprop="wordCount" content="5">
-<meta itemprop="keywords" content="Tag1,Tag2," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="算法中常用的哨兵变量(TODO)"/>
-<meta name="twitter:description" content=""/>
+<meta property="article:modified_time" content="2023-11-19T14:45:15+08:00" /><meta property="og:site_name" content="647号宇宙" />
+<meta itemprop="name" content="算法中使用哨兵变量(TODO)">
+<meta itemprop="description" content="背景 哨兵，现实中是用于解决国家之间的边界问题。
+在算法程序中，我们设置一些冗余的变量，让算法程序处理边界问题时更加容易，这些变量就被称为哨兵。
+本文将会举例说明，哨兵变量在算法程序中的应用。
+插入排序 插入排序是一种常用的排序算法，它的思路是
+用 i 从 1 开始遍历数组中每个元素 从后往前遍历 1-i 的每个元素，找到第一个比当前元素小的元素，将其插入到该元素之后 Note: 先挪位置，循环结束后再在 j 指示的索引中(第一个比当前元素小的元素)插入当前值 func InsertSort[T ttypes.Number](arr []T) []T { res := make([]T, len(arr)) copy(res, arr) for i := 1; i &lt; len(res); i&#43;&#43; { j := i current := res[i] for j &gt; 0 &amp;&amp; res[j-1] &gt; current { res[j] = res[j-1] j-- } res[j] = current } return res } 演示图:
+哨兵模式 哨兵模式的代码如下，它在数组的前面添加一个元素。
+每次开始遍历前，它将当前需要插入的元素放到数组头部(res[0])。这样就算 1-i 中没有比 res[i] 小的元素，但循环到最后还是会触发条件 not (res[0] &gt; current), 达到跳出循环的目的。"><meta itemprop="datePublished" content="2022-09-11T10:52:23+08:00" />
+<meta itemprop="dateModified" content="2023-11-19T14:45:15+08:00" />
+<meta itemprop="wordCount" content="456">
+<meta itemprop="keywords" content="Algo,哨兵," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="算法中使用哨兵变量(TODO)"/>
+<meta name="twitter:description" content="背景 哨兵，现实中是用于解决国家之间的边界问题。
+在算法程序中，我们设置一些冗余的变量，让算法程序处理边界问题时更加容易，这些变量就被称为哨兵。
+本文将会举例说明，哨兵变量在算法程序中的应用。
+插入排序 插入排序是一种常用的排序算法，它的思路是
+用 i 从 1 开始遍历数组中每个元素 从后往前遍历 1-i 的每个元素，找到第一个比当前元素小的元素，将其插入到该元素之后 Note: 先挪位置，循环结束后再在 j 指示的索引中(第一个比当前元素小的元素)插入当前值 func InsertSort[T ttypes.Number](arr []T) []T { res := make([]T, len(arr)) copy(res, arr) for i := 1; i &lt; len(res); i&#43;&#43; { j := i current := res[i] for j &gt; 0 &amp;&amp; res[j-1] &gt; current { res[j] = res[j-1] j-- } res[j] = current } return res } 演示图:
+哨兵模式 哨兵模式的代码如下，它在数组的前面添加一个元素。
+每次开始遍历前，它将当前需要插入的元素放到数组头部(res[0])。这样就算 1-i 中没有比 res[i] 小的元素，但循环到最后还是会触发条件 not (res[0] &gt; current), 达到跳出循环的目的。"/>
 
 
 
 
-<link rel="preload" href="/647/scss/main.min.17cc54b971bd9ff3187d929fd66e6d8f3b4c48419cb03ba0d0cb3513825a06b8.css" as="style">
-<link href="/647/scss/main.min.17cc54b971bd9ff3187d929fd66e6d8f3b4c48419cb03ba0d0cb3513825a06b8.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/647/scss/main.scss" as="style">
+<link href="/647/scss/main.scss" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -213,7 +237,9 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsmysql-li">
   <a href="/647/docs/mysql/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsmysql"><span class="">MySQL</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsmysqlmysql-password-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsmysqltransaction-li">
+  <a href="/647/docs/mysql/transaction/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsmysqltransaction"><span class="">MySQL 事务</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsmysqlmysql-password-li">
   <a href="/647/docs/mysql/mysql-password/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsmysqlmysql-password"><span class="">MySQL 修改 root 密码</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsmysqlmysql-foreign-key-li">
   <a href="/647/docs/mysql/mysql-foreign-key/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsmysqlmysql-foreign-key"><span class="">MySQL 外键分析</span></a>
@@ -311,7 +337,7 @@
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-647docsalgoalgo-sentry-li">
-  <a href="/647/docs/algo/algo-sentry/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-647docsalgoalgo-sentry"><span class="td-sidebar-nav-active-item">算法中常用的哨兵变量(TODO)</span></a>
+  <a href="/647/docs/algo/algo-sentry/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-647docsalgoalgo-sentry"><span class="td-sidebar-nav-active-item">算法中使用哨兵变量(TODO)</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docsalgohash-li">
   <a href="/647/docs/algo/hash/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsalgohash"><span class="">哈希表学习笔记</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-647docsalgojump-stairs-li">
@@ -528,7 +554,9 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsthrift-li">
   <a href="/647/docs/thrift/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsthrift"><span class="">Thrift</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftgolang-client-timeout-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftpython-fastbinary-negative-field-id-error-li">
+  <a href="/647/docs/thrift/python-fastbinary-negative-field-id-error/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftpython-fastbinary-negative-field-id-error"><span class="">Thrift Python Client 解析负数 field id 失败</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftgolang-client-timeout-li">
   <a href="/647/docs/thrift/golang-client-timeout/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftgolang-client-timeout"><span class="">Thrift golang client 如何设置超时时间</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsthriftthrift-protocol-li">
   <a href="/647/docs/thrift/thrift-protocol/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsthriftthrift-protocol"><span class="">Thrift 协议学习笔记</span></a>
@@ -607,11 +635,34 @@
 
 </div>
 
-            
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#插入排序">插入排序</a>
+      <ul>
+        <li><a href="#哨兵模式">哨兵模式</a></li>
+      </ul>
+    </li>
+    <li><a href="#链表todo">链表(TODO)</a></li>
+    <li><a href="#返回所有二叉搜索树">返回所有二叉搜索树</a>
+      <ul>
+        <li><a href="#题目">题目</a></li>
+        <li><a href="#不缓存结果的动态规划解法">不缓存结果的动态规划解法</a></li>
+        <li><a href="#普通解法的代码">普通解法的代码</a></li>
+        <li><a href="#添加了哨兵之后的代码">添加了哨兵之后的代码</a></li>
+      </ul>
+    </li>
+    <li><a href="#合并有序列表使用了哨兵变量todo">合并有序列表使用了哨兵变量(TODO)</a></li>
+    <li><a href="#循环链表也使用了哨兵变量-todo-待讨论">循环链表也使用了哨兵变量 (TODO: 待讨论)</a></li>
+  </ul>
+</nav>
+      </div>
+    
             <div class="taxonomy taxonomy-terms-cloud taxo-tags">
       <h5 class="taxonomy-title">Tag Cloud</h5>
       <ul class="taxonomy-terms">
-        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/algo/" data-taxonomy-term="algo"><span class="taxonomy-label">algo</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/algo/" data-taxonomy-term="algo"><span class="taxonomy-label">Algo</span><span class="taxonomy-count">5</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/algorithm/" data-taxonomy-term="algorithm"><span class="taxonomy-label">Algorithm</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/arch/" data-taxonomy-term="arch"><span class="taxonomy-label">Arch</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
@@ -657,7 +708,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">lsof</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">mariadb</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/mongodb/" data-taxonomy-term="mongodb"><span class="taxonomy-label">MongoDB</span><span class="taxonomy-count">6</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">20</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">21</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">network</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">nfs</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">nginx</span><span class="taxonomy-count">3</span></a></li>
@@ -682,7 +733,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/template/" data-taxonomy-term="template"><span class="taxonomy-label">Template</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/test/" data-taxonomy-term="test"><span class="taxonomy-label">Test</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">5</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">41</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">42</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">tombkeeper</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">5</span></a></li>
@@ -697,6 +748,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/werkzeug/" data-taxonomy-term="werkzeug"><span class="taxonomy-label">Werkzeug</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">wireshark</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">zigzag</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E5%93%A8%E5%85%B5/" data-taxonomy-term="%E5%93%A8%E5%85%B5"><span class="taxonomy-label">哨兵</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E5%B7%A5%E5%85%B7/" data-taxonomy-term="%E5%B7%A5%E5%85%B7"><span class="taxonomy-label">工具</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-taxonomy-term="%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="taxonomy-label">并发编程</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E6%8A%98%E8%85%BE/" data-taxonomy-term="%E6%8A%98%E8%85%BE"><span class="taxonomy-label">折腾</span><span class="taxonomy-count">2</span></a></li>
@@ -725,29 +777,181 @@
   <li class="breadcrumb-item">
     <a href="https://bwangel.me/647/docs/algo/">算法</a></li>
   <li class="breadcrumb-item active" aria-current="page">
-    算法中常用的哨兵变量(TODO)</li>
+    算法中使用哨兵变量(TODO)</li>
   </ol>
 </nav>
             
 <div class="td-content">
-	<h1>算法中常用的哨兵变量(TODO)</h1>
+	<h1>算法中使用哨兵变量(TODO)</h1>
 	
 	<header class="article-meta">
 		<div class="taxonomy taxonomy-terms-article taxo-tags">
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tag1/" data-taxonomy-term="tag1"><span class="taxonomy-label">Tag1</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tag2/" data-taxonomy-term="tag2"><span class="taxonomy-label">Tag2</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/algo/" data-taxonomy-term="algo"><span class="taxonomy-label">Algo</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E5%93%A8%E5%85%B5/" data-taxonomy-term="%E5%93%A8%E5%85%B5"><span class="taxonomy-label">哨兵</span></a></li>
     </ul>
 </div>
 
   </header>
-	<hr>
+	<h2 id="背景">背景</h2>
+<p>哨兵，现实中是用于解决国家之间的边界问题。</p>
+<p>在算法程序中，我们设置一些冗余的变量，让算法程序处理边界问题时更加容易，这些变量就被称为哨兵。</p>
+<p>本文将会举例说明，哨兵变量在算法程序中的应用。</p>
+<h2 id="插入排序">插入排序</h2>
+<p>插入排序是一种常用的排序算法，它的思路是</p>
 <ol>
-<li>插入排序使用了哨兵变量</li>
-<li>合并有序列表使用了哨兵变量</li>
-<li>循环链表也使用了哨兵变量 (TODO: 待讨论)</li>
+<li>用 i 从 1 开始遍历数组中每个元素</li>
+<li>从后往前遍历 1-i 的每个元素，找到第一个比当前元素小的元素，将其插入到该元素之后
+<ul>
+<li><strong>Note</strong>: 先挪位置，循环结束后再在 j 指示的索引中(第一个比当前元素小的元素)插入当前值</li>
+</ul>
+</li>
 </ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">InsertSort</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span> <span style="color:#000">ttypes</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Number</span><span style="color:#000;font-weight:bold">](</span><span style="color:#000">arr</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#000">T</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">res</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87">make</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">arr</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87">copy</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">arr</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">i</span> <span style="color:#000;font-weight:bold">&lt;</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#000;font-weight:bold">);</span> <span style="color:#000">i</span><span style="color:#ce5c00;font-weight:bold">++</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">i</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">current</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">j</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">j</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000">current</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">j</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">j</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">j</span><span style="color:#ce5c00;font-weight:bold">--</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">j</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">current</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">res</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>演示图:</p>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-11-17-094414.gif" alt=""></p>
+<h3 id="哨兵模式">哨兵模式</h3>
+<p>哨兵模式的代码如下，它在数组的前面添加一个元素。</p>
+<p>每次开始遍历前，它将当前需要插入的元素放到数组头部(<code>res[0]</code>)。这样就算 <code>1-i</code> 中没有比 <code>res[i]</code> 小的元素，但循环到最后还是会触发条件 <code>not (res[0] &gt; current)</code>, 达到跳出循环的目的。</p>
+<p>在哨兵模式的插入排序中，我们利用一个元素的内存，省去 <code>j&gt;0</code> 这个判断条件。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">InsertSortWithSentinel</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span> <span style="color:#000">ttypes</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Number</span><span style="color:#000;font-weight:bold">](</span><span style="color:#000">arr</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#000">T</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">res</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87">make</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">arr</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87">copy</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">arr</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">res</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">append</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">{</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">},</span> <span style="color:#000">res</span><span style="color:#ce5c00;font-weight:bold">...</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">i</span> <span style="color:#000;font-weight:bold">&lt;</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#000;font-weight:bold">);</span> <span style="color:#000">i</span><span style="color:#ce5c00;font-weight:bold">++</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">j</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">i</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">current</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">current</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 和无哨兵相比，省略掉了 j &gt; 0 这个比较条件
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">j</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000">current</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">j</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">j</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">j</span><span style="color:#ce5c00;font-weight:bold">--</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">j</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">current</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">:]</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h2 id="链表todo">链表(TODO)</h2>
+<h2 id="返回所有二叉搜索树">返回所有二叉搜索树</h2>
+<h3 id="题目">题目</h3>
+<p>给你一个整数 n ，请你生成并返回所有由 n 个节点组成且节点值从 1 到 n 互不相同的不同二叉搜索树 。可以按 任意顺序 返回答案。</p>
+<h3 id="不缓存结果的动态规划解法">不缓存结果的动态规划解法</h3>
+<p>这个问题我们可以用动态规划的思路来解题。</p>
+<p><strong>递推公式</strong>:</p>
+<p>令:</p>
+<ul>
+<li>\( f(1, n) \) 表示 1-n 组成的互补相同的二叉搜索树的集合。</li>
+</ul>
+
+<div class="math">$$f(1, n) = \sum_{i=1}^n f(1, i-1) + f(i+1, n)$$</div><p>上述公式表示，从 1 到 n, 分别以每个数作为根节点，利用剩下的数组成两个二叉搜索树，最终计算出来 1-n 的二叉搜索树的集合。</p>
+<p>上述公式，将大问题 \( f(1, n) \) 分解成了小问题 \( f(1, i-1), f(i+1, n) \)</p>
+<p><strong>递归出口</strong>:</p>
+<p>当 \( f(i, j) \) 中，i &gt; j 的时候，即此时计算的子树是 0 个节点，那么 \( f(i, j) \) 返回一个空数组。</p>
+<h3 id="普通解法的代码">普通解法的代码</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">genTreeTedious</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">start</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">end</span> <span style="color:#204a87;font-weight:bold">int</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">lt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TreeNode</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">res</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">make</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">lt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TreeNode</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">root</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">start</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">root</span> <span style="color:#ce5c00;font-weight:bold">&lt;=</span> <span style="color:#000">end</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">root</span><span style="color:#ce5c00;font-weight:bold">++</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">leftTrees</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">genTreeTedious</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">start</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">root</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">rightTrees</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">genTreeTedious</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">root</span><span style="color:#ce5c00;font-weight:bold">+</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">end</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">leftTrees</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rightTrees</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">tree</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">lt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TreeNode</span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000">Val</span><span style="color:#000;font-weight:bold">:</span>   <span style="color:#000">root</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000">Left</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000">Right</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">res</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">tree</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">leftTrees</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">_</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">right</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87;font-weight:bold">range</span> <span style="color:#000">rightTrees</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000">tree</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">lt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TreeNode</span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000">Val</span><span style="color:#000;font-weight:bold">:</span>   <span style="color:#000">root</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000">Left</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000">Right</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">right</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000">res</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">tree</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rightTrees</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">_</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">left</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87;font-weight:bold">range</span> <span style="color:#000">leftTrees</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000">tree</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">lt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TreeNode</span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000">Val</span><span style="color:#000;font-weight:bold">:</span>   <span style="color:#000">root</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000">Left</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#000">left</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000">Right</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000">res</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">tree</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">_</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">left</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87;font-weight:bold">range</span> <span style="color:#000">leftTrees</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">_</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">right</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87;font-weight:bold">range</span> <span style="color:#000">rightTrees</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000">tree</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">lt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TreeNode</span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#000">Val</span><span style="color:#000;font-weight:bold">:</span>   <span style="color:#000">root</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#000">Left</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#000">left</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>						<span style="color:#000">Right</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">right</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000">res</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">tree</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">res</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>在上述代码中，我们在递归出口中，直接返回了一个空数组，那么它的上一层就需要判断当前子树是否到了递归出口，如果是，则补充上一个叶子节点。</p>
+<p>由于需要判断，左右子树同时达到出口，左子树达到出口，右子树达到出口三种情况，代码整体看起来很繁琐。</p>
+<h3 id="添加了哨兵之后的代码">添加了哨兵之后的代码</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">genTree</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">start</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">end</span> <span style="color:#204a87;font-weight:bold">int</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">lt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TreeNode</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">res</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">make</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">lt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TreeNode</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 这一句让, leftTrees 和 rightTrees 返回的长度不是0, 而是1, 里面的值是 nil
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">start</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000">end</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">lt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TreeNode</span><span style="color:#000;font-weight:bold">{</span><span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">root</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">start</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">root</span> <span style="color:#ce5c00;font-weight:bold">&lt;=</span> <span style="color:#000">end</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">root</span><span style="color:#ce5c00;font-weight:bold">++</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">leftTrees</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">genTree</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">start</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">root</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">rightTrees</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">genTree</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">root</span><span style="color:#ce5c00;font-weight:bold">+</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">end</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">_</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">left</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87;font-weight:bold">range</span> <span style="color:#000">leftTrees</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">_</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">right</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87;font-weight:bold">range</span> <span style="color:#000">rightTrees</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000">tree</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">lt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">TreeNode</span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000">Val</span><span style="color:#000;font-weight:bold">:</span>   <span style="color:#000">root</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000">Left</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#000">left</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#000">Right</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">right</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000">res</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">tree</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">res</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>上述代码和前一小节的代码思路是一样的，不过在递归出口处，不是返回一个空数组，而是返回包含一个 <code>nil</code> 元素的数组。</p>
+<p>这样递归出口的上一层，不需要判断下一层是否达到了出口，直接使用下一层返回的子树 <code>nil</code> 作为叶子节点的 <code>Left</code> 和 <code>Right</code> 的值。</p>
+<p>这样使用了包含了 <code>nil</code> 的数组作为哨兵之后，代码整体看起来简洁了很多。</p>
+<h2 id="合并有序列表使用了哨兵变量todo">合并有序列表使用了哨兵变量(TODO)</h2>
+<h2 id="循环链表也使用了哨兵变量-todo-待讨论">循环链表也使用了哨兵变量 (TODO: 待讨论)</h2>
+
 	<div class="text-muted mt-5 pt-3 border-top">
    2022年09月11日 / 10:52</div>
 
