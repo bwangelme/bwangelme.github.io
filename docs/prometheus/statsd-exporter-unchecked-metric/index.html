@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.117.0">
+<meta name="generator" content="Hugo 0.115.2">
 <meta name="robots" content="index, follow">
 
 
@@ -436,7 +436,9 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docsencoding-li">
   <a href="/647/docs/encoding/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docsencoding"><span class="">编码</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsencodingvariant_zigzag-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsencodingunicode-li">
+  <a href="/647/docs/encoding/unicode/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsencodingunicode"><span class="">细说：Unicode, UTF-8, UTF-16, UTF-32, UCS-2, UCS-4</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsencodingvariant_zigzag-li">
   <a href="/647/docs/encoding/variant_zigzag/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsencodingvariant_zigzag"><span class="">ZigZag 变长整数编码</span></a>
 </li>
   </ul>
@@ -707,7 +709,10 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">tombkeeper</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">ucs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/unicode/" data-taxonomy-term="unicode"><span class="taxonomy-label">unicode</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/unittest/" data-taxonomy-term="unittest"><span class="taxonomy-label">unittest</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/utf-16/" data-taxonomy-term="utf-16"><span class="taxonomy-label">utf-16</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">vagrant</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/vim/" data-taxonomy-term="vim"><span class="taxonomy-label">Vim</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">vimium-c</span><span class="taxonomy-count">1</span></a></li>
@@ -966,7 +971,7 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// prometheus.DefaultRegisterer.Register(h)
 </span></span></span></code></pre></div><p><code>prometheus.Collector</code> 接口有一个 <code>Describe</code> 方法，它用于获取指标的信息。具体做法是传入一个 channel 参数，指标将 Desc 信息写入到 channel 中。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">type</span> <span style="color:#000">Collector</span> <span style="color:#204a87;font-weight:bold">interface</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#a40000">#</span> <span style="color:#000">Desc</span> <span style="color:#000">包含指标名</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">help</span> <span style="color:#000">等信息</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a40000">#</span> <span style="color:#000">Desc</span> <span style="color:#a40000">包含指标名</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">help</span> <span style="color:#a40000">等信息</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#000">Describe</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">chan</span><span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">Desc</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">...</span><span style="color:#000;font-weight:bold">.</span>
 </span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
