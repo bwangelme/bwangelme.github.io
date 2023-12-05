@@ -95,7 +95,7 @@ UTF-8的编码规则：
 最多编码字节数|4|4|4|2|4
 是否依赖字节序|否|是|是|是|是
 
-### 参考
+## 参考
 
 - [维基百科：Unicode](https://en.wikipedia.org/wiki/Unicode)
 - [维基百科：Universal Coded Character Set](https://en.wikipedia.org/wiki/Universal_Coded_Character_Set)
