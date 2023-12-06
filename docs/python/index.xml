@@ -16,6 +16,47 @@
     
     
     <item>
+      <title>Docs: Python2 的正则在 Mac 和 Linux 上的不同表现</title>
+      <link>https://bwangel.me/647/docs/python/unicode-re/</link>
+      <pubDate>Wed, 06 Dec 2023 12:20:47 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/python/unicode-re/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;表现&#34;&gt;表现&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;s = u&amp;#39;玛丽黛佳眉笔只-需-18,冲p腹t製o2𝒂I5EfW4xPmTq𝒃o2打🤔开桃o寶&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个字符串 s 是一段淘口令，核心内容就是 𝒂 和 𝒃 之间的 ID &lt;code&gt;I5EfW4xPmTq&lt;/code&gt;, 我们想用一个正则表达式将 ID 捕获出来。&lt;/p&gt;
+&lt;p&gt;𝒂 和 𝒃 的 unicode 码点不在基本平面内，在1号平面内。Unicode 各个平面的字符范围参考 &lt;a href=&#34;https://zh.wikipedia.org/wiki/Unicode%E5%AD%97%E7%AC%A6%E5%B9%B3%E9%9D%A2%E6%98%A0%E5%B0%84&#34;&gt;维基百科&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在 MacOS 的 Python2 上，可以用下面这段正则捕获&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ur&amp;#34;[\uD800-\uDBFF][\uDC00-\uDFFF]([a-zA-Z0-9]{11})[\uD800-\uDBFF][\uDC00-\uDFFF]&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;D800-DBFF&lt;/code&gt;, &lt;code&gt;DC00-DFFF&lt;/code&gt; 表示非基本平面的字符，用 utf-16 编码后，生成的两个字节。&lt;/p&gt;
+&lt;p&gt;MacOS 的 Python2 中，编译的时候默认使用了 UCS2 作为 Unicode 的编码实现，&lt;code&gt;sys.maxunicode == 65535&lt;/code&gt;， 它不支持展示非基本平面外的 unicode 字符，所以只能用这种办法来绕过。&lt;/p&gt;
+&lt;p&gt;在 Linux 的 Python2 中，上述正则就失效了，需要用另外一个正则&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ur&amp;#34;[\U00010000-\U0001FFFF]([a-zA-Z0-9]{11})[\U00010000-\U0001FFFF]&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;00010000-0001FFFF&lt;/code&gt; 表示1号平面内的所有字符。&lt;/p&gt;
+&lt;p&gt;Linux 的 Python2 中，Unicode 的编码实现使用的是 UCS4，&lt;code&gt;sys.maxunicode == 1114111&lt;/code&gt;, 它可以展示 Unicode 17 个平面中的所有字符，所以在正则中可以直接写非基本平面的码点&lt;/p&gt;
+&lt;h2 id=&#34;如何开启-ucs4&#34;&gt;如何开启 UCS4&lt;/h2&gt;
+&lt;p&gt;编译 Python 的时候，指定 &lt;code&gt;--enable-unicode=ucs4&lt;/code&gt; 即可指定 unicode 的编码实现是 UCS4, 从而支持展示所有平面的 Unicode 码点。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;curl -O https://www.python.org/ftp/python/2.7.8/Python-2.7.8.tgz
+tar xf ./Python-2.7.8.tgz
+cd ./Python-2.7.8
+./configure --enable-unicode=ucs4 --prefix=/path/to/install MACOSX_DEPLOYMENT_TARGET=10.9
+make
+make install
+cd
+/path/to/install/bin/python2.7
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/a/25112348/5161084&#34;&gt;How to install python on Mac with wide-build&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zh.wikipedia.org/wiki/Unicode%E5%AD%97%E7%AC%A6%E5%B9%B3%E9%9D%A2%E6%98%A0%E5%B0%84&#34;&gt;Unicode字符平面映射&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cnblogs.com/malecrab/p/5300503.html&#34;&gt;细说：Unicode, UTF-8, UTF-16, UTF-32, UCS-2, UCS-4&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
       <title>Docs: Python2 使用 Thrift 为什么会出现 EINTR 错误</title>
       <link>https://bwangel.me/647/docs/python/thrift-eintr/</link>
       <pubDate>Fri, 27 Oct 2023 09:22:30 +0800</pubDate>
