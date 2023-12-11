@@ -19,20 +19,40 @@
 <link rel="icon" type="image/png" href="/647/favicons/android-192x192.png" sizes="192x192">
 
 <title>Thrift Python Client 解析负数 field id 失败 | 647 Universe</title>
-<meta name="description" content="">
+<meta name="description" content="thrift python 的 fastbinary 是什么 thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。
+序列化的方式有多种，JSON, Binary, Compact。
+Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C&#43;&#43; 实现。C&#43;&#43; 实现的这份我们叫做 fastbinary。
+使用 TBinaryProtocol 初始化 protocol ，调用的是纯 Python 实现。TBinaryProtocolAccelerated 调用的是 C&#43;&#43; 实现。
+问题描述 Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。
+我们创建一个 thrift 服务，它的 idl 文件定义如下 service Service { string hello(1: string name) i64 add(i64 a, i64 b) } hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)">
 <meta property="og:title" content="Thrift Python Client 解析负数 field id 失败" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="thrift python 的 fastbinary 是什么 thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。
+序列化的方式有多种，JSON, Binary, Compact。
+Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C&#43;&#43; 实现。C&#43;&#43; 实现的这份我们叫做 fastbinary。
+使用 TBinaryProtocol 初始化 protocol ，调用的是纯 Python 实现。TBinaryProtocolAccelerated 调用的是 C&#43;&#43; 实现。
+问题描述 Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。
+我们创建一个 thrift 服务，它的 idl 文件定义如下 service Service { string hello(1: string name) i64 add(i64 a, i64 b) } hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bwangel.me/647/docs/thrift/python-fastbinary-negative-field-id-error/" /><meta property="article:section" content="docs" />
 <meta property="article:published_time" content="2023-11-23T17:27:03+08:00" />
-<meta property="article:modified_time" content="2023-11-24T18:40:28+08:00" /><meta property="og:site_name" content="647号宇宙" />
+<meta property="article:modified_time" content="2023-12-11T19:52:07+08:00" /><meta property="og:site_name" content="647号宇宙" />
 <meta itemprop="name" content="Thrift Python Client 解析负数 field id 失败">
-<meta itemprop="description" content=""><meta itemprop="datePublished" content="2023-11-23T17:27:03+08:00" />
-<meta itemprop="dateModified" content="2023-11-24T18:40:28+08:00" />
-<meta itemprop="wordCount" content="0">
-<meta itemprop="keywords" content="Tag1,Tag2," /><meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="thrift python 的 fastbinary 是什么 thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。
+序列化的方式有多种，JSON, Binary, Compact。
+Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C&#43;&#43; 实现。C&#43;&#43; 实现的这份我们叫做 fastbinary。
+使用 TBinaryProtocol 初始化 protocol ，调用的是纯 Python 实现。TBinaryProtocolAccelerated 调用的是 C&#43;&#43; 实现。
+问题描述 Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。
+我们创建一个 thrift 服务，它的 idl 文件定义如下 service Service { string hello(1: string name) i64 add(i64 a, i64 b) } hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)"><meta itemprop="datePublished" content="2023-11-23T17:27:03+08:00" />
+<meta itemprop="dateModified" content="2023-12-11T19:52:07+08:00" />
+<meta itemprop="wordCount" content="655">
+<meta itemprop="keywords" content="Python,Thrift," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Thrift Python Client 解析负数 field id 失败"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="thrift python 的 fastbinary 是什么 thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。
+序列化的方式有多种，JSON, Binary, Compact。
+Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C&#43;&#43; 实现。C&#43;&#43; 实现的这份我们叫做 fastbinary。
+使用 TBinaryProtocol 初始化 protocol ，调用的是纯 Python 实现。TBinaryProtocolAccelerated 调用的是 C&#43;&#43; 实现。
+问题描述 Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。
+我们创建一个 thrift 服务，它的 idl 文件定义如下 service Service { string hello(1: string name) i64 add(i64 a, i64 b) } hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)"/>
 
 
 
@@ -615,7 +635,18 @@
 
 </div>
 
-            
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#thrift-python-的-fastbinary-是什么">thrift python 的 fastbinary 是什么</a></li>
+    <li><a href="#问题描述">问题描述</a></li>
+    <li><a href="#抓包查看细节">抓包查看细节</a></li>
+    <li><a href="#问题原因">问题原因</a></li>
+    <li><a href="#代码考古">代码考古</a></li>
+  </ul>
+</nav>
+      </div>
+    
             <div class="taxonomy taxonomy-terms-cloud taxo-tags">
       <h5 class="taxonomy-title">Tag Cloud</h5>
       <ul class="taxonomy-terms">
@@ -677,20 +708,18 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">prom</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">prometheus</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/pubsub/" data-taxonomy-term="pubsub"><span class="taxonomy-label">PubSub</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">21</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">22</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/python%E6%A0%87%E5%87%86%E5%BA%93/" data-taxonomy-term="python%E6%A0%87%E5%87%86%E5%BA%93"><span class="taxonomy-label">Python标准库</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/rabbitmq/" data-taxonomy-term="rabbitmq"><span class="taxonomy-label">RabbitMQ</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">re</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/redis/" data-taxonomy-term="redis"><span class="taxonomy-label">Redis</span><span class="taxonomy-count">7</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">stackoverflow</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">stty</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tag1/" data-taxonomy-term="tag1"><span class="taxonomy-label">Tag1</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tag2/" data-taxonomy-term="tag2"><span class="taxonomy-label">Tag2</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">tcp</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tdd/" data-taxonomy-term="tdd"><span class="taxonomy-label">TDD</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/template/" data-taxonomy-term="template"><span class="taxonomy-label">Template</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/test/" data-taxonomy-term="test"><span class="taxonomy-label">Test</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">6</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">42</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">tombkeeper</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span><span class="taxonomy-count">1</span></a></li>
@@ -749,13 +778,207 @@
 		<div class="taxonomy taxonomy-terms-article taxo-tags">
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tag1/" data-taxonomy-term="tag1"><span class="taxonomy-label">Tag1</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tag2/" data-taxonomy-term="tag2"><span class="taxonomy-label">Tag2</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span></a></li>
     </ul>
 </div>
 
   </header>
-	
+	<h2 id="thrift-python-的-fastbinary-是什么">thrift python 的 fastbinary 是什么</h2>
+<p>thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。</p>
+<p>序列化的方式有多种，JSON, Binary, Compact。</p>
+<p>Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实现。C++ 实现的这份我们叫做 fastbinary。</p>
+<p>使用 <code>TBinaryProtocol</code> 初始化 protocol ，调用的是纯 Python 实现。<code>TBinaryProtocolAccelerated</code> 调用的是 C++ 实现。</p>
+<h2 id="问题描述">问题描述</h2>
+<p>Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。</p>
+<ol>
+<li>我们创建一个 thrift 服务，它的 idl 文件定义如下</li>
+</ol>
+<pre tabindex="0"><code>service Service {
+   string hello(1: string name)
+   i64 add(i64 a, i64 b)
+}
+</code></pre><p>hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)</p>
+<ol start="2">
+<li>client.py 和 server.py 的代码如下</li>
+</ol>
+<ul>
+<li>client.py</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">gen_py.tutorial</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Service</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">thrift.transport</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">TSocket</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">thrift.transport</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">TTransport</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">thrift.protocol</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">TBinaryProtocol</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">():</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Make socket</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">transport</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">TSocket</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">TSocket</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;localhost&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">9090</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Buffering is critical. Raw sockets are very slow</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">transport</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">TTransport</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">TBufferedTransport</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">transport</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># TBinaryProtocolAccelerated 表示 binary 协议使用 fastbinary 进行序列化</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">protocol</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">TBinaryProtocol</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">TBinaryProtocolAccelerated</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">transport</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># protocol = TBinaryProtocol.TBinaryProtocol(transport)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Create a client to use the protocol encoder</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">client</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Service</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">Client</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">protocol</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Connect!</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">transport</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">open</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">client</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">hello</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;bwangel&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">client</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">add</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">40</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">__name__</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#39;__main__&#39;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><ul>
+<li>server.py</li>
+</ul>
+<pre tabindex="0"><code>import sys
+sys.path.append(&#39;gen-py&#39;)
+
+from gen_py.tutorial import Service
+from thrift.transport import TSocket
+from thrift.transport import TTransport
+from thrift.protocol import TBinaryProtocol
+from thrift.server import TServer
+
+
+class ServiceHandler:
+    def __init__(self):
+        self.log = {}
+
+    def hello(self, name):
+        return &#34;hello, %s&#34; % name
+
+    def add(self, a, b):
+        return a + b
+
+
+if __name__ == &#39;__main__&#39;:
+    handler = ServiceHandler()
+    processor = Service.Processor(handler)
+    transport = TSocket.TServerSocket(host=&#39;127.0.0.1&#39;, port=9090)
+    tfactory = TTransport.TBufferedTransportFactory()
+    pfactory = TBinaryProtocol.TBinaryProtocolFactory()
+
+    server = TServer.TSimpleServer(processor, transport, tfactory, pfactory)
+
+    print(&#39;Starting the server...&#39;)
+    server.serve()
+    print(&#39;done.&#39;)
+</code></pre><p>上述完整代码见 <a href="https://github.com/bwangelme/thrift-fastbinary-error">Github</a></p>
+<p>当我们运行 <code>./venv/bin/python client.py</code> 之后，服务端就会出现错误</p>
+<pre tabindex="0"><code>ERROR:root:Unexpected exception in handler
+Traceback (most recent call last):
+  File &#34;/home/xuyundong/Github/Python/thrift-fastbinary-error/gen_py/tutorial/Service.py&#34;, line 171, in process_add
+    result.success = self._handler.add(args.a, args.b)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/xuyundong/Github/Python/thrift-fastbinary-error/server.py&#34;, line 19, in add
+    return a + b
+           ~~^~~
+TypeError: unsupported operand type(s) for +: &#39;NoneType&#39; and &#39;NoneType&#39;
+</code></pre><p>这是因为服务端的 <code>add</code> 方法接收到的两个参数 <code>a</code> 和 <code>b</code> 都是 None, 在它们之上执行 <code>+</code> 就会抛出 <code>TypeError</code></p>
+<h2 id="抓包查看细节">抓包查看细节</h2>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-12-11-192219.png" alt=""></p>
+<p>这是 add 方法的请求包，可以看到出了包头和方法之外，没有任何参数。应该写参数的位置写了一个空结构体(<code>T_STOP</code>)。</p>
+<h2 id="问题原因">问题原因</h2>
+<p>为什么客户端的参数没有写到协议里面呢，我们可以看一下生成代码的细节</p>
+<p>在 <code>gen_py/tutorial/Service.py:191</code> 中定义了 hello 方法参数的序列化类 <code>hello_args</code></p>
+<pre tabindex="0"><code>class hello_args(object):
+    &#34;&#34;&#34;
+    Attributes:
+     - name
+
+    &#34;&#34;&#34;
+
+
+    def __init__(self, name=None,):
+        self.name = name
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+        ....
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        ....
+</code></pre><p>可以看到，它在写入和读取的时候，都会判断底层协议对象(iprot, oprot)有没有 <code>_fast_decode/_fast_encode</code> 方法，如果有的话，调用这些方法。<code>_fast_decode/_fast_encode</code> 就是用 C++ 实现的 Binary 协议的序列化方法。</p>
+<p>_fast_encode 方法传入2个参数，</p>
+<ol>
+<li>hello_args 对象</li>
+<li>[hello_args 类, hello_args 对象的 <code>thrift_spec</code> 属性] 组成的元组</li>
+</ol>
+<p>问题就出在 thrift_spec 上，我们观察 <code>hello_args</code> 和 <code>add_args</code> 的 thrift_spec，发现 <code>add_args</code> 的 thrift_spec 是空的。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#000">hello_args</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">thrift_spec</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">None</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># 0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">TType</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">STRING</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;name&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;UTF8&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">None</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">),</span>  <span style="color:#8f5902;font-style:italic"># 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#000">add_args</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">thrift_spec</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><p>为什么 <code>add_args.thrift_spec</code> 会是空的呢，我们再来看 thrift 编译器生成 Python 代码的逻辑，在 thrift 的代码 <a href="https://github.com/apache/thrift/blob/0.18.1/compiler/cpp/src/thrift/generate/t_py_generator.cc#L739-L775"><code>compiler/cpp/src/thrift/generate/t_py_generator.cc</code></a> 中的 <code>generate_py_thrift_spec</code> 中，定义了生成 thrift_spec 的逻辑。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> * Generate the thrift_spec for a struct
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> * For example,
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> *   all_structs.append(Recursive)
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> *   Recursive.thrift_spec = (
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> *       None,  # 0
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> *       (1, TType.LIST, &#39;Children&#39;, (TType.STRUCT, (Recursive, None), False), None, ),  # 1
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> *   )
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">t_py_generator</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">generate_py_thrift_spec</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ostream</span><span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">out</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                                             <span style="color:#000">t_struct</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">tstruct</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                                             <span style="color:#204a87;font-weight:bold">bool</span> <span style="color:#8f5902;font-style:italic">/*is_exception*/</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#000">vector</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">t_field</span><span style="color:#ce5c00;font-weight:bold">*&gt;&amp;</span> <span style="color:#000">sorted_members</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">tstruct</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">get_sorted_members</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">vector</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">t_field</span><span style="color:#ce5c00;font-weight:bold">*&gt;::</span><span style="color:#000">const_iterator</span> <span style="color:#000">m_iter</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic">// Add struct definition to list so thrift_spec can be fixed for recursive structures.
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#000">indent</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;all_structs.append(&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">tstruct</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">get_name</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;)&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic">// __注意__: 这里的判断语句， sorted_members[0]-&gt;get_key() &gt;= 0, 意味着结构体成员的 field_num &gt;= 0, 才会执行 if 块里面的内容
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">sorted_members</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">empty</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">sorted_members</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">get_key</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">&gt;=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">indent</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">tstruct</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">get_name</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;.thrift_spec = (&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">indent_up</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">sorted_keys_pos</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">m_iter</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">sorted_members</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">begin</span><span style="color:#000;font-weight:bold">();</span> <span style="color:#000">m_iter</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000">sorted_members</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">end</span><span style="color:#000;font-weight:bold">();</span> <span style="color:#ce5c00;font-weight:bold">++</span><span style="color:#000">m_iter</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(;</span> <span style="color:#000">sorted_keys_pos</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">m_iter</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">get_key</span><span style="color:#000;font-weight:bold">();</span> <span style="color:#000">sorted_keys_pos</span><span style="color:#ce5c00;font-weight:bold">++</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">indent</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;None,  # &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">sorted_keys_pos</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">indent</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;(&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">m_iter</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">get_key</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;, &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">type_to_enum</span><span style="color:#000;font-weight:bold">((</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">m_iter</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">get_type</span><span style="color:#000;font-weight:bold">())</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;, &#34;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;&#39;&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">m_iter</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">get_name</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;, &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">type_to_spec_args</span><span style="color:#000;font-weight:bold">((</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">m_iter</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">get_type</span><span style="color:#000;font-weight:bold">())</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;, &#34;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">render_field_default_value</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">m_iter</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;, &#34;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;),&#34;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;  # &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">sorted_keys_pos</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">sorted_keys_pos</span><span style="color:#ce5c00;font-weight:bold">++</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">indent_down</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">indent</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;)&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">indent</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">tstruct</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">get_name</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;.thrift_spec = ()&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>可以看到，thrift 编译器生成代码的时候有判断逻辑，如果结构体第一个成员的 field_number &lt; 0, 那么结构体对应的 <code>thrift_spec</code> 就是个空元组。</p>
+<p>这样就能解释的通了，因为 <code>add</code> 方法没有写序列号，thrift 默认使用负数序列号，那它们生成代码的时候，<code>thrift_spec</code> 属性就是空，fastbinary 序列化成二进制协议的时候，也就不会生成对应的内容了。</p>
+<h2 id="代码考古">代码考古</h2>
+<p>为什么 thrift 要这样区别对待非 strict 的方法呢，我翻了一下历史 PR, 找到了 fastbinary 最初提交的 COMMIT</p>
+<ul>
+<li><a href="https://github.com/apache/thrift/commit/382fc3043cba33fea1a919e4e6bfeac0cb9c22aa">382fc3043cba33fea1a919e4e6bfeac0cb9c22aa</a></li>
+</ul>
+<p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-12-11-194538.png" alt=""></p>
+<p>作者一开始就没有考虑 field_id 是负数的情况，他当时还留了一个 TODO, 后来随着时间的流逝，这个 TODO 也被删掉了。</p>
+
 	<div class="text-muted mt-5 pt-3 border-top">
    2023年11月23日 / 17:27</div>
 
