@@ -28,7 +28,7 @@ sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa
 ## Ubuntu 将 capslock 映射成 esc
 
 ```sh
-sudo apt-get install dconf-tools
+sudo apt-get install dconf-cli
 # 使 caps 成为 esc 按键
 dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
 # 交换 caps 和 esc 按键
