@@ -2,7 +2,7 @@
 title: "细说：Unicode, UTF-8, UTF-16, UTF-32, UCS-2, UCS-4"
 date: 2023-12-05T19:18:29+08:00
 lastmod: 2023-12-05T19:18:29+08:00
-tags: [unicode, utf-16, ucs]
+tags: [unicode, utf-16, ucs, blog]
 author: "bwangel"
 ---
 

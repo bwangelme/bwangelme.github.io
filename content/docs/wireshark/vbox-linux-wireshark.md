@@ -2,7 +2,6 @@
 title: "利用 VirtualBox 和 Ubuntu 22 重现抓包实验"
 date: 2023-08-23T10:07:25+08:00
 lastmod: 2023-08-23T10:07:25+08:00
-weight: 4
 tags: [wireshark, blog]
 ---
 

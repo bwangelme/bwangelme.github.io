@@ -2,7 +2,7 @@
 title: "Python2 的正则在 Mac 和 Linux 上的不同表现"
 date: 2023-12-06T12:20:47+08:00
 lastmod: 2023-12-06T12:20:47+08:00
-tags: [Python, Unicode, re]
+tags: [Python, Unicode, re, blog]
 author: "bwangel"
 ---
 
