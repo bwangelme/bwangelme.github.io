@@ -12,7 +12,7 @@ comment: true
 ```sh
 sed -i 's/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 sudo apt update
-sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump
+sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa
 ```
 
 - [github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
@@ -23,6 +23,7 @@ sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump
 - [gvm](https://github.com/moovweb/gvm)
 - [rustup](https://rustup.rs/)
 - [nerdfont DejaVuSansMono](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/DejaVuSansMono.zip)
+- [font](/647/docs/ubuntu/nvim-web-devicons/)
 
 ## Ubuntu 将 capslock 映射成 esc
 
