@@ -35,10 +35,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 刷新字体缓存&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fc-cache -fv
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;获取字体名称，打开终端，在 &lt;strong&gt;配置文件首选项&lt;/strong&gt; 中查看字体名称&lt;/li&gt;
+&lt;li&gt;获取字体名称 &lt;code&gt;DejaVuSansM Nerd Font Mono&lt;/code&gt; ，打开终端，在 &lt;strong&gt;配置文件首选项&lt;/strong&gt; 中查看字体名称&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-10-21-155055.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;可以看到字体名称是: &lt;strong&gt;DejaVuSansMono Nerd Font Mono&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;可以看到字体名称是: &lt;strong&gt;DejaVuSansM Nerd Font Mono&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;修改 &lt;code&gt;~/.alacritty.yml&lt;/code&gt; 文件，将 &lt;code&gt;font -&amp;gt; normal -&amp;gt; family&lt;/code&gt; 改成对应的字体名称&lt;/li&gt;
 &lt;li&gt;最终，我们就能够在终端里看到，图标被正确显示了&lt;/li&gt;

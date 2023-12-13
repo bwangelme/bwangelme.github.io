@@ -35,10 +35,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 刷新字体缓存&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fc-cache -fv
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;获取字体名称，打开终端，在 &lt;strong&gt;配置文件首选项&lt;/strong&gt; 中查看字体名称&lt;/li&gt;
+&lt;li&gt;获取字体名称 &lt;code&gt;DejaVuSansM Nerd Font Mono&lt;/code&gt; ，打开终端，在 &lt;strong&gt;配置文件首选项&lt;/strong&gt; 中查看字体名称&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-10-21-155055.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;可以看到字体名称是: &lt;strong&gt;DejaVuSansMono Nerd Font Mono&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;可以看到字体名称是: &lt;strong&gt;DejaVuSansM Nerd Font Mono&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;修改 &lt;code&gt;~/.alacritty.yml&lt;/code&gt; 文件，将 &lt;code&gt;font -&amp;gt; normal -&amp;gt; family&lt;/code&gt; 改成对应的字体名称&lt;/li&gt;
 &lt;li&gt;最终，我们就能够在终端里看到，图标被正确显示了&lt;/li&gt;
@@ -63,7 +63,7 @@
         &lt;h2 id=&#34;安装软件&#34;&gt;安装软件&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g&amp;#39;&lt;/span&gt; /etc/apt/sources.list
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt update
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/cli/cli/blob/trunk/docs/install_linux.md&#34;&gt;github cli&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.vagrantup.com/downloads&#34;&gt;vagrant&lt;/a&gt;&lt;/li&gt;
@@ -73,9 +73,10 @@
 &lt;li&gt;&lt;a href=&#34;https://github.com/moovweb/gvm&#34;&gt;gvm&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://rustup.rs/&#34;&gt;rustup&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/DejaVuSansMono.zip&#34;&gt;nerdfont DejaVuSansMono&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://bwangel.me/647/647/docs/ubuntu/nvim-web-devicons/&#34;&gt;font&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;ubuntu-将-capslock-映射成-esc&#34;&gt;Ubuntu 将 capslock 映射成 esc&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install dconf-tools
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install dconf-cli
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 使 caps 成为 esc 按键&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dconf write /org/gnome/desktop/input-sources/xkb-options &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;[&amp;#39;caps:escape&amp;#39;]&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 交换 caps 和 esc 按键&lt;/span&gt;

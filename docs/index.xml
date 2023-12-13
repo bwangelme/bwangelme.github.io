@@ -15,302 +15,6 @@
     
     
     <item>
-      <title>Docs: 利用 VirtualBox 和 Ubuntu 22 重现抓包实验</title>
-      <link>https://bwangel.me/647/docs/wireshark/vbox-linux-wireshark/</link>
-      <pubDate>Wed, 23 Aug 2023 10:07:25 +0800</pubDate>
-      
-      <guid>https://bwangel.me/647/docs/wireshark/vbox-linux-wireshark/</guid>
-      <description>
-        
-        
-        &lt;h2 id=&#34;实验介绍&#34;&gt;实验介绍&lt;/h2&gt;
-&lt;p&gt;在 &lt;a href=&#34;https://book.douban.com/subject/26268767/&#34;&gt;《Wireshark网络分析就这么简单》&lt;/a&gt; 第一章，讲述了一道面试题。&lt;/p&gt;
-&lt;p&gt;HostA 和 HostB 在同一个局域网中，它们的 IP 配置如下，请问这两台机器能否 ping 通?&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HostA: 
-    IP: 192.168.26.129/24
-    Gateway: 192.168.26.2
-HostB: 
-    IP: 192.168.26.3/27
-    Gateway: 192.168.26.2
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;答案是能够 ping 通，HostA 和 HostB 连同网关最终会形成一个奇怪的网络&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-103426.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;具体通信过程如下:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;HostA(&lt;code&gt;192.168.26.129&lt;/code&gt;) 发送 ping 请求给 HostB(&lt;code&gt;192.168.26.3&lt;/code&gt;)
-&lt;ul&gt;
-&lt;li&gt;HostA 将 HostB 的 IP 和自己的掩码计算，发现 &lt;code&gt;192.168.26.3&lt;/code&gt; 和自己是处于同一子网&lt;/li&gt;
-&lt;li&gt;HostA 通过 ARP 协议广播寻找 &lt;code&gt;192.168.26.3&lt;/code&gt; 的 MAC 地址，由于 &lt;code&gt;192.168.26.3&lt;/code&gt; 和它在同一局域网中，&lt;code&gt;192.168.26.3&lt;/code&gt; 会应答自己的 MAC 地址&lt;/li&gt;
-&lt;li&gt;HostA 将 ping 请求直接发送给 &lt;code&gt;192.168.26.3&lt;/code&gt;, 目的 MAC 地址使用的就是 &lt;code&gt;192.168.26.3&lt;/code&gt; 的地址&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;HostB(&lt;code&gt;192.168.26.3&lt;/code&gt;) 收到 ping 请求，给 HostA 发送 ping 响应
-&lt;ul&gt;
-&lt;li&gt;HostB 将 HostA 的 IP 和自己的掩码计算，发现 &lt;code&gt;192.168.26.129&lt;/code&gt; 和自己不是同一子网
-&lt;ul&gt;
-&lt;li&gt;192.168.26.3 &amp;amp; 255.255.255.224 == 192.168.26.0&lt;/li&gt;
-&lt;li&gt;192.168.26.129 &amp;amp; 255.255.255.224 == 192.168.26.128&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;HostB 将 ping 响应发送给网关，由网关进行路由发送
-&lt;ul&gt;
-&lt;li&gt;HostB 通过 APR 协议广播寻找网关 &lt;code&gt;192.168.26.2&lt;/code&gt; 的 MAC 地址，网关 &lt;code&gt;192.168.26.2&lt;/code&gt; 告诉 HostB 自己的 MAC&lt;/li&gt;
-&lt;li&gt;HostB 发送 ping 响应包，目的 IP 是 &lt;code&gt;192.168.26.129&lt;/code&gt;, 目的 MAC 是网关的 MAC 地址&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;网关将 ping 响应发送给了 HostA&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;开始实验&#34;&gt;开始实验&lt;/h2&gt;
-&lt;p&gt;读完以后，感觉这个测试挺好玩，就尝试在本地复现了一下。&lt;/p&gt;
-&lt;p&gt;我的环境如下，3台安装了 Ubuntu 22.04 Vitualbox 虚拟机, 它们分别充当 HostA, HostB 和 网关&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-224057.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;配置-vagrant&#34;&gt;配置 Vagrant&lt;/h3&gt;
-&lt;p&gt;我的 VirtualBox 是通过 Vagrant 启动的&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;首先我们需要在 Vagrant 官网上下载 Ubuntu 22.04 的 Box&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;https://app.vagrantup.com/ubuntu/boxes/jammy64&#34;&gt;ubuntu/jammy64 Vagrant box 下载地址&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;下载完成之后通过如下命令添加 Vagrant Box&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vagrant box add ~/Downloads/jammy-server-cloudimg-amd64-vagrant.box --name ubuntu/jammy
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;添加完成后使用 &lt;code&gt;vagrant box list&lt;/code&gt; 可以看到我们添加的 box 名字了&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;接着我们再来安装 &lt;code&gt;vagrant-disksize&lt;/code&gt; 插件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 建议在执行命令前挂上 http 代理&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;vagrant plugin install vagrant-disksize
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;启动并配置-vbox&#34;&gt;启动并配置 VBox&lt;/h3&gt;
-&lt;p&gt;这是我的 Vagrantfile, 它启动了三个 virtualbox 虚拟机，分别命名为 vbox1, vbox2, vbox3。完整代码见 &lt;a href=&#34;https://github.com/bwangelme/DockerVbox.git&#34;&gt;github/bwangelme/DockerVbox.git&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# -*- mode: ruby -*-&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# vi: set ft=ruby :&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Verify whether required plugins are installed.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;required_plugins&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;vagrant-disksize&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;required_plugins&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;each&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;plugin&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;not&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Vagrant&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;has_plugin?&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;plugin&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;raise&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;The vagrant plugin &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;plugin&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; is required. Please run `vagrant plugin install &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;plugin&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;`&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;Vagrant&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;box_check_update&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;$num_instances&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;..&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$num_instances&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;each&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;define&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;vbox&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;box&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ubuntu/jammy&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;hostname&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;vbox&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;provider&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;virtualbox&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vb&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;vb&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;memory&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;1024&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;vb&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cpus&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;vb&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;vbox&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 单独执行 vagrant provision 也会执行一遍 install.sh 脚本&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;provision&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;shell&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;path&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;install.sh&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将 &lt;a href=&#34;https://github.com/bwangelme/DockerVbox.git&#34;&gt;github/bwangelme/DockerVbox.git&lt;/a&gt; 克隆到本地，进入目录中执行&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vagrant up
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;就可以创建并启动三个 Ubuntu 22.04 的 VirtualBox 虚机了&lt;/p&gt;
-&lt;p&gt;启动完成后，我们执行&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vagrant halt
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;将虚拟机先停止，接着我们来手动设置网络。&lt;/p&gt;
-&lt;h3 id=&#34;设置-vbox-网络&#34;&gt;设置 VBox 网络&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;第一步，打开 VirtualBox 的 &lt;strong&gt;管理 -&amp;gt; 全局设定&lt;/strong&gt; ，打开网络 Tab, 添加一个 Nat 网络，设置名字为 &lt;code&gt;NatNetwork&lt;/code&gt;，设置网段为 &lt;code&gt;192.168.26.0/24&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-225440.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-225556.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;第二步，分别在每个虚拟机上执行，在 &lt;strong&gt;虚拟机设置 -&amp;gt; 网络&lt;/strong&gt; 中添加网卡，&lt;strong&gt;连接方式&lt;/strong&gt; 选 &lt;code&gt;Nat网络&lt;/code&gt;, &lt;strong&gt;界面名称&lt;/strong&gt; 选择我们刚刚创建的 &lt;code&gt;NatNetwork&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-225755.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;第三步，手动启动三个虚拟机。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;注意:&lt;/strong&gt; 不能使用 &lt;code&gt;vagrant up&lt;/code&gt; 启动, 否则我们创建的网卡就被关闭了&lt;/p&gt;
-&lt;h3 id=&#34;手动设置机器的-ip&#34;&gt;手动设置机器的 IP&lt;/h3&gt;
-&lt;p&gt;虚拟机启动后，使用如下命令可以登陆到对应的虚机上&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vagrant ssh vbox1
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;接着我们修改 &lt;code&gt;/etc/netplan/50-cloud-init.yaml&lt;/code&gt; 文件，加入我们 Nat 网卡 &lt;code&gt;enp0s8&lt;/code&gt; 的配置&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; vagrant@vbox1:~$ cat /etc/netplan/50-cloud-init.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; # This file is generated from information provided by the datasource.  Changes
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; # to it will not persist across an instance reboot.  To disable cloud-init&amp;#39;s
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; # network configuration capabilities, write a file
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; # /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; # network: {config: disabled}
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; network:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     ethernets:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         enp0s3:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;             dhcp4: true
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;             match:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                 macaddress: 02:20:c0:fe:1f:a9
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;             set-name: enp0s3
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+        enp0s8:
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+            dhcp4: no
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+            addresses:
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                - 192.168.26.129/24
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+            gateway4: 192.168.26.2
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+            nameservers:
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                addresses: [223.5.5.5]
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;&lt;/span&gt;     version: 2
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;三台主机的配置如下&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Hostname&lt;/th&gt;
-&lt;th&gt;网卡名称&lt;/th&gt;
-&lt;th&gt;IP/掩码&lt;/th&gt;
-&lt;th&gt;MAC 地址&lt;/th&gt;
-&lt;th&gt;网关&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;vbox1&lt;/td&gt;
-&lt;td&gt;enp0s8&lt;/td&gt;
-&lt;td&gt;192.168.26.129/24&lt;/td&gt;
-&lt;td&gt;08:00:27:4c:f0:52&lt;/td&gt;
-&lt;td&gt;192.168.26.2&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;vbox2&lt;/td&gt;
-&lt;td&gt;enp0s8&lt;/td&gt;
-&lt;td&gt;192.168.26.3/27&lt;/td&gt;
-&lt;td&gt;08:00:27:69:22:ae&lt;/td&gt;
-&lt;td&gt;192.168.26.2&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;vbox3&lt;/td&gt;
-&lt;td&gt;enp0s8&lt;/td&gt;
-&lt;td&gt;192.168.26.2/24&lt;/td&gt;
-&lt;td&gt;08:00:27:d5:b5:13&lt;/td&gt;
-&lt;td&gt;192.168.26.1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;修改完配置文件后，使用以下命令将配置生效&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo netplan apply
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;至此，所有的网络环境都配置成功了，我们可以开始抓包了。&lt;/p&gt;
-&lt;h2 id=&#34;问题1-192168263-地址存在两个&#34;&gt;问题1: 192.168.26.3 地址存在两个&lt;/h2&gt;
-&lt;p&gt;我在 vbox1 上执行以下抓包命令&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo tcpdump -i enp0s8 --print -en -w vbox1_ping src host 192.168.26.3 or dst host 192.168.26.3
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在另一个终端中执行 ping 发送 ICMP 包&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ping -c 3 192.168.26.3
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;此时，很奇怪的问题出现了&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;192.168.26.3&lt;/code&gt; 能够 ping 通，但请求不是从 vbox2 发回来的，而是从一个 MAC 地址为 &lt;code&gt;08:00:27:ae:84:b6&lt;/code&gt; 的网卡发回来的。&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;01:26:47.254731 08:00:27:4c:f0:52 &amp;gt; 08:00:27:ae:84:b6, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.3: ICMP echo request, id 9, seq 1, length 64
-01:26:47.254885 08:00:27:ae:84:b6 &amp;gt; 08:00:27:4c:f0:52, ethertype IPv4 (0x0800), length 98: 192.168.26.3 &amp;gt; 192.168.26.129: ICMP echo reply, id 9, seq 1, length 64
-01:26:48.275239 08:00:27:4c:f0:52 &amp;gt; 08:00:27:ae:84:b6, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.3: ICMP echo request, id 9, seq 2, length 64
-01:26:48.275415 08:00:27:ae:84:b6 &amp;gt; 08:00:27:4c:f0:52, ethertype IPv4 (0x0800), length 98: 192.168.26.3 &amp;gt; 192.168.26.129: ICMP echo reply, id 9, seq 2, length 64
-01:26:49.298910 08:00:27:4c:f0:52 &amp;gt; 08:00:27:ae:84:b6, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.3: ICMP echo request, id 9, seq 3, length 64
-01:26:49.299089 08:00:27:ae:84:b6 &amp;gt; 08:00:27:4c:f0:52, ethertype IPv4 (0x0800), length 98: 192.168.26.3 &amp;gt; 192.168.26.129: ICMP echo reply, id 9, seq 3, length 64
-01:26:52.370038 08:00:27:4c:f0:52 &amp;gt; 08:00:27:ae:84:b6, ethertype ARP (0x0806), length 42: Request who-has 192.168.26.3 tell 192.168.26.129, length 28
-01:26:52.370156 08:00:27:ae:84:b6 &amp;gt; 08:00:27:4c:f0:52, ethertype ARP (0x0806), length 60: Reply 192.168.26.3 is-at 08:00:27:ae:84:b6, length 46
-
-# 这个抓包更奇怪，vbox1 询问 192.168.26.3 的 MAC 地址，有两个地址发来了响应
-vagrant@vbox1:~$ sudo tcpdump -i enp0s8 --print src host 192.168.26.3 or dst host 192.168.26.3 -w vbox1_ping
-tcpdump: listening on enp0s8, link-type EN10MB (Ethernet), snapshot length 262144 bytes
-16:50:54.672007 ARP, Request who-has 192.168.26.3 tell vbox1, length 28
-16:50:54.672243 ARP, Reply 192.168.26.3 is-at 08:00:27:ae:84:b6 (oui Unknown), length 46
-16:50:54.672243 ARP, Reply 192.168.26.3 is-at 08:00:27:69:22:ae (oui Unknown), length 46
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个困扰了我好久，我反复检查三台 vbox 的所有网卡和我宿主机所有网卡的 MAC 地址，没有一个是符合 &lt;code&gt;08:00:27:ae:84:b6&lt;/code&gt; 的。&lt;/p&gt;
-&lt;p&gt;后来我突发奇想，这是不是 virtualbox Nat Network 默认创建的地址，于是我将 vbox2 和 vbox3 的地址全部换掉，发现&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;192.168.26.1&lt;/li&gt;
-&lt;li&gt;192.168.26.2&lt;/li&gt;
-&lt;li&gt;192.168.26.3&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;这三个地址依然是能够 ping 通的。&lt;/p&gt;
-&lt;p&gt;我用关键字 &lt;code&gt;vbox nat network gateway&lt;/code&gt; 在 Google 中搜索，找到了 vbox 的一篇文档: &lt;a href=&#34;https://www.virtualbox.org/manual/ch06.html#network_nat_service&#34;&gt;6.4. Network Address Translation Service&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;文档中创建了一个 &lt;code&gt;192.168.15.0/24&lt;/code&gt; 的 Nat 网络， 并说静态设置的网关默认被赋予地址 &lt;code&gt;192.168.15.1&lt;/code&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Here, natnet1 is the name of the internal network to be used and 192.168.15.0/24 is the network address and mask of the NAT service interface. By default in this static configuration the gateway will be assigned the address 192.168.15.1, the address following the interface address, though this is subject to change. To attach a DHCP server to the internal network, modify the example command as follows:&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这下我就明白了，&lt;code&gt;192.168.26.1&lt;/code&gt;, &lt;code&gt;192.168.26.2&lt;/code&gt;, &lt;code&gt;192.168.26.3&lt;/code&gt; 是 Vbox Nat 网络的保留地址，&lt;code&gt;192.168.26.1&lt;/code&gt; 是默认网关，&lt;code&gt;192.168.26.3&lt;/code&gt; 是 DNS Server 的地址(因为它的 53 端口能用 UDP 连上), &lt;code&gt;192.168.26.2&lt;/code&gt; 是干嘛的还没搞明白&lt;/p&gt;
-&lt;p&gt;为了不冲突，我们改一下我们三台机器的地址，新地址如下&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Hostname&lt;/th&gt;
-&lt;th&gt;网卡名称&lt;/th&gt;
-&lt;th&gt;IP/掩码&lt;/th&gt;
-&lt;th&gt;MAC 地址&lt;/th&gt;
-&lt;th&gt;网关&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;vbox1&lt;/td&gt;
-&lt;td&gt;enp0s8&lt;/td&gt;
-&lt;td&gt;192.168.26.129/24&lt;/td&gt;
-&lt;td&gt;08:00:27:4c:f0:52&lt;/td&gt;
-&lt;td&gt;192.168.26.123&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;vbox2&lt;/td&gt;
-&lt;td&gt;enp0s8&lt;/td&gt;
-&lt;td&gt;192.168.26.122/27&lt;/td&gt;
-&lt;td&gt;08:00:27:69:22:ae&lt;/td&gt;
-&lt;td&gt;192.168.26.123&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;vbox3&lt;/td&gt;
-&lt;td&gt;enp0s8&lt;/td&gt;
-&lt;td&gt;192.168.26.123/24&lt;/td&gt;
-&lt;td&gt;08:00:27:d5:b5:13&lt;/td&gt;
-&lt;td&gt;192.168.26.1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&#34;问题2-网关没有转发&#34;&gt;问题2: 网关没有转发&lt;/h2&gt;
-&lt;p&gt;更新了 IP 地址后，我们接着在 vbox1 上 ping &lt;code&gt;192.168.26.122&lt;/code&gt;, 此时出现的问题是 ping 不通了，看起来上一个问题解决了，但是新的问题出现了。&lt;/p&gt;
-&lt;p&gt;我在 vbox2 上抓了一下包，看到了如下内容&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vagrant@vbox2:~$ sudo tcpdump -i enp0s8 --print -en
-17:17:56.850218 08:00:27:4c:f0:52 &amp;gt; 08:00:27:69:22:ae, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.122: ICMP echo request, id 25, seq 8, length 64
-17:17:56.850246 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 25, seq 8, length 64
-17:17:57.868013 08:00:27:4c:f0:52 &amp;gt; 08:00:27:69:22:ae, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.122: ICMP echo request, id 25, seq 9, length 64
-17:17:57.868046 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 25, seq 9, length 64
-17:17:58.883354 08:00:27:4c:f0:52 &amp;gt; 08:00:27:69:22:ae, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.122: ICMP echo request, id 25, seq 10, length 64
-17:17:58.883387 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 25, seq 10, length 64
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;vbox2 收到了来自 vbox1 的 ping request, 并发送 ping reply 给网关 vbox3, 这和我们预期的行为一致，说明 vbox2 没问题。&lt;/p&gt;
-&lt;p&gt;接着我又在 vbox3 上抓了一下包&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;root@vbox3:~# tcpdump -i enp0s8 --print -en
-listening on enp0s8, link-type EN10MB (Ethernet), snapshot length 262144 bytes
-01:49:50.730850 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 26, seq 1, length 64
-01:49:51.790335 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 26, seq 2, length 64
-01:49:53.203978 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 26, seq 3, length 64
-01:49:55.993736 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype ARP (0x0806), length 60: Request who-has 192.168.26.123 tell 192.168.26.122, length 46
-01:49:55.993751 08:00:27:d5:b5:13 &amp;gt; 08:00:27:69:22:ae, ethertype ARP (0x0806), length 42: Reply 192.168.26.123 is-at 08:00:27:d5:b5:13, length 28
-01:52:10.616571 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 27, seq 1, length 64
-01:52:11.965582 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 27, seq 2, length 64
-01:52:12.992503 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 27, seq 3, length 64
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;vbox3 收到了 vbox2 转发来的包，但它没有进一步的发送动作，此时我拍脑袋一想，Linux 可能默认有限制，不转发包，于是我用 &lt;strong&gt;ubuntu 开启路由转发&lt;/strong&gt; 作为关键字搜了一下，找到了配置项 &lt;code&gt;net.ipv4.ip_forward&lt;/code&gt;, 我又用 &lt;strong&gt;ubuntu ipv4_forward&lt;/strong&gt; 作为关键字搜索了一下，找到了 &lt;a href=&#34;https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux&#34;&gt;ubuntu 开启 IP Forward 的文章&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;我执行以下命令，在 vbox3 上临时开启了 ip 转发的功能&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sysctl -w net.ipv4.ip_forward=1
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;改完上述配置后，在 vbox1 上 ping &lt;code&gt;192.168.26.122&lt;/code&gt; 就能 ping 通了。&lt;/p&gt;
-&lt;p&gt;在 vbox3 上抓包也能看到转发的 ICMP reply 包&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;01:58:54.790382 08:00:27:d5:b5:13 &amp;gt; 08:00:27:4c:f0:52, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 28, seq 1, length 64
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-234135.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://linux-audit.com/how-to-clear-the-arp-cache-on-linux/&#34;&gt;How to clear the ARP cache on Linux?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.virtualbox.org/manual/ch06.html#network_nat_service&#34;&gt;6.4. Network Address Translation Service&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux&#34;&gt;Linux IP forwarding – How to Disable/Enable using net.ipv4.ip_forward&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;其他用到的命令&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 查看 arp 表
-arp -n
-# 清空 arp 表
-sudo ip -s -s neigh flush all
-# 查看路由信息
-route -n
-&lt;/code&gt;&lt;/pre&gt;
-      </description>
-    </item>
-    
-    <item>
       <title>Docs: QPS 和 RT 的关系</title>
       <link>https://bwangel.me/647/docs/performance/qps_rt/</link>
       <pubDate>Sun, 13 Aug 2023 16:17:52 +0800</pubDate>
@@ -458,155 +162,93 @@ docker build -t curl_test --build-arg app_repo=bwangelme/rdcdemo --build-arg app
     </item>
     
     <item>
-      <title>Docs: lsof</title>
-      <link>https://bwangel.me/647/docs/linux/lsof/</link>
-      <pubDate>Thu, 02 Mar 2023 12:43:09 +0800</pubDate>
+      <title>Docs: envoy 线程模型</title>
+      <link>https://bwangel.me/647/docs/envoy/envoy-threading-model/</link>
+      <pubDate>Wed, 13 Dec 2023 13:17:28 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/lsof/</guid>
+      <guid>https://bwangel.me/647/docs/envoy/envoy-threading-model/</guid>
       <description>
         
         
-        &lt;h2 id=&#34;按照网络状态筛选进程的-fd&#34;&gt;按照网络状态筛选进程的 fd&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo lsof -i -sTCP:LISTEN -a -p &amp;lt;pid&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+        &lt;h2 id=&#34;线程模型&#34;&gt;线程模型&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-12-13-114846.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;envoy 的线程可以分成三类&lt;/p&gt;
+&lt;h3 id=&#34;main-thread&#34;&gt;main thread&lt;/h3&gt;
+&lt;p&gt;main thread 负责进程的管理，和 xDS Server 的通信，统计信息 stat 刷新，admin 设置。&lt;/p&gt;
+&lt;p&gt;main 线程中所有的工作都是异步 &amp;amp; 非阻塞的， 而且它负责的重要功能通常都不会用到大量的 CPU，所以它可以以单线程的模式运行。&lt;/p&gt;
+&lt;h3 id=&#34;worker-thread&#34;&gt;worker thread&lt;/h3&gt;
+&lt;p&gt;worker 线程可以通过 &lt;code&gt;--concurrency&lt;/code&gt; 选项来控制个数。&lt;/p&gt;
+&lt;p&gt;worekr 线程整体是一个非阻塞的事件循环，它负责创建 Listener 的连接，listen 端口，accept 连接并处理连接生命周期内的所有请求。这使得大多数连接代码都可以像单线程一样编写。&lt;/p&gt;
+&lt;p&gt;这种设计可能会导致连接不均衡，即某些 worker 线程比其他线程处理更多的连接。&lt;/p&gt;
+&lt;h3 id=&#34;file-flush-thread&#34;&gt;file flush thread&lt;/h3&gt;
+&lt;p&gt;Envoy 写的每个文件(主要是 access-log)都有一个独立的数据刷新线程。因为将内容写入到操作系统的文件缓存时，即使使用了 &lt;code&gt;O_NONBLOCK&lt;/code&gt; 选项，有时也会阻塞住。&lt;/p&gt;
+&lt;p&gt;当线程需要写入文件时，他们通常是将内容写入到一块内存区域，然后 flush 线程再将内容刷新到文件中。&lt;/p&gt;
+&lt;h2 id=&#34;连接处理&#34;&gt;连接处理&lt;/h2&gt;
+&lt;p&gt;连接不均衡的问题，最早就有人在 &lt;a href=&#34;https://github.com/envoyproxy/envoy/issues/2961&#34;&gt;github上问了&lt;/a&gt;，Envoy作者的回答是让操作系统来做负载均衡最好，而且一个线程处理accept，扩展性不高。但是后来作者还是加上了一个&lt;a href=&#34;https://www.envoyproxy.io/docs/envoy/v1.28.0/intro/arch_overview/intro/threading_model#listener-connection-balancing&#34;&gt;均衡连接的可选配置&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;现代内核在连接的负载均衡方面表现得非常出色。
+它们采用诸如IO优先级提升( IO priority boosting)之类的功能，试图在开始使用其他正在监听相同套接字的线程之前，填充一个线程的工作。同时，它们也不使用单个自旋锁来处理每个 accpet 操作。&lt;/p&gt;
+&lt;p&gt;连接一旦创建，IO 读写一般是绑定在一个线程。&lt;/p&gt;
+&lt;p&gt;Envoy 中每个工作线程都会创建一个连接池，因此尽管 HTTP2 会在一个连接上使用多个 Stream, 但是 Envoy 的每个线程还是会针对每个 Upstream 创建一个 TCP 连接。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;--concurrency&lt;/code&gt; 默认太大了，除了边缘代理外，大部分代理可以将这个数字设置地小一点。&lt;/p&gt;
+&lt;h2 id=&#34;线程间通信的-tls&#34;&gt;线程间通信的 TLS&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-12-13-125138.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;主线程从 xDS 获取到配置信息后，使用 TLS (Thread local storage) 功能将配置发送给工作线程。&lt;/p&gt;
+&lt;p&gt;TLS 的模式如下，针对一份数据，主线程和工作线程维护了一份数组 slots，它里面保存了指向实际数据的指针。&lt;/p&gt;
+&lt;p&gt;工作线程的 slots 保存在线程本地变量(Threading local storage)中，这样可以避免并发，由于保存的是指针，使用的空间也比较少。&lt;/p&gt;
+&lt;p&gt;上图中，主线程更新了一份数据，将它保存到索引3上，同时发送一个事件给所有 worker 的事件循环，1-3号线程收到事件后都更新了，4号线程还在旧事件循环中处理 IO，它拿到的是索引2的旧数据，等线程4结束了一次事件循环后，它会更新数据，使用索引3上的数据。&lt;/p&gt;
+&lt;p&gt;每个数据都保存了使用方的 &lt;strong&gt;引用计数&lt;/strong&gt;，当所有线程都不再使用，确认引用计数是0之后，Envoy 会删除索引2指向的数据。&lt;/p&gt;
+&lt;h2 id=&#34;tls-更新流程&#34;&gt;TLS 更新流程&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-12-13-125837.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;-a&lt;/code&gt; 表示 and, 前后两个条件要一起生效&lt;/p&gt;
+&lt;p&gt;集群管理器 (cluster manager) 是 Envoy 内部的组件，负责管理所有已知的上游集群、CDS API、SDS/EDS API、DNS 和主动（out-of-band）健康检查。它负责创建每个上游集群的最终一致视图，包括发现的主机以及其健康状态。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;-i&lt;/code&gt; 和 &lt;code&gt;-s&lt;/code&gt; 一起用，表示可以按照 TCP/UDP 状态来筛选 fd&lt;/p&gt;
+&lt;p&gt;健康检查器 (health checker) 执行主动健康检查，并将健康状态变化报告给集群管理器。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;列出进程 &lt;code&gt;&amp;lt;pid&amp;gt;&lt;/code&gt; 建立的所有 TCP 连接&lt;/p&gt;
+&lt;p&gt;CDS/SDS/EDS/DNS 用于确定集群成员资格。状态变化会报告给集群管理器。&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo lsof -i -sTCP:ESTABLISHED -a -p &amp;lt;pid&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;列出进程 &lt;code&gt;&amp;lt;pid&amp;gt;&lt;/code&gt; 所有 IDLE 状态的 UDP 连接&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo lsof -i -sUDP:IDLE -a -p &amp;lt;pid&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;根据 Unix 发行版本的不同，TCP/UDP 状态也会有不同的名字:&lt;/p&gt;
+&lt;li&gt;
+&lt;p&gt;每个工作线程都持续运行一个事件循环。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;当集群管理器确定集群的状态发生变化时，它会创建该集群状态的新的只读快照，并将其发布到每个工作线程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在接下来的安静期间(quiescent period)，工作线程将更新分配的 TLS slots 中的快照。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在需要确定负载均衡的主机的 IO 事件期间，负载均衡器将查询 TLS slots 以获取主机信息。这一过程无需获取任何锁。（还要注意，TLS 还可以在更新时触发事件，以便负载均衡器和其他组件可以重新计算缓存、数据结构等。这超出了本文的范围，但在代码中的各个地方都有使用。）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;查看-envoy-线程的名字&#34;&gt;查看 Envoy 线程的名字&lt;/h2&gt;
+&lt;p&gt;以下命令可以查看 envoy 所有线程的启动名字。&lt;/p&gt;
+&lt;p&gt;这个 envoy 进程我是以 &lt;code&gt;--concurrency 3&lt;/code&gt; 启动的，可以看到线程数是 13 个，每个 worker 会启动两个线程 &lt;code&gt;wrk:worker_x&lt;/code&gt; 和 &lt;code&gt;GrpcGoogClient&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;envoy_id=`ps aux | rg &amp;#39;envoy-1.28&amp;#39; | rg -v rg | awk &amp;#39;{print $2}&amp;#39;` \
+           ps aux -L | rg &amp;#39;envoy-1.28&amp;#39; | rg -v rg | awk &amp;#39;{print $3}&amp;#39; | \
+           xargs -I{{ cat &amp;#34;/proc/${envoy_id}/task/{{/comm&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;envoy-1.28.0
+default-executo
+resolver-execut
+grpc_global_tim
+GrpcGoogClient
+dog:main_thread
+dog:workers_gua
+
+wrk:worker_0
+wrk:worker_1
+wrk:worker_2
+
+GrpcGoogClient
+GrpcGoogClient
+GrpcGoogClient
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考文章&#34;&gt;参考文章&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;常用的 TCP 状态是: &lt;code&gt;CLOSED&lt;/code&gt;, &lt;code&gt;IDLE&lt;/code&gt;, &lt;code&gt;BOUND&lt;/code&gt;, &lt;code&gt;LISTEN&lt;/code&gt;, &lt;code&gt;ESTABLISHED&lt;/code&gt;, &lt;code&gt;SYN_SENT&lt;/code&gt;, &lt;code&gt;SYN_RCDV&lt;/code&gt;, &lt;code&gt;ESTABLISHED&lt;/code&gt;, &lt;code&gt;CLOSE_WAIT&lt;/code&gt;, &lt;code&gt;FIN_WAIT1&lt;/code&gt;, &lt;code&gt;CLOSING&lt;/code&gt;, &lt;code&gt;LAST_ACK&lt;/code&gt;, &lt;code&gt;FIN_WAIT_2&lt;/code&gt;, &lt;code&gt;TIME_WAIT&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;常用的 UDP 状态是: &lt;code&gt;Unbound&lt;/code&gt;, &lt;code&gt;Idle&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;按照-fd-number-查找进程的-fd&#34;&gt;按照 fd number 查找进程的 fd&lt;/h2&gt;
-&lt;p&gt;使用 &lt;code&gt;strace&lt;/code&gt; 查看进程的系统调用的时候，经常能够看到在某个 fd 上执行读写操作，例如:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;write&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;267, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\1\0\0\0\0\0\0\0&amp;#34;&lt;/span&gt;, 8&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;       &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;8&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;5405, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;# Kubernetes-managed hosts file &amp;#34;&lt;/span&gt;..., 4096&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们想要查一下这个 267 和 5405 具体代表了什么连接，可以用&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo lsof -d &amp;lt;fd_number&amp;gt; -a -p &amp;lt;pid&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;例如我利用 strace 查看飞书 app 的系统调用，看到以下的信息&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; sudo strace -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;8261&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;strace: Process &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;8261&lt;/span&gt; attached
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;restart_syscall&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&amp;lt;... resuming interrupted &lt;span style=&#34;color:#204a87&#34;&gt;read&lt;/span&gt; ...&amp;gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openat&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;AT_FDCWD, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/proc/self/status&amp;#34;&lt;/span&gt;, O_RDONLY&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;4, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Name:\tfeishu\nUmask:\t0002\nState:\t&amp;#34;&lt;/span&gt;..., 1024&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1024&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;close&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;4&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;                                &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;futex&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x7ff0a7ffead8, FUTEX_WAKE_PRIVATE, 2147483647&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;futex&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x7ff0a7ffea88, FUTEX_WAKE_PRIVATE, 1&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;recvmsg&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;23, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg_namelen&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, 0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; -1 EAGAIN &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;资源暂时不可用&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;recvmsg&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;23, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg_namelen&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, 0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; -1 EAGAIN &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;资源暂时不可用&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;poll&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;([{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;9, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;10, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;22, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;23, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;67, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}]&lt;/span&gt;, 5, 0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;Timeout&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;recvmsg&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;23, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg_namelen&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, 0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; -1 EAGAIN &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;资源暂时不可用&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;recvmsg&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;23, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg_namelen&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, 0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; -1 EAGAIN &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;资源暂时不可用&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;poll&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;([{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;9, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;10, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;22, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;23, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;67, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}]&lt;/span&gt;, 5, 200&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;([{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;10, &lt;span style=&#34;color:#000&#34;&gt;revents&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}])&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;10, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;!&amp;#34;&lt;/span&gt;, 2&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;                        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;futex&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x7ff0a7ffead8, FUTEX_WAKE_PRIVATE, 2147483647&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;futex&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x7ff0a7ffea88, FUTEX_WAKE_PRIVATE, 1&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;futex&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x7ff0a0001eb8, FUTEX_WAKE_PRIVATE, 1&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openat&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;AT_FDCWD, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/proc/self/status&amp;#34;&lt;/span&gt;, O_RDONLY&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;4, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Name:\tfeishu\nUmask:\t0002\nState:\t&amp;#34;&lt;/span&gt;..., 1024&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1024&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我想知道 fd 4 代表了什么，执行 &lt;code&gt;sudo lsof -d 4 -a -p 8261&lt;/code&gt;，可以看到它是我的电脑和 &lt;code&gt;220.181.131.241&lt;/code&gt; 建立的一个 https 连接。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; sudo lsof -d &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4&lt;/span&gt; -a -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;8261&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;COMMAND  PID      USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;feishu  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;8261&lt;/span&gt; xuyundong    4u  IPv4 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2613086&lt;/span&gt;      0t0  TCP 192.168.252.88:35810-&amp;gt;220.181.131.241:https &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;ESTABLISHED&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;查看端口占用&#34;&gt;查看端口占用&lt;/h2&gt;
-&lt;p&gt;有时候我们启动程序的时候，发现端口被占用了，可以用 &lt;code&gt;lsof -i:xxx&lt;/code&gt; 来查看端口被哪个进程占用了，例如:&lt;/p&gt;
-&lt;p&gt;下面这条命令显示 3306 端口被 &lt;code&gt;360702&lt;/code&gt; 和 &lt;code&gt;360709&lt;/code&gt; 两个进程占用了。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; sudo lsof -i:3306
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;COMMAND      PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker-pr &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;360702&lt;/span&gt; root    4u  IPv4 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1842886&lt;/span&gt;      0t0  TCP *:mysql &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;LISTEN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker-pr &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;360709&lt;/span&gt; root    4u  IPv6 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1842889&lt;/span&gt;      0t0  TCP *:mysql &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;LISTEN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;查看容器的网络调用&#34;&gt;查看容器的网络调用&lt;/h2&gt;
-&lt;h3 id=&#34;构建镜像&#34;&gt;构建镜像&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;download.py&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#!/usr/bin/env python3&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# -*- coding: utf-8 -*-&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;requests&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;resp&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;requests&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;https://releases.ubuntu.com/22.04.2/ubuntu-22.04.2-desktop-amd64.iso?_ga=2.131295240.668169970.1684741981-917190618.1681460407&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;resp&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;status_code&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;Dockerfile&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-dockerfile&#34; data-lang=&#34;dockerfile&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;FROM&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; python:3.10&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;RUN&lt;/span&gt; pip install requests&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;COPY&lt;/span&gt; download.py /download.py&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ENTRYPOINT&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/download.py&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;准备上述两个文件，然后执行&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker build -t test_download .
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;构建我们用于调试的镜像, &lt;code&gt;test_download&lt;/code&gt; 。&lt;/p&gt;
-&lt;h3 id=&#34;启动阻塞的容器&#34;&gt;启动阻塞的容器&lt;/h3&gt;
-&lt;p&gt;执行以下命令，启动一个阻塞在网络请求中的容器。&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker run --rm test_download
-&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;:&lt;/p&gt;
-&lt;p&gt;这个例子不太好，因为 &lt;code&gt;releases.ubuntu.com&lt;/code&gt; 还比较健康，会持续地返回内容，现实中我们遇到的情况是，服务器完全不返回内容，客户端也没有设置超时时间，完全处于阻塞的状态。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;查找容器的-pid&#34;&gt;查找容器的 pid&lt;/h3&gt;
-&lt;p&gt;根据容器的 ID, 我们通过 &lt;code&gt;docker inspect &amp;lt;id&amp;gt;| rg -i pid&lt;/code&gt; 可以获得容器的进程 ID&lt;/p&gt;
-&lt;p&gt;如果你使用的是 containerd, 可以使用 &lt;code&gt;crictl inspect &amp;lt;id&amp;gt; | rg -i pid&lt;/code&gt;&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; docker ps
-CONTAINER ID   IMAGE           COMMAND                 CREATED          STATUS          PORTS     NAMES
-bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 seconds ago   Up 36 seconds             friendly_wozniak
-ø&amp;gt; docker inspect bf5846384913 | rg -i pid
-            &amp;#34;Pid&amp;#34;: 726678,
-            &amp;#34;PidMode&amp;#34;: &amp;#34;&amp;#34;,
-            &amp;#34;PidsLimit&amp;#34;: null,
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;利用-strace-查看进程的状态&#34;&gt;利用 strace 查看进程的状态&lt;/h3&gt;
-&lt;p&gt;从 strace 的输出中可以看到，进程一直在从 3 号 fd 上读取数据&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# strace -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;strace: Process &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt; attached
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Z\263\351\331\315\17\330\205\222\361\21\235&amp;#39;Kp\301w\256\365|\275K\326y\350@\305\300\325\262\fk&amp;#34;&lt;/span&gt;..., 13131&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1448&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\317GKJ\324O)1\5\272\\\&amp;#34;\24\360s\177\263\223#\376\360\35\360\226\240\214mf\374\243\222\335&amp;#34;&lt;/span&gt;..., 11683&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11683&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\22c\367U@\243\377\325\255\n0\376\79J\244\v9O4\233Kq\0233\304k\6\356dy\20&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;[\244K\30\7\30?[\210\313\364\335\t\321&amp;gt;l\270\2\365\262\307|\376\211.\376\342%\361\34\31\246&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\335\373\354\320:SF\244o#\244\377Ll\21\366AT\374vgYD\2418\305\340\313||\243;&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;X \300\240\252IoZ\352W&lt;/span&gt;$&lt;span style=&#34;color:#4e9a06&#34;&gt;\255\266\324\304q\306\23\226-b\212\300\271\222pI\270\33\tcn&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\213\331\225\331b\2405\204\f\213\32\r\250;\250\326.\4l\221\230^0\272{\317\32he\262V\223&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brk&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x55fba8f48000&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;                     &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 0x55fba8f48000
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\4\317\362`-R}\360\&amp;#34;\266nZ\33\261s,\340\345\371\300;]\347\30\237\344\305\235m\360j\357&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;1v\355\312]nG\347\240\4\210\350\241\34\257\333\307\233z\261\0\6\307\2234n\21V\27\305\272\371&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;利用-lsof-查看-fd-详细信息&#34;&gt;利用 lsof 查看 fd 详细信息&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nsenter -n -t &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt; lsof -d &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; -a -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# nsenter -n -t &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt; lsof -d &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; -a -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;COMMAND    PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt; root    3u  IPv4 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;9813984&lt;/span&gt;      0t0  TCP 172.17.0.2:55378-&amp;gt;https-services.aerodent.canonical.com:https &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;ESTABLISHED&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到，3号fd 是一个TCP 连接，本地的 &lt;code&gt;172.17.0.2:55378&lt;/code&gt; 连接了远端的 &lt;code&gt;https-services.aerodent.canonical.com:https&lt;/code&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;如果我们不加 nsenter -n -t &lt;pid&gt; 来切换 network namespace 的话，lsof 输出的信息中就没有详细的客户端和服务端的地址了&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# lsof -d &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; -a -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;729160&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;COMMAND    PID USER   FD   TYPE DEVICE SIZE/OFF    NODE NAME
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;729160&lt;/span&gt; root    3u  sock    0,8      0t0 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;9829458&lt;/span&gt; protocol: TCP
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://linux.die.net/man/8/lsof&#34;&gt;man lsof&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.envoyproxy.io/envoy-threading-model-a8d44b922310&#34;&gt;Envoy threading model&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/442036172&#34;&gt;Envoy调研：线程模型&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.aliyun.com/article/757470&#34;&gt;Envoy源码分析之Dispatcher机制&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developer.aliyun.com/article/757471&#34;&gt;Envoy源码分析之ThreadLocal机制&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
       </description>
@@ -1936,6 +1578,302 @@ sudo chmod 755 /mnt/share
     </item>
     
     <item>
+      <title>Docs: 利用 VirtualBox 和 Ubuntu 22 重现抓包实验</title>
+      <link>https://bwangel.me/647/docs/wireshark/vbox-linux-wireshark/</link>
+      <pubDate>Wed, 23 Aug 2023 10:07:25 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/wireshark/vbox-linux-wireshark/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;实验介绍&#34;&gt;实验介绍&lt;/h2&gt;
+&lt;p&gt;在 &lt;a href=&#34;https://book.douban.com/subject/26268767/&#34;&gt;《Wireshark网络分析就这么简单》&lt;/a&gt; 第一章，讲述了一道面试题。&lt;/p&gt;
+&lt;p&gt;HostA 和 HostB 在同一个局域网中，它们的 IP 配置如下，请问这两台机器能否 ping 通?&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HostA: 
+    IP: 192.168.26.129/24
+    Gateway: 192.168.26.2
+HostB: 
+    IP: 192.168.26.3/27
+    Gateway: 192.168.26.2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;答案是能够 ping 通，HostA 和 HostB 连同网关最终会形成一个奇怪的网络&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-103426.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;具体通信过程如下:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HostA(&lt;code&gt;192.168.26.129&lt;/code&gt;) 发送 ping 请求给 HostB(&lt;code&gt;192.168.26.3&lt;/code&gt;)
+&lt;ul&gt;
+&lt;li&gt;HostA 将 HostB 的 IP 和自己的掩码计算，发现 &lt;code&gt;192.168.26.3&lt;/code&gt; 和自己是处于同一子网&lt;/li&gt;
+&lt;li&gt;HostA 通过 ARP 协议广播寻找 &lt;code&gt;192.168.26.3&lt;/code&gt; 的 MAC 地址，由于 &lt;code&gt;192.168.26.3&lt;/code&gt; 和它在同一局域网中，&lt;code&gt;192.168.26.3&lt;/code&gt; 会应答自己的 MAC 地址&lt;/li&gt;
+&lt;li&gt;HostA 将 ping 请求直接发送给 &lt;code&gt;192.168.26.3&lt;/code&gt;, 目的 MAC 地址使用的就是 &lt;code&gt;192.168.26.3&lt;/code&gt; 的地址&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;HostB(&lt;code&gt;192.168.26.3&lt;/code&gt;) 收到 ping 请求，给 HostA 发送 ping 响应
+&lt;ul&gt;
+&lt;li&gt;HostB 将 HostA 的 IP 和自己的掩码计算，发现 &lt;code&gt;192.168.26.129&lt;/code&gt; 和自己不是同一子网
+&lt;ul&gt;
+&lt;li&gt;192.168.26.3 &amp;amp; 255.255.255.224 == 192.168.26.0&lt;/li&gt;
+&lt;li&gt;192.168.26.129 &amp;amp; 255.255.255.224 == 192.168.26.128&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;HostB 将 ping 响应发送给网关，由网关进行路由发送
+&lt;ul&gt;
+&lt;li&gt;HostB 通过 APR 协议广播寻找网关 &lt;code&gt;192.168.26.2&lt;/code&gt; 的 MAC 地址，网关 &lt;code&gt;192.168.26.2&lt;/code&gt; 告诉 HostB 自己的 MAC&lt;/li&gt;
+&lt;li&gt;HostB 发送 ping 响应包，目的 IP 是 &lt;code&gt;192.168.26.129&lt;/code&gt;, 目的 MAC 是网关的 MAC 地址&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;网关将 ping 响应发送给了 HostA&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;开始实验&#34;&gt;开始实验&lt;/h2&gt;
+&lt;p&gt;读完以后，感觉这个测试挺好玩，就尝试在本地复现了一下。&lt;/p&gt;
+&lt;p&gt;我的环境如下，3台安装了 Ubuntu 22.04 Vitualbox 虚拟机, 它们分别充当 HostA, HostB 和 网关&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-224057.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;配置-vagrant&#34;&gt;配置 Vagrant&lt;/h3&gt;
+&lt;p&gt;我的 VirtualBox 是通过 Vagrant 启动的&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先我们需要在 Vagrant 官网上下载 Ubuntu 22.04 的 Box&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://app.vagrantup.com/ubuntu/boxes/jammy64&#34;&gt;ubuntu/jammy64 Vagrant box 下载地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下载完成之后通过如下命令添加 Vagrant Box&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vagrant box add ~/Downloads/jammy-server-cloudimg-amd64-vagrant.box --name ubuntu/jammy
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;添加完成后使用 &lt;code&gt;vagrant box list&lt;/code&gt; 可以看到我们添加的 box 名字了&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;接着我们再来安装 &lt;code&gt;vagrant-disksize&lt;/code&gt; 插件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 建议在执行命令前挂上 http 代理&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;vagrant plugin install vagrant-disksize
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;启动并配置-vbox&#34;&gt;启动并配置 VBox&lt;/h3&gt;
+&lt;p&gt;这是我的 Vagrantfile, 它启动了三个 virtualbox 虚拟机，分别命名为 vbox1, vbox2, vbox3。完整代码见 &lt;a href=&#34;https://github.com/bwangelme/DockerVbox.git&#34;&gt;github/bwangelme/DockerVbox.git&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# -*- mode: ruby -*-&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# vi: set ft=ruby :&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Verify whether required plugins are installed.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;required_plugins&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;vagrant-disksize&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;required_plugins&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;each&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;plugin&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;not&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Vagrant&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;has_plugin?&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;plugin&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;raise&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;The vagrant plugin &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;plugin&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; is required. Please run `vagrant plugin install &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;plugin&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;`&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;Vagrant&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;box_check_update&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;$num_instances&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;..&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$num_instances&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;each&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;define&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;vbox&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;box&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ubuntu/jammy&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;hostname&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;vbox&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;provider&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;virtualbox&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vb&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;vb&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;memory&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;1024&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;vb&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cpus&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;vb&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;vbox&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 单独执行 vagrant provision 也会执行一遍 install.sh 脚本&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;vm&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;provision&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;shell&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;path&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;install.sh&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将 &lt;a href=&#34;https://github.com/bwangelme/DockerVbox.git&#34;&gt;github/bwangelme/DockerVbox.git&lt;/a&gt; 克隆到本地，进入目录中执行&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vagrant up
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;就可以创建并启动三个 Ubuntu 22.04 的 VirtualBox 虚机了&lt;/p&gt;
+&lt;p&gt;启动完成后，我们执行&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vagrant halt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;将虚拟机先停止，接着我们来手动设置网络。&lt;/p&gt;
+&lt;h3 id=&#34;设置-vbox-网络&#34;&gt;设置 VBox 网络&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;第一步，打开 VirtualBox 的 &lt;strong&gt;管理 -&amp;gt; 全局设定&lt;/strong&gt; ，打开网络 Tab, 添加一个 Nat 网络，设置名字为 &lt;code&gt;NatNetwork&lt;/code&gt;，设置网段为 &lt;code&gt;192.168.26.0/24&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-225440.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-225556.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第二步，分别在每个虚拟机上执行，在 &lt;strong&gt;虚拟机设置 -&amp;gt; 网络&lt;/strong&gt; 中添加网卡，&lt;strong&gt;连接方式&lt;/strong&gt; 选 &lt;code&gt;Nat网络&lt;/code&gt;, &lt;strong&gt;界面名称&lt;/strong&gt; 选择我们刚刚创建的 &lt;code&gt;NatNetwork&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-225755.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第三步，手动启动三个虚拟机。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;注意:&lt;/strong&gt; 不能使用 &lt;code&gt;vagrant up&lt;/code&gt; 启动, 否则我们创建的网卡就被关闭了&lt;/p&gt;
+&lt;h3 id=&#34;手动设置机器的-ip&#34;&gt;手动设置机器的 IP&lt;/h3&gt;
+&lt;p&gt;虚拟机启动后，使用如下命令可以登陆到对应的虚机上&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vagrant ssh vbox1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;接着我们修改 &lt;code&gt;/etc/netplan/50-cloud-init.yaml&lt;/code&gt; 文件，加入我们 Nat 网卡 &lt;code&gt;enp0s8&lt;/code&gt; 的配置&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; vagrant@vbox1:~$ cat /etc/netplan/50-cloud-init.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; # This file is generated from information provided by the datasource.  Changes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; # to it will not persist across an instance reboot.  To disable cloud-init&amp;#39;s
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; # network configuration capabilities, write a file
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; # /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; # network: {config: disabled}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; network:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     ethernets:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         enp0s3:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;             dhcp4: true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;             match:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                 macaddress: 02:20:c0:fe:1f:a9
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;             set-name: enp0s3
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+        enp0s8:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+            dhcp4: no
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+            addresses:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                - 192.168.26.129/24
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+            gateway4: 192.168.26.2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+            nameservers:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;+                addresses: [223.5.5.5]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#00a000&#34;&gt;&lt;/span&gt;     version: 2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;三台主机的配置如下&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Hostname&lt;/th&gt;
+&lt;th&gt;网卡名称&lt;/th&gt;
+&lt;th&gt;IP/掩码&lt;/th&gt;
+&lt;th&gt;MAC 地址&lt;/th&gt;
+&lt;th&gt;网关&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;vbox1&lt;/td&gt;
+&lt;td&gt;enp0s8&lt;/td&gt;
+&lt;td&gt;192.168.26.129/24&lt;/td&gt;
+&lt;td&gt;08:00:27:4c:f0:52&lt;/td&gt;
+&lt;td&gt;192.168.26.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;vbox2&lt;/td&gt;
+&lt;td&gt;enp0s8&lt;/td&gt;
+&lt;td&gt;192.168.26.3/27&lt;/td&gt;
+&lt;td&gt;08:00:27:69:22:ae&lt;/td&gt;
+&lt;td&gt;192.168.26.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;vbox3&lt;/td&gt;
+&lt;td&gt;enp0s8&lt;/td&gt;
+&lt;td&gt;192.168.26.2/24&lt;/td&gt;
+&lt;td&gt;08:00:27:d5:b5:13&lt;/td&gt;
+&lt;td&gt;192.168.26.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;修改完配置文件后，使用以下命令将配置生效&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo netplan apply
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;至此，所有的网络环境都配置成功了，我们可以开始抓包了。&lt;/p&gt;
+&lt;h2 id=&#34;问题1-192168263-地址存在两个&#34;&gt;问题1: 192.168.26.3 地址存在两个&lt;/h2&gt;
+&lt;p&gt;我在 vbox1 上执行以下抓包命令&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo tcpdump -i enp0s8 --print -en -w vbox1_ping src host 192.168.26.3 or dst host 192.168.26.3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在另一个终端中执行 ping 发送 ICMP 包&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ping -c 3 192.168.26.3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;此时，很奇怪的问题出现了&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;192.168.26.3&lt;/code&gt; 能够 ping 通，但请求不是从 vbox2 发回来的，而是从一个 MAC 地址为 &lt;code&gt;08:00:27:ae:84:b6&lt;/code&gt; 的网卡发回来的。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;01:26:47.254731 08:00:27:4c:f0:52 &amp;gt; 08:00:27:ae:84:b6, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.3: ICMP echo request, id 9, seq 1, length 64
+01:26:47.254885 08:00:27:ae:84:b6 &amp;gt; 08:00:27:4c:f0:52, ethertype IPv4 (0x0800), length 98: 192.168.26.3 &amp;gt; 192.168.26.129: ICMP echo reply, id 9, seq 1, length 64
+01:26:48.275239 08:00:27:4c:f0:52 &amp;gt; 08:00:27:ae:84:b6, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.3: ICMP echo request, id 9, seq 2, length 64
+01:26:48.275415 08:00:27:ae:84:b6 &amp;gt; 08:00:27:4c:f0:52, ethertype IPv4 (0x0800), length 98: 192.168.26.3 &amp;gt; 192.168.26.129: ICMP echo reply, id 9, seq 2, length 64
+01:26:49.298910 08:00:27:4c:f0:52 &amp;gt; 08:00:27:ae:84:b6, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.3: ICMP echo request, id 9, seq 3, length 64
+01:26:49.299089 08:00:27:ae:84:b6 &amp;gt; 08:00:27:4c:f0:52, ethertype IPv4 (0x0800), length 98: 192.168.26.3 &amp;gt; 192.168.26.129: ICMP echo reply, id 9, seq 3, length 64
+01:26:52.370038 08:00:27:4c:f0:52 &amp;gt; 08:00:27:ae:84:b6, ethertype ARP (0x0806), length 42: Request who-has 192.168.26.3 tell 192.168.26.129, length 28
+01:26:52.370156 08:00:27:ae:84:b6 &amp;gt; 08:00:27:4c:f0:52, ethertype ARP (0x0806), length 60: Reply 192.168.26.3 is-at 08:00:27:ae:84:b6, length 46
+
+# 这个抓包更奇怪，vbox1 询问 192.168.26.3 的 MAC 地址，有两个地址发来了响应
+vagrant@vbox1:~$ sudo tcpdump -i enp0s8 --print src host 192.168.26.3 or dst host 192.168.26.3 -w vbox1_ping
+tcpdump: listening on enp0s8, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+16:50:54.672007 ARP, Request who-has 192.168.26.3 tell vbox1, length 28
+16:50:54.672243 ARP, Reply 192.168.26.3 is-at 08:00:27:ae:84:b6 (oui Unknown), length 46
+16:50:54.672243 ARP, Reply 192.168.26.3 is-at 08:00:27:69:22:ae (oui Unknown), length 46
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个困扰了我好久，我反复检查三台 vbox 的所有网卡和我宿主机所有网卡的 MAC 地址，没有一个是符合 &lt;code&gt;08:00:27:ae:84:b6&lt;/code&gt; 的。&lt;/p&gt;
+&lt;p&gt;后来我突发奇想，这是不是 virtualbox Nat Network 默认创建的地址，于是我将 vbox2 和 vbox3 的地址全部换掉，发现&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;192.168.26.1&lt;/li&gt;
+&lt;li&gt;192.168.26.2&lt;/li&gt;
+&lt;li&gt;192.168.26.3&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这三个地址依然是能够 ping 通的。&lt;/p&gt;
+&lt;p&gt;我用关键字 &lt;code&gt;vbox nat network gateway&lt;/code&gt; 在 Google 中搜索，找到了 vbox 的一篇文档: &lt;a href=&#34;https://www.virtualbox.org/manual/ch06.html#network_nat_service&#34;&gt;6.4. Network Address Translation Service&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;文档中创建了一个 &lt;code&gt;192.168.15.0/24&lt;/code&gt; 的 Nat 网络， 并说静态设置的网关默认被赋予地址 &lt;code&gt;192.168.15.1&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Here, natnet1 is the name of the internal network to be used and 192.168.15.0/24 is the network address and mask of the NAT service interface. By default in this static configuration the gateway will be assigned the address 192.168.15.1, the address following the interface address, though this is subject to change. To attach a DHCP server to the internal network, modify the example command as follows:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这下我就明白了，&lt;code&gt;192.168.26.1&lt;/code&gt;, &lt;code&gt;192.168.26.2&lt;/code&gt;, &lt;code&gt;192.168.26.3&lt;/code&gt; 是 Vbox Nat 网络的保留地址，&lt;code&gt;192.168.26.1&lt;/code&gt; 是默认网关，&lt;code&gt;192.168.26.3&lt;/code&gt; 是 DNS Server 的地址(因为它的 53 端口能用 UDP 连上), &lt;code&gt;192.168.26.2&lt;/code&gt; 是干嘛的还没搞明白&lt;/p&gt;
+&lt;p&gt;为了不冲突，我们改一下我们三台机器的地址，新地址如下&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Hostname&lt;/th&gt;
+&lt;th&gt;网卡名称&lt;/th&gt;
+&lt;th&gt;IP/掩码&lt;/th&gt;
+&lt;th&gt;MAC 地址&lt;/th&gt;
+&lt;th&gt;网关&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;vbox1&lt;/td&gt;
+&lt;td&gt;enp0s8&lt;/td&gt;
+&lt;td&gt;192.168.26.129/24&lt;/td&gt;
+&lt;td&gt;08:00:27:4c:f0:52&lt;/td&gt;
+&lt;td&gt;192.168.26.123&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;vbox2&lt;/td&gt;
+&lt;td&gt;enp0s8&lt;/td&gt;
+&lt;td&gt;192.168.26.122/27&lt;/td&gt;
+&lt;td&gt;08:00:27:69:22:ae&lt;/td&gt;
+&lt;td&gt;192.168.26.123&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;vbox3&lt;/td&gt;
+&lt;td&gt;enp0s8&lt;/td&gt;
+&lt;td&gt;192.168.26.123/24&lt;/td&gt;
+&lt;td&gt;08:00:27:d5:b5:13&lt;/td&gt;
+&lt;td&gt;192.168.26.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;问题2-网关没有转发&#34;&gt;问题2: 网关没有转发&lt;/h2&gt;
+&lt;p&gt;更新了 IP 地址后，我们接着在 vbox1 上 ping &lt;code&gt;192.168.26.122&lt;/code&gt;, 此时出现的问题是 ping 不通了，看起来上一个问题解决了，但是新的问题出现了。&lt;/p&gt;
+&lt;p&gt;我在 vbox2 上抓了一下包，看到了如下内容&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vagrant@vbox2:~$ sudo tcpdump -i enp0s8 --print -en
+17:17:56.850218 08:00:27:4c:f0:52 &amp;gt; 08:00:27:69:22:ae, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.122: ICMP echo request, id 25, seq 8, length 64
+17:17:56.850246 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 25, seq 8, length 64
+17:17:57.868013 08:00:27:4c:f0:52 &amp;gt; 08:00:27:69:22:ae, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.122: ICMP echo request, id 25, seq 9, length 64
+17:17:57.868046 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 25, seq 9, length 64
+17:17:58.883354 08:00:27:4c:f0:52 &amp;gt; 08:00:27:69:22:ae, ethertype IPv4 (0x0800), length 98: 192.168.26.129 &amp;gt; 192.168.26.122: ICMP echo request, id 25, seq 10, length 64
+17:17:58.883387 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 25, seq 10, length 64
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;vbox2 收到了来自 vbox1 的 ping request, 并发送 ping reply 给网关 vbox3, 这和我们预期的行为一致，说明 vbox2 没问题。&lt;/p&gt;
+&lt;p&gt;接着我又在 vbox3 上抓了一下包&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;root@vbox3:~# tcpdump -i enp0s8 --print -en
+listening on enp0s8, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+01:49:50.730850 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 26, seq 1, length 64
+01:49:51.790335 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 26, seq 2, length 64
+01:49:53.203978 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 26, seq 3, length 64
+01:49:55.993736 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype ARP (0x0806), length 60: Request who-has 192.168.26.123 tell 192.168.26.122, length 46
+01:49:55.993751 08:00:27:d5:b5:13 &amp;gt; 08:00:27:69:22:ae, ethertype ARP (0x0806), length 42: Reply 192.168.26.123 is-at 08:00:27:d5:b5:13, length 28
+01:52:10.616571 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 27, seq 1, length 64
+01:52:11.965582 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 27, seq 2, length 64
+01:52:12.992503 08:00:27:69:22:ae &amp;gt; 08:00:27:d5:b5:13, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 27, seq 3, length 64
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;vbox3 收到了 vbox2 转发来的包，但它没有进一步的发送动作，此时我拍脑袋一想，Linux 可能默认有限制，不转发包，于是我用 &lt;strong&gt;ubuntu 开启路由转发&lt;/strong&gt; 作为关键字搜了一下，找到了配置项 &lt;code&gt;net.ipv4.ip_forward&lt;/code&gt;, 我又用 &lt;strong&gt;ubuntu ipv4_forward&lt;/strong&gt; 作为关键字搜索了一下，找到了 &lt;a href=&#34;https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux&#34;&gt;ubuntu 开启 IP Forward 的文章&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;我执行以下命令，在 vbox3 上临时开启了 ip 转发的功能&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sysctl -w net.ipv4.ip_forward=1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;改完上述配置后，在 vbox1 上 ping &lt;code&gt;192.168.26.122&lt;/code&gt; 就能 ping 通了。&lt;/p&gt;
+&lt;p&gt;在 vbox3 上抓包也能看到转发的 ICMP reply 包&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;01:58:54.790382 08:00:27:d5:b5:13 &amp;gt; 08:00:27:4c:f0:52, ethertype IPv4 (0x0800), length 98: 192.168.26.122 &amp;gt; 192.168.26.129: ICMP echo reply, id 28, seq 1, length 64
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-234135.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://linux-audit.com/how-to-clear-the-arp-cache-on-linux/&#34;&gt;How to clear the ARP cache on Linux?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.virtualbox.org/manual/ch06.html#network_nat_service&#34;&gt;6.4. Network Address Translation Service&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux&#34;&gt;Linux IP forwarding – How to Disable/Enable using net.ipv4.ip_forward&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;其他用到的命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 查看 arp 表
+arp -n
+# 清空 arp 表
+sudo ip -s -s neigh flush all
+# 查看路由信息
+route -n
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
       <title>Docs: 泛型</title>
       <link>https://bwangel.me/647/docs/golang/generic/</link>
       <pubDate>Tue, 15 Aug 2023 19:22:52 +0800</pubDate>
@@ -2862,6 +2800,161 @@ options ndots:15
     </item>
     
     <item>
+      <title>Docs: lsof</title>
+      <link>https://bwangel.me/647/docs/linux/lsof/</link>
+      <pubDate>Thu, 02 Mar 2023 12:43:09 +0800</pubDate>
+      
+      <guid>https://bwangel.me/647/docs/linux/lsof/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;按照网络状态筛选进程的-fd&#34;&gt;按照网络状态筛选进程的 fd&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo lsof -i -sTCP:LISTEN -a -p &amp;lt;pid&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-a&lt;/code&gt; 表示 and, 前后两个条件要一起生效&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-i&lt;/code&gt; 和 &lt;code&gt;-s&lt;/code&gt; 一起用，表示可以按照 TCP/UDP 状态来筛选 fd&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;列出进程 &lt;code&gt;&amp;lt;pid&amp;gt;&lt;/code&gt; 建立的所有 TCP 连接&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo lsof -i -sTCP:ESTABLISHED -a -p &amp;lt;pid&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;列出进程 &lt;code&gt;&amp;lt;pid&amp;gt;&lt;/code&gt; 所有 IDLE 状态的 UDP 连接&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo lsof -i -sUDP:IDLE -a -p &amp;lt;pid&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;根据 Unix 发行版本的不同，TCP/UDP 状态也会有不同的名字:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;常用的 TCP 状态是: &lt;code&gt;CLOSED&lt;/code&gt;, &lt;code&gt;IDLE&lt;/code&gt;, &lt;code&gt;BOUND&lt;/code&gt;, &lt;code&gt;LISTEN&lt;/code&gt;, &lt;code&gt;ESTABLISHED&lt;/code&gt;, &lt;code&gt;SYN_SENT&lt;/code&gt;, &lt;code&gt;SYN_RCDV&lt;/code&gt;, &lt;code&gt;ESTABLISHED&lt;/code&gt;, &lt;code&gt;CLOSE_WAIT&lt;/code&gt;, &lt;code&gt;FIN_WAIT1&lt;/code&gt;, &lt;code&gt;CLOSING&lt;/code&gt;, &lt;code&gt;LAST_ACK&lt;/code&gt;, &lt;code&gt;FIN_WAIT_2&lt;/code&gt;, &lt;code&gt;TIME_WAIT&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;常用的 UDP 状态是: &lt;code&gt;Unbound&lt;/code&gt;, &lt;code&gt;Idle&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;按照-fd-number-查找进程的-fd&#34;&gt;按照 fd number 查找进程的 fd&lt;/h2&gt;
+&lt;p&gt;使用 &lt;code&gt;strace&lt;/code&gt; 查看进程的系统调用的时候，经常能够看到在某个 fd 上执行读写操作，例如:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;write&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;267, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\1\0\0\0\0\0\0\0&amp;#34;&lt;/span&gt;, 8&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;       &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;8&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;5405, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;# Kubernetes-managed hosts file &amp;#34;&lt;/span&gt;..., 4096&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们想要查一下这个 267 和 5405 具体代表了什么连接，可以用&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo lsof -d &amp;lt;fd_number&amp;gt; -a -p &amp;lt;pid&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;例如我利用 strace 查看飞书 app 的系统调用，看到以下的信息&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; sudo strace -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;8261&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;strace: Process &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;8261&lt;/span&gt; attached
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;restart_syscall&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&amp;lt;... resuming interrupted &lt;span style=&#34;color:#204a87&#34;&gt;read&lt;/span&gt; ...&amp;gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openat&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;AT_FDCWD, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/proc/self/status&amp;#34;&lt;/span&gt;, O_RDONLY&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;4, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Name:\tfeishu\nUmask:\t0002\nState:\t&amp;#34;&lt;/span&gt;..., 1024&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1024&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;close&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;4&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;                                &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;futex&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x7ff0a7ffead8, FUTEX_WAKE_PRIVATE, 2147483647&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;futex&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x7ff0a7ffea88, FUTEX_WAKE_PRIVATE, 1&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;recvmsg&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;23, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg_namelen&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, 0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; -1 EAGAIN &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;资源暂时不可用&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;recvmsg&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;23, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg_namelen&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, 0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; -1 EAGAIN &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;资源暂时不可用&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;poll&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;([{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;9, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;10, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;22, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;23, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;67, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}]&lt;/span&gt;, 5, 0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;Timeout&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;recvmsg&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;23, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg_namelen&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, 0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; -1 EAGAIN &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;资源暂时不可用&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;recvmsg&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;23, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;msg_namelen&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, 0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; -1 EAGAIN &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;资源暂时不可用&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;poll&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;([{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;9, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;10, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;22, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;23, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;, &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;67, &lt;span style=&#34;color:#000&#34;&gt;events&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}]&lt;/span&gt;, 5, 200&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;([{&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fd&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;10, &lt;span style=&#34;color:#000&#34;&gt;revents&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;POLLIN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;10, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;!&amp;#34;&lt;/span&gt;, 2&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;                        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;futex&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x7ff0a7ffead8, FUTEX_WAKE_PRIVATE, 2147483647&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;futex&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x7ff0a7ffea88, FUTEX_WAKE_PRIVATE, 1&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;futex&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x7ff0a0001eb8, FUTEX_WAKE_PRIVATE, 1&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openat&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;AT_FDCWD, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/proc/self/status&amp;#34;&lt;/span&gt;, O_RDONLY&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;4, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Name:\tfeishu\nUmask:\t0002\nState:\t&amp;#34;&lt;/span&gt;..., 1024&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1024&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我想知道 fd 4 代表了什么，执行 &lt;code&gt;sudo lsof -d 4 -a -p 8261&lt;/code&gt;，可以看到它是我的电脑和 &lt;code&gt;220.181.131.241&lt;/code&gt; 建立的一个 https 连接。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; sudo lsof -d &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4&lt;/span&gt; -a -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;8261&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;COMMAND  PID      USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;feishu  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;8261&lt;/span&gt; xuyundong    4u  IPv4 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2613086&lt;/span&gt;      0t0  TCP 192.168.252.88:35810-&amp;gt;220.181.131.241:https &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;ESTABLISHED&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;查看端口占用&#34;&gt;查看端口占用&lt;/h2&gt;
+&lt;p&gt;有时候我们启动程序的时候，发现端口被占用了，可以用 &lt;code&gt;lsof -i:xxx&lt;/code&gt; 来查看端口被哪个进程占用了，例如:&lt;/p&gt;
+&lt;p&gt;下面这条命令显示 3306 端口被 &lt;code&gt;360702&lt;/code&gt; 和 &lt;code&gt;360709&lt;/code&gt; 两个进程占用了。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; sudo lsof -i:3306
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;COMMAND      PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker-pr &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;360702&lt;/span&gt; root    4u  IPv4 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1842886&lt;/span&gt;      0t0  TCP *:mysql &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;LISTEN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker-pr &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;360709&lt;/span&gt; root    4u  IPv6 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1842889&lt;/span&gt;      0t0  TCP *:mysql &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;LISTEN&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;查看容器的网络调用&#34;&gt;查看容器的网络调用&lt;/h2&gt;
+&lt;h3 id=&#34;构建镜像&#34;&gt;构建镜像&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;download.py&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#!/usr/bin/env python3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# -*- coding: utf-8 -*-&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;requests&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;resp&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;requests&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;https://releases.ubuntu.com/22.04.2/ubuntu-22.04.2-desktop-amd64.iso?_ga=2.131295240.668169970.1684741981-917190618.1681460407&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;resp&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;status_code&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;Dockerfile&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-dockerfile&#34; data-lang=&#34;dockerfile&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;FROM&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; python:3.10&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;RUN&lt;/span&gt; pip install requests&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;COPY&lt;/span&gt; download.py /download.py&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ENTRYPOINT&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/download.py&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;准备上述两个文件，然后执行&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker build -t test_download .
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;构建我们用于调试的镜像, &lt;code&gt;test_download&lt;/code&gt; 。&lt;/p&gt;
+&lt;h3 id=&#34;启动阻塞的容器&#34;&gt;启动阻塞的容器&lt;/h3&gt;
+&lt;p&gt;执行以下命令，启动一个阻塞在网络请求中的容器。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker run --rm test_download
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;这个例子不太好，因为 &lt;code&gt;releases.ubuntu.com&lt;/code&gt; 还比较健康，会持续地返回内容，现实中我们遇到的情况是，服务器完全不返回内容，客户端也没有设置超时时间，完全处于阻塞的状态。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;查找容器的-pid&#34;&gt;查找容器的 pid&lt;/h3&gt;
+&lt;p&gt;根据容器的 ID, 我们通过 &lt;code&gt;docker inspect &amp;lt;id&amp;gt;| rg -i pid&lt;/code&gt; 可以获得容器的进程 ID&lt;/p&gt;
+&lt;p&gt;如果你使用的是 containerd, 可以使用 &lt;code&gt;crictl inspect &amp;lt;id&amp;gt; | rg -i pid&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; docker ps
+CONTAINER ID   IMAGE           COMMAND                 CREATED          STATUS          PORTS     NAMES
+bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 seconds ago   Up 36 seconds             friendly_wozniak
+ø&amp;gt; docker inspect bf5846384913 | rg -i pid
+            &amp;#34;Pid&amp;#34;: 726678,
+            &amp;#34;PidMode&amp;#34;: &amp;#34;&amp;#34;,
+            &amp;#34;PidsLimit&amp;#34;: null,
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;利用-strace-查看进程的状态&#34;&gt;利用 strace 查看进程的状态&lt;/h3&gt;
+&lt;p&gt;从 strace 的输出中可以看到，进程一直在从 3 号 fd 上读取数据&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# strace -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;strace: Process &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt; attached
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Z\263\351\331\315\17\330\205\222\361\21\235&amp;#39;Kp\301w\256\365|\275K\326y\350@\305\300\325\262\fk&amp;#34;&lt;/span&gt;..., 13131&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1448&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\317GKJ\324O)1\5\272\\\&amp;#34;\24\360s\177\263\223#\376\360\35\360\226\240\214mf\374\243\222\335&amp;#34;&lt;/span&gt;..., 11683&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11683&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\22c\367U@\243\377\325\255\n0\376\79J\244\v9O4\233Kq\0233\304k\6\356dy\20&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;[\244K\30\7\30?[\210\313\364\335\t\321&amp;gt;l\270\2\365\262\307|\376\211.\376\342%\361\34\31\246&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\335\373\354\320:SF\244o#\244\377Ll\21\366AT\374vgYD\2418\305\340\313||\243;&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;X \300\240\252IoZ\352W&lt;/span&gt;$&lt;span style=&#34;color:#4e9a06&#34;&gt;\255\266\324\304q\306\23\226-b\212\300\271\222pI\270\33\tcn&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\213\331\225\331b\2405\204\f\213\32\r\250;\250\326.\4l\221\230^0\272{\317\32he\262V\223&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brk&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;0x55fba8f48000&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;                     &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 0x55fba8f48000
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\4\317\362`-R}\360\&amp;#34;\266nZ\33\261s,\340\345\371\300;]\347\30\237\344\305\235m\360j\357&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;1v\355\312]nG\347\240\4\210\350\241\34\257\333\307\233z\261\0\6\307\2234n\21V\27\305\272\371&amp;#34;&lt;/span&gt;..., 16401&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16401&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;read&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\27\3\3@\21&amp;#34;&lt;/span&gt;, 5&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;               &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;利用-lsof-查看-fd-详细信息&#34;&gt;利用 lsof 查看 fd 详细信息&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nsenter -n -t &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt; lsof -d &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; -a -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# nsenter -n -t &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt; lsof -d &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; -a -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;COMMAND    PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;726678&lt;/span&gt; root    3u  IPv4 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;9813984&lt;/span&gt;      0t0  TCP 172.17.0.2:55378-&amp;gt;https-services.aerodent.canonical.com:https &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;ESTABLISHED&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到，3号fd 是一个TCP 连接，本地的 &lt;code&gt;172.17.0.2:55378&lt;/code&gt; 连接了远端的 &lt;code&gt;https-services.aerodent.canonical.com:https&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果我们不加 nsenter -n -t &lt;pid&gt; 来切换 network namespace 的话，lsof 输出的信息中就没有详细的客户端和服务端的地址了&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@Macmini:~# lsof -d &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; -a -p &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;729160&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;COMMAND    PID USER   FD   TYPE DEVICE SIZE/OFF    NODE NAME
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;729160&lt;/span&gt; root    3u  sock    0,8      0t0 &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;9829458&lt;/span&gt; protocol: TCP
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://linux.die.net/man/8/lsof&#34;&gt;man lsof&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
       <title>Docs: Pod Tips</title>
       <link>https://bwangel.me/647/docs/k8s/pod-tips/</link>
       <pubDate>Thu, 02 Mar 2023 09:31:14 +0800</pubDate>
@@ -3614,10 +3707,10 @@ Field Header := field id + field value
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 刷新字体缓存&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fc-cache -fv
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;获取字体名称，打开终端，在 &lt;strong&gt;配置文件首选项&lt;/strong&gt; 中查看字体名称&lt;/li&gt;
+&lt;li&gt;获取字体名称 &lt;code&gt;DejaVuSansM Nerd Font Mono&lt;/code&gt; ，打开终端，在 &lt;strong&gt;配置文件首选项&lt;/strong&gt; 中查看字体名称&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-10-21-155055.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;可以看到字体名称是: &lt;strong&gt;DejaVuSansMono Nerd Font Mono&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;可以看到字体名称是: &lt;strong&gt;DejaVuSansM Nerd Font Mono&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;修改 &lt;code&gt;~/.alacritty.yml&lt;/code&gt; 文件，将 &lt;code&gt;font -&amp;gt; normal -&amp;gt; family&lt;/code&gt; 改成对应的字体名称&lt;/li&gt;
 &lt;li&gt;最终，我们就能够在终端里看到，图标被正确显示了&lt;/li&gt;
@@ -4560,7 +4653,7 @@ sudo systemctl restart docker
         &lt;h2 id=&#34;安装软件&#34;&gt;安装软件&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g&amp;#39;&lt;/span&gt; /etc/apt/sources.list
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt update
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/cli/cli/blob/trunk/docs/install_linux.md&#34;&gt;github cli&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.vagrantup.com/downloads&#34;&gt;vagrant&lt;/a&gt;&lt;/li&gt;
@@ -4570,9 +4663,10 @@ sudo systemctl restart docker
 &lt;li&gt;&lt;a href=&#34;https://github.com/moovweb/gvm&#34;&gt;gvm&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://rustup.rs/&#34;&gt;rustup&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/DejaVuSansMono.zip&#34;&gt;nerdfont DejaVuSansMono&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://bwangel.me/647/647/docs/ubuntu/nvim-web-devicons/&#34;&gt;font&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;ubuntu-将-capslock-映射成-esc&#34;&gt;Ubuntu 将 capslock 映射成 esc&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install dconf-tools
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install dconf-cli
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 使 caps 成为 esc 按键&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dconf write /org/gnome/desktop/input-sources/xkb-options &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;[&amp;#39;caps:escape&amp;#39;]&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 交换 caps 和 esc 按键&lt;/span&gt;
@@ -5044,33 +5138,6 @@ Mon Sep 28 16:42:16 CST 2015
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;variant bytes is `2D 00 00 00 00 00 00 00 00 00 `
 decode value is -23
 &lt;/code&gt;&lt;/pre&gt;
-      </description>
-    </item>
-    
-    <item>
-      <title>Docs: 如何阅读网络上的小作文</title>
-      <link>https://bwangel.me/647/docs/life/read/</link>
-      <pubDate>Sat, 26 Feb 2022 17:19:24 +0800</pubDate>
-      
-      <guid>https://bwangel.me/647/docs/life/read/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;怎么做网络小作文的阅读理解&#34;&gt;怎么做网络小作文的阅读理解&lt;/h2&gt;
-&lt;p&gt;新闻五要素是：时间、地点、人物、事件、原因。看小作文的时候，五要素略有不同：时间、地点、主语、谓语、宾语。因为不能强求别人知道原因是什么。但是，但是，但是，主谓宾总应该有，时间地点总应该有。&lt;/p&gt;
-&lt;p&gt;看小作文的步骤&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;第一步，是删除仅表达情绪而不包含有效信息的句子。&lt;/li&gt;
-&lt;li&gt;第二步，对剩下来的句子删除其中仅仅表达情绪而不包含有效信息的形容词、感叹词、惊叹号等。&lt;/li&gt;
-&lt;li&gt;第三步，根据剩下来的内容，对每一个描述梳理五要素。要素缺乏的地方，打个问号。&lt;/li&gt;
-&lt;li&gt;第四步，根据以上过程梳理出来内容，对每一个指控，分析一下利害关系和动机。看看受益者是谁，受损者是谁。看看被指控人是不是受益了，指控者是不是受损了。看看被指控的行为是不是存在动机。&lt;/li&gt;
-&lt;li&gt;第五步，把第三步中的问号改成各种不同的内容，比如把时间要素分别改为“今天”、“去年”、“大前年”，看看是否会影响你对事情的看法。如果会，就要考虑这些缺失的要素可能是被故意省略的。需要追问一下小作文的作者，这些要素到底是什么。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://weibo.com/u/1401527553&#34;&gt;https://weibo.com/u/1401527553&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
       </description>
     </item>
     
