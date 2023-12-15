@@ -78,7 +78,128 @@ func InsertSortWithSentinel[T ttypes.Number](arr []T) []T {
 }
 ```
 
-## 链表(TODO)
+## 链表
+
+链表节点的定义如下
+
+```go
+//SingleListNode 单链表
+type SingleListNode[T any] struct {
+	Data T
+	Next *SingleListNode[T]
+}
+```
+
+### Append
+
+Append 函数用于向链表的尾部添加节点，下面的程序分别是普通写法和添加了哨兵节点的写法
+
+- 普通写法
+
+```go
+func Append[T any](head *SingleListNode[T], val T) *SingleListNode[T] {
+	var node = &SingleListNode[T]{
+		Next: nil,
+		Data: val,
+	}
+
+	if head == nil {
+		return node
+	}
+
+	var current = head
+	for current.Next != nil {
+		current = current.Next
+	}
+	current.Next = node
+
+	return head
+}
+```
+
+- 添加了哨兵节点的写法
+
+```go
+func AppendDummy[T any](head *SingleListNode[T], val T) *SingleListNode[T] {
+	var node = &SingleListNode[T]{
+		Next: nil,
+		Data: val,
+	}
+	var dummy = &SingleListNode[T]{
+		Next: head,
+	}
+	var current = dummy
+
+	for current.Next != nil {
+		current = current.Next
+	}
+
+	current.Next = node
+
+	return dummy.Next
+}
+```
+
+在普通写法中，需要先判断 `if head == nil`，避免 for 循环中 `current.Next` 出错。
+
+在哨兵节点写法中，我们在链表的头节点之前加了一个 dummy 节点，这样 `current.Next` 就一定不会是空了，因此可以省略掉 if 判断语句。
+
+### DeleteVal
+
+DeleteVal 函数用于从链表中删除指定值的节点，以下是它的两种写法:
+
+- 普通写法
+
+```go
+func DeleteVal[T string](head *SingleListNode[T], val T) *SingleListNode[T] {
+	if head == nil {
+		return head
+	}
+
+	if head.Data == val {
+		return head.Next
+	}
+
+	var current = head
+	for current.Next != nil {
+		if current.Next.Data == val {
+			current.Next = current.Next.Next
+			break
+		}
+		current = current.Next
+	}
+
+	return head
+}
+```
+
+- 哨兵节点写法
+
+```go
+func DeleteValDummy[T string](head *SingleListNode[T], val T) *SingleListNode[T] {
+	var dummy = &SingleListNode[T]{
+		Next: head,
+	}
+
+	var current = dummy
+	for current.Next != nil {
+		if current.Next.Data == val {
+			current.Next = current.Next.Next
+			break
+		}
+		current = current.Next
+	}
+
+	return dummy.Next
+}
+```
+
+在 `DeleteVal` 中，我们需要先判断 `head` 是否为空，head 是否就是要查找的节点。然后才能开始循环，挨个判断 `current.Next` 是否是查找的节点。
+
+在 `DeleteValDummy` 中，我们在头节点之前添加了一个哨兵节点 `Dummy`。
+
+1. 这样第一个节点肯定不会是空，`if head == nil` 可以省略
+2. 判断的第一个节点是 `Dummy.Next` 即 `head`, `if head.Data == val` 也省略。
 
 ## 返回所有二叉搜索树
 
