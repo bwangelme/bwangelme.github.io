@@ -37,7 +37,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bwangel.me/647/docs/algo/algo-sentry/" /><meta property="article:section" content="docs" />
 <meta property="article:published_time" content="2022-09-11T10:52:23+08:00" />
-<meta property="article:modified_time" content="2023-11-19T14:45:15+08:00" /><meta property="og:site_name" content="647号宇宙" />
+<meta property="article:modified_time" content="2023-12-15T10:00:01+08:00" /><meta property="og:site_name" content="647号宇宙" />
 <meta itemprop="name" content="算法中使用哨兵变量(TODO)">
 <meta itemprop="description" content="背景 哨兵，现实中是用于解决国家之间的边界问题。
 在算法程序中，我们设置一些冗余的变量，让算法程序处理边界问题时更加容易，这些变量就被称为哨兵。
@@ -46,8 +46,8 @@
 用 i 从 1 开始遍历数组中每个元素 从后往前遍历 1-i 的每个元素，找到第一个比当前元素小的元素，将其插入到该元素之后 Note: 先挪位置，循环结束后再在 j 指示的索引中(第一个比当前元素小的元素)插入当前值 func InsertSort[T ttypes.Number](arr []T) []T { res := make([]T, len(arr)) copy(res, arr) for i := 1; i &lt; len(res); i&#43;&#43; { j := i current := res[i] for j &gt; 0 &amp;&amp; res[j-1] &gt; current { res[j] = res[j-1] j-- } res[j] = current } return res } 演示图:
 哨兵模式 哨兵模式的代码如下，它在数组的前面添加一个元素。
 每次开始遍历前，它将当前需要插入的元素放到数组头部(res[0])。这样就算 1-i 中没有比 res[i] 小的元素，但循环到最后还是会触发条件 not (res[0] &gt; current), 达到跳出循环的目的。"><meta itemprop="datePublished" content="2022-09-11T10:52:23+08:00" />
-<meta itemprop="dateModified" content="2023-11-19T14:45:15+08:00" />
-<meta itemprop="wordCount" content="456">
+<meta itemprop="dateModified" content="2023-12-15T10:00:01+08:00" />
+<meta itemprop="wordCount" content="699">
 <meta itemprop="keywords" content="Algo,哨兵," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="算法中使用哨兵变量(TODO)"/>
 <meta name="twitter:description" content="背景 哨兵，现实中是用于解决国家之间的边界问题。
@@ -352,6 +352,8 @@
   <ul class="ul-2 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslinuxcurl-li">
   <a href="/647/docs/linux/curl/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxcurl"><span class="">curl</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslinuxpython-shell-li">
+  <a href="/647/docs/linux/python-shell/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxpython-shell"><span class="">利用 Python 处理字符串</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslinuxdns-li">
   <a href="/647/docs/linux/dns/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslinuxdns"><span class="">DNS</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslinuxnfs-server-li">
@@ -429,10 +431,20 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docslife-li">
   <a href="/647/docs/life/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-647docslife"><span class="">Life</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslifelanguage-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslifee689ace5908de7ab8be4b887e5bdb1e8af84-li">
+  <a href="/647/docs/life/%E6%89%AC%E5%90%8D%E7%AB%8B%E4%B8%87%E5%BD%B1%E8%AF%84/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslifee689ace5908de7ab8be4b887e5bdb1e8af84"><span class="">《扬名立万》中一些前后呼应的情节</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslifelanguage-li">
   <a href="/647/docs/life/language/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslifelanguage"><span class="">编程语言很重要</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docsliferead-li">
   <a href="/647/docs/life/read/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docsliferead"><span class="">如何阅读网络上的小作文</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslifee696b0e997bbe4bca0e692ad-li">
+  <a href="/647/docs/life/%E6%96%B0%E9%97%BB%E4%BC%A0%E6%92%AD/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslifee696b0e997bbe4bca0e692ad"><span class="">关于新闻传播的思考</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslifee585b3e4ba8ee5ada6e4b9a0e58685e5aeb9e79a84e6809de88083-li">
+  <a href="/647/docs/life/%E5%85%B3%E4%BA%8E%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9%E7%9A%84%E6%80%9D%E8%80%83/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslifee585b3e4ba8ee5ada6e4b9a0e58685e5aeb9e79a84e6809de88083"><span class="">关于学习内容的思考</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslifewhy-to-learn-li">
+  <a href="/647/docs/life/why-to-learn/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslifewhy-to-learn"><span class="">为什么要学习?</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-647docslifee4b8ade59bbde588b6e88dafe59fbae59cb0e7ae80e69fa5-li">
+  <a href="/647/docs/life/%E4%B8%AD%E5%9B%BD%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0%E7%AE%80%E6%9F%A5/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-647docslifee4b8ade59bbde588b6e88dafe59fbae59cb0e7ae80e69fa5"><span class="">中国制药基地到最近小区的直线距离</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-647docstools-li">
@@ -655,7 +667,12 @@
         <li><a href="#哨兵模式">哨兵模式</a></li>
       </ul>
     </li>
-    <li><a href="#链表todo">链表(TODO)</a></li>
+    <li><a href="#链表">链表</a>
+      <ul>
+        <li><a href="#append">Append</a></li>
+        <li><a href="#deleteval">DeleteVal</a></li>
+      </ul>
+    </li>
     <li><a href="#返回所有二叉搜索树">返回所有二叉搜索树</a>
       <ul>
         <li><a href="#题目">题目</a></li>
@@ -715,7 +732,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">language</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">13</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">life</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">life</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span><span class="taxonomy-count">8</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">lsof</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">mariadb</span><span class="taxonomy-count">1</span></a></li>
@@ -732,11 +749,12 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">prom</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">prometheus</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/pubsub/" data-taxonomy-term="pubsub"><span class="taxonomy-label">PubSub</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">22</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">23</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/python%E6%A0%87%E5%87%86%E5%BA%93/" data-taxonomy-term="python%E6%A0%87%E5%87%86%E5%BA%93"><span class="taxonomy-label">Python标准库</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/rabbitmq/" data-taxonomy-term="rabbitmq"><span class="taxonomy-label">RabbitMQ</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">re</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/redis/" data-taxonomy-term="redis"><span class="taxonomy-label">Redis</span><span class="taxonomy-count">7</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/shell/" data-taxonomy-term="shell"><span class="taxonomy-label">shell</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">stackoverflow</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">stty</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">tcp</span><span class="taxonomy-count">1</span></a></li>
@@ -745,7 +763,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/test/" data-taxonomy-term="test"><span class="taxonomy-label">Test</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">6</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">42</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">tombkeeper</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">tombkeeper</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">5</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">ucs</span><span class="taxonomy-count">1</span></a></li>
@@ -762,13 +780,18 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/werkzeug/" data-taxonomy-term="werkzeug"><span class="taxonomy-label">Werkzeug</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">wireshark</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">zigzag</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83/" data-taxonomy-term="%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83"><span class="taxonomy-label">人生思考</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0/" data-taxonomy-term="%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0"><span class="taxonomy-label">制药基地</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E5%93%A8%E5%85%B5/" data-taxonomy-term="%E5%93%A8%E5%85%B5"><span class="taxonomy-label">哨兵</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E5%96%9C%E5%89%A7/" data-taxonomy-term="%E5%96%9C%E5%89%A7"><span class="taxonomy-label">喜剧</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E5%B7%A5%E5%85%B7/" data-taxonomy-term="%E5%B7%A5%E5%85%B7"><span class="taxonomy-label">工具</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" data-taxonomy-term="%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="taxonomy-label">并发编程</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E6%8A%98%E8%85%BE/" data-taxonomy-term="%E6%8A%98%E8%85%BE"><span class="taxonomy-label">折腾</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" data-taxonomy-term="%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="taxonomy-label">文件系统</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E6%96%B0%E9%97%BB/" data-taxonomy-term="%E6%96%B0%E9%97%BB"><span class="taxonomy-label">新闻</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E6%9D%82%E8%AE%B0/" data-taxonomy-term="%E6%9D%82%E8%AE%B0"><span class="taxonomy-label">杂记</span><span class="taxonomy-count">7</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-taxonomy-term="%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="taxonomy-label">正则表达式</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E7%94%B5%E5%BD%B1/" data-taxonomy-term="%E7%94%B5%E5%BD%B1"><span class="taxonomy-label">电影</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E7%AC%94%E8%AE%B0/" data-taxonomy-term="%E7%AC%94%E8%AE%B0"><span class="taxonomy-label">笔记</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E7%BC%96%E7%A0%81/" data-taxonomy-term="%E7%BC%96%E7%A0%81"><span class="taxonomy-label">编码</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/647/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" data-taxonomy-term="%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86"><span class="taxonomy-label">编译原理</span><span class="taxonomy-count">1</span></a></li>
@@ -864,7 +887,109 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">res</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">:]</span>
 </span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h2 id="链表todo">链表(TODO)</h2>
+</span></span></code></pre></div><h2 id="链表">链表</h2>
+<p>链表节点的定义如下</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">//SingleListNode 单链表
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">type</span> <span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span> <span style="color:#000">any</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">Data</span> <span style="color:#000">T</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">Next</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h3 id="append">Append</h3>
+<p>Append 函数用于向链表的尾部添加节点，下面的程序分别是普通写法和添加了哨兵节点的写法</p>
+<ul>
+<li>普通写法</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">Append</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span> <span style="color:#000">any</span><span style="color:#000;font-weight:bold">](</span><span style="color:#000">head</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">],</span> <span style="color:#000">val</span> <span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">node</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">]{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">Next</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">Data</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">val</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">head</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">node</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">current</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">head</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">current</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">node</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">head</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><ul>
+<li>添加了哨兵节点的写法</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">AppendDummy</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span> <span style="color:#000">any</span><span style="color:#000;font-weight:bold">](</span><span style="color:#000">head</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">],</span> <span style="color:#000">val</span> <span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">node</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">]{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">Next</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">Data</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">val</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">dummy</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">]{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">Next</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">head</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">current</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">dummy</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">current</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">node</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">dummy</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>在普通写法中，需要先判断 <code>if head == nil</code>，避免 for 循环中 <code>current.Next</code> 出错。</p>
+<p>在哨兵节点写法中，我们在链表的头节点之前加了一个 dummy 节点，这样 <code>current.Next</code> 就一定不会是空了，因此可以省略掉 if 判断语句。</p>
+<h3 id="deleteval">DeleteVal</h3>
+<p>DeleteVal 函数用于从链表中删除指定值的节点，以下是它的两种写法:</p>
+<ul>
+<li>普通写法</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">DeleteVal</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span> <span style="color:#204a87;font-weight:bold">string</span><span style="color:#000;font-weight:bold">](</span><span style="color:#000">head</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">],</span> <span style="color:#000">val</span> <span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">head</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">head</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">head</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Data</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">val</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">head</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">current</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">head</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Data</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">val</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#204a87;font-weight:bold">break</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">current</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">head</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><ul>
+<li>哨兵节点写法</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">DeleteValDummy</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span> <span style="color:#204a87;font-weight:bold">string</span><span style="color:#000;font-weight:bold">](</span><span style="color:#000">head</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">],</span> <span style="color:#000">val</span> <span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">dummy</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">SingleListNode</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">]{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">Next</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">head</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">current</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">dummy</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Data</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">val</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#204a87;font-weight:bold">break</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">current</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">current</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">dummy</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Next</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>在 <code>DeleteVal</code> 中，我们需要先判断 <code>head</code> 是否为空，head 是否就是要查找的节点。然后才能开始循环，挨个判断 <code>current.Next</code> 是否是查找的节点。</p>
+<p>在 <code>DeleteValDummy</code> 中，我们在头节点之前添加了一个哨兵节点 <code>Dummy</code>。</p>
+<ol>
+<li>这样第一个节点肯定不会是空，<code>if head == nil</code> 可以省略</li>
+<li>判断的第一个节点是 <code>Dummy.Next</code> 即 <code>head</code>, <code>if head.Data == val</code> 也省略。</li>
+</ol>
 <h2 id="返回所有二叉搜索树">返回所有二叉搜索树</h2>
 <h3 id="题目">题目</h3>
 <p>给你一个整数 n ，请你生成并返回所有由 n 个节点组成且节点值从 1 到 n 互不相同的不同二叉搜索树 。可以按 任意顺序 返回答案。</p>

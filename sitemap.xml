@@ -35,6 +35,18 @@
     <loc>https://bwangel.me/647/docs/</loc>
     <lastmod>2023-08-01T12:10:45+08:00</lastmod>
   </url><url>
+    <loc>https://bwangel.me/647/tags/python/</loc>
+    <lastmod>2023-12-18T17:50:57+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/647/tags/shell/</loc>
+    <lastmod>2023-12-18T17:50:57+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/647/tags/</loc>
+    <lastmod>2023-12-18T17:50:57+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/647/docs/linux/python-shell/</loc>
+    <lastmod>2023-12-18T17:50:57+08:00</lastmod>
+  </url><url>
     <loc>https://bwangel.me/647/tags/blog/</loc>
     <lastmod>2023-12-13T13:25:27+08:00</lastmod>
   </url><url>
@@ -42,12 +54,6 @@
     <lastmod>2023-12-13T13:25:27+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/docs/envoy/envoy-threading-model/</loc>
-    <lastmod>2023-12-13T13:25:27+08:00</lastmod>
-  </url><url>
-    <loc>https://bwangel.me/647/tags/</loc>
-    <lastmod>2023-12-13T13:25:27+08:00</lastmod>
-  </url><url>
-    <loc>https://bwangel.me/647/tags/python/</loc>
     <lastmod>2023-12-13T13:25:27+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/docs/python/unicode-re/</loc>
@@ -96,7 +102,7 @@
     <lastmod>2023-11-06T10:49:23+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/tags/algo/</loc>
-    <lastmod>2023-11-19T14:45:15+08:00</lastmod>
+    <lastmod>2023-12-15T10:00:01+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/tags/leetcode/</loc>
     <lastmod>2023-11-03T09:10:28+08:00</lastmod>
@@ -288,10 +294,10 @@
     <lastmod>2023-10-25T07:52:47+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/tags/%E5%93%A8%E5%85%B5/</loc>
-    <lastmod>2023-11-19T14:45:15+08:00</lastmod>
+    <lastmod>2023-12-15T10:00:01+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/docs/algo/algo-sentry/</loc>
-    <lastmod>2023-11-19T14:45:15+08:00</lastmod>
+    <lastmod>2023-12-15T10:00:01+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/tags/containerd/</loc>
     <lastmod>2023-09-13T10:02:01+08:00</lastmod>
@@ -328,6 +334,15 @@
   </url><url>
     <loc>https://bwangel.me/647/docs/k8s/process-block/</loc>
     <lastmod>2023-09-29T11:10:24+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/647/docs/life/%E6%89%AC%E5%90%8D%E7%AB%8B%E4%B8%87%E5%BD%B1%E8%AF%84/</loc>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/647/tags/%E5%96%9C%E5%89%A7/</loc>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/647/tags/%E7%94%B5%E5%BD%B1/</loc>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/docs/golang/go-release/</loc>
     <lastmod>2023-08-15T14:21:47+08:00</lastmod>
@@ -372,10 +387,10 @@
     <lastmod>2023-09-06T09:54:27+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/tags/life/</loc>
-    <lastmod>2023-09-29T11:10:24+08:00</lastmod>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/tags/tombkeeper/</loc>
-    <lastmod>2023-09-29T11:10:24+08:00</lastmod>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/docs/life/read/</loc>
     <lastmod>2023-09-29T11:10:24+08:00</lastmod>
@@ -554,6 +569,12 @@
     <loc>https://bwangel.me/647/docs/golang/go-schedule/</loc>
     <lastmod>2023-09-13T10:02:01+08:00</lastmod>
   </url><url>
+    <loc>https://bwangel.me/647/docs/life/%E6%96%B0%E9%97%BB%E4%BC%A0%E6%92%AD/</loc>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/647/tags/%E6%96%B0%E9%97%BB/</loc>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
+  </url><url>
     <loc>https://bwangel.me/647/tags/rabbitmq/</loc>
     <lastmod>2023-10-18T09:36:48+08:00</lastmod>
   </url><url>
@@ -575,11 +596,26 @@
     <loc>https://bwangel.me/647/docs/golang/intro-servemux/</loc>
     <lastmod>2023-10-18T09:36:48+08:00</lastmod>
   </url><url>
+    <loc>https://bwangel.me/647/docs/life/%E5%85%B3%E4%BA%8E%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9%E7%9A%84%E6%80%9D%E8%80%83/</loc>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/647/docs/life/why-to-learn/</loc>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/647/tags/%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83/</loc>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
+  </url><url>
     <loc>https://bwangel.me/647/docs/algo/leetcode/leetcode-2/</loc>
     <lastmod>2023-09-29T11:13:40+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/docs/algo/leetcode/leetcode-3/</loc>
     <lastmod>2023-09-29T11:13:40+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/647/docs/life/%E4%B8%AD%E5%9B%BD%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0%E7%AE%80%E6%9F%A5/</loc>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/647/tags/%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0/</loc>
+    <lastmod>2023-12-09T19:16:20+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/647/docs/golang/review-testify/</loc>
     <lastmod>2023-10-18T09:36:48+08:00</lastmod>
