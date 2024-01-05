@@ -9,7 +9,5 @@ author: "bwangel"
 ## docker cli 获取所有容器的 IP
 
 ```
-docker ps | rg -v CONTAINER | awk '{print $1}' \
-    | xargs docker inspect -f \
-    '{{.Name}}{{"\t"}}{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
+docker ps -q | xargs docker inspect -f '{{.Name}}{{"\t"}}{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
 ```
