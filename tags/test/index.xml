@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Test</title>
-    <link>https://bwangel.me/647/tags/test/</link>
+    <link>https://bwangel.me/tags/test/</link>
     <description>Recent content in Test on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sun, 24 Mar 2019 19:40:53 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/test/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/test/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Go 的测试</title>
-      <link>https://bwangel.me/647/docs/golang/go-test/</link>
+      <link>https://bwangel.me/docs/golang/go-test/</link>
       <pubDate>Sun, 24 Mar 2019 19:40:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-test/</guid>
+      <guid>https://bwangel.me/docs/golang/go-test/</guid>
       <description>
         
         

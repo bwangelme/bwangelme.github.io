@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – tips</title>
-    <link>https://bwangel.me/647/tags/tips/</link>
+    <link>https://bwangel.me/tags/tips/</link>
     <description>Recent content in tips on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Tue, 28 Nov 2023 22:10:53 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/tips/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/tips/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: QPS 和 RT 的关系</title>
-      <link>https://bwangel.me/647/docs/performance/qps_rt/</link>
+      <link>https://bwangel.me/docs/performance/qps_rt/</link>
       <pubDate>Sun, 13 Aug 2023 16:17:52 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/performance/qps_rt/</guid>
+      <guid>https://bwangel.me/docs/performance/qps_rt/</guid>
       <description>
         
         
@@ -60,10 +60,10 @@
     
     <item>
       <title>Docs: MySQL 事务</title>
-      <link>https://bwangel.me/647/docs/mysql/transaction/</link>
+      <link>https://bwangel.me/docs/mysql/transaction/</link>
       <pubDate>Tue, 28 Nov 2023 22:10:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/transaction/</guid>
+      <guid>https://bwangel.me/docs/mysql/transaction/</guid>
       <description>
         
         
@@ -78,10 +78,10 @@
     
     <item>
       <title>Docs: 二分查找</title>
-      <link>https://bwangel.me/647/docs/algo/binary_search/</link>
+      <link>https://bwangel.me/docs/algo/binary_search/</link>
       <pubDate>Tue, 10 Oct 2023 09:31:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/binary_search/</guid>
+      <guid>https://bwangel.me/docs/algo/binary_search/</guid>
       <description>
         
         
@@ -103,10 +103,10 @@ right = mid - 1
     
     <item>
       <title>Docs: Consumer</title>
-      <link>https://bwangel.me/647/docs/kafka/consumer/</link>
+      <link>https://bwangel.me/docs/kafka/consumer/</link>
       <pubDate>Mon, 11 Sep 2023 16:30:55 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/kafka/consumer/</guid>
+      <guid>https://bwangel.me/docs/kafka/consumer/</guid>
       <description>
         
         
@@ -157,10 +157,10 @@ right = mid - 1
     
     <item>
       <title>Docs: Broker</title>
-      <link>https://bwangel.me/647/docs/kafka/broker/</link>
+      <link>https://bwangel.me/docs/kafka/broker/</link>
       <pubDate>Mon, 11 Sep 2023 16:27:26 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/kafka/broker/</guid>
+      <guid>https://bwangel.me/docs/kafka/broker/</guid>
       <description>
         
         
@@ -207,10 +207,10 @@ right = mid - 1
     
     <item>
       <title>Docs: DNS</title>
-      <link>https://bwangel.me/647/docs/linux/dns/</link>
+      <link>https://bwangel.me/docs/linux/dns/</link>
       <pubDate>Sat, 09 Sep 2023 13:41:16 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/dns/</guid>
+      <guid>https://bwangel.me/docs/linux/dns/</guid>
       <description>
         
         
@@ -393,10 +393,10 @@ www.a.shifen.com.       53      IN      A       220.181.38.149
     
     <item>
       <title>Docs: Nginx proxy_set_header 默认会覆盖上一层的设置</title>
-      <link>https://bwangel.me/647/docs/http/nginx-proxy-set-header/</link>
+      <link>https://bwangel.me/docs/http/nginx-proxy-set-header/</link>
       <pubDate>Thu, 27 Apr 2023 15:02:39 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/nginx-proxy-set-header/</guid>
+      <guid>https://bwangel.me/docs/http/nginx-proxy-set-header/</guid>
       <description>
         
         
@@ -494,10 +494,10 @@ www.a.shifen.com.       53      IN      A       220.181.38.149
     
     <item>
       <title>Docs: Logrus 添加预设字段</title>
-      <link>https://bwangel.me/647/docs/golang/logrus-formatter/</link>
+      <link>https://bwangel.me/docs/golang/logrus-formatter/</link>
       <pubDate>Thu, 27 Apr 2023 14:55:12 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/logrus-formatter/</guid>
+      <guid>https://bwangel.me/docs/golang/logrus-formatter/</guid>
       <description>
         
         
@@ -542,10 +542,10 @@ www.a.shifen.com.       53      IN      A       220.181.38.149
     
     <item>
       <title>Docs: Ubuntu 中 Docker 设置容器中 DNS 服务器的地址</title>
-      <link>https://bwangel.me/647/docs/container/docker-dns/</link>
+      <link>https://bwangel.me/docs/container/docker-dns/</link>
       <pubDate>Mon, 20 Mar 2023 18:28:08 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/container/docker-dns/</guid>
+      <guid>https://bwangel.me/docs/container/docker-dns/</guid>
       <description>
         
         
@@ -573,10 +573,10 @@ options ndots:15
     
     <item>
       <title>Docs: Pod Tips</title>
-      <link>https://bwangel.me/647/docs/k8s/pod-tips/</link>
+      <link>https://bwangel.me/docs/k8s/pod-tips/</link>
       <pubDate>Thu, 02 Mar 2023 09:31:14 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/pod-tips/</guid>
+      <guid>https://bwangel.me/docs/k8s/pod-tips/</guid>
       <description>
         
         
@@ -651,10 +651,10 @@ options ndots:15
     
     <item>
       <title>Docs: Thrft</title>
-      <link>https://bwangel.me/647/docs/thrift/thrift-concept/</link>
+      <link>https://bwangel.me/docs/thrift/thrift-concept/</link>
       <pubDate>Tue, 15 Nov 2022 12:40:19 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/thrift-concept/</guid>
+      <guid>https://bwangel.me/docs/thrift/thrift-concept/</guid>
       <description>
         
         
@@ -683,10 +683,10 @@ options ndots:15
     
     <item>
       <title>Docs: 日期和时间格式</title>
-      <link>https://bwangel.me/647/docs/spec/datetime/</link>
+      <link>https://bwangel.me/docs/spec/datetime/</link>
       <pubDate>Wed, 26 Oct 2022 11:32:14 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/spec/datetime/</guid>
+      <guid>https://bwangel.me/docs/spec/datetime/</guid>
       <description>
         
         
@@ -725,10 +725,10 @@ options ndots:15
     
     <item>
       <title>Docs: Ubuntu 下 alacritty 终端中安装 nvim-tree 插件</title>
-      <link>https://bwangel.me/647/docs/ubuntu/nvim-web-devicons/</link>
+      <link>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</link>
       <pubDate>Fri, 21 Oct 2022 15:43:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/ubuntu/nvim-web-devicons/</guid>
+      <guid>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</guid>
       <description>
         
         
@@ -761,10 +761,10 @@ options ndots:15
     
     <item>
       <title>Docs: Deployment Tips</title>
-      <link>https://bwangel.me/647/docs/k8s/deployment-tips/</link>
+      <link>https://bwangel.me/docs/k8s/deployment-tips/</link>
       <pubDate>Thu, 15 Sep 2022 10:31:16 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/deployment-tips/</guid>
+      <guid>https://bwangel.me/docs/k8s/deployment-tips/</guid>
       <description>
         
         
@@ -792,10 +792,10 @@ Type     Reason            Age                From                   Message
     
     <item>
       <title>Docs: ls Tips</title>
-      <link>https://bwangel.me/647/docs/linux/ls-tips.md/</link>
+      <link>https://bwangel.me/docs/linux/ls-tips.md/</link>
       <pubDate>Tue, 16 Aug 2022 23:10:06 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/ls-tips.md/</guid>
+      <guid>https://bwangel.me/docs/linux/ls-tips.md/</guid>
       <description>
         
         
@@ -819,10 +819,10 @@ Type     Reason            Age                From                   Message
     
     <item>
       <title>Docs: 查看信号的快捷键</title>
-      <link>https://bwangel.me/647/docs/linux/stty/</link>
+      <link>https://bwangel.me/docs/linux/stty/</link>
       <pubDate>Tue, 09 Aug 2022 21:43:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/stty/</guid>
+      <guid>https://bwangel.me/docs/linux/stty/</guid>
       <description>
         
         
@@ -872,10 +872,10 @@ done
     
     <item>
       <title>Docs: Ubuntu 下 Docker 设置 Registry</title>
-      <link>https://bwangel.me/647/docs/container/docker-registry/</link>
+      <link>https://bwangel.me/docs/container/docker-registry/</link>
       <pubDate>Tue, 09 Aug 2022 21:14:49 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/container/docker-registry/</guid>
+      <guid>https://bwangel.me/docs/container/docker-registry/</guid>
       <description>
         
         
@@ -973,10 +973,10 @@ sudo systemctl restart docker
     
     <item>
       <title>Docs: pkg/errors 和 go1.13 中 errors 库发展历史</title>
-      <link>https://bwangel.me/647/docs/golang/golang-err/</link>
+      <link>https://bwangel.me/docs/golang/golang-err/</link>
       <pubDate>Mon, 01 Aug 2022 10:23:16 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang-err/</guid>
+      <guid>https://bwangel.me/docs/golang/golang-err/</guid>
       <description>
         
         
@@ -1008,10 +1008,10 @@ sudo systemctl restart docker
     
     <item>
       <title>Docs: 进程卡住如何 debug</title>
-      <link>https://bwangel.me/647/docs/k8s/process-block/</link>
+      <link>https://bwangel.me/docs/k8s/process-block/</link>
       <pubDate>Thu, 07 Jul 2022 19:56:13 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/process-block/</guid>
+      <guid>https://bwangel.me/docs/k8s/process-block/</guid>
       <description>
         
         
@@ -1035,10 +1035,10 @@ sudo systemctl restart docker
     
     <item>
       <title>Docs: Golang 的版本发布计划</title>
-      <link>https://bwangel.me/647/docs/golang/go-release/</link>
+      <link>https://bwangel.me/docs/golang/go-release/</link>
       <pubDate>Sat, 14 May 2022 20:58:10 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-release/</guid>
+      <guid>https://bwangel.me/docs/golang/go-release/</guid>
       <description>
         
         
@@ -1178,10 +1178,10 @@ sudo systemctl restart docker
     
     <item>
       <title>Docs: Ubuntu 初始化</title>
-      <link>https://bwangel.me/647/docs/ubuntu/ubuntu-init/</link>
+      <link>https://bwangel.me/docs/ubuntu/ubuntu-init/</link>
       <pubDate>Sun, 08 May 2022 10:42:22 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/ubuntu/ubuntu-init/</guid>
+      <guid>https://bwangel.me/docs/ubuntu/ubuntu-init/</guid>
       <description>
         
         
@@ -1198,7 +1198,7 @@ sudo systemctl restart docker
 &lt;li&gt;&lt;a href=&#34;https://github.com/moovweb/gvm&#34;&gt;gvm&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://rustup.rs/&#34;&gt;rustup&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/DejaVuSansMono.zip&#34;&gt;nerdfont DejaVuSansMono&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://bwangel.me/647/647/docs/ubuntu/nvim-web-devicons/&#34;&gt;font&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://bwangel.me/647/docs/ubuntu/nvim-web-devicons/&#34;&gt;font&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;ubuntu-将-capslock-映射成-esc&#34;&gt;Ubuntu 将 capslock 映射成 esc&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install dconf-cli
@@ -1244,10 +1244,10 @@ sudo systemctl restart docker
     
     <item>
       <title>Docs: Ubuntu 使用默认的 DNS Server 配置</title>
-      <link>https://bwangel.me/647/docs/ubuntu/ubuntu-dns/</link>
+      <link>https://bwangel.me/docs/ubuntu/ubuntu-dns/</link>
       <pubDate>Wed, 20 Apr 2022 02:07:00 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/ubuntu/ubuntu-dns/</guid>
+      <guid>https://bwangel.me/docs/ubuntu/ubuntu-dns/</guid>
       <description>
         
         
@@ -1273,10 +1273,10 @@ sudo systemctl restart docker
     
     <item>
       <title>Docs: Mac OSX 使用技巧</title>
-      <link>https://bwangel.me/647/docs/tools/mac-tips/</link>
+      <link>https://bwangel.me/docs/tools/mac-tips/</link>
       <pubDate>Mon, 18 Apr 2022 17:06:10 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tools/mac-tips/</guid>
+      <guid>https://bwangel.me/docs/tools/mac-tips/</guid>
       <description>
         
         
@@ -1319,10 +1319,10 @@ Mon Sep 28 16:42:16 CST 2015
     
     <item>
       <title>Docs: 从源码安装 confluent-kafka-python</title>
-      <link>https://bwangel.me/647/docs/kafka/confluent_python.md/</link>
+      <link>https://bwangel.me/docs/kafka/confluent_python.md/</link>
       <pubDate>Fri, 11 Mar 2022 14:34:44 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/kafka/confluent_python.md/</guid>
+      <guid>https://bwangel.me/docs/kafka/confluent_python.md/</guid>
       <description>
         
         
@@ -1362,10 +1362,10 @@ Mon Sep 28 16:42:16 CST 2015
     
     <item>
       <title>Docs: MySQL 修改 root 密码</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql-password/</link>
+      <link>https://bwangel.me/docs/mysql/mysql-password/</link>
       <pubDate>Wed, 09 Mar 2022 14:26:24 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql-password/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql-password/</guid>
       <description>
         
         
@@ -1401,10 +1401,10 @@ Mon Sep 28 16:42:16 CST 2015
     
     <item>
       <title>Docs: 编程语言很重要</title>
-      <link>https://bwangel.me/647/docs/life/language/</link>
+      <link>https://bwangel.me/docs/life/language/</link>
       <pubDate>Mon, 07 Mar 2022 23:03:41 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/life/language/</guid>
+      <guid>https://bwangel.me/docs/life/language/</guid>
       <description>
         
         
@@ -1439,10 +1439,10 @@ Mon Sep 28 16:42:16 CST 2015
     
     <item>
       <title>Docs: 如何阅读网络上的小作文</title>
-      <link>https://bwangel.me/647/docs/life/read/</link>
+      <link>https://bwangel.me/docs/life/read/</link>
       <pubDate>Sat, 26 Feb 2022 17:19:24 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/life/read/</guid>
+      <guid>https://bwangel.me/docs/life/read/</guid>
       <description>
         
         
@@ -1466,10 +1466,10 @@ Mon Sep 28 16:42:16 CST 2015
     
     <item>
       <title>Docs: 匹配所有可打印 Ascii 字符的正则</title>
-      <link>https://bwangel.me/647/docs/python/re-ascii-print/</link>
+      <link>https://bwangel.me/docs/python/re-ascii-print/</link>
       <pubDate>Wed, 15 Dec 2021 19:16:45 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/re-ascii-print/</guid>
+      <guid>https://bwangel.me/docs/python/re-ascii-print/</guid>
       <description>
         
         
@@ -1493,10 +1493,10 @@ Out[5]: &amp;lt;re.Match object; span=(0, 1), match=&amp;#39;^&amp;#39;&amp;gt;
     
     <item>
       <title>Docs: Go proxy 的说明</title>
-      <link>https://bwangel.me/647/docs/golang/goproxy/</link>
+      <link>https://bwangel.me/docs/golang/goproxy/</link>
       <pubDate>Sat, 11 Dec 2021 21:42:46 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/goproxy/</guid>
+      <guid>https://bwangel.me/docs/golang/goproxy/</guid>
       <description>
         
         
@@ -1572,10 +1572,10 @@ replace (
     
     <item>
       <title>Docs: Vagrant 添加挂载目录</title>
-      <link>https://bwangel.me/647/docs/tools/vagrant_add_volume/</link>
+      <link>https://bwangel.me/docs/tools/vagrant_add_volume/</link>
       <pubDate>Thu, 02 Dec 2021 21:10:27 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tools/vagrant_add_volume/</guid>
+      <guid>https://bwangel.me/docs/tools/vagrant_add_volume/</guid>
       <description>
         
         
@@ -1594,10 +1594,10 @@ replace (
     
     <item>
       <title>Docs: 混杂模式</title>
-      <link>https://bwangel.me/647/docs/tcp_ip/promisc/</link>
+      <link>https://bwangel.me/docs/tcp_ip/promisc/</link>
       <pubDate>Fri, 12 Nov 2021 23:36:02 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tcp_ip/promisc/</guid>
+      <guid>https://bwangel.me/docs/tcp_ip/promisc/</guid>
       <description>
         
         
@@ -1653,10 +1653,10 @@ replace (
     
     <item>
       <title>Docs: 使用 Buildkit 和 Containerd 构建运行容器</title>
-      <link>https://bwangel.me/647/docs/k8s/buildkit/</link>
+      <link>https://bwangel.me/docs/k8s/buildkit/</link>
       <pubDate>Mon, 08 Nov 2021 12:43:04 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/buildkit/</guid>
+      <guid>https://bwangel.me/docs/k8s/buildkit/</guid>
       <description>
         
         
@@ -1801,10 +1801,10 @@ hel:latest   application/vnd.docker.distribution.manifest.v2+json sha256:00fdb70
     
     <item>
       <title>Docs: Redis 备份恢复的正确步骤</title>
-      <link>https://bwangel.me/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</link>
+      <link>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</link>
       <pubDate>Sat, 23 Oct 2021 17:36:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</guid>
+      <guid>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</guid>
       <description>
         
         
@@ -1827,10 +1827,10 @@ hel:latest   application/vnd.docker.distribution.manifest.v2+json sha256:00fdb70
     
     <item>
       <title>Docs: Redis 备份机制</title>
-      <link>https://bwangel.me/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</link>
+      <link>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</link>
       <pubDate>Fri, 22 Oct 2021 00:00:45 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</guid>
+      <guid>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</guid>
       <description>
         
         
@@ -1880,10 +1880,10 @@ save 60 10000
     
     <item>
       <title>Docs: Redis 集群简介</title>
-      <link>https://bwangel.me/647/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</link>
+      <link>https://bwangel.me/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Thu, 21 Oct 2021 23:40:12 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://bwangel.me/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</guid>
       <description>
         
         
@@ -1911,10 +1911,10 @@ save 60 10000
     
     <item>
       <title>Docs: Golang 中空数组是否是 nil</title>
-      <link>https://bwangel.me/647/docs/golang/go-array-and-nil/</link>
+      <link>https://bwangel.me/docs/golang/go-array-and-nil/</link>
       <pubDate>Tue, 19 Oct 2021 00:03:44 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-array-and-nil/</guid>
+      <guid>https://bwangel.me/docs/golang/go-array-and-nil/</guid>
       <description>
         
         
@@ -1938,10 +1938,10 @@ save 60 10000
     
     <item>
       <title>Docs: Github 客户端 gh 添加搜索仓库的命令</title>
-      <link>https://bwangel.me/647/docs/tools/gh-search-github/</link>
+      <link>https://bwangel.me/docs/tools/gh-search-github/</link>
       <pubDate>Tue, 19 Oct 2021 00:01:12 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tools/gh-search-github/</guid>
+      <guid>https://bwangel.me/docs/tools/gh-search-github/</guid>
       <description>
         
         
@@ -1957,10 +1957,10 @@ save 60 10000
     
     <item>
       <title>Docs: Java 抛出UnsupportedEncodingException</title>
-      <link>https://bwangel.me/647/docs/tools/java-unsupportedencodingexception/</link>
+      <link>https://bwangel.me/docs/tools/java-unsupportedencodingexception/</link>
       <pubDate>Mon, 18 Oct 2021 23:55:58 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tools/java-unsupportedencodingexception/</guid>
+      <guid>https://bwangel.me/docs/tools/java-unsupportedencodingexception/</guid>
       <description>
         
         
@@ -1979,10 +1979,10 @@ save 60 10000
     
     <item>
       <title>Docs: TCP Naggle 算法</title>
-      <link>https://bwangel.me/647/docs/tcp_ip/tcp-naggle/</link>
+      <link>https://bwangel.me/docs/tcp_ip/tcp-naggle/</link>
       <pubDate>Mon, 18 Oct 2021 23:54:13 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tcp_ip/tcp-naggle/</guid>
+      <guid>https://bwangel.me/docs/tcp_ip/tcp-naggle/</guid>
       <description>
         
         
@@ -2008,10 +2008,10 @@ save 60 10000
     
     <item>
       <title>Docs: Glob 语法解析</title>
-      <link>https://bwangel.me/647/docs/linux/glob-%E8%AF%AD%E6%B3%95/</link>
+      <link>https://bwangel.me/docs/linux/glob-%E8%AF%AD%E6%B3%95/</link>
       <pubDate>Mon, 18 Oct 2021 11:38:23 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/glob-%E8%AF%AD%E6%B3%95/</guid>
+      <guid>https://bwangel.me/docs/linux/glob-%E8%AF%AD%E6%B3%95/</guid>
       <description>
         
         
@@ -2102,10 +2102,10 @@ save 60 10000
     
     <item>
       <title>Docs: Caps-lock mapping 成 Esc 在 vscode 中不生效</title>
-      <link>https://bwangel.me/647/docs/editor/vscode-esc-not-work/</link>
+      <link>https://bwangel.me/docs/editor/vscode-esc-not-work/</link>
       <pubDate>Mon, 18 Oct 2021 11:27:39 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/vscode-esc-not-work/</guid>
+      <guid>https://bwangel.me/docs/editor/vscode-esc-not-work/</guid>
       <description>
         
         
@@ -2126,10 +2126,10 @@ save 60 10000
     
     <item>
       <title>Docs: CentOS 下编译安装 Nginx</title>
-      <link>https://bwangel.me/647/docs/http/nginx_install/</link>
+      <link>https://bwangel.me/docs/http/nginx_install/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/nginx_install/</guid>
+      <guid>https://bwangel.me/docs/http/nginx_install/</guid>
       <description>
         
         

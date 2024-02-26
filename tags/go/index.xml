@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – go</title>
-    <link>https://bwangel.me/647/tags/go/</link>
+    <link>https://bwangel.me/tags/go/</link>
     <description>Recent content in go on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Thu, 01 Jun 2023 07:29:34 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/go/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/go/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Statsd Exporter 如何跳过 prom 的指标检查</title>
-      <link>https://bwangel.me/647/docs/prometheus/statsd-exporter-unchecked-metric/</link>
+      <link>https://bwangel.me/docs/prometheus/statsd-exporter-unchecked-metric/</link>
       <pubDate>Thu, 01 Jun 2023 07:29:34 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/prometheus/statsd-exporter-unchecked-metric/</guid>
+      <guid>https://bwangel.me/docs/prometheus/statsd-exporter-unchecked-metric/</guid>
       <description>
         
         
@@ -226,7 +226,7 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// prometheus.DefaultRegisterer.Register(h)
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;prometheus.Collector&lt;/code&gt; 接口有一个 &lt;code&gt;Describe&lt;/code&gt; 方法，它用于获取指标的信息。具体做法是传入一个 channel 参数，指标将 Desc 信息写入到 channel 中。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Collector&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a40000&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Desc&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;包含指标名&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;label&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;help&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;等信息&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a40000&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Desc&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;包含指标名&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;label&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;help&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;等信息&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;Describe&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;chan&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Desc&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;...&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
@@ -286,10 +286,10 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
     
     <item>
       <title>Docs: Logrus 添加预设字段</title>
-      <link>https://bwangel.me/647/docs/golang/logrus-formatter/</link>
+      <link>https://bwangel.me/docs/golang/logrus-formatter/</link>
       <pubDate>Thu, 27 Apr 2023 14:55:12 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/logrus-formatter/</guid>
+      <guid>https://bwangel.me/docs/golang/logrus-formatter/</guid>
       <description>
         
         
@@ -334,10 +334,10 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
     
     <item>
       <title>Docs: Golang Build 出错: error obtaining VCS status: exit status 128</title>
-      <link>https://bwangel.me/647/docs/golang/go-build-vcsmap/</link>
+      <link>https://bwangel.me/docs/golang/go-build-vcsmap/</link>
       <pubDate>Tue, 21 Mar 2023 12:07:05 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-build-vcsmap/</guid>
+      <guid>https://bwangel.me/docs/golang/go-build-vcsmap/</guid>
       <description>
         
         
@@ -522,10 +522,10 @@ go: github.private.repo/org/repo/cmd/dag@latest: module github.private.repo/org/
     
     <item>
       <title>Docs: pkg/errors 和 go1.13 中 errors 库发展历史</title>
-      <link>https://bwangel.me/647/docs/golang/golang-err/</link>
+      <link>https://bwangel.me/docs/golang/golang-err/</link>
       <pubDate>Mon, 01 Aug 2022 10:23:16 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang-err/</guid>
+      <guid>https://bwangel.me/docs/golang/golang-err/</guid>
       <description>
         
         
@@ -557,10 +557,10 @@ go: github.private.repo/org/repo/cmd/dag@latest: module github.private.repo/org/
     
     <item>
       <title>Docs: Golang 的版本发布计划</title>
-      <link>https://bwangel.me/647/docs/golang/go-release/</link>
+      <link>https://bwangel.me/docs/golang/go-release/</link>
       <pubDate>Sat, 14 May 2022 20:58:10 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-release/</guid>
+      <guid>https://bwangel.me/docs/golang/go-release/</guid>
       <description>
         
         
@@ -700,10 +700,10 @@ go: github.private.repo/org/repo/cmd/dag@latest: module github.private.repo/org/
     
     <item>
       <title>Docs: Mac OSX 使用技巧</title>
-      <link>https://bwangel.me/647/docs/tools/mac-tips/</link>
+      <link>https://bwangel.me/docs/tools/mac-tips/</link>
       <pubDate>Mon, 18 Apr 2022 17:06:10 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tools/mac-tips/</guid>
+      <guid>https://bwangel.me/docs/tools/mac-tips/</guid>
       <description>
         
         
@@ -746,10 +746,10 @@ Mon Sep 28 16:42:16 CST 2015
     
     <item>
       <title>Docs: Go gcflags/ldflags 的说明</title>
-      <link>https://bwangel.me/647/docs/golang/go_gcflags/</link>
+      <link>https://bwangel.me/docs/golang/go_gcflags/</link>
       <pubDate>Wed, 12 Jan 2022 17:56:10 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go_gcflags/</guid>
+      <guid>https://bwangel.me/docs/golang/go_gcflags/</guid>
       <description>
         
         
@@ -816,10 +816,10 @@ Mon Sep 28 16:42:16 CST 2015
     
     <item>
       <title>Docs: Review 《Don’t use Go’s default HTTP client (in production)》</title>
-      <link>https://bwangel.me/647/docs/golang/go-http-client/</link>
+      <link>https://bwangel.me/docs/golang/go-http-client/</link>
       <pubDate>Fri, 31 Dec 2021 11:01:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-http-client/</guid>
+      <guid>https://bwangel.me/docs/golang/go-http-client/</guid>
       <description>
         
         
@@ -914,10 +914,10 @@ Go 的 net 包也有一个默认的 Transport 和 Dialer 。下面是一个使�
     
     <item>
       <title>Docs: Go proxy 的说明</title>
-      <link>https://bwangel.me/647/docs/golang/goproxy/</link>
+      <link>https://bwangel.me/docs/golang/goproxy/</link>
       <pubDate>Sat, 11 Dec 2021 21:42:46 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/goproxy/</guid>
+      <guid>https://bwangel.me/docs/golang/goproxy/</guid>
       <description>
         
         
@@ -993,10 +993,10 @@ replace (
     
     <item>
       <title>Docs: Golang 中空数组是否是 nil</title>
-      <link>https://bwangel.me/647/docs/golang/go-array-and-nil/</link>
+      <link>https://bwangel.me/docs/golang/go-array-and-nil/</link>
       <pubDate>Tue, 19 Oct 2021 00:03:44 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-array-and-nil/</guid>
+      <guid>https://bwangel.me/docs/golang/go-array-and-nil/</guid>
       <description>
         
         
@@ -1020,10 +1020,10 @@ replace (
     
     <item>
       <title>Docs: Golang 链接时注入额外信息</title>
-      <link>https://bwangel.me/647/docs/golang/go-build-variable/</link>
+      <link>https://bwangel.me/docs/golang/go-build-variable/</link>
       <pubDate>Fri, 07 May 2021 17:04:21 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-build-variable/</guid>
+      <guid>https://bwangel.me/docs/golang/go-build-variable/</guid>
       <description>
         
         
@@ -1072,10 +1072,10 @@ Note that before Go 1.5 this option took two separate arguments.&lt;/p&gt;
     
     <item>
       <title>Docs: Review 《Memory Consistency Models: A Tutorial》</title>
-      <link>https://bwangel.me/647/docs/os/review-memory-consistency-models/</link>
+      <link>https://bwangel.me/docs/os/review-memory-consistency-models/</link>
       <pubDate>Sat, 16 Jan 2021 13:34:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/os/review-memory-consistency-models/</guid>
+      <guid>https://bwangel.me/docs/os/review-memory-consistency-models/</guid>
       <description>
         
         
@@ -1141,10 +1141,10 @@ Note that before Go 1.5 this option took two separate arguments.&lt;/p&gt;
     
     <item>
       <title>Docs: 《Golang Error》学习笔记</title>
-      <link>https://bwangel.me/647/docs/golang/golang_error/</link>
+      <link>https://bwangel.me/docs/golang/golang_error/</link>
       <pubDate>Wed, 30 Dec 2020 22:28:45 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang_error/</guid>
+      <guid>https://bwangel.me/docs/golang/golang_error/</guid>
       <description>
         
         
@@ -1379,10 +1379,10 @@ Note that before Go 1.5 this option took two separate arguments.&lt;/p&gt;
     
     <item>
       <title>Docs: Go 的调度模型学习笔记</title>
-      <link>https://bwangel.me/647/docs/golang/go-schedule/</link>
+      <link>https://bwangel.me/docs/golang/go-schedule/</link>
       <pubDate>Mon, 16 Mar 2020 01:18:03 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-schedule/</guid>
+      <guid>https://bwangel.me/docs/golang/go-schedule/</guid>
       <description>
         
         
@@ -1430,10 +1430,10 @@ P取 G 的顺序是: &lt;code&gt;LRQ &amp;gt; GRQ &amp;gt; 从其他 P 偷 G&lt;
     
     <item>
       <title>Docs: Rabbitmq Tutorial 学习笔记</title>
-      <link>https://bwangel.me/647/docs/tools/rabbitmq-tutorial/</link>
+      <link>https://bwangel.me/docs/tools/rabbitmq-tutorial/</link>
       <pubDate>Sat, 21 Dec 2019 21:49:45 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tools/rabbitmq-tutorial/</guid>
+      <guid>https://bwangel.me/docs/tools/rabbitmq-tutorial/</guid>
       <description>
         
         
@@ -1656,10 +1656,10 @@ P取 G 的顺序是: &lt;code&gt;LRQ &amp;gt; GRQ &amp;gt; 从其他 P 偷 G&lt;
     
     <item>
       <title>Docs: Golang 中的 ServeMux 路由简介</title>
-      <link>https://bwangel.me/647/docs/golang/intro-servemux/</link>
+      <link>https://bwangel.me/docs/golang/intro-servemux/</link>
       <pubDate>Sat, 30 Nov 2019 18:35:05 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/intro-servemux/</guid>
+      <guid>https://bwangel.me/docs/golang/intro-servemux/</guid>
       <description>
         
         
@@ -1934,10 +1934,10 @@ P取 G 的顺序是: &lt;code&gt;LRQ &amp;gt; GRQ &amp;gt; 从其他 P 偷 G&lt;
     
     <item>
       <title>Docs: Review 《github.com/stretchr/testify》</title>
-      <link>https://bwangel.me/647/docs/golang/review-testify/</link>
+      <link>https://bwangel.me/docs/golang/review-testify/</link>
       <pubDate>Sun, 02 Jun 2019 22:41:59 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/review-testify/</guid>
+      <guid>https://bwangel.me/docs/golang/review-testify/</guid>
       <description>
         
         
@@ -2189,10 +2189,10 @@ P取 G 的顺序是: &lt;code&gt;LRQ &amp;gt; GRQ &amp;gt; 从其他 P 偷 G&lt;
     
     <item>
       <title>Docs: Go 并发模式之发布订阅模型</title>
-      <link>https://bwangel.me/647/docs/golang/go-pubsub/</link>
+      <link>https://bwangel.me/docs/golang/go-pubsub/</link>
       <pubDate>Thu, 30 May 2019 07:29:04 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-pubsub/</guid>
+      <guid>https://bwangel.me/docs/golang/go-pubsub/</guid>
       <description>
         
         
@@ -2368,10 +2368,10 @@ P取 G 的顺序是: &lt;code&gt;LRQ &amp;gt; GRQ &amp;gt; 从其他 P 偷 G&lt;
     
     <item>
       <title>Docs: Review 《JSON and Go》</title>
-      <link>https://bwangel.me/647/docs/golang/review-json-and-go/</link>
+      <link>https://bwangel.me/docs/golang/review-json-and-go/</link>
       <pubDate>Tue, 21 May 2019 21:40:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/review-json-and-go/</guid>
+      <guid>https://bwangel.me/docs/golang/review-json-and-go/</guid>
       <description>
         
         
@@ -2878,10 +2878,10 @@ P取 G 的顺序是: &lt;code&gt;LRQ &amp;gt; GRQ &amp;gt; 从其他 P 偷 G&lt;
     
     <item>
       <title>Docs: strings.Builder 转换字符串的时候为什么比 bytes.Buffer 要快</title>
-      <link>https://bwangel.me/647/docs/golang/byte-vs-builder/</link>
+      <link>https://bwangel.me/docs/golang/byte-vs-builder/</link>
       <pubDate>Sun, 28 Apr 2019 23:48:00 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/byte-vs-builder/</guid>
+      <guid>https://bwangel.me/docs/golang/byte-vs-builder/</guid>
       <description>
         
         
@@ -2977,10 +2977,10 @@ P取 G 的顺序是: &lt;code&gt;LRQ &amp;gt; GRQ &amp;gt; 从其他 P 偷 G&lt;
     
     <item>
       <title>Docs: Review 《Golang Trick: Export unexport method for test》</title>
-      <link>https://bwangel.me/647/docs/golang/golang-trick-export-for-test/</link>
+      <link>https://bwangel.me/docs/golang/golang-trick-export-for-test/</link>
       <pubDate>Sat, 27 Apr 2019 17:33:52 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang-trick-export-for-test/</guid>
+      <guid>https://bwangel.me/docs/golang/golang-trick-export-for-test/</guid>
       <description>
         
         
@@ -3071,10 +3071,10 @@ P取 G 的顺序是: &lt;code&gt;LRQ &amp;gt; GRQ &amp;gt; 从其他 P 偷 G&lt;
     
     <item>
       <title>Docs: urfave/cli 学习笔记</title>
-      <link>https://bwangel.me/647/docs/golang/go-cli/</link>
+      <link>https://bwangel.me/docs/golang/go-cli/</link>
       <pubDate>Sun, 21 Apr 2019 18:23:00 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-cli/</guid>
+      <guid>https://bwangel.me/docs/golang/go-cli/</guid>
       <description>
         
         
@@ -3888,10 +3888,10 @@ func main() {
     
     <item>
       <title>Docs: Review 《Go Concurrency Patterns: Pipelines and cancellation》</title>
-      <link>https://bwangel.me/647/docs/golang/review-go-pipelines/</link>
+      <link>https://bwangel.me/docs/golang/review-go-pipelines/</link>
       <pubDate>Mon, 15 Apr 2019 22:35:48 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/review-go-pipelines/</guid>
+      <guid>https://bwangel.me/docs/golang/review-go-pipelines/</guid>
       <description>
         
         
@@ -4045,10 +4045,10 @@ func main() {
     
     <item>
       <title>Docs: 关于线程同步操作的一道面试题</title>
-      <link>https://bwangel.me/647/docs/golang/go-sync-channel/</link>
+      <link>https://bwangel.me/docs/golang/go-sync-channel/</link>
       <pubDate>Sat, 13 Apr 2019 17:27:36 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-sync-channel/</guid>
+      <guid>https://bwangel.me/docs/golang/go-sync-channel/</guid>
       <description>
         
         
@@ -4226,23 +4226,23 @@ func main() {
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;使用锁的解决方案&#34;&gt;使用锁的解决方案&lt;/h2&gt;
 &lt;p&gt;使用锁并不是这个问题的正确解决思路，&lt;strong&gt;甚至会将人的思维带入歧途&lt;/strong&gt;，所以不推荐大家使用锁解决。&lt;/p&gt;
-&lt;p&gt;这是我之前写的旧文，&lt;a href=&#34;https://bwangel.me/647/2019/03/26/go-lock/&#34;&gt;线程同步操作面试题使用锁的解法&lt;/a&gt;，个人觉得某些地方还有一些参考价值，请大家酌情阅读。&lt;/p&gt;
+&lt;p&gt;这是我之前写的旧文，&lt;a href=&#34;https://bwangel.me/2019/03/26/go-lock/&#34;&gt;线程同步操作面试题使用锁的解法&lt;/a&gt;，个人觉得某些地方还有一些参考价值，请大家酌情阅读。&lt;/p&gt;
 &lt;h2 id=&#34;使用-atomicinteger-的解决方案&#34;&gt;使用 AtomicInteger 的解决方案&lt;/h2&gt;
-&lt;p&gt;使用&lt;code&gt;AtomicInteger&lt;/code&gt;并不是一种好的解决方案(因为这个解法让 CPU 持续空转)，但是通过这个解法我们可以了解到 Go 调度器阻塞的一个陷阱，所以也把这种解法放了上来，感兴趣的朋友可以查看我的另一篇文章 &lt;a href=&#34;https://bwangel.me/647/2019/04/10/go-scheduler-pitfall/&#34;&gt;Go 调度器的一个无法执行陷阱&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;使用&lt;code&gt;AtomicInteger&lt;/code&gt;并不是一种好的解决方案(因为这个解法让 CPU 持续空转)，但是通过这个解法我们可以了解到 Go 调度器阻塞的一个陷阱，所以也把这种解法放了上来，感兴趣的朋友可以查看我的另一篇文章 &lt;a href=&#34;https://bwangel.me/2019/04/10/go-scheduler-pitfall/&#34;&gt;Go 调度器的一个无法执行陷阱&lt;/a&gt;。&lt;/p&gt;
       </description>
     </item>
     
     <item>
       <title>Docs: Go 调度器的一个无法执行陷阱</title>
-      <link>https://bwangel.me/647/docs/golang/go-scheduler-pitfall/</link>
+      <link>https://bwangel.me/docs/golang/go-scheduler-pitfall/</link>
       <pubDate>Wed, 10 Apr 2019 22:18:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-scheduler-pitfall/</guid>
+      <guid>https://bwangel.me/docs/golang/go-scheduler-pitfall/</guid>
       <description>
         
         
         &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/647/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;2020年03月16日补充说明&#34;&gt;2020年03月16日补充说明&lt;/h2&gt;
 &lt;p&gt;Go 1.14 加入了基于信号的抢占式调度，这个问题在 go 1.14 上已经复现不了了。参考 &lt;a href=&#34;http://xiaorui.cc/archives/6535&#34;&gt;go1.14基于信号的抢占式调度实现原理&lt;/a&gt;&lt;/p&gt;
@@ -4377,10 +4377,10 @@ Go 通过这种方式来将执行权切换到 Go 调度器，从而避免通过�
     
     <item>
       <title>Docs: Go Panic 的触发及恢复过程</title>
-      <link>https://bwangel.me/647/docs/golang/go-panic/</link>
+      <link>https://bwangel.me/docs/golang/go-panic/</link>
       <pubDate>Mon, 08 Apr 2019 22:14:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-panic/</guid>
+      <guid>https://bwangel.me/docs/golang/go-panic/</guid>
       <description>
         
         
@@ -4412,15 +4412,15 @@ Go 通过这种方式来将执行权切换到 Go 调度器，从而避免通过�
     
     <item>
       <title>Docs: 线程同步操作面试题使用锁的解法</title>
-      <link>https://bwangel.me/647/docs/golang/go-lock/</link>
+      <link>https://bwangel.me/docs/golang/go-lock/</link>
       <pubDate>Tue, 26 Mar 2019 21:56:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-lock/</guid>
+      <guid>https://bwangel.me/docs/golang/go-lock/</guid>
       <description>
         
         
         &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/647/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;前两天在 V2ex 上看到了一篇博文，&lt;a href=&#34;http://samray.me/%E4%B8%80%E6%9D%A1%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83&#34;&gt;《一条经典面试题引发的思考》&lt;/a&gt;，感觉很有意思，我就用 Go 把它的答案实现了一遍。&lt;/p&gt;
@@ -4784,10 +4784,10 @@ Go 通过这种方式来将执行权切换到 Go 调度器，从而避免通过�
     
     <item>
       <title>Docs: Go 的测试</title>
-      <link>https://bwangel.me/647/docs/golang/go-test/</link>
+      <link>https://bwangel.me/docs/golang/go-test/</link>
       <pubDate>Sun, 24 Mar 2019 19:40:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-test/</guid>
+      <guid>https://bwangel.me/docs/golang/go-test/</guid>
       <description>
         
         
@@ -4938,10 +4938,10 @@ ok      puzzlers/article20/q3   1.739s
     
     <item>
       <title>Docs: Dependency injection in Golang using higher order functions</title>
-      <link>https://bwangel.me/647/docs/golang/go-dep-inject/</link>
+      <link>https://bwangel.me/docs/golang/go-dep-inject/</link>
       <pubDate>Sun, 24 Mar 2019 18:37:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-dep-inject/</guid>
+      <guid>https://bwangel.me/docs/golang/go-dep-inject/</guid>
       <description>
         
         
@@ -4992,10 +4992,10 @@ ok      puzzlers/article20/q3   1.739s
     
     <item>
       <title>Docs: Go 模板</title>
-      <link>https://bwangel.me/647/docs/golang/go-template/</link>
+      <link>https://bwangel.me/docs/golang/go-template/</link>
       <pubDate>Thu, 18 Oct 2018 23:24:24 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-template/</guid>
+      <guid>https://bwangel.me/docs/golang/go-template/</guid>
       <description>
         
         
@@ -5225,10 +5225,10 @@ ok      puzzlers/article20/q3   1.739s
     
     <item>
       <title>Docs: Go mod 说明</title>
-      <link>https://bwangel.me/647/docs/golang/go_mod/</link>
+      <link>https://bwangel.me/docs/golang/go_mod/</link>
       <pubDate>Thu, 11 Oct 2018 08:44:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go_mod/</guid>
+      <guid>https://bwangel.me/docs/golang/go_mod/</guid>
       <description>
         
         
@@ -5343,10 +5343,10 @@ ok      puzzlers/article20/q3   1.739s
     
     <item>
       <title>Docs: 素数生成器</title>
-      <link>https://bwangel.me/647/docs/golang/prime-generator/</link>
+      <link>https://bwangel.me/docs/golang/prime-generator/</link>
       <pubDate>Tue, 14 Aug 2018 06:54:09 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/prime-generator/</guid>
+      <guid>https://bwangel.me/docs/golang/prime-generator/</guid>
       <description>
         
         
@@ -5444,10 +5444,10 @@ ok      puzzlers/article20/q3   1.739s
     
     <item>
       <title>Docs: Go与数据结构之二叉搜索树</title>
-      <link>https://bwangel.me/647/docs/algo/go-binarysearchtree/</link>
+      <link>https://bwangel.me/docs/algo/go-binarysearchtree/</link>
       <pubDate>Thu, 01 Mar 2018 22:22:52 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/go-binarysearchtree/</guid>
+      <guid>https://bwangel.me/docs/algo/go-binarysearchtree/</guid>
       <description>
         
         
@@ -5713,10 +5713,10 @@ ok      puzzlers/article20/q3   1.739s
     
     <item>
       <title>Docs: Go 语言的 Type Switch 语句解析</title>
-      <link>https://bwangel.me/647/docs/golang/golang-type-switch/</link>
+      <link>https://bwangel.me/docs/golang/golang-type-switch/</link>
       <pubDate>Sat, 03 Feb 2018 00:17:00 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang-type-switch/</guid>
+      <guid>https://bwangel.me/docs/golang/golang-type-switch/</guid>
       <description>
         
         
@@ -5860,10 +5860,10 @@ ok      puzzlers/article20/q3   1.739s
     
     <item>
       <title>Docs: Go的并发编程简述</title>
-      <link>https://bwangel.me/647/docs/golang/go-concurrency/</link>
+      <link>https://bwangel.me/docs/golang/go-concurrency/</link>
       <pubDate>Tue, 19 Sep 2017 12:49:42 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-concurrency/</guid>
+      <guid>https://bwangel.me/docs/golang/go-concurrency/</guid>
       <description>
         
         
@@ -6170,10 +6170,10 @@ ok      puzzlers/article20/q3   1.739s
     
     <item>
       <title>Docs: Go 的反射包浅析</title>
-      <link>https://bwangel.me/647/docs/golang/golang-reflect/</link>
+      <link>https://bwangel.me/docs/golang/golang-reflect/</link>
       <pubDate>Fri, 15 Sep 2017 08:30:38 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang-reflect/</guid>
+      <guid>https://bwangel.me/docs/golang/golang-reflect/</guid>
       <description>
         
         
@@ -6543,10 +6543,10 @@ ok      puzzlers/article20/q3   1.739s
     
     <item>
       <title>Docs: Go 学习笔记</title>
-      <link>https://bwangel.me/647/docs/golang/gotour-notes/</link>
+      <link>https://bwangel.me/docs/golang/gotour-notes/</link>
       <pubDate>Tue, 29 Aug 2017 08:32:02 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/gotour-notes/</guid>
+      <guid>https://bwangel.me/docs/golang/gotour-notes/</guid>
       <description>
         
         

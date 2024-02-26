@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – k8s</title>
-    <link>https://bwangel.me/647/tags/k8s/</link>
+    <link>https://bwangel.me/tags/k8s/</link>
     <description>Recent content in k8s on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Thu, 02 Mar 2023 09:31:14 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 25 Dec 2023 18:16:42 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,11 +16,124 @@
     
     
     <item>
+      <title>Docs: CNI</title>
+      <link>https://bwangel.me/docs/k8s/cni/</link>
+      <pubDate>Mon, 25 Dec 2023 18:16:42 +0800</pubDate>
+      
+      <guid>https://bwangel.me/docs/k8s/cni/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;cni-要求&#34;&gt;CNI 要求&lt;/h2&gt;
+&lt;p&gt;CNI 插件的要求可以被简述成两个&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;连通性(Connectivity), 每个 Pod 通过默认的网卡接口 eth0 分配 IP 地址，并且这个 IP 地址，在节点的根网络空间上可达。&lt;/li&gt;
+&lt;li&gt;可达性(Reachability)，跨节点的 Pod 可以直接用 pod ip 通信（不需要经过 NAT）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;验证连通性&#34;&gt;验证连通性&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;这是我用 kind 在本地搭建的一个三节点集群&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;kind&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Cluster&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;apiVersion&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kind.x-k8s.io/v1alpha4&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;demo&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nodes&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;role&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;control-plane&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;role&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;worker&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;role&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;worker&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; docker ps
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CONTAINER ID   IMAGE                  COMMAND                   CREATED              STATUS              PORTS                       NAMES
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3fdffdb2fa2d   kindest/node:v1.26.3   &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/usr/local/bin/entr…&amp;#34;&lt;/span&gt;   About a minute ago   Up About a minute   127.0.0.1:34309-&amp;gt;6443/tcp   demo-control-plane
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;646f93b78436   kindest/node:v1.26.3   &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/usr/local/bin/entr…&amp;#34;&lt;/span&gt;   About a minute ago   Up About a minute                               demo-worker
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d5e20cd642fb   kindest/node:v1.26.3   &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/usr/local/bin/entr…&amp;#34;&lt;/span&gt;   About a minute ago   Up About a minute                               demo-worker2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;646f93b78436 是 k8s 的工作节点 &lt;code&gt;demo-worker&lt;/code&gt;，它的进程 ID 是 1568942&lt;/li&gt;
+&lt;li&gt;d5e20cd642fb 是 k8s 的工作节点 &lt;code&gt;demo-worker2&lt;/code&gt;，它的进程 ID 是 1568954&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; docker inspect 646f93b78436 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; rg -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&amp;#34;pid&amp;#34;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Pid&amp;#34;&lt;/span&gt;: 1568942,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; docker inspect d5e20cd642fb &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; rg -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&amp;#34;pid&amp;#34;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Pid&amp;#34;&lt;/span&gt;: 1568954,
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;apple-app-ddb7b6f95-kz2w8 是集群中的一个 pod, 它运行在 demo-worker2 上, 它的 eth0 网卡的地址是 10.244.1.2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; k -n qae get pod -o wide
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NAME                        READY   STATUS    RESTARTS   AGE    IP           NODE           NOMINATED NODE   READINESS GATES
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apple-app-ddb7b6f95-kz2w8   1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          117s   10.244.1.2   demo-worker2   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; k -n qae &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; -it apple-app-ddb7b6f95-kz2w8 ip addr show eth0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;POD&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;COMMAND&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; is DEPRECATED and will be removed in a future version. Use kubectl &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;POD&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; -- &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;COMMAND&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; instead.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2: eth0@eth0: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1500&lt;/span&gt; qdisc noqueue state UP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    link/ether 1e:a2:83:1b:93:92 brd ff:ff:ff:ff:ff:ff
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    inet 10.244.1.2/24 brd 10.244.1.255 scope global eth0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    inet6 fe80::1ca2:83ff:fe1b:9392/64 scope link
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;我进入 1568942 和 1568954 的网络空间，相当于登陆到了了 k8s 的 worker 节点上，ping pod 是可以 ping 通的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# demo-worker 节点&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; sudo nsenter -n -t &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1568942&lt;/span&gt; ping -c &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; 10.244.1.2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PING 10.244.1.2 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;10.244.1.2&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; 56&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;84&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; bytes of data.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; bytes from 10.244.1.2: &lt;span style=&#34;color:#000&#34;&gt;icmp_seq&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ttl&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;63&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0.063 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; bytes from 10.244.1.2: &lt;span style=&#34;color:#000&#34;&gt;icmp_seq&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ttl&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;63&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0.057 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;--- 10.244.1.2 ping statistics ---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; packets transmitted, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; received, 0% packet loss, &lt;span style=&#34;color:#204a87&#34;&gt;time&lt;/span&gt; 1011ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rtt min/avg/max/mdev &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 0.057/0.060/0.063/0.003 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# demo-worker2 节点&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; sudo nsenter -n -t &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1568954&lt;/span&gt; ping -c &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; 10.244.1.2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PING 10.244.1.2 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;10.244.1.2&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; 56&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;84&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; bytes of data.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; bytes from 10.244.1.2: &lt;span style=&#34;color:#000&#34;&gt;icmp_seq&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ttl&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0.059 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; bytes from 10.244.1.2: &lt;span style=&#34;color:#000&#34;&gt;icmp_seq&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ttl&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0.017 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;--- 10.244.1.2 ping statistics ---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; packets transmitted, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; received, 0% packet loss, &lt;span style=&#34;color:#204a87&#34;&gt;time&lt;/span&gt; 1004ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rtt min/avg/max/mdev &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 0.017/0.038/0.059/0.021 ms
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;验证可达性&#34;&gt;验证可达性&lt;/h3&gt;
+&lt;p&gt;这是集群中的所有 pod, 我在 apple-app-ddb7b6f95-kz2w8 上 ping  local-path-provisioner-75f5b54ffd-slkv5，可以 ping 通&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; k get pod --all-namespaces -o wide
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NAMESPACE            NAME                                         READY   STATUS    RESTARTS   AGE     IP           NODE                 NOMINATED NODE   READINESS GATES
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          coredns-787d4945fb-2sdzq                     1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     10.244.0.3   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          coredns-787d4945fb-kdmsd                     1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     10.244.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          etcd-demo-control-plane                      1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kindnet-jdvn8                                1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.4   demo-worker2         &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kindnet-sbm7g                                1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kindnet-xcbjv                                1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.3   demo-worker          &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-apiserver-demo-control-plane            1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-controller-manager-demo-control-plane   1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-proxy-6kqfz                             1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.3   demo-worker          &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-proxy-nq6dw                             1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.4   demo-worker2         &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-proxy-ws5nj                             1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-scheduler-demo-control-plane            1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local-path-storage   local-path-provisioner-75f5b54ffd-slkv5      1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     10.244.0.4   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;qae                  apple-app-ddb7b6f95-kz2w8                    1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          9m21s   10.244.1.2   demo-worker2         &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; k -n qae exec -it apple-app-ddb7b6f95-kz2w8 -- ping -c 2 10.244.0.4
+PING 10.244.0.4 (10.244.0.4): 56 data bytes
+64 bytes from 10.244.0.4: seq=0 ttl=62 time=0.063 ms
+64 bytes from 10.244.0.4: seq=1 ttl=62 time=0.056 ms
+
+--- 10.244.0.4 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 0.056/0.059/0.063 ms
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tkng.io/cni/&#34;&gt;tkng&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
       <title>Docs: Pod Tips</title>
-      <link>https://bwangel.me/647/docs/k8s/pod-tips/</link>
+      <link>https://bwangel.me/docs/k8s/pod-tips/</link>
       <pubDate>Thu, 02 Mar 2023 09:31:14 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/pod-tips/</guid>
+      <guid>https://bwangel.me/docs/k8s/pod-tips/</guid>
       <description>
         
         
@@ -95,10 +208,10 @@
     
     <item>
       <title>Docs: Deployment Tips</title>
-      <link>https://bwangel.me/647/docs/k8s/deployment-tips/</link>
+      <link>https://bwangel.me/docs/k8s/deployment-tips/</link>
       <pubDate>Thu, 15 Sep 2022 10:31:16 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/deployment-tips/</guid>
+      <guid>https://bwangel.me/docs/k8s/deployment-tips/</guid>
       <description>
         
         
@@ -126,10 +239,10 @@ Type     Reason            Age                From                   Message
     
     <item>
       <title>Docs: Ubuntu 下安装 Containerd 及配置代理</title>
-      <link>https://bwangel.me/647/docs/container/install-containerd/</link>
+      <link>https://bwangel.me/docs/container/install-containerd/</link>
       <pubDate>Tue, 23 Aug 2022 08:17:21 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/container/install-containerd/</guid>
+      <guid>https://bwangel.me/docs/container/install-containerd/</guid>
       <description>
         
         

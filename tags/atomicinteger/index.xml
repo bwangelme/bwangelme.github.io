@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – AtomicInteger</title>
-    <link>https://bwangel.me/647/tags/atomicinteger/</link>
+    <link>https://bwangel.me/tags/atomicinteger/</link>
     <description>Recent content in AtomicInteger on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 10 Apr 2019 22:18:53 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/atomicinteger/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/atomicinteger/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,15 +17,15 @@
     
     <item>
       <title>Docs: Go 调度器的一个无法执行陷阱</title>
-      <link>https://bwangel.me/647/docs/golang/go-scheduler-pitfall/</link>
+      <link>https://bwangel.me/docs/golang/go-scheduler-pitfall/</link>
       <pubDate>Wed, 10 Apr 2019 22:18:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-scheduler-pitfall/</guid>
+      <guid>https://bwangel.me/docs/golang/go-scheduler-pitfall/</guid>
       <description>
         
         
         &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/647/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;2020年03月16日补充说明&#34;&gt;2020年03月16日补充说明&lt;/h2&gt;
 &lt;p&gt;Go 1.14 加入了基于信号的抢占式调度，这个问题在 go 1.14 上已经复现不了了。参考 &lt;a href=&#34;http://xiaorui.cc/archives/6535&#34;&gt;go1.14基于信号的抢占式调度实现原理&lt;/a&gt;&lt;/p&gt;

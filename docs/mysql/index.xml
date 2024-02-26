@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – MySQL</title>
-    <link>https://bwangel.me/647/docs/mysql/</link>
+    <link>https://bwangel.me/docs/mysql/</link>
     <description>Recent content in MySQL on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Fri, 29 Sep 2023 10:50:50 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/docs/mysql/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/docs/mysql/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: MySQL 事务</title>
-      <link>https://bwangel.me/647/docs/mysql/transaction/</link>
+      <link>https://bwangel.me/docs/mysql/transaction/</link>
       <pubDate>Tue, 28 Nov 2023 22:10:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/transaction/</guid>
+      <guid>https://bwangel.me/docs/mysql/transaction/</guid>
       <description>
         
         
@@ -35,10 +35,10 @@
     
     <item>
       <title>Docs: MySQL 修改 root 密码</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql-password/</link>
+      <link>https://bwangel.me/docs/mysql/mysql-password/</link>
       <pubDate>Wed, 09 Mar 2022 14:26:24 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql-password/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql-password/</guid>
       <description>
         
         
@@ -74,10 +74,10 @@
     
     <item>
       <title>Docs: MySQL 外键分析</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql-foreign-key/</link>
+      <link>https://bwangel.me/docs/mysql/mysql-foreign-key/</link>
       <pubDate>Mon, 05 Mar 2018 23:42:44 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql-foreign-key/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql-foreign-key/</guid>
       <description>
         
         
@@ -119,10 +119,10 @@
     
     <item>
       <title>Docs: InnoDB 锁机制</title>
-      <link>https://bwangel.me/647/docs/mysql/innodb-lock/</link>
+      <link>https://bwangel.me/docs/mysql/innodb-lock/</link>
       <pubDate>Sun, 04 Mar 2018 13:22:46 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/innodb-lock/</guid>
+      <guid>https://bwangel.me/docs/mysql/innodb-lock/</guid>
       <description>
         
         
@@ -748,10 +748,10 @@
     
     <item>
       <title>Docs: InnoDB 行记录格式</title>
-      <link>https://bwangel.me/647/docs/mysql/innodb-row/</link>
+      <link>https://bwangel.me/docs/mysql/innodb-row/</link>
       <pubDate>Tue, 30 Jan 2018 12:51:59 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/innodb-row/</guid>
+      <guid>https://bwangel.me/docs/mysql/innodb-row/</guid>
       <description>
         
         
@@ -957,10 +957,10 @@
     
     <item>
       <title>Docs: MySQL 日志管理</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</link>
       <pubDate>Mon, 01 Jan 2018 10:34:15 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</guid>
       <description>
         
         
@@ -1070,10 +1070,10 @@
     
     <item>
       <title>Docs: MySQL Character Set support</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql-character-set-support/</link>
+      <link>https://bwangel.me/docs/mysql/mysql-character-set-support/</link>
       <pubDate>Thu, 22 Jun 2017 23:32:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql-character-set-support/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql-character-set-support/</guid>
       <description>
         
         
@@ -1249,10 +1249,10 @@
     
     <item>
       <title>Docs: MySQL from 部分的子查询</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql-subqueries-in-the-from-clause/</link>
+      <link>https://bwangel.me/docs/mysql/mysql-subqueries-in-the-from-clause/</link>
       <pubDate>Sat, 08 Oct 2016 20:28:45 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql-subqueries-in-the-from-clause/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql-subqueries-in-the-from-clause/</guid>
       <description>
         
         
@@ -1311,10 +1311,10 @@
     
     <item>
       <title>Docs: MySQL单表查询</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
       <description>
         
         
@@ -1522,10 +1522,10 @@
     
     <item>
       <title>Docs: MySQL多表查询</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
       <description>
         
         
@@ -1711,10 +1711,10 @@
     
     <item>
       <title>Docs: MySQL存储过程</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</guid>
       <description>
         
         
@@ -1970,10 +1970,10 @@
     
     <item>
       <title>Docs: MySQL安全机制</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/</guid>
       <description>
         
         
@@ -2213,10 +2213,10 @@ mysql.db  # 数据库级别授权
     
     <item>
       <title>Docs: MySQL常用函数</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</guid>
       <description>
         
         
@@ -2407,10 +2407,10 @@ mysql.db  # 数据库级别授权
     
     <item>
       <title>Docs: MySQL技术架构概览</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</guid>
       <description>
         
         
@@ -2474,10 +2474,10 @@ mysql.db  # 数据库级别授权
     
     <item>
       <title>Docs: MySQL数据类型_数值类型</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B/</guid>
       <description>
         
         
@@ -2534,7 +2534,7 @@ mysql.db  # 数据库级别授权
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;id2&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;6&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;zerofill&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;#&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;如果不够显示字段，自动补充&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;，由于是以&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;开始，所以默认会是&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;unsigned&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;的&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;#&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;如果不够显示字段，自动补充&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;，由于是以&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;开始，所以默认会是&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;unsigned的&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-浮点数类型&#34;&gt;2. 浮点数类型&lt;/h2&gt;
 &lt;p&gt;|类型|字节|
 |Float|4|
@@ -2559,7 +2559,7 @@ mysql.db  # 数据库级别授权
 &lt;p&gt;字节是1 - 8&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;create&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;table&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;test6&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;bit&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;位数&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;#&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;是一个&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;bit&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;类型的整型，表示一个二进制数，括号里面跟位数，默认是&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;#&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;id是一个bit类型的整型&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;，表示一个二进制数，括号里面跟位数，默认是&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;select&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;bin&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;oct&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;hex&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;from&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;test6&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
@@ -2585,10 +2585,10 @@ YEAR|1|1901|2155&lt;/p&gt;
     
     <item>
       <title>Docs: MySQL数据类型-字符串类型</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/</guid>
       <description>
         
         
@@ -2719,10 +2719,10 @@ YEAR|1|1901|2155&lt;/p&gt;
     
     <item>
       <title>Docs: MySQL索引</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E7%B4%A2%E5%BC%95/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E7%B4%A2%E5%BC%95/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E7%B4%A2%E5%BC%95/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E7%B4%A2%E5%BC%95/</guid>
       <description>
         
         
@@ -2878,10 +2878,10 @@ YEAR|1|1901|2155&lt;/p&gt;
     
     <item>
       <title>Docs: MySQL编译安装</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</guid>
       <description>
         
         
@@ -3028,10 +3028,10 @@ YEAR|1|1901|2155&lt;/p&gt;
     
     <item>
       <title>Docs: MySQL表的操作和约束</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E5%92%8C%E7%BA%A6%E6%9D%9F/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E5%92%8C%E7%BA%A6%E6%9D%9F/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E5%92%8C%E7%BA%A6%E6%9D%9F/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E5%92%8C%E7%BA%A6%E6%9D%9F/</guid>
       <description>
         
         
@@ -3114,10 +3114,10 @@ YEAR|1|1901|2155&lt;/p&gt;
     
     <item>
       <title>Docs: MySQL视图</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E8%A7%86%E5%9B%BE/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E8%A7%86%E5%9B%BE/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E8%A7%86%E5%9B%BE/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E8%A7%86%E5%9B%BE/</guid>
       <description>
         
         
@@ -3187,10 +3187,10 @@ YEAR|1|1901|2155&lt;/p&gt;
     
     <item>
       <title>Docs: MySQL触发器</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/</guid>
       <description>
         
         
@@ -3351,10 +3351,10 @@ YEAR|1|1901|2155&lt;/p&gt;
     
     <item>
       <title>Docs: MySQL运算符的使用</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <link>https://bwangel.me/docs/mysql/mysql%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
       <description>
         
         

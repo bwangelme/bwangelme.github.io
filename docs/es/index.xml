@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – ElasticSearch</title>
-    <link>https://bwangel.me/647/docs/es/</link>
+    <link>https://bwangel.me/docs/es/</link>
     <description>Recent content in ElasticSearch on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Mon, 06 Nov 2023 10:46:49 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/docs/es/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/docs/es/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: ElasticSearch 7.6 学习笔记</title>
-      <link>https://bwangel.me/647/docs/es/es-7-6-note/</link>
+      <link>https://bwangel.me/docs/es/es-7-6-note/</link>
       <pubDate>Sun, 10 May 2020 17:28:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/es/es-7-6-note/</guid>
+      <guid>https://bwangel.me/docs/es/es-7-6-note/</guid>
       <description>
         
         
@@ -1028,10 +1028,10 @@ POST /movies/_search
     
     <item>
       <title>Docs: ElasticSearch 学习笔记</title>
-      <link>https://bwangel.me/647/docs/es/es-note/</link>
+      <link>https://bwangel.me/docs/es/es-note/</link>
       <pubDate>Sat, 28 Mar 2020 17:16:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/es/es-note/</guid>
+      <guid>https://bwangel.me/docs/es/es-note/</guid>
       <description>
         
         
@@ -1866,10 +1866,10 @@ Dynamic 设为 stric 时，文档会写入失败&lt;/p&gt;
     
     <item>
       <title>Docs: Elasticsearch reference v6.5.3 笔记</title>
-      <link>https://bwangel.me/647/docs/es/elasticsearch_reference/</link>
+      <link>https://bwangel.me/docs/es/elasticsearch_reference/</link>
       <pubDate>Sat, 15 Dec 2018 20:52:11 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/es/elasticsearch_reference/</guid>
+      <guid>https://bwangel.me/docs/es/elasticsearch_reference/</guid>
       <description>
         
         

@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – 翻译</title>
-    <link>https://bwangel.me/647/tags/%E7%BF%BB%E8%AF%91/</link>
+    <link>https://bwangel.me/tags/%E7%BF%BB%E8%AF%91/</link>
     <description>Recent content in 翻译 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Fri, 31 Dec 2021 11:01:25 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/%E7%BF%BB%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/%E7%BF%BB%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Review 《Don’t use Go’s default HTTP client (in production)》</title>
-      <link>https://bwangel.me/647/docs/golang/go-http-client/</link>
+      <link>https://bwangel.me/docs/golang/go-http-client/</link>
       <pubDate>Fri, 31 Dec 2021 11:01:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-http-client/</guid>
+      <guid>https://bwangel.me/docs/golang/go-http-client/</guid>
       <description>
         
         
@@ -115,10 +115,10 @@ Go 的 net 包也有一个默认的 Transport 和 Dialer 。下面是一个使�
     
     <item>
       <title>Docs: Review 《How eBPF will solve Service Mesh - Goodbye Sidecars》</title>
-      <link>https://bwangel.me/647/docs/k8s/ebpf-service-mesh/</link>
+      <link>https://bwangel.me/docs/k8s/ebpf-service-mesh/</link>
       <pubDate>Mon, 20 Dec 2021 19:41:20 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/ebpf-service-mesh/</guid>
+      <guid>https://bwangel.me/docs/k8s/ebpf-service-mesh/</guid>
       <description>
         
         
@@ -222,10 +222,10 @@ Go 的 net 包也有一个默认的 Transport 和 Dialer 。下面是一个使�
     
     <item>
       <title>Docs: 翻译《Chapter 1. Introduction to Apache Thrift》</title>
-      <link>https://bwangel.me/647/docs/thrift/introduction-to-apache-thrift/</link>
+      <link>https://bwangel.me/docs/thrift/introduction-to-apache-thrift/</link>
       <pubDate>Fri, 17 Dec 2021 14:38:59 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/introduction-to-apache-thrift/</guid>
+      <guid>https://bwangel.me/docs/thrift/introduction-to-apache-thrift/</guid>
       <description>
         
         
@@ -293,10 +293,10 @@ struct MusicTrack {
     
     <item>
       <title>Docs: Review 《File Descriptor Transfer over Unix Domain Sockets》</title>
-      <link>https://bwangel.me/647/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</link>
+      <link>https://bwangel.me/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</link>
       <pubDate>Tue, 30 Nov 2021 11:58:56 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</guid>
+      <guid>https://bwangel.me/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</guid>
       <description>
         
         
@@ -529,10 +529,10 @@ root@5247072fc542:~/uds#
     
     <item>
       <title>Docs: Review 《Memory Consistency Models: A Tutorial》</title>
-      <link>https://bwangel.me/647/docs/os/review-memory-consistency-models/</link>
+      <link>https://bwangel.me/docs/os/review-memory-consistency-models/</link>
       <pubDate>Sat, 16 Jan 2021 13:34:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/os/review-memory-consistency-models/</guid>
+      <guid>https://bwangel.me/docs/os/review-memory-consistency-models/</guid>
       <description>
         
         
@@ -598,10 +598,10 @@ root@5247072fc542:~/uds#
     
     <item>
       <title>Docs: Review 《Using pipelining to speedup Redis queries》</title>
-      <link>https://bwangel.me/647/docs/redis/redis-pipelining/</link>
+      <link>https://bwangel.me/docs/redis/redis-pipelining/</link>
       <pubDate>Sat, 22 Aug 2020 17:22:37 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/redis/redis-pipelining/</guid>
+      <guid>https://bwangel.me/docs/redis/redis-pipelining/</guid>
       <description>
         
         
@@ -702,10 +702,10 @@ root@5247072fc542:~/uds#
     
     <item>
       <title>Docs: Review 《github.com/stretchr/testify》</title>
-      <link>https://bwangel.me/647/docs/golang/review-testify/</link>
+      <link>https://bwangel.me/docs/golang/review-testify/</link>
       <pubDate>Sun, 02 Jun 2019 22:41:59 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/review-testify/</guid>
+      <guid>https://bwangel.me/docs/golang/review-testify/</guid>
       <description>
         
         
@@ -957,10 +957,10 @@ root@5247072fc542:~/uds#
     
     <item>
       <title>Docs: Review 《JSON and Go》</title>
-      <link>https://bwangel.me/647/docs/golang/review-json-and-go/</link>
+      <link>https://bwangel.me/docs/golang/review-json-and-go/</link>
       <pubDate>Tue, 21 May 2019 21:40:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/review-json-and-go/</guid>
+      <guid>https://bwangel.me/docs/golang/review-json-and-go/</guid>
       <description>
         
         
@@ -1467,10 +1467,10 @@ root@5247072fc542:~/uds#
     
     <item>
       <title>Docs: Review 《Golang Trick: Export unexport method for test》</title>
-      <link>https://bwangel.me/647/docs/golang/golang-trick-export-for-test/</link>
+      <link>https://bwangel.me/docs/golang/golang-trick-export-for-test/</link>
       <pubDate>Sat, 27 Apr 2019 17:33:52 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang-trick-export-for-test/</guid>
+      <guid>https://bwangel.me/docs/golang/golang-trick-export-for-test/</guid>
       <description>
         
         
@@ -1561,10 +1561,10 @@ root@5247072fc542:~/uds#
     
     <item>
       <title>Docs: More advanced if usage</title>
-      <link>https://bwangel.me/647/docs/linux/more-advanced-if-usage/</link>
+      <link>https://bwangel.me/docs/linux/more-advanced-if-usage/</link>
       <pubDate>Mon, 03 Oct 2016 09:52:51 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/more-advanced-if-usage/</guid>
+      <guid>https://bwangel.me/docs/linux/more-advanced-if-usage/</guid>
       <description>
         
         
@@ -1605,10 +1605,10 @@ root@5247072fc542:~/uds#
     
     <item>
       <title>Docs: Python concurrent.futures 文档翻译</title>
-      <link>https://bwangel.me/647/docs/python/concurrent-futures/</link>
+      <link>https://bwangel.me/docs/python/concurrent-futures/</link>
       <pubDate>Fri, 23 Sep 2016 11:19:16 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/concurrent-futures/</guid>
+      <guid>https://bwangel.me/docs/python/concurrent-futures/</guid>
       <description>
         
         
@@ -1955,10 +1955,10 @@ Python 3.3 后的新特性&lt;/p&gt;
     
     <item>
       <title>Docs: Gevent 的 KeyError</title>
-      <link>https://bwangel.me/647/docs/python/gevent-keyerror/</link>
+      <link>https://bwangel.me/docs/python/gevent-keyerror/</link>
       <pubDate>Wed, 14 Sep 2016 15:21:40 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/gevent-keyerror/</guid>
+      <guid>https://bwangel.me/docs/python/gevent-keyerror/</guid>
       <description>
         
         
@@ -2042,10 +2042,10 @@ KeyError: 26805584
     
     <item>
       <title>Docs: Python字符串Format方法示例</title>
-      <link>https://bwangel.me/647/docs/python/string-format-example/</link>
+      <link>https://bwangel.me/docs/python/string-format-example/</link>
       <pubDate>Wed, 31 Aug 2016 15:45:41 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/string-format-example/</guid>
+      <guid>https://bwangel.me/docs/python/string-format-example/</guid>
       <description>
         
         
@@ -2163,10 +2163,10 @@ KeyError: 26805584
     
     <item>
       <title>Docs: PEP 343: Python的with语句</title>
-      <link>https://bwangel.me/647/docs/python/python%E7%9A%84with%E8%AF%AD%E5%8F%A5/</link>
+      <link>https://bwangel.me/docs/python/python%E7%9A%84with%E8%AF%AD%E5%8F%A5/</link>
       <pubDate>Mon, 25 Apr 2016 21:04:33 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/python%E7%9A%84with%E8%AF%AD%E5%8F%A5/</guid>
+      <guid>https://bwangel.me/docs/python/python%E7%9A%84with%E8%AF%AD%E5%8F%A5/</guid>
       <description>
         
         

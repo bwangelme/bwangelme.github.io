@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Linux</title>
-    <link>https://bwangel.me/647/docs/linux/</link>
+    <link>https://bwangel.me/docs/linux/</link>
     <description>Recent content in Linux on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     
-	  <atom:link href="https://bwangel.me/647/docs/linux/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/docs/linux/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Docs: curl</title>
-      <link>https://bwangel.me/647/docs/linux/curl/</link>
+      <link>https://bwangel.me/docs/linux/curl/</link>
       <pubDate>Tue, 01 Aug 2023 11:50:58 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/curl/</guid>
+      <guid>https://bwangel.me/docs/linux/curl/</guid>
       <description>
         
         
@@ -101,11 +101,35 @@ docker build -t curl_test --build-arg app_repo=bwangelme/rdcdemo --build-arg app
     </item>
     
     <item>
+      <title>Docs: Makefile</title>
+      <link>https://bwangel.me/docs/linux/makefile/</link>
+      <pubDate>Tue, 19 Dec 2023 17:13:40 +0800</pubDate>
+      
+      <guid>https://bwangel.me/docs/linux/makefile/</guid>
+      <description>
+        
+        
+        &lt;ul&gt;
+&lt;li&gt;&lt;code&gt;?=&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;?=&lt;/code&gt; 指示仅在未设置或没有值时设置 KDIR 变量。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# make test 将会输出 foo
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;KDIR&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;?=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;foo&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;KDIR&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;?=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;bar&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;test&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;KDIR&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
       <title>Docs: 利用 Python 处理字符串</title>
-      <link>https://bwangel.me/647/docs/linux/python-shell/</link>
+      <link>https://bwangel.me/docs/linux/python-shell/</link>
       <pubDate>Thu, 14 Dec 2023 12:06:58 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/python-shell/</guid>
+      <guid>https://bwangel.me/docs/linux/python-shell/</guid>
       <description>
         
         
@@ -132,10 +156,10 @@ Repo(dir=&amp;#39;karazhan&amp;#39;, name=&amp;#39;antispam/karazhan&amp;#39;),
     
     <item>
       <title>Docs: DNS</title>
-      <link>https://bwangel.me/647/docs/linux/dns/</link>
+      <link>https://bwangel.me/docs/linux/dns/</link>
       <pubDate>Sat, 09 Sep 2023 13:41:16 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/dns/</guid>
+      <guid>https://bwangel.me/docs/linux/dns/</guid>
       <description>
         
         
@@ -318,10 +342,10 @@ www.a.shifen.com.       53      IN      A       220.181.38.149
     
     <item>
       <title>Docs: 在 Ubuntu 22.04 上搭建 NFS Server</title>
-      <link>https://bwangel.me/647/docs/linux/nfs-server/</link>
+      <link>https://bwangel.me/docs/linux/nfs-server/</link>
       <pubDate>Wed, 06 Sep 2023 08:51:39 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/nfs-server/</guid>
+      <guid>https://bwangel.me/docs/linux/nfs-server/</guid>
       <description>
         
         
@@ -403,10 +427,10 @@ sudo chmod 755 /mnt/share
     
     <item>
       <title>Docs: lsof</title>
-      <link>https://bwangel.me/647/docs/linux/lsof/</link>
+      <link>https://bwangel.me/docs/linux/lsof/</link>
       <pubDate>Thu, 02 Mar 2023 12:43:09 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/lsof/</guid>
+      <guid>https://bwangel.me/docs/linux/lsof/</guid>
       <description>
         
         
@@ -558,10 +582,10 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
     
     <item>
       <title>Docs: ls Tips</title>
-      <link>https://bwangel.me/647/docs/linux/ls-tips.md/</link>
+      <link>https://bwangel.me/docs/linux/ls-tips.md/</link>
       <pubDate>Tue, 16 Aug 2022 23:10:06 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/ls-tips.md/</guid>
+      <guid>https://bwangel.me/docs/linux/ls-tips.md/</guid>
       <description>
         
         
@@ -585,10 +609,10 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
     
     <item>
       <title>Docs: 查看信号的快捷键</title>
-      <link>https://bwangel.me/647/docs/linux/stty/</link>
+      <link>https://bwangel.me/docs/linux/stty/</link>
       <pubDate>Tue, 09 Aug 2022 21:43:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/stty/</guid>
+      <guid>https://bwangel.me/docs/linux/stty/</guid>
       <description>
         
         
@@ -638,10 +662,10 @@ done
     
     <item>
       <title>Docs: Review 《File Descriptor Transfer over Unix Domain Sockets》</title>
-      <link>https://bwangel.me/647/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</link>
+      <link>https://bwangel.me/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</link>
       <pubDate>Tue, 30 Nov 2021 11:58:56 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</guid>
+      <guid>https://bwangel.me/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</guid>
       <description>
         
         
@@ -874,10 +898,10 @@ root@5247072fc542:~/uds#
     
     <item>
       <title>Docs: Glob 语法解析</title>
-      <link>https://bwangel.me/647/docs/linux/glob-%E8%AF%AD%E6%B3%95/</link>
+      <link>https://bwangel.me/docs/linux/glob-%E8%AF%AD%E6%B3%95/</link>
       <pubDate>Mon, 18 Oct 2021 11:38:23 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/glob-%E8%AF%AD%E6%B3%95/</guid>
+      <guid>https://bwangel.me/docs/linux/glob-%E8%AF%AD%E6%B3%95/</guid>
       <description>
         
         
@@ -968,10 +992,10 @@ root@5247072fc542:~/uds#
     
     <item>
       <title>Docs: 词法分析器生成工具 Lex 简介</title>
-      <link>https://bwangel.me/647/docs/linux/flex/</link>
+      <link>https://bwangel.me/docs/linux/flex/</link>
       <pubDate>Sun, 15 Dec 2019 14:53:46 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/flex/</guid>
+      <guid>https://bwangel.me/docs/linux/flex/</guid>
       <description>
         
         
@@ -1128,10 +1152,10 @@ else        { return(ELSE); }
     
     <item>
       <title>Docs: 说说Bash中的几个重定向</title>
-      <link>https://bwangel.me/647/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</link>
+      <link>https://bwangel.me/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</link>
       <pubDate>Sun, 13 Aug 2017 14:10:48 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</guid>
+      <guid>https://bwangel.me/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</guid>
       <description>
         
         
@@ -1170,10 +1194,10 @@ else        { return(ELSE); }
     
     <item>
       <title>Docs: 【流水账】利用闲置笔记本搭建自己的开发服务器</title>
-      <link>https://bwangel.me/647/docs/linux/laptop-server/</link>
+      <link>https://bwangel.me/docs/linux/laptop-server/</link>
       <pubDate>Mon, 27 Mar 2017 16:41:36 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/laptop-server/</guid>
+      <guid>https://bwangel.me/docs/linux/laptop-server/</guid>
       <description>
         
         
@@ -1253,10 +1277,10 @@ else        { return(ELSE); }
     
     <item>
       <title>Docs: 【非技术】 Arch 下的无线自动断开</title>
-      <link>https://bwangel.me/647/docs/linux/arch-wireless-adapter/</link>
+      <link>https://bwangel.me/docs/linux/arch-wireless-adapter/</link>
       <pubDate>Sun, 18 Dec 2016 14:13:44 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/arch-wireless-adapter/</guid>
+      <guid>https://bwangel.me/docs/linux/arch-wireless-adapter/</guid>
       <description>
         
         
@@ -1336,10 +1360,10 @@ else        { return(ELSE); }
     
     <item>
       <title>Docs: More advanced if usage</title>
-      <link>https://bwangel.me/647/docs/linux/more-advanced-if-usage/</link>
+      <link>https://bwangel.me/docs/linux/more-advanced-if-usage/</link>
       <pubDate>Mon, 03 Oct 2016 09:52:51 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/more-advanced-if-usage/</guid>
+      <guid>https://bwangel.me/docs/linux/more-advanced-if-usage/</guid>
       <description>
         
         

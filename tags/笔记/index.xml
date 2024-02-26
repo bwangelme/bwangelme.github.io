@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – 笔记</title>
-    <link>https://bwangel.me/647/tags/%E7%AC%94%E8%AE%B0/</link>
+    <link>https://bwangel.me/tags/%E7%AC%94%E8%AE%B0/</link>
     <description>Recent content in 笔记 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 30 Dec 2020 22:28:45 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 《Golang Error》学习笔记</title>
-      <link>https://bwangel.me/647/docs/golang/golang_error/</link>
+      <link>https://bwangel.me/docs/golang/golang_error/</link>
       <pubDate>Wed, 30 Dec 2020 22:28:45 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang_error/</guid>
+      <guid>https://bwangel.me/docs/golang/golang_error/</guid>
       <description>
         
         
@@ -255,10 +255,10 @@
     
     <item>
       <title>Docs: ElasticSearch 7.6 学习笔记</title>
-      <link>https://bwangel.me/647/docs/es/es-7-6-note/</link>
+      <link>https://bwangel.me/docs/es/es-7-6-note/</link>
       <pubDate>Sun, 10 May 2020 17:28:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/es/es-7-6-note/</guid>
+      <guid>https://bwangel.me/docs/es/es-7-6-note/</guid>
       <description>
         
         
@@ -1266,10 +1266,10 @@ POST /movies/_search
     
     <item>
       <title>Docs: ElasticSearch 学习笔记</title>
-      <link>https://bwangel.me/647/docs/es/es-note/</link>
+      <link>https://bwangel.me/docs/es/es-note/</link>
       <pubDate>Sat, 28 Mar 2020 17:16:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/es/es-note/</guid>
+      <guid>https://bwangel.me/docs/es/es-note/</guid>
       <description>
         
         
@@ -2104,10 +2104,10 @@ Dynamic 设为 stric 时，文档会写入失败&lt;/p&gt;
     
     <item>
       <title>Docs: Go 的调度模型学习笔记</title>
-      <link>https://bwangel.me/647/docs/golang/go-schedule/</link>
+      <link>https://bwangel.me/docs/golang/go-schedule/</link>
       <pubDate>Mon, 16 Mar 2020 01:18:03 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-schedule/</guid>
+      <guid>https://bwangel.me/docs/golang/go-schedule/</guid>
       <description>
         
         

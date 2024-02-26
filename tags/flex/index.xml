@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Flex</title>
-    <link>https://bwangel.me/647/tags/flex/</link>
+    <link>https://bwangel.me/tags/flex/</link>
     <description>Recent content in Flex on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sun, 15 Dec 2019 14:53:46 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/flex/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/flex/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 词法分析器生成工具 Lex 简介</title>
-      <link>https://bwangel.me/647/docs/linux/flex/</link>
+      <link>https://bwangel.me/docs/linux/flex/</link>
       <pubDate>Sun, 15 Dec 2019 14:53:46 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/flex/</guid>
+      <guid>https://bwangel.me/docs/linux/flex/</guid>
       <description>
         
         

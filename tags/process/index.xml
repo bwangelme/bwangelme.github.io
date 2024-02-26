@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – process</title>
-    <link>https://bwangel.me/647/tags/process/</link>
+    <link>https://bwangel.me/tags/process/</link>
     <description>Recent content in process on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Thu, 07 Jul 2022 19:56:13 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/process/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/process/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 进程卡住如何 debug</title>
-      <link>https://bwangel.me/647/docs/k8s/process-block/</link>
+      <link>https://bwangel.me/docs/k8s/process-block/</link>
       <pubDate>Thu, 07 Jul 2022 19:56:13 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/process-block/</guid>
+      <guid>https://bwangel.me/docs/k8s/process-block/</guid>
       <description>
         
         

@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – 编辑器</title>
-    <link>https://bwangel.me/647/docs/editor/</link>
+    <link>https://bwangel.me/docs/editor/</link>
     <description>Recent content in 编辑器 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 09 Aug 2023 10:57:48 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/docs/editor/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/docs/editor/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Pycharm</title>
-      <link>https://bwangel.me/647/docs/editor/pycharm/</link>
+      <link>https://bwangel.me/docs/editor/pycharm/</link>
       <pubDate>Wed, 09 Aug 2023 10:57:42 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/pycharm/</guid>
+      <guid>https://bwangel.me/docs/editor/pycharm/</guid>
       <description>
         
         
@@ -35,10 +35,10 @@
     
     <item>
       <title>Docs: Caps-lock mapping 成 Esc 在 vscode 中不生效</title>
-      <link>https://bwangel.me/647/docs/editor/vscode-esc-not-work/</link>
+      <link>https://bwangel.me/docs/editor/vscode-esc-not-work/</link>
       <pubDate>Mon, 18 Oct 2021 11:27:39 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/vscode-esc-not-work/</guid>
+      <guid>https://bwangel.me/docs/editor/vscode-esc-not-work/</guid>
       <description>
         
         
@@ -59,10 +59,10 @@
     
     <item>
       <title>Docs: 简单聊聊Vim中的自定义快捷键</title>
-      <link>https://bwangel.me/647/docs/editor/vim-map/</link>
+      <link>https://bwangel.me/docs/editor/vim-map/</link>
       <pubDate>Sun, 26 Mar 2017 17:19:11 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/vim-map/</guid>
+      <guid>https://bwangel.me/docs/editor/vim-map/</guid>
       <description>
         
         
@@ -233,10 +233,10 @@ it&amp;rsquo;s just used here for this situation.&lt;/p&gt;
     
     <item>
       <title>Docs: Emmet学习笔记</title>
-      <link>https://bwangel.me/647/docs/editor/emmet/</link>
+      <link>https://bwangel.me/docs/editor/emmet/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/emmet/</guid>
+      <guid>https://bwangel.me/docs/editor/emmet/</guid>
       <description>
         
         
@@ -350,10 +350,10 @@ it&amp;rsquo;s just used here for this situation.&lt;/p&gt;
     
     <item>
       <title>Docs: Sublime小记</title>
-      <link>https://bwangel.me/647/docs/editor/sublime_text/</link>
+      <link>https://bwangel.me/docs/editor/sublime_text/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/sublime_text/</guid>
+      <guid>https://bwangel.me/docs/editor/sublime_text/</guid>
       <description>
         
         
@@ -370,10 +370,10 @@ it&amp;rsquo;s just used here for this situation.&lt;/p&gt;
     
     <item>
       <title>Docs: 编辑器需求</title>
-      <link>https://bwangel.me/647/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</link>
+      <link>https://bwangel.me/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</guid>
+      <guid>https://bwangel.me/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</guid>
       <description>
         
         

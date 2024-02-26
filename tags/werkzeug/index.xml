@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Werkzeug</title>
-    <link>https://bwangel.me/647/tags/werkzeug/</link>
+    <link>https://bwangel.me/tags/werkzeug/</link>
     <description>Recent content in Werkzeug on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Mon, 23 Jan 2017 17:31:00 +0000</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/werkzeug/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/werkzeug/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Werkzeug 的 wsgi-app 说明</title>
-      <link>https://bwangel.me/647/docs/python/wsgi-app-example/</link>
+      <link>https://bwangel.me/docs/python/wsgi-app-example/</link>
       <pubDate>Mon, 23 Jan 2017 17:31:00 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/wsgi-app-example/</guid>
+      <guid>https://bwangel.me/docs/python/wsgi-app-example/</guid>
       <description>
         
         

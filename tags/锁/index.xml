@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – 锁</title>
-    <link>https://bwangel.me/647/tags/%E9%94%81/</link>
+    <link>https://bwangel.me/tags/%E9%94%81/</link>
     <description>Recent content in 锁 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Tue, 26 Mar 2019 21:56:43 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/%E9%94%81/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/%E9%94%81/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,15 +17,15 @@
     
     <item>
       <title>Docs: 线程同步操作面试题使用锁的解法</title>
-      <link>https://bwangel.me/647/docs/golang/go-lock/</link>
+      <link>https://bwangel.me/docs/golang/go-lock/</link>
       <pubDate>Tue, 26 Mar 2019 21:56:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-lock/</guid>
+      <guid>https://bwangel.me/docs/golang/go-lock/</guid>
       <description>
         
         
         &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/647/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;前两天在 V2ex 上看到了一篇博文，&lt;a href=&#34;http://samray.me/%E4%B8%80%E6%9D%A1%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83&#34;&gt;《一条经典面试题引发的思考》&lt;/a&gt;，感觉很有意思，我就用 Go 把它的答案实现了一遍。&lt;/p&gt;

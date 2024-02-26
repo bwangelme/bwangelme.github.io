@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – wireshark</title>
-    <link>https://bwangel.me/647/tags/wireshark/</link>
+    <link>https://bwangel.me/tags/wireshark/</link>
     <description>Recent content in wireshark on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 23 Aug 2023 10:07:25 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/wireshark/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/wireshark/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 利用 VirtualBox 和 Ubuntu 22 重现抓包实验</title>
-      <link>https://bwangel.me/647/docs/wireshark/vbox-linux-wireshark/</link>
+      <link>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</link>
       <pubDate>Wed, 23 Aug 2023 10:07:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/wireshark/vbox-linux-wireshark/</guid>
+      <guid>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</guid>
       <description>
         
         

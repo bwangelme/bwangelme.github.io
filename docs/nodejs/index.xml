@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – NodeJS</title>
-    <link>https://bwangel.me/647/docs/nodejs/</link>
+    <link>https://bwangel.me/docs/nodejs/</link>
     <description>Recent content in NodeJS on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Mon, 06 Nov 2023 10:50:58 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/docs/nodejs/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/docs/nodejs/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 简单聊聊HTML 5中的Web Storage</title>
-      <link>https://bwangel.me/647/docs/nodejs/web-storage-api/</link>
+      <link>https://bwangel.me/docs/nodejs/web-storage-api/</link>
       <pubDate>Sat, 06 May 2017 02:34:14 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/nodejs/web-storage-api/</guid>
+      <guid>https://bwangel.me/docs/nodejs/web-storage-api/</guid>
       <description>
         
         
@@ -126,10 +126,10 @@
     
     <item>
       <title>Docs: npm小记</title>
-      <link>https://bwangel.me/647/docs/nodejs/npm%E5%B0%8F%E8%AE%B0/</link>
+      <link>https://bwangel.me/docs/nodejs/npm%E5%B0%8F%E8%AE%B0/</link>
       <pubDate>Fri, 06 May 2016 15:10:25 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/nodejs/npm%E5%B0%8F%E8%AE%B0/</guid>
+      <guid>https://bwangel.me/docs/nodejs/npm%E5%B0%8F%E8%AE%B0/</guid>
       <description>
         
         
@@ -194,10 +194,10 @@
     
     <item>
       <title>Docs: NodeJS 笔记</title>
-      <link>https://bwangel.me/647/docs/nodejs/note/</link>
+      <link>https://bwangel.me/docs/nodejs/note/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/nodejs/note/</guid>
+      <guid>https://bwangel.me/docs/nodejs/note/</guid>
       <description>
         
         
@@ -228,10 +228,10 @@
     
     <item>
       <title>Docs: Vue.js关于组件的笔记</title>
-      <link>https://bwangel.me/647/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <link>https://bwangel.me/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://bwangel.me/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
       <description>
         
         

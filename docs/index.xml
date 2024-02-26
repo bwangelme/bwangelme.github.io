@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Documentation</title>
-    <link>https://bwangel.me/647/docs/</link>
+    <link>https://bwangel.me/docs/</link>
     <description>Recent content in Documentation on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     
-	  <atom:link href="https://bwangel.me/647/docs/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/docs/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Docs: QPS 和 RT 的关系</title>
-      <link>https://bwangel.me/647/docs/performance/qps_rt/</link>
+      <link>https://bwangel.me/docs/performance/qps_rt/</link>
       <pubDate>Sun, 13 Aug 2023 16:17:52 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/performance/qps_rt/</guid>
+      <guid>https://bwangel.me/docs/performance/qps_rt/</guid>
       <description>
         
         
@@ -59,10 +59,10 @@
     
     <item>
       <title>Docs: Pycharm</title>
-      <link>https://bwangel.me/647/docs/editor/pycharm/</link>
+      <link>https://bwangel.me/docs/editor/pycharm/</link>
       <pubDate>Wed, 09 Aug 2023 10:57:42 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/pycharm/</guid>
+      <guid>https://bwangel.me/docs/editor/pycharm/</guid>
       <description>
         
         
@@ -77,10 +77,10 @@
     
     <item>
       <title>Docs: curl</title>
-      <link>https://bwangel.me/647/docs/linux/curl/</link>
+      <link>https://bwangel.me/docs/linux/curl/</link>
       <pubDate>Tue, 01 Aug 2023 11:50:58 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/curl/</guid>
+      <guid>https://bwangel.me/docs/linux/curl/</guid>
       <description>
         
         
@@ -162,11 +162,331 @@ docker build -t curl_test --build-arg app_repo=bwangelme/rdcdemo --build-arg app
     </item>
     
     <item>
+      <title>Docs: Git Tips</title>
+      <link>https://bwangel.me/docs/tools/git/</link>
+      <pubDate>Sat, 20 Jan 2024 22:26:51 +0800</pubDate>
+      
+      <guid>https://bwangel.me/docs/tools/git/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;git-ssh-push-超时&#34;&gt;Git ssh push 超时&lt;/h2&gt;
+&lt;p&gt;修改 &lt;code&gt;~/.git/config&lt;/code&gt; 文件&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Add section below to it
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;将 push 的端口从 22 改成 443，有可能绕过 GFW&lt;/p&gt;
+&lt;h2 id=&#34;测试&#34;&gt;测试&lt;/h2&gt;
+&lt;p&gt;22 端口超时&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ssh -T git@github.com
+ssh: connect to host github.com port 22: Connection timed out
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;443 端口能联通&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; ssh -T -p 443 git@github.com
+Hi bwangelme! You&amp;#39;ve successfully authenticated, but GitHub does not provide shell access.
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Docker Cli</title>
+      <link>https://bwangel.me/docs/container/docker-cli/</link>
+      <pubDate>Thu, 04 Jan 2024 16:53:10 +0800</pubDate>
+      
+      <guid>https://bwangel.me/docs/container/docker-cli/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;docker-cli-获取所有容器的-ip&#34;&gt;docker cli 获取所有容器的 IP&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker ps -q | xargs docker inspect -f &amp;#39;{{.Name}}{{&amp;#34;\t&amp;#34;}}{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: CNI</title>
+      <link>https://bwangel.me/docs/k8s/cni/</link>
+      <pubDate>Mon, 25 Dec 2023 18:16:42 +0800</pubDate>
+      
+      <guid>https://bwangel.me/docs/k8s/cni/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;cni-要求&#34;&gt;CNI 要求&lt;/h2&gt;
+&lt;p&gt;CNI 插件的要求可以被简述成两个&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;连通性(Connectivity), 每个 Pod 通过默认的网卡接口 eth0 分配 IP 地址，并且这个 IP 地址，在节点的根网络空间上可达。&lt;/li&gt;
+&lt;li&gt;可达性(Reachability)，跨节点的 Pod 可以直接用 pod ip 通信（不需要经过 NAT）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;验证连通性&#34;&gt;验证连通性&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;这是我用 kind 在本地搭建的一个三节点集群&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;kind&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Cluster&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;apiVersion&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kind.x-k8s.io/v1alpha4&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;demo&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nodes&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;role&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;control-plane&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;role&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;worker&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;  &lt;/span&gt;- &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;role&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;worker&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;    &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; docker ps
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CONTAINER ID   IMAGE                  COMMAND                   CREATED              STATUS              PORTS                       NAMES
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3fdffdb2fa2d   kindest/node:v1.26.3   &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/usr/local/bin/entr…&amp;#34;&lt;/span&gt;   About a minute ago   Up About a minute   127.0.0.1:34309-&amp;gt;6443/tcp   demo-control-plane
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;646f93b78436   kindest/node:v1.26.3   &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/usr/local/bin/entr…&amp;#34;&lt;/span&gt;   About a minute ago   Up About a minute                               demo-worker
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;d5e20cd642fb   kindest/node:v1.26.3   &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/usr/local/bin/entr…&amp;#34;&lt;/span&gt;   About a minute ago   Up About a minute                               demo-worker2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;646f93b78436 是 k8s 的工作节点 &lt;code&gt;demo-worker&lt;/code&gt;，它的进程 ID 是 1568942&lt;/li&gt;
+&lt;li&gt;d5e20cd642fb 是 k8s 的工作节点 &lt;code&gt;demo-worker2&lt;/code&gt;，它的进程 ID 是 1568954&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; docker inspect 646f93b78436 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; rg -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&amp;#34;pid&amp;#34;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Pid&amp;#34;&lt;/span&gt;: 1568942,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; docker inspect d5e20cd642fb &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; rg -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&amp;#34;pid&amp;#34;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Pid&amp;#34;&lt;/span&gt;: 1568954,
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;apple-app-ddb7b6f95-kz2w8 是集群中的一个 pod, 它运行在 demo-worker2 上, 它的 eth0 网卡的地址是 10.244.1.2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; k -n qae get pod -o wide
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NAME                        READY   STATUS    RESTARTS   AGE    IP           NODE           NOMINATED NODE   READINESS GATES
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apple-app-ddb7b6f95-kz2w8   1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          117s   10.244.1.2   demo-worker2   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; k -n qae &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; -it apple-app-ddb7b6f95-kz2w8 ip addr show eth0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;POD&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;COMMAND&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; is DEPRECATED and will be removed in a future version. Use kubectl &lt;span style=&#34;color:#204a87&#34;&gt;exec&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;POD&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; -- &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;COMMAND&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; instead.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2: eth0@eth0: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1500&lt;/span&gt; qdisc noqueue state UP
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    link/ether 1e:a2:83:1b:93:92 brd ff:ff:ff:ff:ff:ff
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    inet 10.244.1.2/24 brd 10.244.1.255 scope global eth0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    inet6 fe80::1ca2:83ff:fe1b:9392/64 scope link
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       valid_lft forever preferred_lft forever
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;我进入 1568942 和 1568954 的网络空间，相当于登陆到了了 k8s 的 worker 节点上，ping pod 是可以 ping 通的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# demo-worker 节点&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; sudo nsenter -n -t &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1568942&lt;/span&gt; ping -c &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; 10.244.1.2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PING 10.244.1.2 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;10.244.1.2&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; 56&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;84&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; bytes of data.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; bytes from 10.244.1.2: &lt;span style=&#34;color:#000&#34;&gt;icmp_seq&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ttl&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;63&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0.063 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; bytes from 10.244.1.2: &lt;span style=&#34;color:#000&#34;&gt;icmp_seq&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ttl&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;63&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0.057 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;--- 10.244.1.2 ping statistics ---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; packets transmitted, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; received, 0% packet loss, &lt;span style=&#34;color:#204a87&#34;&gt;time&lt;/span&gt; 1011ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rtt min/avg/max/mdev &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 0.057/0.060/0.063/0.003 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# demo-worker2 节点&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; sudo nsenter -n -t &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1568954&lt;/span&gt; ping -c &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; 10.244.1.2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PING 10.244.1.2 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;10.244.1.2&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; 56&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;84&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; bytes of data.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; bytes from 10.244.1.2: &lt;span style=&#34;color:#000&#34;&gt;icmp_seq&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ttl&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0.059 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; bytes from 10.244.1.2: &lt;span style=&#34;color:#000&#34;&gt;icmp_seq&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ttl&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;64&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;0.017 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;--- 10.244.1.2 ping statistics ---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; packets transmitted, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; received, 0% packet loss, &lt;span style=&#34;color:#204a87&#34;&gt;time&lt;/span&gt; 1004ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rtt min/avg/max/mdev &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 0.017/0.038/0.059/0.021 ms
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;验证可达性&#34;&gt;验证可达性&lt;/h3&gt;
+&lt;p&gt;这是集群中的所有 pod, 我在 apple-app-ddb7b6f95-kz2w8 上 ping  local-path-provisioner-75f5b54ffd-slkv5，可以 ping 通&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; k get pod --all-namespaces -o wide
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NAMESPACE            NAME                                         READY   STATUS    RESTARTS   AGE     IP           NODE                 NOMINATED NODE   READINESS GATES
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          coredns-787d4945fb-2sdzq                     1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     10.244.0.3   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          coredns-787d4945fb-kdmsd                     1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     10.244.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          etcd-demo-control-plane                      1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kindnet-jdvn8                                1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.4   demo-worker2         &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kindnet-sbm7g                                1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kindnet-xcbjv                                1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.3   demo-worker          &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-apiserver-demo-control-plane            1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-controller-manager-demo-control-plane   1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-proxy-6kqfz                             1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.3   demo-worker          &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-proxy-nq6dw                             1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.4   demo-worker2         &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-proxy-ws5nj                             1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kube-system          kube-scheduler-demo-control-plane            1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     172.23.0.2   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;local-path-storage   local-path-provisioner-75f5b54ffd-slkv5      1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          10m     10.244.0.4   demo-control-plane   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;qae                  apple-app-ddb7b6f95-kz2w8                    1/1     Running   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;          9m21s   10.244.1.2   demo-worker2         &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; k -n qae exec -it apple-app-ddb7b6f95-kz2w8 -- ping -c 2 10.244.0.4
+PING 10.244.0.4 (10.244.0.4): 56 data bytes
+64 bytes from 10.244.0.4: seq=0 ttl=62 time=0.063 ms
+64 bytes from 10.244.0.4: seq=1 ttl=62 time=0.056 ms
+
+--- 10.244.0.4 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 0.056/0.059/0.063 ms
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tkng.io/cni/&#34;&gt;tkng&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Latency</title>
+      <link>https://bwangel.me/docs/performance/latency/</link>
+      <pubDate>Tue, 19 Dec 2023 18:51:09 +0800</pubDate>
+      
+      <guid>https://bwangel.me/docs/performance/latency/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;latency-comparison-numbers-2012&#34;&gt;Latency Comparison Numbers (~2012)&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Operation&lt;/th&gt;
+&lt;th&gt;ns&lt;/th&gt;
+&lt;th&gt;µs&lt;/th&gt;
+&lt;th&gt;ms&lt;/th&gt;
+&lt;th&gt;note&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;L1 cache reference&lt;/td&gt;
+&lt;td&gt;0.5 ns&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Branch mispredict&lt;/td&gt;
+&lt;td&gt;5 ns&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;L2 cache reference&lt;/td&gt;
+&lt;td&gt;7 ns&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;14x L1 cache&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Mutex lock/unlock&lt;/td&gt;
+&lt;td&gt;25 ns&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Main memory reference&lt;/td&gt;
+&lt;td&gt;100 ns&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;20x L2 cache, 200x L1 cache&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Compress 1K bytes with Zippy&lt;/td&gt;
+&lt;td&gt;3,000 ns&lt;/td&gt;
+&lt;td&gt;3 µs&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Send 1K bytes over 1 Gbps network&lt;/td&gt;
+&lt;td&gt;10,000 ns&lt;/td&gt;
+&lt;td&gt;10 µs&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Read 4K randomly from SSD*&lt;/td&gt;
+&lt;td&gt;150,000 ns&lt;/td&gt;
+&lt;td&gt;150 µs&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;~1GB/sec SSD&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Read 1 MB sequentially from memory&lt;/td&gt;
+&lt;td&gt;250,000 ns&lt;/td&gt;
+&lt;td&gt;250 µs&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Round trip within same datacenter&lt;/td&gt;
+&lt;td&gt;500,000 ns&lt;/td&gt;
+&lt;td&gt;500 µs&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Read 1 MB sequentially from SSD*&lt;/td&gt;
+&lt;td&gt;1,000,000 ns&lt;/td&gt;
+&lt;td&gt;1,000 µs&lt;/td&gt;
+&lt;td&gt;1 ms&lt;/td&gt;
+&lt;td&gt;~1GB/sec SSD, 4X memory&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Disk seek&lt;/td&gt;
+&lt;td&gt;10,000,000 ns&lt;/td&gt;
+&lt;td&gt;10,000 µs&lt;/td&gt;
+&lt;td&gt;10 ms&lt;/td&gt;
+&lt;td&gt;20x datacenter roundtrip&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Read 1 MB sequentially from disk&lt;/td&gt;
+&lt;td&gt;20,000,000 ns&lt;/td&gt;
+&lt;td&gt;20,000 µs&lt;/td&gt;
+&lt;td&gt;20 ms&lt;/td&gt;
+&lt;td&gt;80x memory, 20X SSD&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Send packet CA -&amp;gt; Netherlands -&amp;gt; CA&lt;/td&gt;
+&lt;td&gt;150,000,000 ns&lt;/td&gt;
+&lt;td&gt;150,000 µs&lt;/td&gt;
+&lt;td&gt;150 ms&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;notes&#34;&gt;Notes&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;1 ns = 10^-9 seconds&lt;/li&gt;
+&lt;li&gt;1 us = 10^-6 seconds = 1,000 ns&lt;/li&gt;
+&lt;li&gt;1 ms = 10^-3 seconds = 1,000 us = 1,000,000 ns&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;credit&#34;&gt;Credit&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;By Jeff Dean:               &lt;a href=&#34;http://research.google.com/people/jeff/&#34;&gt;http://research.google.com/people/jeff/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Originally by Peter Norvig: &lt;a href=&#34;http://norvig.com/21-days.html#answers&#34;&gt;http://norvig.com/21-days.html#answers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;contributions&#34;&gt;Contributions&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;lsquo;Humanized&amp;rsquo; comparison:  &lt;a href=&#34;https://gist.github.com/hellerbarde/2843375&#34;&gt;https://gist.github.com/hellerbarde/2843375&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Visual comparison chart: &lt;a href=&#34;http://i.imgur.com/k0t1e.png&#34;&gt;http://i.imgur.com/k0t1e.png&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Makefile</title>
+      <link>https://bwangel.me/docs/linux/makefile/</link>
+      <pubDate>Tue, 19 Dec 2023 17:13:40 +0800</pubDate>
+      
+      <guid>https://bwangel.me/docs/linux/makefile/</guid>
+      <description>
+        
+        
+        &lt;ul&gt;
+&lt;li&gt;&lt;code&gt;?=&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;?=&lt;/code&gt; 指示仅在未设置或没有值时设置 KDIR 变量。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# make test 将会输出 foo
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;KDIR&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;?=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;foo&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;KDIR&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;?=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;bar&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;test&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;KDIR&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
       <title>Docs: 利用 Python 处理字符串</title>
-      <link>https://bwangel.me/647/docs/linux/python-shell/</link>
+      <link>https://bwangel.me/docs/linux/python-shell/</link>
       <pubDate>Thu, 14 Dec 2023 12:06:58 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/python-shell/</guid>
+      <guid>https://bwangel.me/docs/linux/python-shell/</guid>
       <description>
         
         
@@ -193,10 +513,10 @@ Repo(dir=&amp;#39;karazhan&amp;#39;, name=&amp;#39;antispam/karazhan&amp;#39;),
     
     <item>
       <title>Docs: envoy 线程模型</title>
-      <link>https://bwangel.me/647/docs/envoy/envoy-threading-model/</link>
+      <link>https://bwangel.me/docs/envoy/envoy-threading-model/</link>
       <pubDate>Wed, 13 Dec 2023 13:17:28 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/envoy/envoy-threading-model/</guid>
+      <guid>https://bwangel.me/docs/envoy/envoy-threading-model/</guid>
       <description>
         
         
@@ -286,10 +606,10 @@ GrpcGoogClient
     
     <item>
       <title>Docs: Python2 的正则在 Mac 和 Linux 上的不同表现</title>
-      <link>https://bwangel.me/647/docs/python/unicode-re/</link>
+      <link>https://bwangel.me/docs/python/unicode-re/</link>
       <pubDate>Wed, 06 Dec 2023 12:20:47 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/unicode-re/</guid>
+      <guid>https://bwangel.me/docs/python/unicode-re/</guid>
       <description>
         
         
@@ -327,10 +647,10 @@ cd
     
     <item>
       <title>Docs: 细说：Unicode, UTF-8, UTF-16, UTF-32, UCS-2, UCS-4</title>
-      <link>https://bwangel.me/647/docs/encoding/unicode/</link>
+      <link>https://bwangel.me/docs/encoding/unicode/</link>
       <pubDate>Tue, 05 Dec 2023 19:18:29 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/encoding/unicode/</guid>
+      <guid>https://bwangel.me/docs/encoding/unicode/</guid>
       <description>
         
         
@@ -484,10 +804,10 @@ cd
     
     <item>
       <title>Docs: MySQL 事务</title>
-      <link>https://bwangel.me/647/docs/mysql/transaction/</link>
+      <link>https://bwangel.me/docs/mysql/transaction/</link>
       <pubDate>Tue, 28 Nov 2023 22:10:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/transaction/</guid>
+      <guid>https://bwangel.me/docs/mysql/transaction/</guid>
       <description>
         
         
@@ -502,10 +822,10 @@ cd
     
     <item>
       <title>Docs: Thrift Python Client 解析负数 field id 失败</title>
-      <link>https://bwangel.me/647/docs/thrift/python-fastbinary-negative-field-id-error/</link>
+      <link>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</link>
       <pubDate>Thu, 23 Nov 2023 17:27:03 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/python-fastbinary-negative-field-id-error/</guid>
+      <guid>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</guid>
       <description>
         
         
@@ -709,10 +1029,10 @@ TypeError: unsupported operand type(s) for +: &amp;#39;NoneType&amp;#39; and &am
     
     <item>
       <title>Docs: Leetcode第96题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-96/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-96/</link>
       <pubDate>Fri, 03 Nov 2023 08:45:11 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-96/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-96/</guid>
       <description>
         
         
@@ -779,10 +1099,10 @@ G(1) = 1$$&lt;/div&gt;&lt;p&gt;题目要求的 &lt;strong&gt;由 n 个节点组�
     
     <item>
       <title>Docs: Python2 使用 Thrift 为什么会出现 EINTR 错误</title>
-      <link>https://bwangel.me/647/docs/python/thrift-eintr/</link>
+      <link>https://bwangel.me/docs/python/thrift-eintr/</link>
       <pubDate>Fri, 27 Oct 2023 09:22:30 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/thrift-eintr/</guid>
+      <guid>https://bwangel.me/docs/python/thrift-eintr/</guid>
       <description>
         
         
@@ -1049,10 +1369,10 @@ get 2745109 bytes in 16.005424737930298
     
     <item>
       <title>Docs: 二分查找</title>
-      <link>https://bwangel.me/647/docs/algo/binary_search/</link>
+      <link>https://bwangel.me/docs/algo/binary_search/</link>
       <pubDate>Tue, 10 Oct 2023 09:31:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/binary_search/</guid>
+      <guid>https://bwangel.me/docs/algo/binary_search/</guid>
       <description>
         
         
@@ -1074,10 +1394,10 @@ right = mid - 1
     
     <item>
       <title>Docs: Consumer</title>
-      <link>https://bwangel.me/647/docs/kafka/consumer/</link>
+      <link>https://bwangel.me/docs/kafka/consumer/</link>
       <pubDate>Mon, 11 Sep 2023 16:30:55 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/kafka/consumer/</guid>
+      <guid>https://bwangel.me/docs/kafka/consumer/</guid>
       <description>
         
         
@@ -1128,10 +1448,10 @@ right = mid - 1
     
     <item>
       <title>Docs: Broker</title>
-      <link>https://bwangel.me/647/docs/kafka/broker/</link>
+      <link>https://bwangel.me/docs/kafka/broker/</link>
       <pubDate>Mon, 11 Sep 2023 16:27:26 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/kafka/broker/</guid>
+      <guid>https://bwangel.me/docs/kafka/broker/</guid>
       <description>
         
         
@@ -1178,10 +1498,10 @@ right = mid - 1
     
     <item>
       <title>Docs: DNS</title>
-      <link>https://bwangel.me/647/docs/linux/dns/</link>
+      <link>https://bwangel.me/docs/linux/dns/</link>
       <pubDate>Sat, 09 Sep 2023 13:41:16 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/dns/</guid>
+      <guid>https://bwangel.me/docs/linux/dns/</guid>
       <description>
         
         
@@ -1364,10 +1684,10 @@ www.a.shifen.com.       53      IN      A       220.181.38.149
     
     <item>
       <title>Docs: 在 Ubuntu 22.04 上搭建 NFS Server</title>
-      <link>https://bwangel.me/647/docs/linux/nfs-server/</link>
+      <link>https://bwangel.me/docs/linux/nfs-server/</link>
       <pubDate>Wed, 06 Sep 2023 08:51:39 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/nfs-server/</guid>
+      <guid>https://bwangel.me/docs/linux/nfs-server/</guid>
       <description>
         
         
@@ -1449,10 +1769,10 @@ sudo chmod 755 /mnt/share
     
     <item>
       <title>Docs: Thrift golang client 如何设置超时时间</title>
-      <link>https://bwangel.me/647/docs/thrift/golang-client-timeout/</link>
+      <link>https://bwangel.me/docs/thrift/golang-client-timeout/</link>
       <pubDate>Tue, 05 Sep 2023 21:41:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/golang-client-timeout/</guid>
+      <guid>https://bwangel.me/docs/thrift/golang-client-timeout/</guid>
       <description>
         
         
@@ -1609,10 +1929,10 @@ sudo chmod 755 /mnt/share
     
     <item>
       <title>Docs: 利用 VirtualBox 和 Ubuntu 22 重现抓包实验</title>
-      <link>https://bwangel.me/647/docs/wireshark/vbox-linux-wireshark/</link>
+      <link>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</link>
       <pubDate>Wed, 23 Aug 2023 10:07:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/wireshark/vbox-linux-wireshark/</guid>
+      <guid>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</guid>
       <description>
         
         
@@ -1905,10 +2225,10 @@ route -n
     
     <item>
       <title>Docs: 泛型</title>
-      <link>https://bwangel.me/647/docs/golang/generic/</link>
+      <link>https://bwangel.me/docs/golang/generic/</link>
       <pubDate>Tue, 15 Aug 2023 19:22:52 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/generic/</guid>
+      <guid>https://bwangel.me/docs/golang/generic/</guid>
       <description>
         
         
@@ -1957,10 +2277,10 @@ route -n
     
     <item>
       <title>Docs: YAML</title>
-      <link>https://bwangel.me/647/docs/golang/yaml/</link>
+      <link>https://bwangel.me/docs/golang/yaml/</link>
       <pubDate>Tue, 15 Aug 2023 11:48:16 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/yaml/</guid>
+      <guid>https://bwangel.me/docs/golang/yaml/</guid>
       <description>
         
         
@@ -2091,10 +2411,10 @@ route -n
     
     <item>
       <title>Docs: Statsd Exporter 如何跳过 prom 的指标检查</title>
-      <link>https://bwangel.me/647/docs/prometheus/statsd-exporter-unchecked-metric/</link>
+      <link>https://bwangel.me/docs/prometheus/statsd-exporter-unchecked-metric/</link>
       <pubDate>Thu, 01 Jun 2023 07:29:34 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/prometheus/statsd-exporter-unchecked-metric/</guid>
+      <guid>https://bwangel.me/docs/prometheus/statsd-exporter-unchecked-metric/</guid>
       <description>
         
         
@@ -2300,7 +2620,7 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// prometheus.DefaultRegisterer.Register(h)
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;prometheus.Collector&lt;/code&gt; 接口有一个 &lt;code&gt;Describe&lt;/code&gt; 方法，它用于获取指标的信息。具体做法是传入一个 channel 参数，指标将 Desc 信息写入到 channel 中。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Collector&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a40000&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Desc&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;包含指标名&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;label&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;help&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;等信息&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a40000&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Desc&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;包含指标名&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;label&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;help&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;等信息&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;Describe&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;chan&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Desc&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;...&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
@@ -2360,10 +2680,10 @@ qae.mrpink.service.ThriftSvcInstance.ThriftSvcInstance.count_by_item.req_time:30
     
     <item>
       <title>Docs: HTTP 协议中带下划线的 header 说明</title>
-      <link>https://bwangel.me/647/docs/http/nginx-header-underline/</link>
+      <link>https://bwangel.me/docs/http/nginx-header-underline/</link>
       <pubDate>Tue, 09 May 2023 22:40:29 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/nginx-header-underline/</guid>
+      <guid>https://bwangel.me/docs/http/nginx-header-underline/</guid>
       <description>
         
         
@@ -2463,10 +2783,10 @@ Server: netcat!
     
     <item>
       <title>Docs: Nginx proxy_set_header 默认会覆盖上一层的设置</title>
-      <link>https://bwangel.me/647/docs/http/nginx-proxy-set-header/</link>
+      <link>https://bwangel.me/docs/http/nginx-proxy-set-header/</link>
       <pubDate>Thu, 27 Apr 2023 15:02:39 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/nginx-proxy-set-header/</guid>
+      <guid>https://bwangel.me/docs/http/nginx-proxy-set-header/</guid>
       <description>
         
         
@@ -2564,10 +2884,10 @@ Server: netcat!
     
     <item>
       <title>Docs: Logrus 添加预设字段</title>
-      <link>https://bwangel.me/647/docs/golang/logrus-formatter/</link>
+      <link>https://bwangel.me/docs/golang/logrus-formatter/</link>
       <pubDate>Thu, 27 Apr 2023 14:55:12 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/logrus-formatter/</guid>
+      <guid>https://bwangel.me/docs/golang/logrus-formatter/</guid>
       <description>
         
         
@@ -2612,10 +2932,10 @@ Server: netcat!
     
     <item>
       <title>Docs: Golang Build 出错: error obtaining VCS status: exit status 128</title>
-      <link>https://bwangel.me/647/docs/golang/go-build-vcsmap/</link>
+      <link>https://bwangel.me/docs/golang/go-build-vcsmap/</link>
       <pubDate>Tue, 21 Mar 2023 12:07:05 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-build-vcsmap/</guid>
+      <guid>https://bwangel.me/docs/golang/go-build-vcsmap/</guid>
       <description>
         
         
@@ -2800,10 +3120,10 @@ go: github.private.repo/org/repo/cmd/dag@latest: module github.private.repo/org/
     
     <item>
       <title>Docs: Ubuntu 中 Docker 设置容器中 DNS 服务器的地址</title>
-      <link>https://bwangel.me/647/docs/container/docker-dns/</link>
+      <link>https://bwangel.me/docs/container/docker-dns/</link>
       <pubDate>Mon, 20 Mar 2023 18:28:08 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/container/docker-dns/</guid>
+      <guid>https://bwangel.me/docs/container/docker-dns/</guid>
       <description>
         
         
@@ -2831,10 +3151,10 @@ options ndots:15
     
     <item>
       <title>Docs: lsof</title>
-      <link>https://bwangel.me/647/docs/linux/lsof/</link>
+      <link>https://bwangel.me/docs/linux/lsof/</link>
       <pubDate>Thu, 02 Mar 2023 12:43:09 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/lsof/</guid>
+      <guid>https://bwangel.me/docs/linux/lsof/</guid>
       <description>
         
         
@@ -2986,10 +3306,10 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
     
     <item>
       <title>Docs: Pod Tips</title>
-      <link>https://bwangel.me/647/docs/k8s/pod-tips/</link>
+      <link>https://bwangel.me/docs/k8s/pod-tips/</link>
       <pubDate>Thu, 02 Mar 2023 09:31:14 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/pod-tips/</guid>
+      <guid>https://bwangel.me/docs/k8s/pod-tips/</guid>
       <description>
         
         
@@ -3064,10 +3384,10 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
     
     <item>
       <title>Docs: 从 none 开始，用网桥模式启动容器的网络</title>
-      <link>https://bwangel.me/647/docs/container/docker-none-network/</link>
+      <link>https://bwangel.me/docs/container/docker-none-network/</link>
       <pubDate>Fri, 20 Jan 2023 10:15:48 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/container/docker-none-network/</guid>
+      <guid>https://bwangel.me/docs/container/docker-none-network/</guid>
       <description>
         
         
@@ -3302,10 +3622,10 @@ root@Macmini:~# ip netns exec $pid ip link set dev B name eth0
     
     <item>
       <title>Docs: Thrift 协议学习笔记</title>
-      <link>https://bwangel.me/647/docs/thrift/thrift-protocol/</link>
+      <link>https://bwangel.me/docs/thrift/thrift-protocol/</link>
       <pubDate>Wed, 11 Jan 2023 11:03:19 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/thrift-protocol/</guid>
+      <guid>https://bwangel.me/docs/thrift/thrift-protocol/</guid>
       <description>
         
         
@@ -3581,7 +3901,7 @@ Field Header := field id + field value
 &lt;ul&gt;
 &lt;li&gt;i16 首先被转换成 i32 之后，再进行 zigzag + var int 编码, i8 数字不会进行编码，直接进行传输。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;关于 zigzag 以及变长整数编码，可以参考我的另一篇文章: &lt;a href=&#34;https://bwangel.me/647/2022/03/01/variant_zigzag/&#34;&gt;ZigZag 变长整数编码&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;关于 zigzag 以及变长整数编码，可以参考我的另一篇文章: &lt;a href=&#34;https://bwangel.me/2022/03/01/variant_zigzag/&#34;&gt;ZigZag 变长整数编码&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;message-如何编码&#34;&gt;Message 如何编码&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-125326.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Compact 协议中，Message 的编码格式如上图&lt;/p&gt;
@@ -3645,10 +3965,10 @@ Field Header := field id + field value
     
     <item>
       <title>Docs: Thrft</title>
-      <link>https://bwangel.me/647/docs/thrift/thrift-concept/</link>
+      <link>https://bwangel.me/docs/thrift/thrift-concept/</link>
       <pubDate>Tue, 15 Nov 2022 12:40:19 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/thrift-concept/</guid>
+      <guid>https://bwangel.me/docs/thrift/thrift-concept/</guid>
       <description>
         
         
@@ -3677,10 +3997,10 @@ Field Header := field id + field value
     
     <item>
       <title>Docs: 日期和时间格式</title>
-      <link>https://bwangel.me/647/docs/spec/datetime/</link>
+      <link>https://bwangel.me/docs/spec/datetime/</link>
       <pubDate>Wed, 26 Oct 2022 11:32:14 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/spec/datetime/</guid>
+      <guid>https://bwangel.me/docs/spec/datetime/</guid>
       <description>
         
         
@@ -3719,10 +4039,10 @@ Field Header := field id + field value
     
     <item>
       <title>Docs: Ubuntu 下 alacritty 终端中安装 nvim-tree 插件</title>
-      <link>https://bwangel.me/647/docs/ubuntu/nvim-web-devicons/</link>
+      <link>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</link>
       <pubDate>Fri, 21 Oct 2022 15:43:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/ubuntu/nvim-web-devicons/</guid>
+      <guid>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</guid>
       <description>
         
         
@@ -3755,10 +4075,10 @@ Field Header := field id + field value
     
     <item>
       <title>Docs: Deployment Tips</title>
-      <link>https://bwangel.me/647/docs/k8s/deployment-tips/</link>
+      <link>https://bwangel.me/docs/k8s/deployment-tips/</link>
       <pubDate>Thu, 15 Sep 2022 10:31:16 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/deployment-tips/</guid>
+      <guid>https://bwangel.me/docs/k8s/deployment-tips/</guid>
       <description>
         
         
@@ -3786,10 +4106,10 @@ Type     Reason            Age                From                   Message
     
     <item>
       <title>Docs: Leetcode 142: 环形链表 II</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-142/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-142/</link>
       <pubDate>Sun, 11 Sep 2022 10:54:04 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-142/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-142/</guid>
       <description>
         
         
@@ -3885,10 +4205,10 @@ Type     Reason            Age                From                   Message
     
     <item>
       <title>Docs: 算法中使用哨兵变量(TODO)</title>
-      <link>https://bwangel.me/647/docs/algo/algo-sentry/</link>
+      <link>https://bwangel.me/docs/algo/algo-sentry/</link>
       <pubDate>Sun, 11 Sep 2022 10:52:23 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/algo-sentry/</guid>
+      <guid>https://bwangel.me/docs/algo/algo-sentry/</guid>
       <description>
         
         
@@ -4157,10 +4477,10 @@ Type     Reason            Age                From                   Message
     
     <item>
       <title>Docs: Ubuntu 下安装 Containerd 及配置代理</title>
-      <link>https://bwangel.me/647/docs/container/install-containerd/</link>
+      <link>https://bwangel.me/docs/container/install-containerd/</link>
       <pubDate>Tue, 23 Aug 2022 08:17:21 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/container/install-containerd/</guid>
+      <guid>https://bwangel.me/docs/container/install-containerd/</guid>
       <description>
         
         
@@ -4286,10 +4606,10 @@ Environment=NO_PROXY=localhost,127.0.0.1,172.17.0.0/16,192.168.56.0/24,10.96.0.0
     
     <item>
       <title>Docs: K8S 中观察 CPU Throttling 情况的指标</title>
-      <link>https://bwangel.me/647/docs/k8s/k8s-cpu-throttle-prom-metric/</link>
+      <link>https://bwangel.me/docs/k8s/k8s-cpu-throttle-prom-metric/</link>
       <pubDate>Tue, 16 Aug 2022 23:14:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/k8s-cpu-throttle-prom-metric/</guid>
+      <guid>https://bwangel.me/docs/k8s/k8s-cpu-throttle-prom-metric/</guid>
       <description>
         
         
@@ -4389,10 +4709,10 @@ sum(
     
     <item>
       <title>Docs: ls Tips</title>
-      <link>https://bwangel.me/647/docs/linux/ls-tips.md/</link>
+      <link>https://bwangel.me/docs/linux/ls-tips.md/</link>
       <pubDate>Tue, 16 Aug 2022 23:10:06 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/ls-tips.md/</guid>
+      <guid>https://bwangel.me/docs/linux/ls-tips.md/</guid>
       <description>
         
         
@@ -4416,10 +4736,10 @@ sum(
     
     <item>
       <title>Docs: 查看信号的快捷键</title>
-      <link>https://bwangel.me/647/docs/linux/stty/</link>
+      <link>https://bwangel.me/docs/linux/stty/</link>
       <pubDate>Tue, 09 Aug 2022 21:43:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/stty/</guid>
+      <guid>https://bwangel.me/docs/linux/stty/</guid>
       <description>
         
         
@@ -4469,10 +4789,10 @@ done
     
     <item>
       <title>Docs: Ubuntu 下 Docker 设置 Registry</title>
-      <link>https://bwangel.me/647/docs/container/docker-registry/</link>
+      <link>https://bwangel.me/docs/container/docker-registry/</link>
       <pubDate>Tue, 09 Aug 2022 21:14:49 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/container/docker-registry/</guid>
+      <guid>https://bwangel.me/docs/container/docker-registry/</guid>
       <description>
         
         
@@ -4570,10 +4890,10 @@ sudo systemctl restart docker
     
     <item>
       <title>Docs: pkg/errors 和 go1.13 中 errors 库发展历史</title>
-      <link>https://bwangel.me/647/docs/golang/golang-err/</link>
+      <link>https://bwangel.me/docs/golang/golang-err/</link>
       <pubDate>Mon, 01 Aug 2022 10:23:16 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang-err/</guid>
+      <guid>https://bwangel.me/docs/golang/golang-err/</guid>
       <description>
         
         
@@ -4605,10 +4925,10 @@ sudo systemctl restart docker
     
     <item>
       <title>Docs: 进程卡住如何 debug</title>
-      <link>https://bwangel.me/647/docs/k8s/process-block/</link>
+      <link>https://bwangel.me/docs/k8s/process-block/</link>
       <pubDate>Thu, 07 Jul 2022 19:56:13 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/process-block/</guid>
+      <guid>https://bwangel.me/docs/k8s/process-block/</guid>
       <description>
         
         
@@ -4632,10 +4952,10 @@ sudo systemctl restart docker
     
     <item>
       <title>Docs: 《扬名立万》中一些前后呼应的情节</title>
-      <link>https://bwangel.me/647/docs/life/%E6%89%AC%E5%90%8D%E7%AB%8B%E4%B8%87%E5%BD%B1%E8%AF%84/</link>
+      <link>https://bwangel.me/docs/life/%E6%89%AC%E5%90%8D%E7%AB%8B%E4%B8%87%E5%BD%B1%E8%AF%84/</link>
       <pubDate>Wed, 01 Jun 2022 21:16:54 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/life/%E6%89%AC%E5%90%8D%E7%AB%8B%E4%B8%87%E5%BD%B1%E8%AF%84/</guid>
+      <guid>https://bwangel.me/docs/life/%E6%89%AC%E5%90%8D%E7%AB%8B%E4%B8%87%E5%BD%B1%E8%AF%84/</guid>
       <description>
         
         
@@ -4700,10 +5020,10 @@ sudo systemctl restart docker
     
     <item>
       <title>Docs: Golang 的版本发布计划</title>
-      <link>https://bwangel.me/647/docs/golang/go-release/</link>
+      <link>https://bwangel.me/docs/golang/go-release/</link>
       <pubDate>Sat, 14 May 2022 20:58:10 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-release/</guid>
+      <guid>https://bwangel.me/docs/golang/go-release/</guid>
       <description>
         
         
@@ -4837,229 +5157,6 @@ sudo systemctl restart docker
 &lt;li&gt;&lt;a href=&#34;https://github.com/golang/go/wiki/Go-Release-Cycle&#34;&gt;Go Release Cycle&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://go.dev/doc/devel/release&#34;&gt;Release History&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://groups.google.com/g/golang-dev/c/4xsD_D5oflI&#34;&gt;Go 1.19 release status&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
-    </item>
-    
-    <item>
-      <title>Docs: Ubuntu 初始化</title>
-      <link>https://bwangel.me/647/docs/ubuntu/ubuntu-init/</link>
-      <pubDate>Sun, 08 May 2022 10:42:22 +0800</pubDate>
-      
-      <guid>https://bwangel.me/647/docs/ubuntu/ubuntu-init/</guid>
-      <description>
-        
-        
-        &lt;h2 id=&#34;安装软件&#34;&gt;安装软件&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g&amp;#39;&lt;/span&gt; /etc/apt/sources.list
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt update
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/cli/cli/blob/trunk/docs/install_linux.md&#34;&gt;github cli&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.vagrantup.com/downloads&#34;&gt;vagrant&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.google.com/chrome/&#34;&gt;google chrome&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb&#34;&gt;chrome download&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/alacritty/alacritty/blob/master/INSTALL.md&#34;&gt;alacritty&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/moovweb/gvm&#34;&gt;gvm&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://rustup.rs/&#34;&gt;rustup&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/DejaVuSansMono.zip&#34;&gt;nerdfont DejaVuSansMono&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://bwangel.me/647/647/docs/ubuntu/nvim-web-devicons/&#34;&gt;font&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;ubuntu-将-capslock-映射成-esc&#34;&gt;Ubuntu 将 capslock 映射成 esc&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install dconf-cli
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 使 caps 成为 esc 按键&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dconf write /org/gnome/desktop/input-sources/xkb-options &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;[&amp;#39;caps:escape&amp;#39;]&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 交换 caps 和 esc 按键&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dconf write &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/org/gnome/desktop/input-sources/xkb-options&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;[&amp;#39;caps:swapescape&amp;#39;]&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;caps 配置的说明&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Caps Lock behavior
-
-┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│Option                         Description                                                                          │
-├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│caps:internal                  Caps Lock uses internal capitalization; Shift &amp;#34;pauses&amp;#34; Caps Lock                     │
-│caps:internal_nocancel         Caps Lock uses internal capitalization; Shift does not affect Caps Lock              │
-│caps:shift                     Caps Lock acts as Shift with locking; Shift &amp;#34;pauses&amp;#34; Caps Lock                       │
-│caps:shift_nocancel            Caps Lock acts as Shift with locking; Shift does not affect Caps Lock                │
-│caps:capslock                  Caps Lock toggles normal capitalization of alphabetic characters                     │
-│caps:shiftlock                 Caps Lock toggles Shift Lock (affects all keys)                                      │
-│caps:swapescape                Swap Esc and Caps Lock                                                               │
-│caps:escape                    Make Caps Lock an additional Esc                                                     │
-│caps:escape_shifted_capslock   Make Caps Lock an additional Esc, but Shift + Caps Lock is the regular Caps Lock     │
-│caps:backspace                 Make Caps Lock an additional Backspace                                               │
-│caps:super                     Make Caps Lock an additional Super                                                   │
-│caps:hyper                     Make Caps Lock an additional Hyper                                                   │
-│caps:menu                      Make Caps Lock an additional Menu key                                                │
-│caps:numlock                   Make Caps Lock an additional Num Lock                                                │
-│caps:ctrl_modifier             Make Caps Lock an additional Ctrl                                                    │
-│caps:none                      Caps Lock is disabled                                                                │
-│                                                                                                                    │
-└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;参考链接&#34;&gt;参考链接&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://askubuntu.com/a/365701/581894&#34;&gt;How to permanently switch Caps Lock and Esc&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://askubuntu.com/a/1415659/581894&#34;&gt;jammy 22.04: how to map Capslock to ctrl and esc&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;man 7 xkeyboard-config&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Docs: Ubuntu 使用默认的 DNS Server 配置</title>
-      <link>https://bwangel.me/647/docs/ubuntu/ubuntu-dns/</link>
-      <pubDate>Wed, 20 Apr 2022 02:07:00 +0800</pubDate>
-      
-      <guid>https://bwangel.me/647/docs/ubuntu/ubuntu-dns/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
-&lt;p&gt;Ubuntu 使用 &lt;code&gt;/etc/resolv.conf&lt;/code&gt; 中设置的地址为 DNS Server 地址&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 关闭 systemd-resolved 服务&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl disable systemd-resolved
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl stop systemd-resolved
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在 &lt;code&gt;/etc/NetworkManager/NetworkManager.conf&lt;/code&gt; 文件的 &lt;code&gt;[main]&lt;/code&gt; 部分添加配置&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;dns=default
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;删除原来的软链接文件&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo unlink /etc/resolv.conf
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重启 NetworkManager&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart NetworkManager
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://askubuntu.com/a/907249/581894&#34;&gt;https://askubuntu.com/a/907249/581894&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.gabriel.urdhr.fr/2020/03/17/systemd-revolved-dns-configuration-for-vpn/&#34;&gt;https://www.gabriel.urdhr.fr/2020/03/17/systemd-revolved-dns-configuration-for-vpn/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
-    </item>
-    
-    <item>
-      <title>Docs: Mac OSX 使用技巧</title>
-      <link>https://bwangel.me/647/docs/tools/mac-tips/</link>
-      <pubDate>Mon, 18 Apr 2022 17:06:10 +0800</pubDate>
-      
-      <guid>https://bwangel.me/647/docs/tools/mac-tips/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;修改某类文件的默认打开方式&#34;&gt;修改某类文件的默认打开方式&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;获取应用的ID: &lt;code&gt;osascript -e &#39;id of app &amp;quot;Sublime Text&amp;quot;&#39;&lt;/code&gt;，应用的名称可以在&lt;code&gt;/Applications&lt;/code&gt;中获取到&lt;/li&gt;
-&lt;li&gt;安装duti: &lt;code&gt;brew install duti&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;设置某类文件的默认打开方式: &lt;code&gt;duti -s com.sublimetext.3 .py all&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;强制退出应用&#34;&gt;强制退出应用&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;Command&lt;/code&gt; + &lt;code&gt;Option&lt;/code&gt; + &lt;code&gt;Esc&lt;/code&gt; 打开活动监视器，选择应用强制退出&lt;/p&gt;
-&lt;h2 id=&#34;为知笔记&#34;&gt;为知笔记&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;笔记内容的存储位置: &lt;code&gt;/Users/michaeltsui/.wiznote/bwangel.me@gmail.com/data/notes&lt;/code&gt;，是按照 zip 压缩存储的。解压出来就是 markdown 文件或者HTML文件。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;~/.wiznote&lt;/code&gt; 为为知笔记的数据目录&lt;/li&gt;
-&lt;li&gt;参考链接：&lt;a href=&#34;http://www.wiz.cn/faq/mac/data_dir&#34;&gt; Mac版的笔记数据在哪个目录？&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;时间戳&#34;&gt;时间戳&lt;/h2&gt;
-&lt;h3 id=&#34;获取时间戳&#34;&gt;获取时间戳&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; date +%s
-1580006193
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;获取特定时间的时间戳&#34;&gt;获取特定时间的时间戳&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ date -j -f %Y-%m-%d 2015-09-28 +%s
-1443427891
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;时间戳转时间&#34;&gt;时间戳转时间&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; date -r 1443429736
-Mon Sep 28 16:42:16 CST 2015
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;快捷键&#34;&gt;快捷键&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;SPlayer&lt;/code&gt; 会占用 &lt;code&gt;shift+cmd+l&lt;/code&gt; 全局快捷键&lt;/p&gt;
-&lt;h2 id=&#34;brew-编译选项&#34;&gt;brew 编译选项&lt;/h2&gt;
-&lt;p&gt;brew 的编译选项需要在 &lt;code&gt;--&lt;/code&gt; 后加&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;brew install macvim -- --with-override-system-vim --with-lua --with-luajit
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/skwp/dotfiles/issues/817&#34;&gt;https://github.com/skwp/dotfiles/issues/817&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/Homebrew/homebrew-core/issues/31510&#34;&gt;https://github.com/Homebrew/homebrew-core/issues/31510&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
-    </item>
-    
-    <item>
-      <title>Docs: 从源码安装 confluent-kafka-python</title>
-      <link>https://bwangel.me/647/docs/kafka/confluent_python.md/</link>
-      <pubDate>Fri, 11 Mar 2022 14:34:44 +0800</pubDate>
-      
-      <guid>https://bwangel.me/647/docs/kafka/confluent_python.md/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;从源码安装-librdkafka&#34;&gt;从源码安装 librdkafka&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 安装 vcpkg&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; git clone https://github.com/microsoft/vcpkg ~/.local/vcpkg
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; ~/.local/vcpkg/bootstrap-vcpkg.sh
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 安装 librdkafka&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; ~/.local/vcpkg/vcpkg install librdkafka
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;设置 include path 和 link path&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;CPATH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;~/.local/vcpkg/packages/librdkafka_x64-linux/include
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;LIBRARY_PATH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;~/.local/vcpkg/packages/librdkafka_x64-linux/lib
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;GCC uses the following environment variables:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;PATH: For searching the executables and run-time shared libraries (.dll, .so).&lt;/li&gt;
-&lt;li&gt;CPATH: For searching the include-paths for headers. It is searched after paths specified in &lt;code&gt;-I&amp;lt;dir&amp;gt;&lt;/code&gt; options. &lt;code&gt;C_INCLUDE_PATH&lt;/code&gt; and &lt;code&gt;CPLUS_INCLUDE_PATH&lt;/code&gt; can be used to specify C and C++ headers if the particular language was indicated in pre-processing.&lt;/li&gt;
-&lt;li&gt;LIBRARY_PATH: For searching library-paths for link libraries. It is searched after paths specified in &lt;code&gt;-L&amp;lt;dir&amp;gt;&lt;/code&gt; options. 程序编译期查找动态链接库的路径。&lt;/li&gt;
-&lt;li&gt;LD_LIBRARY_PATH: 程序运行期间查找动态链接库的路径。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;安装 librdkafka&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install -e ~/work/Douban/code/confluent-kafka-python/
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html#zz-1.9&#34;&gt;https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html#zz-1.9&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/microsoft/vcpkg&#34;&gt;https://github.com/microsoft/vcpkg&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
-    </item>
-    
-    <item>
-      <title>Docs: MySQL 修改 root 密码</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql-password/</link>
-      <pubDate>Wed, 09 Mar 2022 14:26:24 +0800</pubDate>
-      
-      <guid>https://bwangel.me/647/docs/mysql/mysql-password/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;旧版本修改-root-密码&#34;&gt;旧版本修改 root 密码&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;MySQL 5.7.6 and newer as well as MariaDB 10.1.20 and newer&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ALTER&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;USER&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;root&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;@&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;IDENTIFIED&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;BY&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;new_password&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FLUSH&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;PRIVILEGES&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;MySQL 5.7.5 and older as well as MariaDB 10.1.20 and older&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;SET&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;FOR&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;root&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;@&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;new_password&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FLUSH&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;PRIVILEGES&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;ubuntu-下-mysql-80-以上版本修改-root-密码&#34;&gt;Ubuntu 下 MySQL 8.0 以上版本修改 root 密码&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;MySQL 8 默认不开启 root 用户，默认用户是 &lt;code&gt;debian-sys-maint&lt;/code&gt;，其默认密码存储在 &lt;code&gt;/etc/mysql/debian.conf&lt;/code&gt; 中&lt;/li&gt;
-&lt;li&gt;MySQL 8 已经抛弃了 &lt;code&gt;PASSWORD()&lt;/code&gt; 函数。&lt;/li&gt;
-&lt;li&gt;MySQL 8 的 user 表已经没有 password 字段了，使用 &lt;code&gt;authentication_string&lt;/code&gt; 存储密码 hash&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;在 &lt;code&gt;/etc/mysql/debian.conf&lt;/code&gt; 中查看 MySQL &lt;code&gt;debian-sys-maint&lt;/code&gt; 用户的密码，登录上之后，修改 root 的密码&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;alter&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;user&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;root&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;@&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;identified&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;with&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;mysql_native_password&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;by&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;passwd&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;flush&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;privileges&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后就可以用 root 用户登录了。&lt;/p&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-reset-your-mysql-or-mariadb-root-password&#34;&gt;https://www.digitalocean.com/community/tutorials/how-to-reset-your-mysql-or-mariadb-root-password&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/qq285744011/article/details/120743369&#34;&gt;https://blog.csdn.net/qq285744011/article/details/120743369&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
       </description>
     </item>

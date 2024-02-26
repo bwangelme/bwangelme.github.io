@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – cli</title>
-    <link>https://bwangel.me/647/tags/cli/</link>
+    <link>https://bwangel.me/tags/cli/</link>
     <description>Recent content in cli on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sun, 21 Apr 2019 18:23:00 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/cli/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/cli/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: urfave/cli 学习笔记</title>
-      <link>https://bwangel.me/647/docs/golang/go-cli/</link>
+      <link>https://bwangel.me/docs/golang/go-cli/</link>
       <pubDate>Sun, 21 Apr 2019 18:23:00 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-cli/</guid>
+      <guid>https://bwangel.me/docs/golang/go-cli/</guid>
       <description>
         
         

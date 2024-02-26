@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – dns</title>
-    <link>https://bwangel.me/647/tags/dns/</link>
+    <link>https://bwangel.me/tags/dns/</link>
     <description>Recent content in dns on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sat, 09 Sep 2023 13:41:16 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/dns/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/dns/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: DNS</title>
-      <link>https://bwangel.me/647/docs/linux/dns/</link>
+      <link>https://bwangel.me/docs/linux/dns/</link>
       <pubDate>Sat, 09 Sep 2023 13:41:16 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/dns/</guid>
+      <guid>https://bwangel.me/docs/linux/dns/</guid>
       <description>
         
         
@@ -203,10 +203,10 @@ www.a.shifen.com.       53      IN      A       220.181.38.149
     
     <item>
       <title>Docs: 【流水账】利用闲置笔记本搭建自己的开发服务器</title>
-      <link>https://bwangel.me/647/docs/linux/laptop-server/</link>
+      <link>https://bwangel.me/docs/linux/laptop-server/</link>
       <pubDate>Mon, 27 Mar 2017 16:41:36 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/laptop-server/</guid>
+      <guid>https://bwangel.me/docs/linux/laptop-server/</guid>
       <description>
         
         

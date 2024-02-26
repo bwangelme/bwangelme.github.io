@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – HTTPS</title>
-    <link>https://bwangel.me/647/tags/https/</link>
+    <link>https://bwangel.me/tags/https/</link>
     <description>Recent content in HTTPS on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sun, 29 Nov 2020 13:25:07 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/https/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/https/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 如何生成自签名 HTTPS 证书</title>
-      <link>https://bwangel.me/647/docs/http/https-generate-cert/</link>
+      <link>https://bwangel.me/docs/http/https-generate-cert/</link>
       <pubDate>Sun, 29 Nov 2020 13:25:07 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/https-generate-cert/</guid>
+      <guid>https://bwangel.me/docs/http/https-generate-cert/</guid>
       <description>
         
         

@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – 工具</title>
-    <link>https://bwangel.me/647/tags/%E5%B7%A5%E5%85%B7/</link>
+    <link>https://bwangel.me/tags/%E5%B7%A5%E5%85%B7/</link>
     <description>Recent content in 工具 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sun, 10 Apr 2016 10:56:54 +0000</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Emmet学习笔记</title>
-      <link>https://bwangel.me/647/docs/editor/emmet/</link>
+      <link>https://bwangel.me/docs/editor/emmet/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/emmet/</guid>
+      <guid>https://bwangel.me/docs/editor/emmet/</guid>
       <description>
         
         
@@ -134,10 +134,10 @@
     
     <item>
       <title>Docs: Sublime小记</title>
-      <link>https://bwangel.me/647/docs/editor/sublime_text/</link>
+      <link>https://bwangel.me/docs/editor/sublime_text/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/sublime_text/</guid>
+      <guid>https://bwangel.me/docs/editor/sublime_text/</guid>
       <description>
         
         
@@ -154,10 +154,10 @@
     
     <item>
       <title>Docs: 编辑器需求</title>
-      <link>https://bwangel.me/647/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</link>
+      <link>https://bwangel.me/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</guid>
+      <guid>https://bwangel.me/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</guid>
       <description>
         
         

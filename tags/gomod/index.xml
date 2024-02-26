@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – gomod</title>
-    <link>https://bwangel.me/647/tags/gomod/</link>
+    <link>https://bwangel.me/tags/gomod/</link>
     <description>Recent content in gomod on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sat, 11 Dec 2021 21:42:46 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/gomod/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/gomod/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Go proxy 的说明</title>
-      <link>https://bwangel.me/647/docs/golang/goproxy/</link>
+      <link>https://bwangel.me/docs/golang/goproxy/</link>
       <pubDate>Sat, 11 Dec 2021 21:42:46 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/goproxy/</guid>
+      <guid>https://bwangel.me/docs/golang/goproxy/</guid>
       <description>
         
         
@@ -96,10 +96,10 @@ replace (
     
     <item>
       <title>Docs: Go mod 说明</title>
-      <link>https://bwangel.me/647/docs/golang/go_mod/</link>
+      <link>https://bwangel.me/docs/golang/go_mod/</link>
       <pubDate>Thu, 11 Oct 2018 08:44:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go_mod/</guid>
+      <guid>https://bwangel.me/docs/golang/go_mod/</guid>
       <description>
         
         

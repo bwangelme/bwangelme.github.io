@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – ARTS</title>
-    <link>https://bwangel.me/647/tags/arts/</link>
+    <link>https://bwangel.me/tags/arts/</link>
     <description>Recent content in ARTS on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Tue, 14 Apr 2020 23:43:14 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/arts/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/arts/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Leetcode 第343题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-343/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-343/</link>
       <pubDate>Tue, 14 Apr 2020 23:43:14 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-343/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-343/</guid>
       <description>
         
         
@@ -77,10 +77,10 @@
     
     <item>
       <title>Docs: Leetcode 第342题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-342/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-342/</link>
       <pubDate>Tue, 07 Apr 2020 18:14:41 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-342/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-342/</guid>
       <description>
         
         
@@ -123,10 +123,10 @@
     
     <item>
       <title>Docs: Leetcode 第65题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-65/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-65/</link>
       <pubDate>Fri, 03 Apr 2020 12:37:29 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-65/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-65/</guid>
       <description>
         
         
@@ -182,10 +182,10 @@ The signature of the C++ function had been updated. If you still see your functi
     
     <item>
       <title>Docs: Leetcode 第2题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-2/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-2/</link>
       <pubDate>Wed, 19 Jun 2019 23:10:11 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-2/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-2/</guid>
       <description>
         
         
@@ -259,10 +259,10 @@ Explanation: 342 + 465 = 807.
     
     <item>
       <title>Docs: Leetcode 第3题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-3/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-3/</link>
       <pubDate>Wed, 19 Jun 2019 23:03:47 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-3/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-3/</guid>
       <description>
         
         
@@ -298,10 +298,10 @@ Explanation: 342 + 465 = 807.
     
     <item>
       <title>Docs: Leetcode 第29题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-29/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-29/</link>
       <pubDate>Mon, 13 May 2019 23:27:08 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-29/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-29/</guid>
       <description>
         
         
@@ -339,7 +339,7 @@ The divisor will never be 0. Assume we are dealing with an environment which cou
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sign&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;被除数&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;^&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;除数&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在 Go 语言中，布尔值执行异或运算，只需要判断两个布尔值是否相同即可以了&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sign&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;除数&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;被除数&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;除数&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;被除数&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;sign&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;溢出情况&#34;&gt;溢出情况&lt;/h3&gt;
@@ -423,10 +423,10 @@ $$&lt;/p&gt;
     
     <item>
       <title>Docs: Leetcode 第191题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-191/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-191/</link>
       <pubDate>Tue, 30 Apr 2019 13:21:59 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-191/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-191/</guid>
       <description>
         
         
@@ -544,10 +544,10 @@ $$&lt;/p&gt;
     
     <item>
       <title>Docs: Review 《Golang Trick: Export unexport method for test》</title>
-      <link>https://bwangel.me/647/docs/golang/golang-trick-export-for-test/</link>
+      <link>https://bwangel.me/docs/golang/golang-trick-export-for-test/</link>
       <pubDate>Sat, 27 Apr 2019 17:33:52 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang-trick-export-for-test/</guid>
+      <guid>https://bwangel.me/docs/golang/golang-trick-export-for-test/</guid>
       <description>
         
         
@@ -638,10 +638,10 @@ $$&lt;/p&gt;
     
     <item>
       <title>Docs: Leetcode 第338题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-338/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-338/</link>
       <pubDate>Sun, 21 Apr 2019 23:37:34 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-338/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-338/</guid>
       <description>
         
         
@@ -729,10 +729,10 @@ $$&lt;/p&gt;
     
     <item>
       <title>Docs: urfave/cli 学习笔记</title>
-      <link>https://bwangel.me/647/docs/golang/go-cli/</link>
+      <link>https://bwangel.me/docs/golang/go-cli/</link>
       <pubDate>Sun, 21 Apr 2019 18:23:00 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-cli/</guid>
+      <guid>https://bwangel.me/docs/golang/go-cli/</guid>
       <description>
         
         
@@ -1546,10 +1546,10 @@ func main() {
     
     <item>
       <title>Docs: Leetcode 第151题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-151/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-151/</link>
       <pubDate>Sun, 14 Apr 2019 20:44:04 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-151/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-151/</guid>
       <description>
         
         
@@ -1669,10 +1669,10 @@ You need to reduce multiple spaces between two words to a single space in the re
     
     <item>
       <title>Docs: Leetcode[258]. Add Digits</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-258/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-258/</link>
       <pubDate>Tue, 09 Apr 2019 00:28:55 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-258/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-258/</guid>
       <description>
         
         
@@ -1770,10 +1770,10 @@ Could you do it without any loop/recursion in O(1) runtime?&lt;/p&gt;
     
     <item>
       <title>Docs: Go Panic 的触发及恢复过程</title>
-      <link>https://bwangel.me/647/docs/golang/go-panic/</link>
+      <link>https://bwangel.me/docs/golang/go-panic/</link>
       <pubDate>Mon, 08 Apr 2019 22:14:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-panic/</guid>
+      <guid>https://bwangel.me/docs/golang/go-panic/</guid>
       <description>
         
         
@@ -1805,10 +1805,10 @@ Could you do it without any loop/recursion in O(1) runtime?&lt;/p&gt;
     
     <item>
       <title>Docs: Leetcode 第8题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-8/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-8/</link>
       <pubDate>Tue, 02 Apr 2019 21:51:28 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-8/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-8/</guid>
       <description>
         
         
@@ -2061,15 +2061,15 @@ Output: -2147483648
     
     <item>
       <title>Docs: 线程同步操作面试题使用锁的解法</title>
-      <link>https://bwangel.me/647/docs/golang/go-lock/</link>
+      <link>https://bwangel.me/docs/golang/go-lock/</link>
       <pubDate>Tue, 26 Mar 2019 21:56:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-lock/</guid>
+      <guid>https://bwangel.me/docs/golang/go-lock/</guid>
       <description>
         
         
         &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/647/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;前两天在 V2ex 上看到了一篇博文，&lt;a href=&#34;http://samray.me/%E4%B8%80%E6%9D%A1%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83&#34;&gt;《一条经典面试题引发的思考》&lt;/a&gt;，感觉很有意思，我就用 Go 把它的答案实现了一遍。&lt;/p&gt;
@@ -2433,10 +2433,10 @@ Output: -2147483648
     
     <item>
       <title>Docs: Leetcode 661题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-661/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-661/</link>
       <pubDate>Sun, 24 Mar 2019 19:58:39 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-661/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-661/</guid>
       <description>
         
         
@@ -2524,10 +2524,10 @@ Output: -2147483648
     
     <item>
       <title>Docs: Go 的测试</title>
-      <link>https://bwangel.me/647/docs/golang/go-test/</link>
+      <link>https://bwangel.me/docs/golang/go-test/</link>
       <pubDate>Sun, 24 Mar 2019 19:40:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-test/</guid>
+      <guid>https://bwangel.me/docs/golang/go-test/</guid>
       <description>
         
         
@@ -2678,10 +2678,10 @@ ok      puzzlers/article20/q3   1.739s
     
     <item>
       <title>Docs: Dependency injection in Golang using higher order functions</title>
-      <link>https://bwangel.me/647/docs/golang/go-dep-inject/</link>
+      <link>https://bwangel.me/docs/golang/go-dep-inject/</link>
       <pubDate>Sun, 24 Mar 2019 18:37:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-dep-inject/</guid>
+      <guid>https://bwangel.me/docs/golang/go-dep-inject/</guid>
       <description>
         
         

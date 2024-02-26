@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Concurrency</title>
-    <link>https://bwangel.me/647/tags/concurrency/</link>
+    <link>https://bwangel.me/tags/concurrency/</link>
     <description>Recent content in Concurrency on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Mon, 15 Apr 2019 22:35:48 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/concurrency/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/concurrency/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Review 《Go Concurrency Patterns: Pipelines and cancellation》</title>
-      <link>https://bwangel.me/647/docs/golang/review-go-pipelines/</link>
+      <link>https://bwangel.me/docs/golang/review-go-pipelines/</link>
       <pubDate>Mon, 15 Apr 2019 22:35:48 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/review-go-pipelines/</guid>
+      <guid>https://bwangel.me/docs/golang/review-go-pipelines/</guid>
       <description>
         
         

@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – unittest</title>
-    <link>https://bwangel.me/647/tags/unittest/</link>
+    <link>https://bwangel.me/tags/unittest/</link>
     <description>Recent content in unittest on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sun, 11 Sep 2016 11:46:43 +0000</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/unittest/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/unittest/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Python unittesting: run tests in another module</title>
-      <link>https://bwangel.me/647/docs/python/python_unittesting_run_tests_in_another_module/</link>
+      <link>https://bwangel.me/docs/python/python_unittesting_run_tests_in_another_module/</link>
       <pubDate>Sun, 11 Sep 2016 11:46:43 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/python_unittesting_run_tests_in_another_module/</guid>
+      <guid>https://bwangel.me/docs/python/python_unittesting_run_tests_in_another_module/</guid>
       <description>
         
         

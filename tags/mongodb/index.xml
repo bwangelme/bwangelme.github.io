@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – MongoDB</title>
-    <link>https://bwangel.me/647/tags/mongodb/</link>
+    <link>https://bwangel.me/tags/mongodb/</link>
     <description>Recent content in MongoDB on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Fri, 22 Apr 2016 11:18:06 +0000</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: MongoDB分片</title>
-      <link>https://bwangel.me/647/docs/mongodb/mongodb%E5%88%86%E7%89%87/</link>
+      <link>https://bwangel.me/docs/mongodb/mongodb%E5%88%86%E7%89%87/</link>
       <pubDate>Fri, 22 Apr 2016 11:18:06 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mongodb/mongodb%E5%88%86%E7%89%87/</guid>
+      <guid>https://bwangel.me/docs/mongodb/mongodb%E5%88%86%E7%89%87/</guid>
       <description>
         
         
@@ -37,7 +37,7 @@
 &lt;li&gt;要设定好数据的分片规则(Config Server才能维护)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;如下图所示&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://bwangel.me/647/images/MongoDB_shard_1.png&#34; alt=&#34;原理图&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://bwangel.me/images/MongoDB_shard_1.png&#34; alt=&#34;原理图&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;启动过程&#34;&gt;启动过程&lt;/h2&gt;
 &lt;h3 id=&#34;启动两台shard实例&#34;&gt;启动两台shard实例&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mongod --dbpath /home/m17/ --logpath /home/mlog/m17.log --fork --port &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;27017&lt;/span&gt; --smallfiles
@@ -98,10 +98,10 @@
     
     <item>
       <title>Docs: MongoDB复制集</title>
-      <link>https://bwangel.me/647/docs/mongodb/mongodb%E5%A4%8D%E5%88%B6%E9%9B%86/</link>
+      <link>https://bwangel.me/docs/mongodb/mongodb%E5%A4%8D%E5%88%B6%E9%9B%86/</link>
       <pubDate>Wed, 20 Apr 2016 10:34:01 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mongodb/mongodb%E5%A4%8D%E5%88%B6%E9%9B%86/</guid>
+      <guid>https://bwangel.me/docs/mongodb/mongodb%E5%A4%8D%E5%88%B6%E9%9B%86/</guid>
       <description>
         
         
@@ -112,7 +112,7 @@
 &lt;h2 id=&#34;原理&#34;&gt;原理&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;replication set&lt;/code&gt; 多台服务器维护相同的数据副本，提高服务器的可用性&lt;/p&gt;
 &lt;p&gt;主服务器负责读写，从服务器保持和主服务器同样的数据集，从服务器为只读状态&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://bwangel.me/647/images/MongoDB_replication_set_1.jpg&#34; alt=&#34;复制集原理示意图&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://bwangel.me/images/MongoDB_replication_set_1.jpg&#34; alt=&#34;复制集原理示意图&#34;&gt;&lt;/p&gt;
 &lt;p&gt;查看复制集的帮助&lt;code&gt;rs.help()&lt;/code&gt;&lt;/p&gt;
 &lt;h2 id=&#34;创建复制集过程&#34;&gt;创建复制集过程&lt;/h2&gt;
 &lt;h3 id=&#34;创建目录&#34;&gt;创建目录&lt;/h3&gt;
@@ -278,10 +278,10 @@
     
     <item>
       <title>Docs: MongoDB备份与回复</title>
-      <link>https://bwangel.me/647/docs/mongodb/mongodb%E5%A4%87%E4%BB%BD%E4%B8%8E%E5%9B%9E%E5%A4%8D/</link>
+      <link>https://bwangel.me/docs/mongodb/mongodb%E5%A4%87%E4%BB%BD%E4%B8%8E%E5%9B%9E%E5%A4%8D/</link>
       <pubDate>Tue, 19 Apr 2016 11:58:26 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mongodb/mongodb%E5%A4%87%E4%BB%BD%E4%B8%8E%E5%9B%9E%E5%A4%8D/</guid>
+      <guid>https://bwangel.me/docs/mongodb/mongodb%E5%A4%87%E4%BB%BD%E4%B8%8E%E5%9B%9E%E5%A4%8D/</guid>
       <description>
         
         
@@ -328,10 +328,10 @@
     
     <item>
       <title>Docs: MongoDB索引</title>
-      <link>https://bwangel.me/647/docs/mongodb/mongodb%E7%B4%A2%E5%BC%95/</link>
+      <link>https://bwangel.me/docs/mongodb/mongodb%E7%B4%A2%E5%BC%95/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mongodb/mongodb%E7%B4%A2%E5%BC%95/</guid>
+      <guid>https://bwangel.me/docs/mongodb/mongodb%E7%B4%A2%E5%BC%95/</guid>
       <description>
         
         
@@ -382,10 +382,10 @@
     
     <item>
       <title>Docs: 深入查询表达式</title>
-      <link>https://bwangel.me/647/docs/mongodb/%E6%B7%B1%E5%85%A5%E6%9F%A5%E8%AF%A2%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <link>https://bwangel.me/docs/mongodb/%E6%B7%B1%E5%85%A5%E6%9F%A5%E8%AF%A2%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mongodb/%E6%B7%B1%E5%85%A5%E6%9F%A5%E8%AF%A2%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <guid>https://bwangel.me/docs/mongodb/%E6%B7%B1%E5%85%A5%E6%9F%A5%E8%AF%A2%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
       <description>
         
         
@@ -403,10 +403,10 @@
     
     <item>
       <title>Docs: 游标操作</title>
-      <link>https://bwangel.me/647/docs/mongodb/%E6%B8%B8%E6%A0%87%E6%93%8D%E4%BD%9C/</link>
+      <link>https://bwangel.me/docs/mongodb/%E6%B8%B8%E6%A0%87%E6%93%8D%E4%BD%9C/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mongodb/%E6%B8%B8%E6%A0%87%E6%93%8D%E4%BD%9C/</guid>
+      <guid>https://bwangel.me/docs/mongodb/%E6%B8%B8%E6%A0%87%E6%93%8D%E4%BD%9C/</guid>
       <description>
         
         

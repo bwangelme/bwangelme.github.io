@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Golang</title>
-    <link>https://bwangel.me/647/tags/golang/</link>
+    <link>https://bwangel.me/tags/golang/</link>
     <description>Recent content in Golang on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Tue, 05 Sep 2023 21:41:25 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Thrift golang client 如何设置超时时间</title>
-      <link>https://bwangel.me/647/docs/thrift/golang-client-timeout/</link>
+      <link>https://bwangel.me/docs/thrift/golang-client-timeout/</link>
       <pubDate>Tue, 05 Sep 2023 21:41:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/golang-client-timeout/</guid>
+      <guid>https://bwangel.me/docs/thrift/golang-client-timeout/</guid>
       <description>
         
         
@@ -177,10 +177,10 @@
     
     <item>
       <title>Docs: 泛型</title>
-      <link>https://bwangel.me/647/docs/golang/generic/</link>
+      <link>https://bwangel.me/docs/golang/generic/</link>
       <pubDate>Tue, 15 Aug 2023 19:22:52 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/generic/</guid>
+      <guid>https://bwangel.me/docs/golang/generic/</guid>
       <description>
         
         

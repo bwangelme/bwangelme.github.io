@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – vimium-c</title>
-    <link>https://bwangel.me/647/tags/vimium-c/</link>
+    <link>https://bwangel.me/tags/vimium-c/</link>
     <description>Recent content in vimium-c on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Thu, 24 Feb 2022 22:20:23 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/vimium-c/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/vimium-c/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 修复 Ubuntu 中 chrome vimium-c 插件失效的问题</title>
-      <link>https://bwangel.me/647/docs/ubuntu/chrome_key_event_missing/</link>
+      <link>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</link>
       <pubDate>Thu, 24 Feb 2022 22:20:23 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/ubuntu/chrome_key_event_missing/</guid>
+      <guid>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</guid>
       <description>
         
         

@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – blog</title>
-    <link>https://bwangel.me/647/tags/blog/</link>
+    <link>https://bwangel.me/tags/blog/</link>
     <description>Recent content in blog on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 13 Dec 2023 13:17:28 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/blog/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: envoy 线程模型</title>
-      <link>https://bwangel.me/647/docs/envoy/envoy-threading-model/</link>
+      <link>https://bwangel.me/docs/envoy/envoy-threading-model/</link>
       <pubDate>Wed, 13 Dec 2023 13:17:28 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/envoy/envoy-threading-model/</guid>
+      <guid>https://bwangel.me/docs/envoy/envoy-threading-model/</guid>
       <description>
         
         
@@ -110,10 +110,10 @@ GrpcGoogClient
     
     <item>
       <title>Docs: Python2 的正则在 Mac 和 Linux 上的不同表现</title>
-      <link>https://bwangel.me/647/docs/python/unicode-re/</link>
+      <link>https://bwangel.me/docs/python/unicode-re/</link>
       <pubDate>Wed, 06 Dec 2023 12:20:47 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/unicode-re/</guid>
+      <guid>https://bwangel.me/docs/python/unicode-re/</guid>
       <description>
         
         
@@ -151,10 +151,10 @@ cd
     
     <item>
       <title>Docs: 细说：Unicode, UTF-8, UTF-16, UTF-32, UCS-2, UCS-4</title>
-      <link>https://bwangel.me/647/docs/encoding/unicode/</link>
+      <link>https://bwangel.me/docs/encoding/unicode/</link>
       <pubDate>Tue, 05 Dec 2023 19:18:29 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/encoding/unicode/</guid>
+      <guid>https://bwangel.me/docs/encoding/unicode/</guid>
       <description>
         
         
@@ -308,10 +308,10 @@ cd
     
     <item>
       <title>Docs: Thrift Python Client 解析负数 field id 失败</title>
-      <link>https://bwangel.me/647/docs/thrift/python-fastbinary-negative-field-id-error/</link>
+      <link>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</link>
       <pubDate>Thu, 23 Nov 2023 17:27:03 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/python-fastbinary-negative-field-id-error/</guid>
+      <guid>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</guid>
       <description>
         
         
@@ -515,10 +515,10 @@ TypeError: unsupported operand type(s) for +: &amp;#39;NoneType&amp;#39; and &am
     
     <item>
       <title>Docs: Leetcode第96题</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-96/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-96/</link>
       <pubDate>Fri, 03 Nov 2023 08:45:11 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-96/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-96/</guid>
       <description>
         
         
@@ -585,10 +585,10 @@ G(1) = 1$$&lt;/div&gt;&lt;p&gt;题目要求的 &lt;strong&gt;由 n 个节点组�
     
     <item>
       <title>Docs: Python2 使用 Thrift 为什么会出现 EINTR 错误</title>
-      <link>https://bwangel.me/647/docs/python/thrift-eintr/</link>
+      <link>https://bwangel.me/docs/python/thrift-eintr/</link>
       <pubDate>Fri, 27 Oct 2023 09:22:30 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/thrift-eintr/</guid>
+      <guid>https://bwangel.me/docs/python/thrift-eintr/</guid>
       <description>
         
         
@@ -855,10 +855,10 @@ get 2745109 bytes in 16.005424737930298
     
     <item>
       <title>Docs: 在 Ubuntu 22.04 上搭建 NFS Server</title>
-      <link>https://bwangel.me/647/docs/linux/nfs-server/</link>
+      <link>https://bwangel.me/docs/linux/nfs-server/</link>
       <pubDate>Wed, 06 Sep 2023 08:51:39 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/nfs-server/</guid>
+      <guid>https://bwangel.me/docs/linux/nfs-server/</guid>
       <description>
         
         
@@ -940,10 +940,10 @@ sudo chmod 755 /mnt/share
     
     <item>
       <title>Docs: Thrift golang client 如何设置超时时间</title>
-      <link>https://bwangel.me/647/docs/thrift/golang-client-timeout/</link>
+      <link>https://bwangel.me/docs/thrift/golang-client-timeout/</link>
       <pubDate>Tue, 05 Sep 2023 21:41:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/golang-client-timeout/</guid>
+      <guid>https://bwangel.me/docs/thrift/golang-client-timeout/</guid>
       <description>
         
         
@@ -1100,10 +1100,10 @@ sudo chmod 755 /mnt/share
     
     <item>
       <title>Docs: 利用 VirtualBox 和 Ubuntu 22 重现抓包实验</title>
-      <link>https://bwangel.me/647/docs/wireshark/vbox-linux-wireshark/</link>
+      <link>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</link>
       <pubDate>Wed, 23 Aug 2023 10:07:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/wireshark/vbox-linux-wireshark/</guid>
+      <guid>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</guid>
       <description>
         
         
@@ -1396,10 +1396,10 @@ route -n
     
     <item>
       <title>Docs: HTTP 协议中带下划线的 header 说明</title>
-      <link>https://bwangel.me/647/docs/http/nginx-header-underline/</link>
+      <link>https://bwangel.me/docs/http/nginx-header-underline/</link>
       <pubDate>Tue, 09 May 2023 22:40:29 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/nginx-header-underline/</guid>
+      <guid>https://bwangel.me/docs/http/nginx-header-underline/</guid>
       <description>
         
         
@@ -1499,10 +1499,10 @@ Server: netcat!
     
     <item>
       <title>Docs: lsof</title>
-      <link>https://bwangel.me/647/docs/linux/lsof/</link>
+      <link>https://bwangel.me/docs/linux/lsof/</link>
       <pubDate>Thu, 02 Mar 2023 12:43:09 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/lsof/</guid>
+      <guid>https://bwangel.me/docs/linux/lsof/</guid>
       <description>
         
         
@@ -1654,10 +1654,10 @@ bf5846384913   test_download   &amp;#34;python /download.py&amp;#34;   37 second
     
     <item>
       <title>Docs: 从 none 开始，用网桥模式启动容器的网络</title>
-      <link>https://bwangel.me/647/docs/container/docker-none-network/</link>
+      <link>https://bwangel.me/docs/container/docker-none-network/</link>
       <pubDate>Fri, 20 Jan 2023 10:15:48 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/container/docker-none-network/</guid>
+      <guid>https://bwangel.me/docs/container/docker-none-network/</guid>
       <description>
         
         
@@ -1892,10 +1892,10 @@ root@Macmini:~# ip netns exec $pid ip link set dev B name eth0
     
     <item>
       <title>Docs: Thrift 协议学习笔记</title>
-      <link>https://bwangel.me/647/docs/thrift/thrift-protocol/</link>
+      <link>https://bwangel.me/docs/thrift/thrift-protocol/</link>
       <pubDate>Wed, 11 Jan 2023 11:03:19 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/thrift-protocol/</guid>
+      <guid>https://bwangel.me/docs/thrift/thrift-protocol/</guid>
       <description>
         
         
@@ -2171,7 +2171,7 @@ Field Header := field id + field value
 &lt;ul&gt;
 &lt;li&gt;i16 首先被转换成 i32 之后，再进行 zigzag + var int 编码, i8 数字不会进行编码，直接进行传输。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;关于 zigzag 以及变长整数编码，可以参考我的另一篇文章: &lt;a href=&#34;https://bwangel.me/647/2022/03/01/variant_zigzag/&#34;&gt;ZigZag 变长整数编码&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;关于 zigzag 以及变长整数编码，可以参考我的另一篇文章: &lt;a href=&#34;https://bwangel.me/2022/03/01/variant_zigzag/&#34;&gt;ZigZag 变长整数编码&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;message-如何编码&#34;&gt;Message 如何编码&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-125326.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Compact 协议中，Message 的编码格式如上图&lt;/p&gt;
@@ -2235,10 +2235,10 @@ Field Header := field id + field value
     
     <item>
       <title>Docs: Leetcode 142: 环形链表 II</title>
-      <link>https://bwangel.me/647/docs/algo/leetcode/leetcode-142/</link>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-142/</link>
       <pubDate>Sun, 11 Sep 2022 10:54:04 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/leetcode/leetcode-142/</guid>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-142/</guid>
       <description>
         
         
@@ -2334,10 +2334,10 @@ Field Header := field id + field value
     
     <item>
       <title>Docs: Ubuntu 下安装 Containerd 及配置代理</title>
-      <link>https://bwangel.me/647/docs/container/install-containerd/</link>
+      <link>https://bwangel.me/docs/container/install-containerd/</link>
       <pubDate>Tue, 23 Aug 2022 08:17:21 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/container/install-containerd/</guid>
+      <guid>https://bwangel.me/docs/container/install-containerd/</guid>
       <description>
         
         
@@ -2463,10 +2463,10 @@ Environment=NO_PROXY=localhost,127.0.0.1,172.17.0.0/16,192.168.56.0/24,10.96.0.0
     
     <item>
       <title>Docs: K8S 中观察 CPU Throttling 情况的指标</title>
-      <link>https://bwangel.me/647/docs/k8s/k8s-cpu-throttle-prom-metric/</link>
+      <link>https://bwangel.me/docs/k8s/k8s-cpu-throttle-prom-metric/</link>
       <pubDate>Tue, 16 Aug 2022 23:14:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/k8s-cpu-throttle-prom-metric/</guid>
+      <guid>https://bwangel.me/docs/k8s/k8s-cpu-throttle-prom-metric/</guid>
       <description>
         
         
@@ -2566,10 +2566,10 @@ sum(
     
     <item>
       <title>Docs: ZigZag 变长整数编码</title>
-      <link>https://bwangel.me/647/docs/encoding/variant_zigzag/</link>
+      <link>https://bwangel.me/docs/encoding/variant_zigzag/</link>
       <pubDate>Tue, 01 Mar 2022 20:16:48 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/encoding/variant_zigzag/</guid>
+      <guid>https://bwangel.me/docs/encoding/variant_zigzag/</guid>
       <description>
         
         
@@ -2727,10 +2727,10 @@ sum(
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;final&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HEX_ARRAY&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;0123456789ABCDEF&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;getBytes&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;StandardCharsets&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;UTF_8&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;ByteBuffer&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ByteBuffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;allocate&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;ByteBuffer&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ByteBuffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;allocate&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;App&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;App&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;();&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;writeVariant&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(-&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;writeVariant&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;23&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;variant bytes is `&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;bytesToHex&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;array&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;`&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;readVariant&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
@@ -2738,44 +2738,44 @@ sum(
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;readVariant&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ByteBuffer&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;throws&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;RuntimeException&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 此处重置 bytebuffer 的 pos，否则不会从第0个开始读起
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;rewind&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;();&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 从字节流中取出一个字节，如果第8位是0的话，表示读取整数结束
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(((&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0x80&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(((&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0x80&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 取出低7位，并左移 7 位放到 value 中
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0x7f&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0x7f&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;7&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;7&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 32 位整数最大编码结果是5个字节，在循环中最多只能读4次
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;28&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;28&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;RuntimeException&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;illegal bytes&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 最后一次在循环外读取，且由于最后一位最高位是0,也不需要进行去除最高位的操作
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;^&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;^&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;writeVariant&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ByteBuffer&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 将整数 value 进行 zigzag 编码, int 是 32 位，所以这里直接写死了 31
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;^&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;31&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;^&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;31&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 判断 v 的低7位是否是0
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;((&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0xffffff80&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;L&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;((&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0xffffff80&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0L&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 取出 v 的低7位，并在最高位上加上1
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;((&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0x7f&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0x80&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;((&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0x7f&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0x80&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 放到 buffer 中
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 因为是先放整数的低字节位，所以这里实现了小端字节序
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#000&#34;&gt;buffer&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;put&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 将 v 无符号右移 7 位，最高位补 0
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&amp;gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;7&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&amp;gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;7&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 最后取出的 7 位最高位一定是0,且它位于 variant 编码的最后一个字节，需要设置成0
@@ -2783,12 +2783,12 @@ sum(
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;bytesToHex&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;bytes&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;hexChars&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;bytes&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;];&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;bytes&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;bytes&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0xFF&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;hexChars&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HEX_ARRAY&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;];&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;hexChars&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HEX_ARRAY&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0x0F&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;];&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;hexChars&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;hexChars&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;bytes&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;bytes&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;bytes&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0xFF&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;hexChars&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HEX_ARRAY&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;hexChars&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HEX_ARRAY&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;0x0F&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;hexChars&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;j&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;hexChars&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;StandardCharsets&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;UTF_8&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
@@ -2805,10 +2805,10 @@ decode value is -23
     
     <item>
       <title>Docs: 修复 Ubuntu 中 chrome vimium-c 插件失效的问题</title>
-      <link>https://bwangel.me/647/docs/ubuntu/chrome_key_event_missing/</link>
+      <link>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</link>
       <pubDate>Thu, 24 Feb 2022 22:20:23 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/ubuntu/chrome_key_event_missing/</guid>
+      <guid>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</guid>
       <description>
         
         
@@ -2843,10 +2843,10 @@ decode value is -23
     
     <item>
       <title>Docs: Go gcflags/ldflags 的说明</title>
-      <link>https://bwangel.me/647/docs/golang/go_gcflags/</link>
+      <link>https://bwangel.me/docs/golang/go_gcflags/</link>
       <pubDate>Wed, 12 Jan 2022 17:56:10 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go_gcflags/</guid>
+      <guid>https://bwangel.me/docs/golang/go_gcflags/</guid>
       <description>
         
         
@@ -2913,10 +2913,10 @@ decode value is -23
     
     <item>
       <title>Docs: Review 《Don’t use Go’s default HTTP client (in production)》</title>
-      <link>https://bwangel.me/647/docs/golang/go-http-client/</link>
+      <link>https://bwangel.me/docs/golang/go-http-client/</link>
       <pubDate>Fri, 31 Dec 2021 11:01:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-http-client/</guid>
+      <guid>https://bwangel.me/docs/golang/go-http-client/</guid>
       <description>
         
         
@@ -3011,10 +3011,10 @@ Go 的 net 包也有一个默认的 Transport 和 Dialer 。下面是一个使�
     
     <item>
       <title>Docs: Review 《How eBPF will solve Service Mesh - Goodbye Sidecars》</title>
-      <link>https://bwangel.me/647/docs/k8s/ebpf-service-mesh/</link>
+      <link>https://bwangel.me/docs/k8s/ebpf-service-mesh/</link>
       <pubDate>Mon, 20 Dec 2021 19:41:20 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/k8s/ebpf-service-mesh/</guid>
+      <guid>https://bwangel.me/docs/k8s/ebpf-service-mesh/</guid>
       <description>
         
         
@@ -3118,10 +3118,10 @@ Go 的 net 包也有一个默认的 Transport 和 Dialer 。下面是一个使�
     
     <item>
       <title>Docs: Review 《File Descriptor Transfer over Unix Domain Sockets》</title>
-      <link>https://bwangel.me/647/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</link>
+      <link>https://bwangel.me/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</link>
       <pubDate>Tue, 30 Nov 2021 11:58:56 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</guid>
+      <guid>https://bwangel.me/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</guid>
       <description>
         
         
@@ -3354,10 +3354,10 @@ root@5247072fc542:~/uds#
     
     <item>
       <title>Docs: Redis 主从同步细节</title>
-      <link>https://bwangel.me/647/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</link>
+      <link>https://bwangel.me/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</link>
       <pubDate>Fri, 22 Oct 2021 21:57:55 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</guid>
+      <guid>https://bwangel.me/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</guid>
       <description>
         
         
@@ -3501,10 +3501,10 @@ root@5247072fc542:~/uds#
     
     <item>
       <title>Docs: Docker 客户端连接远程 Docker Daemon</title>
-      <link>https://bwangel.me/647/docs/container/docker-client-remote-server/</link>
+      <link>https://bwangel.me/docs/container/docker-client-remote-server/</link>
       <pubDate>Sat, 22 May 2021 11:41:46 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/container/docker-client-remote-server/</guid>
+      <guid>https://bwangel.me/docs/container/docker-client-remote-server/</guid>
       <description>
         
         
@@ -3566,10 +3566,10 @@ docker.elastic.co/kibana/kibana   7.1.0     714b175e84e8   2 years ago     745MB
     
     <item>
       <title>Docs: Golang 链接时注入额外信息</title>
-      <link>https://bwangel.me/647/docs/golang/go-build-variable/</link>
+      <link>https://bwangel.me/docs/golang/go-build-variable/</link>
       <pubDate>Fri, 07 May 2021 17:04:21 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-build-variable/</guid>
+      <guid>https://bwangel.me/docs/golang/go-build-variable/</guid>
       <description>
         
         
@@ -3618,10 +3618,10 @@ Note that before Go 1.5 this option took two separate arguments.&lt;/p&gt;
     
     <item>
       <title>Docs: 《Golang Error》学习笔记</title>
-      <link>https://bwangel.me/647/docs/golang/golang_error/</link>
+      <link>https://bwangel.me/docs/golang/golang_error/</link>
       <pubDate>Wed, 30 Dec 2020 22:28:45 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang_error/</guid>
+      <guid>https://bwangel.me/docs/golang/golang_error/</guid>
       <description>
         
         
@@ -3856,10 +3856,10 @@ Note that before Go 1.5 this option took two separate arguments.&lt;/p&gt;
     
     <item>
       <title>Docs: 如何生成自签名 HTTPS 证书</title>
-      <link>https://bwangel.me/647/docs/http/https-generate-cert/</link>
+      <link>https://bwangel.me/docs/http/https-generate-cert/</link>
       <pubDate>Sun, 29 Nov 2020 13:25:07 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/https-generate-cert/</guid>
+      <guid>https://bwangel.me/docs/http/https-generate-cert/</guid>
       <description>
         
         
@@ -4006,10 +4006,10 @@ Note that before Go 1.5 this option took two separate arguments.&lt;/p&gt;
     
     <item>
       <title>Docs: Review 《Using pipelining to speedup Redis queries》</title>
-      <link>https://bwangel.me/647/docs/redis/redis-pipelining/</link>
+      <link>https://bwangel.me/docs/redis/redis-pipelining/</link>
       <pubDate>Sat, 22 Aug 2020 17:22:37 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/redis/redis-pipelining/</guid>
+      <guid>https://bwangel.me/docs/redis/redis-pipelining/</guid>
       <description>
         
         
@@ -4110,10 +4110,10 @@ Note that before Go 1.5 this option took two separate arguments.&lt;/p&gt;
     
     <item>
       <title>Docs: Go 的调度模型学习笔记</title>
-      <link>https://bwangel.me/647/docs/golang/go-schedule/</link>
+      <link>https://bwangel.me/docs/golang/go-schedule/</link>
       <pubDate>Mon, 16 Mar 2020 01:18:03 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-schedule/</guid>
+      <guid>https://bwangel.me/docs/golang/go-schedule/</guid>
       <description>
         
         
@@ -4161,10 +4161,10 @@ P取 G 的顺序是: &lt;code&gt;LRQ &amp;gt; GRQ &amp;gt; 从其他 P 偷 G&lt;
     
     <item>
       <title>Docs: Rabbitmq Tutorial 学习笔记</title>
-      <link>https://bwangel.me/647/docs/tools/rabbitmq-tutorial/</link>
+      <link>https://bwangel.me/docs/tools/rabbitmq-tutorial/</link>
       <pubDate>Sat, 21 Dec 2019 21:49:45 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tools/rabbitmq-tutorial/</guid>
+      <guid>https://bwangel.me/docs/tools/rabbitmq-tutorial/</guid>
       <description>
         
         
@@ -4387,10 +4387,10 @@ P取 G 的顺序是: &lt;code&gt;LRQ &amp;gt; GRQ &amp;gt; 从其他 P 偷 G&lt;
     
     <item>
       <title>Docs: 词法分析器生成工具 Lex 简介</title>
-      <link>https://bwangel.me/647/docs/linux/flex/</link>
+      <link>https://bwangel.me/docs/linux/flex/</link>
       <pubDate>Sun, 15 Dec 2019 14:53:46 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/flex/</guid>
+      <guid>https://bwangel.me/docs/linux/flex/</guid>
       <description>
         
         
@@ -4547,10 +4547,10 @@ else        { return(ELSE); }
     
     <item>
       <title>Docs: Golang 中的 ServeMux 路由简介</title>
-      <link>https://bwangel.me/647/docs/golang/intro-servemux/</link>
+      <link>https://bwangel.me/docs/golang/intro-servemux/</link>
       <pubDate>Sat, 30 Nov 2019 18:35:05 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/intro-servemux/</guid>
+      <guid>https://bwangel.me/docs/golang/intro-servemux/</guid>
       <description>
         
         
@@ -4825,10 +4825,10 @@ else        { return(ELSE); }
     
     <item>
       <title>Docs: Review 《github.com/stretchr/testify》</title>
-      <link>https://bwangel.me/647/docs/golang/review-testify/</link>
+      <link>https://bwangel.me/docs/golang/review-testify/</link>
       <pubDate>Sun, 02 Jun 2019 22:41:59 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/review-testify/</guid>
+      <guid>https://bwangel.me/docs/golang/review-testify/</guid>
       <description>
         
         
@@ -5080,10 +5080,10 @@ else        { return(ELSE); }
     
     <item>
       <title>Docs: Go 并发模式之发布订阅模型</title>
-      <link>https://bwangel.me/647/docs/golang/go-pubsub/</link>
+      <link>https://bwangel.me/docs/golang/go-pubsub/</link>
       <pubDate>Thu, 30 May 2019 07:29:04 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-pubsub/</guid>
+      <guid>https://bwangel.me/docs/golang/go-pubsub/</guid>
       <description>
         
         
@@ -5259,10 +5259,10 @@ else        { return(ELSE); }
     
     <item>
       <title>Docs: Review 《JSON and Go》</title>
-      <link>https://bwangel.me/647/docs/golang/review-json-and-go/</link>
+      <link>https://bwangel.me/docs/golang/review-json-and-go/</link>
       <pubDate>Tue, 21 May 2019 21:40:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/review-json-and-go/</guid>
+      <guid>https://bwangel.me/docs/golang/review-json-and-go/</guid>
       <description>
         
         
@@ -5769,10 +5769,10 @@ else        { return(ELSE); }
     
     <item>
       <title>Docs: strings.Builder 转换字符串的时候为什么比 bytes.Buffer 要快</title>
-      <link>https://bwangel.me/647/docs/golang/byte-vs-builder/</link>
+      <link>https://bwangel.me/docs/golang/byte-vs-builder/</link>
       <pubDate>Sun, 28 Apr 2019 23:48:00 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/byte-vs-builder/</guid>
+      <guid>https://bwangel.me/docs/golang/byte-vs-builder/</guid>
       <description>
         
         
@@ -5868,10 +5868,10 @@ else        { return(ELSE); }
     
     <item>
       <title>Docs: Review 《Golang Trick: Export unexport method for test》</title>
-      <link>https://bwangel.me/647/docs/golang/golang-trick-export-for-test/</link>
+      <link>https://bwangel.me/docs/golang/golang-trick-export-for-test/</link>
       <pubDate>Sat, 27 Apr 2019 17:33:52 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/golang-trick-export-for-test/</guid>
+      <guid>https://bwangel.me/docs/golang/golang-trick-export-for-test/</guid>
       <description>
         
         
@@ -5962,10 +5962,10 @@ else        { return(ELSE); }
     
     <item>
       <title>Docs: urfave/cli 学习笔记</title>
-      <link>https://bwangel.me/647/docs/golang/go-cli/</link>
+      <link>https://bwangel.me/docs/golang/go-cli/</link>
       <pubDate>Sun, 21 Apr 2019 18:23:00 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-cli/</guid>
+      <guid>https://bwangel.me/docs/golang/go-cli/</guid>
       <description>
         
         
@@ -6779,10 +6779,10 @@ func main() {
     
     <item>
       <title>Docs: Review 《Go Concurrency Patterns: Pipelines and cancellation》</title>
-      <link>https://bwangel.me/647/docs/golang/review-go-pipelines/</link>
+      <link>https://bwangel.me/docs/golang/review-go-pipelines/</link>
       <pubDate>Mon, 15 Apr 2019 22:35:48 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/review-go-pipelines/</guid>
+      <guid>https://bwangel.me/docs/golang/review-go-pipelines/</guid>
       <description>
         
         
@@ -6936,10 +6936,10 @@ func main() {
     
     <item>
       <title>Docs: 关于线程同步操作的一道面试题</title>
-      <link>https://bwangel.me/647/docs/golang/go-sync-channel/</link>
+      <link>https://bwangel.me/docs/golang/go-sync-channel/</link>
       <pubDate>Sat, 13 Apr 2019 17:27:36 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-sync-channel/</guid>
+      <guid>https://bwangel.me/docs/golang/go-sync-channel/</guid>
       <description>
         
         
@@ -7117,23 +7117,23 @@ func main() {
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;使用锁的解决方案&#34;&gt;使用锁的解决方案&lt;/h2&gt;
 &lt;p&gt;使用锁并不是这个问题的正确解决思路，&lt;strong&gt;甚至会将人的思维带入歧途&lt;/strong&gt;，所以不推荐大家使用锁解决。&lt;/p&gt;
-&lt;p&gt;这是我之前写的旧文，&lt;a href=&#34;https://bwangel.me/647/2019/03/26/go-lock/&#34;&gt;线程同步操作面试题使用锁的解法&lt;/a&gt;，个人觉得某些地方还有一些参考价值，请大家酌情阅读。&lt;/p&gt;
+&lt;p&gt;这是我之前写的旧文，&lt;a href=&#34;https://bwangel.me/2019/03/26/go-lock/&#34;&gt;线程同步操作面试题使用锁的解法&lt;/a&gt;，个人觉得某些地方还有一些参考价值，请大家酌情阅读。&lt;/p&gt;
 &lt;h2 id=&#34;使用-atomicinteger-的解决方案&#34;&gt;使用 AtomicInteger 的解决方案&lt;/h2&gt;
-&lt;p&gt;使用&lt;code&gt;AtomicInteger&lt;/code&gt;并不是一种好的解决方案(因为这个解法让 CPU 持续空转)，但是通过这个解法我们可以了解到 Go 调度器阻塞的一个陷阱，所以也把这种解法放了上来，感兴趣的朋友可以查看我的另一篇文章 &lt;a href=&#34;https://bwangel.me/647/2019/04/10/go-scheduler-pitfall/&#34;&gt;Go 调度器的一个无法执行陷阱&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;使用&lt;code&gt;AtomicInteger&lt;/code&gt;并不是一种好的解决方案(因为这个解法让 CPU 持续空转)，但是通过这个解法我们可以了解到 Go 调度器阻塞的一个陷阱，所以也把这种解法放了上来，感兴趣的朋友可以查看我的另一篇文章 &lt;a href=&#34;https://bwangel.me/2019/04/10/go-scheduler-pitfall/&#34;&gt;Go 调度器的一个无法执行陷阱&lt;/a&gt;。&lt;/p&gt;
       </description>
     </item>
     
     <item>
       <title>Docs: Go 调度器的一个无法执行陷阱</title>
-      <link>https://bwangel.me/647/docs/golang/go-scheduler-pitfall/</link>
+      <link>https://bwangel.me/docs/golang/go-scheduler-pitfall/</link>
       <pubDate>Wed, 10 Apr 2019 22:18:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-scheduler-pitfall/</guid>
+      <guid>https://bwangel.me/docs/golang/go-scheduler-pitfall/</guid>
       <description>
         
         
         &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/647/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;2020年03月16日补充说明&#34;&gt;2020年03月16日补充说明&lt;/h2&gt;
 &lt;p&gt;Go 1.14 加入了基于信号的抢占式调度，这个问题在 go 1.14 上已经复现不了了。参考 &lt;a href=&#34;http://xiaorui.cc/archives/6535&#34;&gt;go1.14基于信号的抢占式调度实现原理&lt;/a&gt;&lt;/p&gt;
@@ -7268,10 +7268,10 @@ Go 通过这种方式来将执行权切换到 Go 调度器，从而避免通过�
     
     <item>
       <title>Docs: Go Panic 的触发及恢复过程</title>
-      <link>https://bwangel.me/647/docs/golang/go-panic/</link>
+      <link>https://bwangel.me/docs/golang/go-panic/</link>
       <pubDate>Mon, 08 Apr 2019 22:14:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-panic/</guid>
+      <guid>https://bwangel.me/docs/golang/go-panic/</guid>
       <description>
         
         
@@ -7303,15 +7303,15 @@ Go 通过这种方式来将执行权切换到 Go 调度器，从而避免通过�
     
     <item>
       <title>Docs: 线程同步操作面试题使用锁的解法</title>
-      <link>https://bwangel.me/647/docs/golang/go-lock/</link>
+      <link>https://bwangel.me/docs/golang/go-lock/</link>
       <pubDate>Tue, 26 Mar 2019 21:56:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-lock/</guid>
+      <guid>https://bwangel.me/docs/golang/go-lock/</guid>
       <description>
         
         
         &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/647/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;前两天在 V2ex 上看到了一篇博文，&lt;a href=&#34;http://samray.me/%E4%B8%80%E6%9D%A1%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83&#34;&gt;《一条经典面试题引发的思考》&lt;/a&gt;，感觉很有意思，我就用 Go 把它的答案实现了一遍。&lt;/p&gt;
@@ -7675,10 +7675,10 @@ Go 通过这种方式来将执行权切换到 Go 调度器，从而避免通过�
     
     <item>
       <title>Docs: Go 的测试</title>
-      <link>https://bwangel.me/647/docs/golang/go-test/</link>
+      <link>https://bwangel.me/docs/golang/go-test/</link>
       <pubDate>Sun, 24 Mar 2019 19:40:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-test/</guid>
+      <guid>https://bwangel.me/docs/golang/go-test/</guid>
       <description>
         
         
@@ -7829,10 +7829,10 @@ ok      puzzlers/article20/q3   1.739s
     
     <item>
       <title>Docs: HTTP 协议中的分块传输编码</title>
-      <link>https://bwangel.me/647/docs/http/http-chunked/</link>
+      <link>https://bwangel.me/docs/http/http-chunked/</link>
       <pubDate>Thu, 01 Nov 2018 23:32:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/http-chunked/</guid>
+      <guid>https://bwangel.me/docs/http/http-chunked/</guid>
       <description>
         
         
@@ -7973,10 +7973,10 @@ Transfer-Encoding: chunked\r\n
     
     <item>
       <title>Docs: Go 模板</title>
-      <link>https://bwangel.me/647/docs/golang/go-template/</link>
+      <link>https://bwangel.me/docs/golang/go-template/</link>
       <pubDate>Thu, 18 Oct 2018 23:24:24 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-template/</guid>
+      <guid>https://bwangel.me/docs/golang/go-template/</guid>
       <description>
         
         
@@ -8206,10 +8206,10 @@ Transfer-Encoding: chunked\r\n
     
     <item>
       <title>Docs: Go mod 说明</title>
-      <link>https://bwangel.me/647/docs/golang/go_mod/</link>
+      <link>https://bwangel.me/docs/golang/go_mod/</link>
       <pubDate>Thu, 11 Oct 2018 08:44:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go_mod/</guid>
+      <guid>https://bwangel.me/docs/golang/go_mod/</guid>
       <description>
         
         
@@ -8324,10 +8324,10 @@ Transfer-Encoding: chunked\r\n
     
     <item>
       <title>Docs: 哈希表学习笔记</title>
-      <link>https://bwangel.me/647/docs/algo/hash/</link>
+      <link>https://bwangel.me/docs/algo/hash/</link>
       <pubDate>Wed, 29 Aug 2018 23:34:29 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/hash/</guid>
+      <guid>https://bwangel.me/docs/algo/hash/</guid>
       <description>
         
         
@@ -8434,10 +8434,10 @@ $$&lt;/p&gt;
     
     <item>
       <title>Docs: 素数生成器</title>
-      <link>https://bwangel.me/647/docs/golang/prime-generator/</link>
+      <link>https://bwangel.me/docs/golang/prime-generator/</link>
       <pubDate>Tue, 14 Aug 2018 06:54:09 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/prime-generator/</guid>
+      <guid>https://bwangel.me/docs/golang/prime-generator/</guid>
       <description>
         
         
@@ -8535,10 +8535,10 @@ $$&lt;/p&gt;
     
     <item>
       <title>Docs: 变态跳台阶问题的解题思路</title>
-      <link>https://bwangel.me/647/docs/algo/jump-stairs/</link>
+      <link>https://bwangel.me/docs/algo/jump-stairs/</link>
       <pubDate>Sun, 08 Jul 2018 14:46:42 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/jump-stairs/</guid>
+      <guid>https://bwangel.me/docs/algo/jump-stairs/</guid>
       <description>
         
         

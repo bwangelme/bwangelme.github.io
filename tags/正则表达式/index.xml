@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – 正则表达式</title>
-    <link>https://bwangel.me/647/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+    <link>https://bwangel.me/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
     <description>Recent content in 正则表达式 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 15 Dec 2021 19:16:45 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 匹配所有可打印 Ascii 字符的正则</title>
-      <link>https://bwangel.me/647/docs/python/re-ascii-print/</link>
+      <link>https://bwangel.me/docs/python/re-ascii-print/</link>
       <pubDate>Wed, 15 Dec 2021 19:16:45 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/re-ascii-print/</guid>
+      <guid>https://bwangel.me/docs/python/re-ascii-print/</guid>
       <description>
         
         

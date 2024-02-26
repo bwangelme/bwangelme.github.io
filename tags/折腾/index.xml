@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – 折腾</title>
-    <link>https://bwangel.me/647/tags/%E6%8A%98%E8%85%BE/</link>
+    <link>https://bwangel.me/tags/%E6%8A%98%E8%85%BE/</link>
     <description>Recent content in 折腾 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Mon, 27 Mar 2017 16:41:36 +0000</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/%E6%8A%98%E8%85%BE/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/%E6%8A%98%E8%85%BE/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 【流水账】利用闲置笔记本搭建自己的开发服务器</title>
-      <link>https://bwangel.me/647/docs/linux/laptop-server/</link>
+      <link>https://bwangel.me/docs/linux/laptop-server/</link>
       <pubDate>Mon, 27 Mar 2017 16:41:36 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/laptop-server/</guid>
+      <guid>https://bwangel.me/docs/linux/laptop-server/</guid>
       <description>
         
         
@@ -100,10 +100,10 @@
     
     <item>
       <title>Docs: 【非技术】 Arch 下的无线自动断开</title>
-      <link>https://bwangel.me/647/docs/linux/arch-wireless-adapter/</link>
+      <link>https://bwangel.me/docs/linux/arch-wireless-adapter/</link>
       <pubDate>Sun, 18 Dec 2016 14:13:44 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/arch-wireless-adapter/</guid>
+      <guid>https://bwangel.me/docs/linux/arch-wireless-adapter/</guid>
       <description>
         
         

@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Template</title>
-    <link>https://bwangel.me/647/tags/template/</link>
+    <link>https://bwangel.me/tags/template/</link>
     <description>Recent content in Template on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Thu, 18 Oct 2018 23:24:24 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/template/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/template/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Go 模板</title>
-      <link>https://bwangel.me/647/docs/golang/go-template/</link>
+      <link>https://bwangel.me/docs/golang/go-template/</link>
       <pubDate>Thu, 18 Oct 2018 23:24:24 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-template/</guid>
+      <guid>https://bwangel.me/docs/golang/go-template/</guid>
       <description>
         
         

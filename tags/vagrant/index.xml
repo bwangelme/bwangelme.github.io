@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – vagrant</title>
-    <link>https://bwangel.me/647/tags/vagrant/</link>
+    <link>https://bwangel.me/tags/vagrant/</link>
     <description>Recent content in vagrant on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Thu, 02 Dec 2021 21:10:27 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/vagrant/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/vagrant/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Vagrant 添加挂载目录</title>
-      <link>https://bwangel.me/647/docs/tools/vagrant_add_volume/</link>
+      <link>https://bwangel.me/docs/tools/vagrant_add_volume/</link>
       <pubDate>Thu, 02 Dec 2021 21:10:27 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tools/vagrant_add_volume/</guid>
+      <guid>https://bwangel.me/docs/tools/vagrant_add_volume/</guid>
       <description>
         
         

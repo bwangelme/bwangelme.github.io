@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – dlv</title>
-    <link>https://bwangel.me/647/tags/dlv/</link>
+    <link>https://bwangel.me/tags/dlv/</link>
     <description>Recent content in dlv on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 12 Jan 2022 17:56:10 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/dlv/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/dlv/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Go gcflags/ldflags 的说明</title>
-      <link>https://bwangel.me/647/docs/golang/go_gcflags/</link>
+      <link>https://bwangel.me/docs/golang/go_gcflags/</link>
       <pubDate>Wed, 12 Jan 2022 17:56:10 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go_gcflags/</guid>
+      <guid>https://bwangel.me/docs/golang/go_gcflags/</guid>
       <description>
         
         

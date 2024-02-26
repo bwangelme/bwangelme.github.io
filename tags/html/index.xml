@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – HTML</title>
-    <link>https://bwangel.me/647/tags/html/</link>
+    <link>https://bwangel.me/tags/html/</link>
     <description>Recent content in HTML on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sat, 06 May 2017 02:34:14 +0000</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/html/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/html/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 简单聊聊HTML 5中的Web Storage</title>
-      <link>https://bwangel.me/647/docs/nodejs/web-storage-api/</link>
+      <link>https://bwangel.me/docs/nodejs/web-storage-api/</link>
       <pubDate>Sat, 06 May 2017 02:34:14 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/nodejs/web-storage-api/</guid>
+      <guid>https://bwangel.me/docs/nodejs/web-storage-api/</guid>
       <description>
         
         

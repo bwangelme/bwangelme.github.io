@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Envoy</title>
-    <link>https://bwangel.me/647/docs/envoy/</link>
+    <link>https://bwangel.me/docs/envoy/</link>
     <description>Recent content in Envoy on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 13 Dec 2023 13:16:42 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/docs/envoy/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/docs/envoy/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: envoy 线程模型</title>
-      <link>https://bwangel.me/647/docs/envoy/envoy-threading-model/</link>
+      <link>https://bwangel.me/docs/envoy/envoy-threading-model/</link>
       <pubDate>Wed, 13 Dec 2023 13:17:28 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/envoy/envoy-threading-model/</guid>
+      <guid>https://bwangel.me/docs/envoy/envoy-threading-model/</guid>
       <description>
         
         

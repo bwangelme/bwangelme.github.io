@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – HTTP</title>
-    <link>https://bwangel.me/647/docs/http/</link>
+    <link>https://bwangel.me/docs/http/</link>
     <description>Recent content in HTTP on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Mon, 11 Sep 2023 10:28:40 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/docs/http/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/docs/http/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: HTTP 协议中带下划线的 header 说明</title>
-      <link>https://bwangel.me/647/docs/http/nginx-header-underline/</link>
+      <link>https://bwangel.me/docs/http/nginx-header-underline/</link>
       <pubDate>Tue, 09 May 2023 22:40:29 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/nginx-header-underline/</guid>
+      <guid>https://bwangel.me/docs/http/nginx-header-underline/</guid>
       <description>
         
         
@@ -120,10 +120,10 @@ Server: netcat!
     
     <item>
       <title>Docs: Nginx proxy_set_header 默认会覆盖上一层的设置</title>
-      <link>https://bwangel.me/647/docs/http/nginx-proxy-set-header/</link>
+      <link>https://bwangel.me/docs/http/nginx-proxy-set-header/</link>
       <pubDate>Thu, 27 Apr 2023 15:02:39 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/nginx-proxy-set-header/</guid>
+      <guid>https://bwangel.me/docs/http/nginx-proxy-set-header/</guid>
       <description>
         
         
@@ -221,10 +221,10 @@ Server: netcat!
     
     <item>
       <title>Docs: 如何生成自签名 HTTPS 证书</title>
-      <link>https://bwangel.me/647/docs/http/https-generate-cert/</link>
+      <link>https://bwangel.me/docs/http/https-generate-cert/</link>
       <pubDate>Sun, 29 Nov 2020 13:25:07 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/https-generate-cert/</guid>
+      <guid>https://bwangel.me/docs/http/https-generate-cert/</guid>
       <description>
         
         
@@ -371,10 +371,10 @@ Server: netcat!
     
     <item>
       <title>Docs: HTTP 协议中的分块传输编码</title>
-      <link>https://bwangel.me/647/docs/http/http-chunked/</link>
+      <link>https://bwangel.me/docs/http/http-chunked/</link>
       <pubDate>Thu, 01 Nov 2018 23:32:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/http-chunked/</guid>
+      <guid>https://bwangel.me/docs/http/http-chunked/</guid>
       <description>
         
         
@@ -515,10 +515,10 @@ Transfer-Encoding: chunked\r\n
     
     <item>
       <title>Docs: Letsencrypt通过DNS TXT记录来验证域名有效性</title>
-      <link>https://bwangel.me/647/docs/http/letsencrypt-dns-txt/</link>
+      <link>https://bwangel.me/docs/http/letsencrypt-dns-txt/</link>
       <pubDate>Sun, 13 Aug 2017 14:04:06 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/letsencrypt-dns-txt/</guid>
+      <guid>https://bwangel.me/docs/http/letsencrypt-dns-txt/</guid>
       <description>
         
         
@@ -562,10 +562,10 @@ Transfer-Encoding: chunked\r\n
     
     <item>
       <title>Docs: CentOS 下编译安装 Nginx</title>
-      <link>https://bwangel.me/647/docs/http/nginx_install/</link>
+      <link>https://bwangel.me/docs/http/nginx_install/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/nginx_install/</guid>
+      <guid>https://bwangel.me/docs/http/nginx_install/</guid>
       <description>
         
         
@@ -614,10 +614,10 @@ Transfer-Encoding: chunked\r\n
     
     <item>
       <title>Docs: web框架要素</title>
-      <link>https://bwangel.me/647/docs/http/web%E6%A1%86%E6%9E%B6%E8%A6%81%E7%B4%A0/</link>
+      <link>https://bwangel.me/docs/http/web%E6%A1%86%E6%9E%B6%E8%A6%81%E7%B4%A0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/web%E6%A1%86%E6%9E%B6%E8%A6%81%E7%B4%A0/</guid>
+      <guid>https://bwangel.me/docs/http/web%E6%A1%86%E6%9E%B6%E8%A6%81%E7%B4%A0/</guid>
       <description>
         
         

@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – vscode</title>
-    <link>https://bwangel.me/647/tags/vscode/</link>
+    <link>https://bwangel.me/tags/vscode/</link>
     <description>Recent content in vscode on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Mon, 18 Oct 2021 11:27:39 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/vscode/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/vscode/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Caps-lock mapping 成 Esc 在 vscode 中不生效</title>
-      <link>https://bwangel.me/647/docs/editor/vscode-esc-not-work/</link>
+      <link>https://bwangel.me/docs/editor/vscode-esc-not-work/</link>
       <pubDate>Mon, 18 Oct 2021 11:27:39 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/editor/vscode-esc-not-work/</guid>
+      <guid>https://bwangel.me/docs/editor/vscode-esc-not-work/</guid>
       <description>
         
         

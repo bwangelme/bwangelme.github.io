@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – mariadb</title>
-    <link>https://bwangel.me/647/tags/mariadb/</link>
+    <link>https://bwangel.me/tags/mariadb/</link>
     <description>Recent content in mariadb on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 09 Mar 2022 14:26:24 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/mariadb/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/mariadb/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: MySQL 修改 root 密码</title>
-      <link>https://bwangel.me/647/docs/mysql/mysql-password/</link>
+      <link>https://bwangel.me/docs/mysql/mysql-password/</link>
       <pubDate>Wed, 09 Mar 2022 14:26:24 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/mysql/mysql-password/</guid>
+      <guid>https://bwangel.me/docs/mysql/mysql-password/</guid>
       <description>
         
         

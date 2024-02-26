@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – network</title>
-    <link>https://bwangel.me/647/tags/network/</link>
+    <link>https://bwangel.me/tags/network/</link>
     <description>Recent content in network on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Fri, 20 Jan 2023 10:15:48 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/network/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/network/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 从 none 开始，用网桥模式启动容器的网络</title>
-      <link>https://bwangel.me/647/docs/container/docker-none-network/</link>
+      <link>https://bwangel.me/docs/container/docker-none-network/</link>
       <pubDate>Fri, 20 Jan 2023 10:15:48 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/container/docker-none-network/</guid>
+      <guid>https://bwangel.me/docs/container/docker-none-network/</guid>
       <description>
         
         
@@ -255,10 +255,10 @@ root@Macmini:~# ip netns exec $pid ip link set dev B name eth0
     
     <item>
       <title>Docs: 混杂模式</title>
-      <link>https://bwangel.me/647/docs/tcp_ip/promisc/</link>
+      <link>https://bwangel.me/docs/tcp_ip/promisc/</link>
       <pubDate>Fri, 12 Nov 2021 23:36:02 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tcp_ip/promisc/</guid>
+      <guid>https://bwangel.me/docs/tcp_ip/promisc/</guid>
       <description>
         
         
@@ -314,10 +314,10 @@ root@Macmini:~# ip netns exec $pid ip link set dev B name eth0
     
     <item>
       <title>Docs: TCP/IP 读书笔记</title>
-      <link>https://bwangel.me/647/docs/tcp_ip/tcp-ip-notes/</link>
+      <link>https://bwangel.me/docs/tcp_ip/tcp-ip-notes/</link>
       <pubDate>Mon, 28 Aug 2017 23:50:38 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/tcp_ip/tcp-ip-notes/</guid>
+      <guid>https://bwangel.me/docs/tcp_ip/tcp-ip-notes/</guid>
       <description>
         
         

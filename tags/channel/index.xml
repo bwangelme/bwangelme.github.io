@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Channel</title>
-    <link>https://bwangel.me/647/tags/channel/</link>
+    <link>https://bwangel.me/tags/channel/</link>
     <description>Recent content in Channel on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sat, 13 Apr 2019 17:27:36 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/channel/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/channel/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 关于线程同步操作的一道面试题</title>
-      <link>https://bwangel.me/647/docs/golang/go-sync-channel/</link>
+      <link>https://bwangel.me/docs/golang/go-sync-channel/</link>
       <pubDate>Sat, 13 Apr 2019 17:27:36 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-sync-channel/</guid>
+      <guid>https://bwangel.me/docs/golang/go-sync-channel/</guid>
       <description>
         
         
@@ -198,9 +198,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;使用锁的解决方案&#34;&gt;使用锁的解决方案&lt;/h2&gt;
 &lt;p&gt;使用锁并不是这个问题的正确解决思路，&lt;strong&gt;甚至会将人的思维带入歧途&lt;/strong&gt;，所以不推荐大家使用锁解决。&lt;/p&gt;
-&lt;p&gt;这是我之前写的旧文，&lt;a href=&#34;https://bwangel.me/647/2019/03/26/go-lock/&#34;&gt;线程同步操作面试题使用锁的解法&lt;/a&gt;，个人觉得某些地方还有一些参考价值，请大家酌情阅读。&lt;/p&gt;
+&lt;p&gt;这是我之前写的旧文，&lt;a href=&#34;https://bwangel.me/2019/03/26/go-lock/&#34;&gt;线程同步操作面试题使用锁的解法&lt;/a&gt;，个人觉得某些地方还有一些参考价值，请大家酌情阅读。&lt;/p&gt;
 &lt;h2 id=&#34;使用-atomicinteger-的解决方案&#34;&gt;使用 AtomicInteger 的解决方案&lt;/h2&gt;
-&lt;p&gt;使用&lt;code&gt;AtomicInteger&lt;/code&gt;并不是一种好的解决方案(因为这个解法让 CPU 持续空转)，但是通过这个解法我们可以了解到 Go 调度器阻塞的一个陷阱，所以也把这种解法放了上来，感兴趣的朋友可以查看我的另一篇文章 &lt;a href=&#34;https://bwangel.me/647/2019/04/10/go-scheduler-pitfall/&#34;&gt;Go 调度器的一个无法执行陷阱&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;使用&lt;code&gt;AtomicInteger&lt;/code&gt;并不是一种好的解决方案(因为这个解法让 CPU 持续空转)，但是通过这个解法我们可以了解到 Go 调度器阻塞的一个陷阱，所以也把这种解法放了上来，感兴趣的朋友可以查看我的另一篇文章 &lt;a href=&#34;https://bwangel.me/2019/04/10/go-scheduler-pitfall/&#34;&gt;Go 调度器的一个无法执行陷阱&lt;/a&gt;。&lt;/p&gt;
       </description>
     </item>
     

@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Algorithm</title>
-    <link>https://bwangel.me/647/tags/algorithm/</link>
+    <link>https://bwangel.me/tags/algorithm/</link>
     <description>Recent content in Algorithm on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Wed, 29 Aug 2018 23:34:29 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 哈希表学习笔记</title>
-      <link>https://bwangel.me/647/docs/algo/hash/</link>
+      <link>https://bwangel.me/docs/algo/hash/</link>
       <pubDate>Wed, 29 Aug 2018 23:34:29 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/hash/</guid>
+      <guid>https://bwangel.me/docs/algo/hash/</guid>
       <description>
         
         
@@ -127,10 +127,10 @@ $$&lt;/p&gt;
     
     <item>
       <title>Docs: 变态跳台阶问题的解题思路</title>
-      <link>https://bwangel.me/647/docs/algo/jump-stairs/</link>
+      <link>https://bwangel.me/docs/algo/jump-stairs/</link>
       <pubDate>Sun, 08 Jul 2018 14:46:42 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/jump-stairs/</guid>
+      <guid>https://bwangel.me/docs/algo/jump-stairs/</guid>
       <description>
         
         
@@ -172,10 +172,10 @@ $$&lt;/p&gt;
     
     <item>
       <title>Docs: 完全二叉树与满二叉树</title>
-      <link>https://bwangel.me/647/docs/algo/binary-tree/</link>
+      <link>https://bwangel.me/docs/algo/binary-tree/</link>
       <pubDate>Sat, 31 Mar 2018 22:42:53 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/binary-tree/</guid>
+      <guid>https://bwangel.me/docs/algo/binary-tree/</guid>
       <description>
         
         
@@ -215,10 +215,10 @@ $$&lt;/p&gt;
     
     <item>
       <title>Docs: 算法复杂度小记</title>
-      <link>https://bwangel.me/647/docs/algo/algorithm-complexity/</link>
+      <link>https://bwangel.me/docs/algo/algorithm-complexity/</link>
       <pubDate>Fri, 08 Sep 2017 00:24:12 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/algorithm-complexity/</guid>
+      <guid>https://bwangel.me/docs/algo/algorithm-complexity/</guid>
       <description>
         
         

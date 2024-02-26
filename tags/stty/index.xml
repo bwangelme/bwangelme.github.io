@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – stty</title>
-    <link>https://bwangel.me/647/tags/stty/</link>
+    <link>https://bwangel.me/tags/stty/</link>
     <description>Recent content in stty on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Tue, 09 Aug 2022 21:43:40 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/stty/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/stty/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 查看信号的快捷键</title>
-      <link>https://bwangel.me/647/docs/linux/stty/</link>
+      <link>https://bwangel.me/docs/linux/stty/</link>
       <pubDate>Tue, 09 Aug 2022 21:43:40 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/stty/</guid>
+      <guid>https://bwangel.me/docs/linux/stty/</guid>
       <description>
         
         

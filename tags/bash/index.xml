@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – Bash</title>
-    <link>https://bwangel.me/647/tags/bash/</link>
+    <link>https://bwangel.me/tags/bash/</link>
     <description>Recent content in Bash on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sun, 13 Aug 2017 14:10:48 +0000</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/bash/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 说说Bash中的几个重定向</title>
-      <link>https://bwangel.me/647/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</link>
+      <link>https://bwangel.me/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</link>
       <pubDate>Sun, 13 Aug 2017 14:10:48 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</guid>
+      <guid>https://bwangel.me/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</guid>
       <description>
         
         
@@ -59,10 +59,10 @@
     
     <item>
       <title>Docs: More advanced if usage</title>
-      <link>https://bwangel.me/647/docs/linux/more-advanced-if-usage/</link>
+      <link>https://bwangel.me/docs/linux/more-advanced-if-usage/</link>
       <pubDate>Mon, 03 Oct 2016 09:52:51 +0000</pubDate>
       
-      <guid>https://bwangel.me/647/docs/linux/more-advanced-if-usage/</guid>
+      <guid>https://bwangel.me/docs/linux/more-advanced-if-usage/</guid>
       <description>
         
         

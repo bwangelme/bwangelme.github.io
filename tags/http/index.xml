@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – HTTP</title>
-    <link>https://bwangel.me/647/tags/http/</link>
+    <link>https://bwangel.me/tags/http/</link>
     <description>Recent content in HTTP on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Tue, 09 May 2023 22:40:29 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/http/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/http/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: HTTP 协议中带下划线的 header 说明</title>
-      <link>https://bwangel.me/647/docs/http/nginx-header-underline/</link>
+      <link>https://bwangel.me/docs/http/nginx-header-underline/</link>
       <pubDate>Tue, 09 May 2023 22:40:29 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/nginx-header-underline/</guid>
+      <guid>https://bwangel.me/docs/http/nginx-header-underline/</guid>
       <description>
         
         
@@ -120,10 +120,10 @@ Server: netcat!
     
     <item>
       <title>Docs: Review 《Don’t use Go’s default HTTP client (in production)》</title>
-      <link>https://bwangel.me/647/docs/golang/go-http-client/</link>
+      <link>https://bwangel.me/docs/golang/go-http-client/</link>
       <pubDate>Fri, 31 Dec 2021 11:01:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/go-http-client/</guid>
+      <guid>https://bwangel.me/docs/golang/go-http-client/</guid>
       <description>
         
         
@@ -218,10 +218,10 @@ Go 的 net 包也有一个默认的 Transport 和 Dialer 。下面是一个使�
     
     <item>
       <title>Docs: Golang 中的 ServeMux 路由简介</title>
-      <link>https://bwangel.me/647/docs/golang/intro-servemux/</link>
+      <link>https://bwangel.me/docs/golang/intro-servemux/</link>
       <pubDate>Sat, 30 Nov 2019 18:35:05 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/golang/intro-servemux/</guid>
+      <guid>https://bwangel.me/docs/golang/intro-servemux/</guid>
       <description>
         
         
@@ -496,10 +496,10 @@ Go 的 net 包也有一个默认的 Transport 和 Dialer 。下面是一个使�
     
     <item>
       <title>Docs: HTTP 协议中的分块传输编码</title>
-      <link>https://bwangel.me/647/docs/http/http-chunked/</link>
+      <link>https://bwangel.me/docs/http/http-chunked/</link>
       <pubDate>Thu, 01 Nov 2018 23:32:43 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/http/http-chunked/</guid>
+      <guid>https://bwangel.me/docs/http/http-chunked/</guid>
       <description>
         
         

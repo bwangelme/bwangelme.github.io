@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – thrift</title>
-    <link>https://bwangel.me/647/tags/thrift/</link>
+    <link>https://bwangel.me/tags/thrift/</link>
     <description>Recent content in thrift on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Thu, 23 Nov 2023 17:27:03 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/thrift/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/thrift/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: Thrift Python Client 解析负数 field id 失败</title>
-      <link>https://bwangel.me/647/docs/thrift/python-fastbinary-negative-field-id-error/</link>
+      <link>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</link>
       <pubDate>Thu, 23 Nov 2023 17:27:03 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/python-fastbinary-negative-field-id-error/</guid>
+      <guid>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</guid>
       <description>
         
         
@@ -224,10 +224,10 @@ TypeError: unsupported operand type(s) for +: &amp;#39;NoneType&amp;#39; and &am
     
     <item>
       <title>Docs: Python2 使用 Thrift 为什么会出现 EINTR 错误</title>
-      <link>https://bwangel.me/647/docs/python/thrift-eintr/</link>
+      <link>https://bwangel.me/docs/python/thrift-eintr/</link>
       <pubDate>Fri, 27 Oct 2023 09:22:30 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/python/thrift-eintr/</guid>
+      <guid>https://bwangel.me/docs/python/thrift-eintr/</guid>
       <description>
         
         
@@ -494,10 +494,10 @@ get 2745109 bytes in 16.005424737930298
     
     <item>
       <title>Docs: Thrift golang client 如何设置超时时间</title>
-      <link>https://bwangel.me/647/docs/thrift/golang-client-timeout/</link>
+      <link>https://bwangel.me/docs/thrift/golang-client-timeout/</link>
       <pubDate>Tue, 05 Sep 2023 21:41:25 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/golang-client-timeout/</guid>
+      <guid>https://bwangel.me/docs/thrift/golang-client-timeout/</guid>
       <description>
         
         
@@ -654,10 +654,10 @@ get 2745109 bytes in 16.005424737930298
     
     <item>
       <title>Docs: Thrift 协议学习笔记</title>
-      <link>https://bwangel.me/647/docs/thrift/thrift-protocol/</link>
+      <link>https://bwangel.me/docs/thrift/thrift-protocol/</link>
       <pubDate>Wed, 11 Jan 2023 11:03:19 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/thrift-protocol/</guid>
+      <guid>https://bwangel.me/docs/thrift/thrift-protocol/</guid>
       <description>
         
         
@@ -933,7 +933,7 @@ Field Header := field id + field value
 &lt;ul&gt;
 &lt;li&gt;i16 首先被转换成 i32 之后，再进行 zigzag + var int 编码, i8 数字不会进行编码，直接进行传输。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;关于 zigzag 以及变长整数编码，可以参考我的另一篇文章: &lt;a href=&#34;https://bwangel.me/647/2022/03/01/variant_zigzag/&#34;&gt;ZigZag 变长整数编码&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;关于 zigzag 以及变长整数编码，可以参考我的另一篇文章: &lt;a href=&#34;https://bwangel.me/2022/03/01/variant_zigzag/&#34;&gt;ZigZag 变长整数编码&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;message-如何编码&#34;&gt;Message 如何编码&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-01-11-125326.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Compact 协议中，Message 的编码格式如上图&lt;/p&gt;
@@ -997,10 +997,10 @@ Field Header := field id + field value
     
     <item>
       <title>Docs: Thrft</title>
-      <link>https://bwangel.me/647/docs/thrift/thrift-concept/</link>
+      <link>https://bwangel.me/docs/thrift/thrift-concept/</link>
       <pubDate>Tue, 15 Nov 2022 12:40:19 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/thrift-concept/</guid>
+      <guid>https://bwangel.me/docs/thrift/thrift-concept/</guid>
       <description>
         
         
@@ -1029,10 +1029,10 @@ Field Header := field id + field value
     
     <item>
       <title>Docs: 翻译《Chapter 1. Introduction to Apache Thrift》</title>
-      <link>https://bwangel.me/647/docs/thrift/introduction-to-apache-thrift/</link>
+      <link>https://bwangel.me/docs/thrift/introduction-to-apache-thrift/</link>
       <pubDate>Fri, 17 Dec 2021 14:38:59 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/thrift/introduction-to-apache-thrift/</guid>
+      <guid>https://bwangel.me/docs/thrift/introduction-to-apache-thrift/</guid>
       <description>
         
         

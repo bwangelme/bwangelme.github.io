@@ -1,13 +1,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>647 Universe – 哨兵</title>
-    <link>https://bwangel.me/647/tags/%E5%93%A8%E5%85%B5/</link>
+    <link>https://bwangel.me/tags/%E5%93%A8%E5%85%B5/</link>
     <description>Recent content in 哨兵 on 647 Universe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
     <lastBuildDate>Sun, 11 Sep 2022 10:52:23 +0800</lastBuildDate>
     
-	  <atom:link href="https://bwangel.me/647/tags/%E5%93%A8%E5%85%B5/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://bwangel.me/tags/%E5%93%A8%E5%85%B5/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -17,10 +17,10 @@
     
     <item>
       <title>Docs: 算法中使用哨兵变量(TODO)</title>
-      <link>https://bwangel.me/647/docs/algo/algo-sentry/</link>
+      <link>https://bwangel.me/docs/algo/algo-sentry/</link>
       <pubDate>Sun, 11 Sep 2022 10:52:23 +0800</pubDate>
       
-      <guid>https://bwangel.me/647/docs/algo/algo-sentry/</guid>
+      <guid>https://bwangel.me/docs/algo/algo-sentry/</guid>
       <description>
         
         
