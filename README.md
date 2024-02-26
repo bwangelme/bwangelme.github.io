@@ -1,7 +1,7 @@
 647号宇宙
 ===
 
-[阅读地址](https://bwangel.me/647/)
+[阅读地址](https://bwangel.me/)
 
 ## 安装依赖
 

@@ -2,7 +2,7 @@
 
 if [[ ! -d ".deploy_git" ]]; then
     echo "please clone blog to .deploy_git"
-    echo "git clone -b gh-page git@github.com:bwangelme/647.git .deploy_git"
+    echo "git clone -b gh-page git@github.com:bwangelme/bwangelme.github.io.git .deploy_git"
     exit 0
 fi
 

@@ -4,14 +4,11 @@ title: 647号宇宙
 
 {{< blocks/cover title="Welcome to 647" image_anchor="top" height="full" >}}
 
-<a class="btn btn-lg btn-primary me-3 mb-4" href="/647/tags/blog/">
+<a class="btn btn-lg btn-primary me-3 mb-4" href="/tags/blog/">
   Blog <i class="fas fa-arrow-alt-circle-right ms-2"></i>
 </a>
-<a class="btn btn-lg btn-primary me-3 mb-4" href="/647/docs/">
+<a class="btn btn-lg btn-primary me-3 mb-4" href="/docs/">
   Docs <i class="fas fa-arrow-alt-circle-right ms-2"></i>
-</a>
-<a class="btn btn-lg btn-primary me-3 mb-4" target="_blank" href="https://www.bwangel.me/">
-  Old Blog <i class="fas fa-arrow-alt-circle-right ms-2"></i>
 </a>
 
 <p class="lead mt-5">
