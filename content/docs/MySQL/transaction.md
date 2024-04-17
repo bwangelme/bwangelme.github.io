@@ -9,7 +9,8 @@ author: "bwangel"
 ## 查询持续时间超过 60s 的事务
 
 ```sql
-select * from information_schema.innodb_trx where TIME_TO_SEC(timediff(now(),trx_started))>60;
+select * from information_schema.innodb_trx
+ where TIME_TO_SEC(timediff(now(),trx_started))>60;
 
 -- innodb_trx 存储了数据库的所有事务
 -- trx_started 表示事务的开始时间
