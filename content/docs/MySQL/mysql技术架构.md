@@ -16,6 +16,14 @@ __摘要__:
 
 ![](https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-11-28-231324.png)
 
+web 请求经过 tomcat 执行 sql 查询的经过
+
+![](https://passage-1253400711.cos.ap-beijing.myqcloud.com/20240418085143.png)
+
+mysql 事务执行过程
+
+![](https://passage-1253400711.cos.ap-beijing.myqcloud.com/20240418085412.png)
+
 ## MySQL锁机制
 
 元数据锁
