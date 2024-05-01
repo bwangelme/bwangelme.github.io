@@ -54,22 +54,34 @@ Could you do it without any loop/recursion in O(1) runtime?
 
 接下来我们证明一下这个性质，
 
-假设有一个`n`位的10进制自然数`N`，我们可以写成 $ N = \sum_{i=0}^{n} a_i * 10^i $
+假设有一个`n`位的10进制自然数`N`，我们可以写成
+
+```math
+N = \sum_{i=0}^{n} a_i * 10^i
+```
 
 因为 
 
-+ $ 10^n \equiv 1^n \equiv 1 \pmod 9 $，即 $10^n$ ， $1^n$ 和 1 模9，得到的余数都是1。
-+ 模运算的乘法运算规则 $ (a * b) \% p \equiv (a \% p * b \% p) \% p $
++ \\( 10^n \equiv 1^n \equiv 1 \pmod 9 \\)，即 \\(10^n\\) ， \\(1^n\\) 和 1 模9，得到的余数都是1。
++ 模运算的乘法运算规则 
 
-所以 $ N \equiv \sum_{i=0}^{n} a_i \pmod 9 $，
+```math
+(a * b) \% p \equiv (a \% p * b \% p) \% p
+```
 
-$ \sum_{i=0}^{n} a_i $ 即是自然数`N`的各个位数相加，我们将自然数`N`的各个位数相加的操作称为`f`，其相加结果为`f(N)`
+所以
 
-可得 $ N \equiv f(N) \pmod 9$
+```math
+N \equiv \sum_{i=0}^{n} a_i \pmod 9
+```
 
-进一步可得 $ N \equiv f(N) \equiv f(f(N)) \equiv f(f(f(N))) \pmod 9 ... $
+\\( \sum_{i=0}^{n} a_i \\) 即是自然数`N`的各个位数相加，我们将自然数`N`的各个位数相加的操作称为`f`，其相加结果为`f(N)`
 
-`N`的数根是重复各个位数相加的过程得来的，所以可得 $ N \equiv N的数根 \pmod 9 $
+可得 \\( N \equiv f(N) \pmod 9\\)
+
+进一步可得 \\( N \equiv f(N) \equiv f(f(N)) \equiv f(f(f(N))) \pmod 9 ... \\)
+
+`N`的数根是重复各个位数相加的过程得来的，所以可得 \\( N \equiv N的数根 \pmod 9 \\)
 
 ## 代码
 
