@@ -2383,6 +2383,10 @@ mysql.db  # 数据库级别授权
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;mysql-逻辑架构&#34;&gt;MySQL 逻辑架构&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-11-28-231324.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;web 请求经过 tomcat 执行 sql 查询的经过&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/20240418085143.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;mysql 事务执行过程&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/20240418085412.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;mysql锁机制&#34;&gt;MySQL锁机制&lt;/h2&gt;
 &lt;p&gt;元数据锁
 表级锁
