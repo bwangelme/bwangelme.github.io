@@ -1149,17 +1149,20 @@ Could you do it without any loop/recursion in O(1) runtime?&lt;/p&gt;
 &lt;p&gt;自然数&lt;code&gt;N&lt;/code&gt;和它的数根&lt;code&gt;X&lt;/code&gt;，对9取余，他们的余数相同&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;接下来我们证明一下这个性质，&lt;/p&gt;
-&lt;p&gt;假设有一个&lt;code&gt;n&lt;/code&gt;位的10进制自然数&lt;code&gt;N&lt;/code&gt;，我们可以写成 $ N = \sum_{i=0}^{n} a_i * 10^i $&lt;/p&gt;
-&lt;p&gt;因为&lt;/p&gt;
+&lt;p&gt;假设有一个&lt;code&gt;n&lt;/code&gt;位的10进制自然数&lt;code&gt;N&lt;/code&gt;，我们可以写成&lt;/p&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$N = \sum_{i=0}^{n} a_i * 10^i$$&lt;/div&gt;&lt;p&gt;因为&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;$ 10^n \equiv 1^n \equiv 1 \pmod 9 $，即 $10^n$ ， $1^n$ 和 1 模9，得到的余数都是1。&lt;/li&gt;
-&lt;li&gt;模运算的乘法运算规则 $ (a * b) % p \equiv (a % p * b % p) % p $&lt;/li&gt;
+&lt;li&gt;\( 10^n \equiv 1^n \equiv 1 \pmod 9 \)，即 \(10^n\) ， \(1^n\) 和 1 模9，得到的余数都是1。&lt;/li&gt;
+&lt;li&gt;模运算的乘法运算规则&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;所以 $ N \equiv \sum_{i=0}^{n} a_i \pmod 9 $，&lt;/p&gt;
-&lt;p&gt;$ \sum_{i=0}^{n} a_i $ 即是自然数&lt;code&gt;N&lt;/code&gt;的各个位数相加，我们将自然数&lt;code&gt;N&lt;/code&gt;的各个位数相加的操作称为&lt;code&gt;f&lt;/code&gt;，其相加结果为&lt;code&gt;f(N)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;可得 $ N \equiv f(N) \pmod 9$&lt;/p&gt;
-&lt;p&gt;进一步可得 $ N \equiv f(N) \equiv f(f(N)) \equiv f(f(f(N))) \pmod 9 &amp;hellip; $&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;N&lt;/code&gt;的数根是重复各个位数相加的过程得来的，所以可得 $ N \equiv N的数根 \pmod 9 $&lt;/p&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$(a * b) \% p \equiv (a \% p * b \% p) \% p$$&lt;/div&gt;&lt;p&gt;所以&lt;/p&gt;
+
+&lt;div class=&#34;math&#34;&gt;$$N \equiv \sum_{i=0}^{n} a_i \pmod 9$$&lt;/div&gt;&lt;p&gt;\( \sum_{i=0}^{n} a_i \) 即是自然数&lt;code&gt;N&lt;/code&gt;的各个位数相加，我们将自然数&lt;code&gt;N&lt;/code&gt;的各个位数相加的操作称为&lt;code&gt;f&lt;/code&gt;，其相加结果为&lt;code&gt;f(N)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;可得 \( N \equiv f(N) \pmod 9\)&lt;/p&gt;
+&lt;p&gt;进一步可得 \( N \equiv f(N) \equiv f(f(N)) \equiv f(f(f(N))) \pmod 9 &amp;hellip; \)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;N&lt;/code&gt;的数根是重复各个位数相加的过程得来的，所以可得 \( N \equiv N的数根 \pmod 9 \)&lt;/p&gt;
 &lt;h2 id=&#34;代码&#34;&gt;代码&lt;/h2&gt;
 &lt;p&gt;根据&lt;code&gt;自然数和它的数根模9同余&lt;/code&gt;的性质，我们可以推断出，一个数的数根是它模9的余数，或者是9（模9等于0）。&lt;/p&gt;
 &lt;p&gt;最终代码如下:&lt;/p&gt;
