@@ -1,173 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – Test</title>
+    <title>Test on 647 Universe</title>
     <link>https://bwangel.me/tags/test/</link>
     <description>Recent content in Test on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Sun, 24 Mar 2019 19:40:53 +0800</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/tags/test/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Wed, 13 Sep 2023 10:02:01 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/test/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: Go 的测试</title>
+      <title>Go 的测试</title>
       <link>https://bwangel.me/docs/golang/go-test/</link>
       <pubDate>Sun, 24 Mar 2019 19:40:53 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/golang/go-test/</guid>
-      <description>
-        
-        
-        &lt;blockquote&gt;
-&lt;p&gt;主要讲了 Go 相关的测试&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;测试的基本规则和流程&#34;&gt;测试的基本规则和流程&lt;/h2&gt;
-&lt;p&gt;单元测试分为三类：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;功能测试(test)&lt;/li&gt;
-&lt;li&gt;基准测试(benchmark)&lt;/li&gt;
-&lt;li&gt;示例测试(example)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;go-test流程&#34;&gt;&lt;code&gt;go test&lt;/code&gt;流程&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;做准备工作（判断给出的代码包和源码文件是否有效，判断给予的标记是否合法）&lt;/li&gt;
-&lt;li&gt;针对每个被测试的代码包，依次地进行构建、执行包中符合要求的测试函数，清理临时文件，打印测试结果。（为了加快测试速度，go test 会并发地对多个被测代码包进行功能测试，在最后打印结果时，它会依照我们给定的顺序逐个进行）&lt;/li&gt;
-&lt;li&gt;为了不影响性能测试结果，性能测试都是串行地运行的。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;功能测试&#34;&gt;功能测试&lt;/h2&gt;
-&lt;h3 id=&#34;测试缓存&#34;&gt;测试缓存&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;go 会将构建和测试的结果缓存起来，缓存目录可以通过&lt;code&gt;go env GOCACHE&lt;/code&gt;命令看到&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;go clean -cache&lt;/code&gt;命令可以删除所有缓存，&lt;code&gt;go clean -testcache&lt;/code&gt;可以删除所有的测试结果缓存&lt;/li&gt;
-&lt;li&gt;通过设置环境变量&lt;code&gt;GODEBUG=&amp;quot;gocacheverify=1&amp;quot;&lt;/code&gt;将会导致 go 命令绕过任何的缓存数据，而真正地执行操作，并重新生成所有结果，然后再去检查新的结果与现在的缓存数据是否一致&lt;/li&gt;
-&lt;li&gt;我们不需要在意缓存数据的存在，因为它们肯定不会妨碍&lt;code&gt;go test&lt;/code&gt;命令打印正确的测试结果&lt;/li&gt;
-&lt;li&gt;对于失败测试的结果，&lt;code&gt;go test&lt;/code&gt;命令并不会进行缓存&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;测试日志&#34;&gt;测试日志&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;t.Log&lt;/code&gt;和&lt;code&gt;t.Logf&lt;/code&gt;方法用来打印常规的测试日志，只有测试失败时，这类日志才会被打印。如果测试成功了，它们不会被打印。如果想在测试成功时看到这类日志，可以在&lt;code&gt;go test&lt;/code&gt;命令上加上&lt;code&gt;-v&lt;/code&gt;选项。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;测试方法&#34;&gt;测试方法&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;t.Fail&lt;/code&gt;方法会让当前测试失败，但不会立刻终止当前测试。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;t.FailNow&lt;/code&gt;方法会让当前测试失败，且立刻终止当前测试（注意，是终止当前测试，并不是终止整个测试程序，其他测试还会继续正常运行）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;性能测试&#34;&gt;性能测试&lt;/h2&gt;
-&lt;h3 id=&#34;执行性能测试&#34;&gt;执行性能测试&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;go test -bench=. -run=&#39;^$&#39; puzzlers/article20/q3&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-bench=.&lt;/code&gt;表示执行任意名称的性能测试函数&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-run=&#39;^$&#39;&lt;/code&gt;表示执行空名称的功能测试函数，即不执行任何功能测试函数。（不加&lt;code&gt;--run=^$&#39;&lt;/code&gt;的话也会执行此测试包中的功能测试函数）&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-bench=&lt;/code&gt;和&lt;code&gt;-run&lt;/code&gt;都必须使用正则表达式&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;性能测试结果&#34;&gt;性能测试结果&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; go test -v -bench=. -run=&amp;#39;^$&amp;#39; puzzlers/article20/q3                                                               20:02:05 (03-03)
-goos: darwin
-goarch: amd64
-pkg: puzzlers/article20/q3
-BenchmarkGetPrimes-4      300000              5571 ns/op
-PASS
-ok      puzzlers/article20/q3   1.739s
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;重点描述倒数第三行，&lt;code&gt;BenchmarkGetPrimes-4&lt;/code&gt;被称为单个性能测试的名称，它表示执行了性能测试&lt;code&gt;BenchmarkGetPrimes&lt;/code&gt;，并且当时所用的最大 P 的数量为4。
-&lt;ul&gt;
-&lt;li&gt;最大 P 的数量相当于可以同时运行 Goroutine 的逻辑 CPU 的最大个数，这里的逻辑 CPU 也可以被称为 CPU 核心，但它并不等同于计算机中真正的 CPU，只是 Go 语言运行时系统内部的一个概念，代表着它同时运行 Goroutine 的能力。&lt;/li&gt;
-&lt;li&gt;可以在测试时通过&lt;code&gt;-cpu 8&lt;/code&gt;选项来调整最大 P 个数，它可以模拟被测程序在计算能力不同的计算机中的性能表现&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;300000&lt;/code&gt;表示被测试函数的执行次数&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;5571 ns/op&lt;/code&gt;表示执行被测试函数的平均执行时间是 5571 纳秒。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://static001.geekbang.org/resource/image/78/69/78d4c73a9aa9d48b59d3fd304d4b2069.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;性能测试过程&#34;&gt;性能测试过程&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;在测试时间上限不变的情况下，&lt;code&gt;go test&lt;/code&gt;会不断调整&lt;code&gt;b.N&lt;/code&gt;的值，直到找到被测程序的最大执行次数。这样的过程称为 &lt;strong&gt;对性能测试函数的一次探索式执行&lt;/strong&gt; 。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;测试函数的实际执行次数&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2019-03-06-235218.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;性能测试的计时器&#34;&gt;性能测试的计时器&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;b.StopTimer&lt;/code&gt;和&lt;code&gt;b.StartTimer&lt;/code&gt;可以停止和启动计时器，将某些代码的执行过程不计入总的执行时间中&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;b.ResetTimer&lt;/code&gt;用于去除在调用它之前的那些代码的执行时间&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;q3&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;testing&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BenchmarkGetPrimes&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;testing&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;B&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 你可以注释或者还原下面这四行代码中的第一行和第四行，
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 并观察测试结果的不同。
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;StopTimer&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Sleep&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Millisecond&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;500&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 模拟某个耗时但与被测程序关系不大的操作。
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#000&#34;&gt;max&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10000&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;StartTimer&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;N&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;++&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000&#34;&gt;GetPrimes&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;max&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt;&amp;gt;&amp;gt; go &lt;span style=&#34;color:#204a87&#34;&gt;test&lt;/span&gt; -count&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; -bench&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;. -v puzzlers/article21/q3                                                                08:10:39 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;03-07&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;goos: darwin
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;goarch: amd64
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pkg: puzzlers/article21/q3
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BenchmarkGetPrimes-4       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20000&lt;/span&gt;             &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;67431&lt;/span&gt; ns/op
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BenchmarkGetPrimes-4       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20000&lt;/span&gt;             &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;68273&lt;/span&gt; ns/op
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PASS
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ok      puzzlers/article21/q3   8.069s
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt;&amp;gt;&amp;gt; go &lt;span style=&#34;color:#204a87&#34;&gt;test&lt;/span&gt; -count&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; -bench&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;. -v puzzlers/article21/q3                                                                08:11:00 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;03-07&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;goos: darwin
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;goarch: amd64
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pkg: puzzlers/article21/q3
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BenchmarkGetPrimes-4       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10000&lt;/span&gt;            &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;113835&lt;/span&gt; ns/op
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BenchmarkGetPrimes-4       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10000&lt;/span&gt;            &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;115399&lt;/span&gt; ns/op
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PASS
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ok      puzzlers/article21/q3   11.993s
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 注释掉计时器相关的代码后，程序的平均执行时间增加了500毫秒左右&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;思考题&#34;&gt;思考题&lt;/h2&gt;
-&lt;h3 id=&#34;-benchmem标记和-benchtime标记的作用分别是什么&#34;&gt;&lt;code&gt;-benchmem&lt;/code&gt;标记和&lt;code&gt;-benchtime&lt;/code&gt;标记的作用分别是什么？&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;-benchmem&lt;/code&gt; 输出基准测试的内存分配统计信息。
-&lt;code&gt;-benchtime&lt;/code&gt; 用于指定基准测试的探索式测试执行时间上限&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ go &lt;span style=&#34;color:#204a87&#34;&gt;test&lt;/span&gt; -bench&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;. word
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;goos: linux
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;goarch: amd64
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pkg: word
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BenchmarkIsPalindrome-4     &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2000000000&lt;/span&gt;     0.00 ns/op
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PASS
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ok     word    0.002s
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ go &lt;span style=&#34;color:#204a87&#34;&gt;test&lt;/span&gt; -bench&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;. -benchmem -benchtime 10s word
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;goos: linux
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;goarch: amd64
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pkg: word
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BenchmarkIsPalindrome-4     &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10000000000&lt;/span&gt;     0.00 ns/op     &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; B/op     &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; allocs/op
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PASS
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ok     word    0.003s
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;注意输出部分多的那两部分（0 B/op，0 allocs/op）以及执行次数。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;怎样在测试的时候开启测试覆盖度分析如果开启会有什么副作用吗&#34;&gt;怎样在测试的时候开启测试覆盖度分析？如果开启，会有什么副作用吗？&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;使用&lt;code&gt;-coverprofile=xxxx.out&lt;/code&gt;输出覆盖率的out文件，使用&lt;code&gt;go tool cover -html=xxxx.out&lt;/code&gt;命令转换成Html的覆盖率测试报告。&lt;/li&gt;
-&lt;li&gt;覆盖率测试将被测试的代码拷贝一份，在每个语句块中加入bool标识变量，测试结束后统计覆盖率并输出成out文件，因此性能上会有一定的影响。&lt;/li&gt;
-&lt;li&gt;使用&lt;code&gt;-covermode=count&lt;/code&gt;标识参数将插入的标识变量由bool类型转换为计数器，在测试过程中，记录执行次数，用于找出被频繁执行的代码块，方便优化。&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;主要讲了 Go 相关的测试&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

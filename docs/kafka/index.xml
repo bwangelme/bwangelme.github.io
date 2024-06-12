@@ -1,166 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – Kafka</title>
+    <title>Kafka on 647 Universe</title>
     <link>https://bwangel.me/docs/kafka/</link>
     <description>Recent content in Kafka on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 11 Sep 2023 10:43:47 +0800</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/docs/kafka/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Fri, 29 Sep 2023 11:10:24 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/docs/kafka/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: Consumer</title>
+      <title>Consumer</title>
       <link>https://bwangel.me/docs/kafka/consumer/</link>
       <pubDate>Mon, 11 Sep 2023 16:30:55 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/kafka/consumer/</guid>
-      <description>
-        
-        
-        &lt;h2 id=&#34;commit&#34;&gt;Commit&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;当 Consumer 将 &lt;code&gt;enable.auto.commit&lt;/code&gt; 设置为 true 的时候，kafka consumer 会自动提交 offset。
-它在 &lt;code&gt;auto.commit.interval.ms&lt;/code&gt; 选项的控制下，间隔N秒后，自动将当前 consumer 拉取到的消息 offset 提交到 kafka 中。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;当 &lt;code&gt;enable.auto.commit=false&lt;/code&gt; 时，kafka 客户端不会自动提交 offset，需要开发者通过 &lt;code&gt;consumer.commitSync&lt;/code&gt; 或 &lt;code&gt;consumer.commitAsync&lt;/code&gt; 提交 offset。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;不建议每收到一条消息就提交一次 offset，&lt;code&gt;consumer.commitSync&lt;/code&gt; 是有性能损耗的，如果 &lt;code&gt;consumer.commitSync&lt;/code&gt; 调用的频率非常高，consumer 消费消息的速度将会变得很慢。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;consumer.commitAsync&lt;/code&gt; 是异步提交的，它相对 &lt;code&gt;consumer.commitSync&lt;/code&gt; 会有一定的性能提升。&lt;code&gt;consumer.commitAsync&lt;/code&gt; 还有一个回调函数参数，让开发者设定在提交失败时做什么。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;一般在 broker 正常时，提交失败的情况很少发生。开发者不需要做提交失败后重试的逻辑。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;参考链接&#34;&gt;参考链接&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md&#34;&gt;https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.confluent.io/platform/current/clients/consumer.html#id1&#34;&gt;https://docs.confluent.io/platform/current/clients/consumer.html#id1&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;offset&#34;&gt;offset&lt;/h2&gt;
-&lt;p&gt;kafka 的消息以 group 为单位给 Consumer 发送。Consumer Group 在 topic 中的 offset 存储在 broker 的 &lt;code&gt;__consumer_offsets&lt;/code&gt; topic 中。&lt;/p&gt;
-&lt;p&gt;新加入的 consumer group 默认从最新位置读取 message。可以通过修改 Consumer 的&lt;code&gt;auto.offset.reset=smallest&lt;/code&gt; 选项，让 consumer 从头开始读取 message.&lt;/p&gt;
-&lt;p&gt;当 broker 获取 consumer group 的 offset 出错时(offset 不存在或者 offset 超出已有的 message 的范围)，也会根据 &lt;code&gt;auto.offset.reset&lt;/code&gt; 的配置来决定从什么位置开始读取 message。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;auto.offset.reset 说明
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;smallest&lt;/code&gt;, &lt;code&gt;earliest&lt;/code&gt; 自动将 offset 设置成最小的 offset&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;largest&lt;/code&gt;, &lt;code&gt;latest&lt;/code&gt; 自动将 offset 设置成最大的 offset&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;error&lt;/code&gt; 抛出一个错误 (ERR__AUTO_OFFSET_RESET) consumer 可以通过 &lt;code&gt;message-&amp;gt;err&lt;/code&gt; 获取到该错误&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;参考链接-1&#34;&gt;参考链接&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md&#34;&gt;https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
+      <description>Commit 当 Consumer 将 enable.auto.commit 设置为 true 的时候，kafka consumer 会自动提交 offset。 它在 auto.commit.interval.ms 选项的控制下，间隔N秒后，自动将当前 consumer 拉取到的消息 offset 提交到 kafka 中。&#xA;当 enable.auto.commit=false 时，kafka 客户端不会自动提交 offset，需要开发者通过 consumer.commitSync 或 consumer.commitAsync 提交 offset。&#xA;不建议每收到一条消息就提交一次 offset，consumer.commitSync 是有性能损耗的，如果 consumer.commitSync 调用的频率非常高，consumer 消费消息的速度将会变得很慢。&#xA;consumer.commitAsync 是异步提交的，它相对 consumer.commitSync 会有一定的性能提升。consumer.commitAsync 还有一个回调函数参数，让开发者设定在提交失败时做什么。&#xA;一般在 broker 正常时，提交失败的情况很少发生。开发者不需要做提交失败后重试的逻辑。 参考链接 https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md https://docs.confluent.io/platform/current/clients/consumer.html#id1 offset kafka 的消息以 group 为单位给 Consumer 发送。Consumer Group 在 topic 中的 offset 存储在 broker 的 __consumer_offsets topic 中。&#xA;新加入的 consumer group 默认从最新位置读取 message。可以通过修改 Consumer 的auto.</description>
     </item>
-    
     <item>
-      <title>Docs: Broker</title>
+      <title>Broker</title>
       <link>https://bwangel.me/docs/kafka/broker/</link>
       <pubDate>Mon, 11 Sep 2023 16:27:26 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/kafka/broker/</guid>
-      <description>
-        
-        
-        &lt;h2 id=&#34;优雅地关闭-kafka-broker&#34;&gt;优雅地关闭 Kafka Broker&lt;/h2&gt;
-&lt;p&gt;向进程发送 &lt;code&gt;TERM&lt;/code&gt; 信号就可以优雅地关闭 Kafka Broker&lt;/p&gt;
-&lt;p&gt;这是 &lt;code&gt;bin/kafka-server-stop.sh&lt;/code&gt; 的内容，他的思路就是通过 ps 查找 cmd 中包括 &lt;code&gt;kafka.Kafka&lt;/code&gt; 的进程，来寻找进程 ID&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;SIGNAL&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SIGNAL&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;:-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;TERM&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;OSNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;uname -s&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$OSNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;OS/390&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; -z &lt;span style=&#34;color:#000&#34;&gt;$JOBNAME&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;JOBNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;KAFKSTRT&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;PIDS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;ps -A -o pid,jobname,comm &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep -i &lt;span style=&#34;color:#000&#34;&gt;$JOBNAME&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep java &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep -v grep &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; awk &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$OSNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;OS400&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;PIDS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;ps -Af &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;kafka\.Kafka&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep java &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep -v grep &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; awk &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;PIDS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;ps ax &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; kafka\.Kafka &amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep java &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep -v grep &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; awk &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; -z &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$PIDS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;No kafka server to stop&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87&#34;&gt;kill&lt;/span&gt; -s &lt;span style=&#34;color:#000&#34;&gt;$SIGNAL&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$PIDS&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;但是 Linux 内核有限制，ps 输出的一行内容不能超过页大小 &lt;code&gt;PAGE_SIZE&lt;/code&gt; (4096)，所以如果 kafka 进程的 cmd 过长，可能会导致 ps + grep 失败。&lt;/p&gt;
-&lt;p&gt;此时就需要我们手动来找对应的进程，可以通过 &lt;code&gt;ps ax | grep &#39;kafka&#39;&lt;/code&gt; 来寻找对应的进程。&lt;/p&gt;
-&lt;h2 id=&#34;存储&#34;&gt;存储&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;顺序写盘的速度不仅比随机写盘的速度快，而且也比随机写内存的速度快。kafka 在设计时采用了文件追加的方式来写入消息，即只能在日志文件的尾部追加新的消息，并且也不允许修改已经写入的消息，这种方式属于典型的顺序写盘的操作。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;kafka 大量地使用了页缓存来提高读写文件的效率，而并没有怎么使用进程内的缓存。Java 对象的内存开销非常大，是真实数据的几倍，Java 的 GC 会随着堆内数据的增多而变得越来越慢。基于以上考虑，kafka 使用 Linux 为文件 I/O 提供的页缓存，而不是使用 Java 进程内的缓存。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Linux 系统提供了 swap 分区的功能，将非活跃的进程调入 swap 分区，以此把内存空出来让给活跃的进程。对于大量使用系统页缓存的 kafka 而言，应避免这种内存的交换，否则会对它各方面的性能产生较大的影响。&lt;code&gt;vm.swappiness&lt;/code&gt; 参数控制 swap 分区的使用率，数值在 0 - 100，数值越大使用的越多，建议设置成1，不设置成 0 防止系统在内存耗尽时 kill 进程。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
+      <description>优雅地关闭 Kafka Broker 向进程发送 TERM 信号就可以优雅地关闭 Kafka Broker&#xA;这是 bin/kafka-server-stop.sh 的内容，他的思路就是通过 ps 查找 cmd 中包括 kafka.Kafka 的进程，来寻找进程 ID&#xA;SIGNAL=${SIGNAL:-TERM} OSNAME=$(uname -s) if [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS/390&amp;#34; ]]; then if [ -z $JOBNAME ]; then JOBNAME=&amp;#34;KAFKSTRT&amp;#34; fi PIDS=$(ps -A -o pid,jobname,comm | grep -i $JOBNAME | grep java | grep -v grep | awk &amp;#39;{print $1}&amp;#39;) elif [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS400&amp;#34; ]]; then PIDS=$(ps -Af | grep -i &amp;#39;kafka\.Kafka&amp;#39; | grep java | grep -v grep | awk &amp;#39;{print $2}&amp;#39;) else PIDS=$(ps ax | grep &amp;#39; kafka\.</description>
     </item>
-    
     <item>
-      <title>Docs: 从源码安装 confluent-kafka-python</title>
+      <title>从源码安装 confluent-kafka-python</title>
       <link>https://bwangel.me/docs/kafka/confluent_python.md/</link>
       <pubDate>Fri, 11 Mar 2022 14:34:44 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/kafka/confluent_python.md/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;从源码安装-librdkafka&#34;&gt;从源码安装 librdkafka&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 安装 vcpkg&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; git clone https://github.com/microsoft/vcpkg ~/.local/vcpkg
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; ~/.local/vcpkg/bootstrap-vcpkg.sh
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 安装 librdkafka&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt; ~/.local/vcpkg/vcpkg install librdkafka
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;设置 include path 和 link path&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;CPATH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;~/.local/vcpkg/packages/librdkafka_x64-linux/include
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;LIBRARY_PATH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;~/.local/vcpkg/packages/librdkafka_x64-linux/lib
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;GCC uses the following environment variables:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;PATH: For searching the executables and run-time shared libraries (.dll, .so).&lt;/li&gt;
-&lt;li&gt;CPATH: For searching the include-paths for headers. It is searched after paths specified in &lt;code&gt;-I&amp;lt;dir&amp;gt;&lt;/code&gt; options. &lt;code&gt;C_INCLUDE_PATH&lt;/code&gt; and &lt;code&gt;CPLUS_INCLUDE_PATH&lt;/code&gt; can be used to specify C and C++ headers if the particular language was indicated in pre-processing.&lt;/li&gt;
-&lt;li&gt;LIBRARY_PATH: For searching library-paths for link libraries. It is searched after paths specified in &lt;code&gt;-L&amp;lt;dir&amp;gt;&lt;/code&gt; options. 程序编译期查找动态链接库的路径。&lt;/li&gt;
-&lt;li&gt;LD_LIBRARY_PATH: 程序运行期间查找动态链接库的路径。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;安装 librdkafka&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install -e ~/work/Douban/code/confluent-kafka-python/
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html#zz-1.9&#34;&gt;https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html#zz-1.9&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/microsoft/vcpkg&#34;&gt;https://github.com/microsoft/vcpkg&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description></description>
     </item>
-    
   </channel>
 </rss>

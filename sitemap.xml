@@ -35,17 +35,23 @@
     <loc>https://bwangel.me/docs/</loc>
     <lastmod>2023-08-01T12:10:45+08:00</lastmod>
   </url><url>
-    <loc>https://bwangel.me/tags/algo/</loc>
-    <lastmod>2024-05-02T11:39:20+08:00</lastmod>
+    <loc>https://bwangel.me/tags/chatgpt/</loc>
+    <lastmod>2024-06-12T11:05:12+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/docs/tools/chatgpt-prompt/</loc>
+    <lastmod>2024-06-12T11:05:12+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/tags/</loc>
-    <lastmod>2024-05-02T11:39:20+08:00</lastmod>
+    <lastmod>2024-06-12T11:05:12+08:00</lastmod>
+  </url><url>
+    <loc>https://bwangel.me/tags/algo/</loc>
+    <lastmod>2024-05-02T12:11:52+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/tags/%E6%8E%92%E5%BA%8F/</loc>
-    <lastmod>2024-05-02T11:39:20+08:00</lastmod>
+    <lastmod>2024-05-02T12:11:52+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/docs/algo/sort/</loc>
-    <lastmod>2024-05-02T11:39:20+08:00</lastmod>
+    <lastmod>2024-05-02T12:11:52+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/docs/algo/leetcode/138/</loc>
     <lastmod>2024-05-01T23:22:55+08:00</lastmod>
@@ -102,7 +108,7 @@
     <lastmod>2023-12-18T17:50:57+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/tags/blog/</loc>
-    <lastmod>2023-12-13T13:25:27+08:00</lastmod>
+    <lastmod>2024-06-12T11:05:12+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/tags/envoy/</loc>
     <lastmod>2023-12-13T13:25:27+08:00</lastmod>
@@ -264,7 +270,7 @@
     <lastmod>2023-08-09T11:08:08+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/tags/go/</loc>
-    <lastmod>2023-11-06T11:16:52+08:00</lastmod>
+    <lastmod>2024-06-12T11:05:12+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/tags/prometheus/</loc>
     <lastmod>2023-09-11T10:32:17+08:00</lastmod>
@@ -293,10 +299,10 @@
     <loc>https://bwangel.me/docs/container/docker-dns/</loc>
     <lastmod>2023-09-11T10:46:19+08:00</lastmod>
   </url><url>
-    <loc>https://bwangel.me/tags/lsof/</loc>
+    <loc>https://bwangel.me/docs/linux/lsof/</loc>
     <lastmod>2023-12-13T13:25:27+08:00</lastmod>
   </url><url>
-    <loc>https://bwangel.me/docs/linux/lsof/</loc>
+    <loc>https://bwangel.me/tags/lsof/</loc>
     <lastmod>2023-12-13T13:25:27+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/docs/k8s/pod-tips/</loc>
@@ -459,7 +465,7 @@
     <lastmod>2023-10-18T09:36:48+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/tags/%E7%BF%BB%E8%AF%91/</loc>
-    <lastmod>2023-11-06T11:16:52+08:00</lastmod>
+    <lastmod>2024-06-12T11:05:12+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/docs/k8s/ebpf-service-mesh/</loc>
     <lastmod>2023-10-18T09:36:48+08:00</lastmod>
@@ -585,7 +591,7 @@
     <lastmod>2023-09-28T11:11:53+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/tags/arts/</loc>
-    <lastmod>2024-05-01T23:35:45+08:00</lastmod>
+    <lastmod>2024-06-12T11:05:12+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/docs/algo/leetcode/leetcode-343/</loc>
     <lastmod>2023-09-29T11:13:40+08:00</lastmod>
@@ -684,7 +690,7 @@
     <lastmod>2023-10-18T09:36:48+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/docs/golang/golang-trick-export-for-test/</loc>
-    <lastmod>2023-10-18T09:36:48+08:00</lastmod>
+    <lastmod>2024-06-12T11:05:12+08:00</lastmod>
   </url><url>
     <loc>https://bwangel.me/docs/algo/leetcode/leetcode-338/</loc>
     <lastmod>2023-09-29T11:13:40+08:00</lastmod>

@@ -1,216 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – gomod</title>
+    <title>Gomod on 647 Universe</title>
     <link>https://bwangel.me/tags/gomod/</link>
-    <description>Recent content in gomod on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Gomod on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Sat, 11 Dec 2021 21:42:46 +0800</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/tags/gomod/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Wed, 13 Sep 2023 10:02:01 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/gomod/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: Go proxy 的说明</title>
+      <title>Go proxy 的说明</title>
       <link>https://bwangel.me/docs/golang/goproxy/</link>
       <pubDate>Sat, 11 Dec 2021 21:42:46 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/golang/goproxy/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;查看-go-proxy-中包的信息&#34;&gt;查看 Go Proxy 中包的信息&lt;/h2&gt;
-&lt;h3 id=&#34;查看包的版本列表&#34;&gt;查看包的版本列表&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/list
-v3.5.0-beta.4
-v3.5.4
-v3.5.2
-v3.5.0-alpha.0
-v3.5.0-rc.0
-v3.5.3
-v3.5.0
-v3.5.1
-v3.5.0-beta.2
-v3.6.0-alpha.0
-v3.5.0-rc.1
-v3.5.0-beta.3
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;查看包的版本信息&#34;&gt;查看包的版本信息&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/v3.0.0-20201116001935-06e48f04865f.info
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;查看包的依赖&#34;&gt;查看包的依赖&lt;/h3&gt;
-&lt;p&gt;即获取 go.mod 文件&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/v3.0.0-20201116001935-06e48f04865f.mod
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;module go.etcd.io/etcd/client/v3
-
-go 1.15
-
-require (
-        github.com/dustin/go-humanize v1.0.0
-        github.com/google/uuid v1.1.2
-        github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
-        github.com/prometheus/client_golang v1.5.1
-        go.etcd.io/etcd/api/v3 v3.5.0-pre
-        go.etcd.io/etcd/pkg/v3 v3.5.0-pre
-        go.uber.org/zap v1.16.0
-        google.golang.org/grpc v1.29.1
-        sigs.k8s.io/yaml v1.2.0
-)
-
-replace (
-        go.etcd.io/etcd/api/v3 =&amp;gt; ../../api
-        go.etcd.io/etcd/pkg/v3 =&amp;gt; ../../pkg
-)
-
-// Bad imports are sometimes causing attempts to pull that code.
-// This makes the error more explicit.
-replace (
-        go.etcd.io/etcd =&amp;gt; ./FORBIDDEN_DEPENDENCY
-        go.etcd.io/etcd/v3 =&amp;gt; ./FORBIDDEN_DEPENDENCY
-        go.etcd.io/tests/v3 =&amp;gt; ./FORBIDDEN_DEPENDENCY
-)
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;下载包&#34;&gt;下载包&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;curl https://proxy.golang.org/go.etcd.io/etcd/client/v3/@v/v3.0.0-20201116001935-06e48f04865f.zip
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;proxy-测速&#34;&gt;Proxy 测速&lt;/h2&gt;
-&lt;p&gt;2021-12-13 日晚安装包 &lt;code&gt;go-git/go-git-fixtures&lt;/code&gt; 的时候卡着不动，测了一下两个 proxy 的速度&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; curl https://goproxy.io/github.com/go-git/go-git-fixtures/v4/@v/v4.2.1.zip -o /tmp/pkg.zip
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                 Dload  Upload   Total   Spent    Left  Speed
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; 93.4M    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; 2623k    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;     &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;   181k      &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  0:08:48  0:00:14  0:08:34  147k
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; curl https://goproxy.cn/github.com/go-git/go-git-fixtures/v4/@v/v4.2.1.zip -o /tmp/pkg.zip
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                 Dload  Upload   Total   Spent    Left  Speed
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10&lt;/span&gt; 93.4M   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10&lt;/span&gt;  9.7M    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;     &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  3712k      &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  0:00:25  0:00:02  0:00:23 3711k
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;21&lt;/span&gt; 93.4M   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;21&lt;/span&gt; 20.2M    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;     &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  5605k      &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  0:00:17  0:00:03  0:00:14 5603k
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;goproxy.io 的下载速度竟然只有 147k，怪不得安装时会卡住&lt;/p&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://go.dev/ref/mod&#34;&gt;https://go.dev/ref/mod&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description></description>
     </item>
-    
     <item>
-      <title>Docs: Go mod 说明</title>
+      <title>Go mod 说明</title>
       <link>https://bwangel.me/docs/golang/go_mod/</link>
       <pubDate>Thu, 11 Oct 2018 08:44:25 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/golang/go_mod/</guid>
-      <description>
-        
-        
-        &lt;p&gt;关于 Go mod 的介绍&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://roberto.selbach.ca/intro-to-go-modules/&#34;&gt;Introduction to Go Modules&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/bwangelme/testmod&#34;&gt;Github 仓库&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/bwangelme/testmod_demo&#34;&gt;使用这个仓库的Demo&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;版本号的说明&#34;&gt;版本号的说明&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;版本号由三个部分组成: &lt;code&gt;主版本.副版本.修订号&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;修订号的增加表示修复了一些BUG&lt;/li&gt;
-&lt;li&gt;副版本号的增加表示修改了一些内部实现的逻辑，但是对外提供的接口没有改变&lt;/li&gt;
-&lt;li&gt;主版本号的增加表示修改了对外提供的接口，主版本之间是可以不兼容的&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;go-module-模式下的核心原则&#34;&gt;Go Module 模式下的核心原则&lt;/h2&gt;
-&lt;p&gt;Go Module 模式是指 &lt;code&gt;GO111MODULE=on&lt;/code&gt; 时:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;一个包的导入路径定义了该包的唯一标识。
-&lt;ul&gt;
-&lt;li&gt;具有不同导入路径的包被视为不同的包。&lt;/li&gt;
-&lt;li&gt;具有相同导入路径的包被视为相同的包（即使 VCS 标签说这些包有不同的主要版本，Go 也认为它们是同一个包）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;没有 &lt;code&gt;/vN&lt;/code&gt; 的导入路径被视为v1或v0模块，即使导入的包没有选择加入模块模式(无 go.mod 文件)，并且 VCS 标签显示主版本号大于1，Go 也认为其主版本号是 V0 或 V1。&lt;/li&gt;
-&lt;li&gt;在一个模块的 go.mod 文件的开头所声明的模块路径（如模块foo/v2）有两层含义。
-&lt;ul&gt;
-&lt;li&gt;对该模块身份的明确声明&lt;/li&gt;
-&lt;li&gt;关于该模块该如何被消费代码导入的正确声明&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;go-mod-版本管理&#34;&gt;Go mod 版本管理&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;注意&lt;/strong&gt;: 使用 go mod 进行管理的仓库必须放置在&lt;code&gt;GOPATH&lt;/code&gt;外&lt;/li&gt;
-&lt;li&gt;Go mod 通过 Git 的标签来标记版本 &lt;code&gt;git tag v1.0.0 &amp;amp;&amp;amp; git push --tags&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;建议为每个主版本新建一个分支(&lt;code&gt;git checkout -b v1&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;go mod init reponame&lt;/code&gt;可以创建一个库&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;go build&lt;/code&gt;命令会自动分析代码中的依赖，并获取相应版本的库&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;go get -u&lt;/code&gt;将会升级依赖的副版本号或者修订号&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;go get -u=patch&lt;/code&gt;将会升级修订号，但是不会升级副版本号&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;go get package@version&lt;/code&gt;表示安装特定版本的的依赖&lt;/li&gt;
-&lt;li&gt;Go会将依赖写在仓库下的&lt;code&gt;go.mod&lt;/code&gt;和&lt;code&gt;go.sum&lt;/code&gt;文件中&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;主版本升级&#34;&gt;主版本升级&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;当仓库的主版本发生变化时，其导入路径也应该随之改变，具体就是将&lt;code&gt;go.mod&lt;/code&gt;中的&lt;code&gt;github.com/user/repo&lt;/code&gt;改成&lt;code&gt;github.com/user/repo/v2&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;在Golang中，一个依赖可以同时存在两个主版本不同的&lt;code&gt;import&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;github.com/user/repo&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;repov2&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;github.com/user/repo/v2&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;故当一个仓库需要升级某个依赖的主版本时，其代码导入路径要随之改变。如果依赖的API变了，那么仓库也要进行相应的更改。&lt;/p&gt;
-&lt;h2 id=&#34;清除依赖&#34;&gt;清除依赖&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;go mod tidy&lt;/code&gt;命令可以移除&lt;code&gt;go.mod&lt;/code&gt;中不再使用的依赖&lt;/p&gt;
-&lt;h2 id=&#34;go-mod-和-vendoring&#34;&gt;Go mod 和 Vendoring&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Go 1.12 支持使用&lt;code&gt;go mod verdor&lt;/code&gt;命令将依赖安装在仓库的&lt;code&gt;vendor&lt;/code&gt;目录下&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;go build&lt;/code&gt;命令会忽略掉&lt;code&gt;vendor&lt;/code&gt;目录，&lt;code&gt;go build -mod vendor&lt;/code&gt;命令会从当前目录的&lt;code&gt;vendor&lt;/code&gt;目录下寻找依赖&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;安装位置&#34;&gt;安装位置&lt;/h2&gt;
-&lt;p&gt;Go 将依赖安装在&lt;code&gt;GOPATH/pkg/mod&lt;/code&gt;中，并且依赖的每个版本会分开安装&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt;&amp;gt;&amp;gt; tree &lt;span style=&#34;color:#000&#34;&gt;$GOPATH&lt;/span&gt;/pkg/mod/github.com/bwangelme/
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/Users/michaeltsui/go/pkg/mod/github.com/bwangelme/
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├── testmod
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│   └── v2@v2.0.0
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│       ├── README.md
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│       ├── go.mod
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│       └── testmod.go
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├── testmod@v1.0.0
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│   ├── README.md
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│   ├── go.mod
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│   └── testmod.go
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└── testmod@v1.0.1
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ├── README.md
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ├── go.mod
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    └── testmod.go
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;查看依赖&#34;&gt;查看依赖&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;查看当前仓库依赖的所有 module&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;go list -m -json all
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;查看 github.com 域名下所有的 module&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;go list -m -json &amp;#39;github.com/...&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;-m&lt;/code&gt; 选项让 go list 列出所有的 module 而不是包。在这种模式下，&lt;code&gt;go list&lt;/code&gt; 的参数可以是模块或模块模式(包含 &lt;code&gt;...&lt;/code&gt; 通配符)，&lt;a href=&#34;https://go.dev/ref/mod#version-queries&#34;&gt;Version Query&lt;/a&gt;，或者特殊模式 &lt;code&gt;all&lt;/code&gt;(匹配&lt;a href=&#34;https://go.dev/ref/mod#glos-build-list&#34;&gt;构建列表&lt;/a&gt;中的所有模块)。如果没有指定参数，&lt;a href=&#34;https://go.dev/ref/mod#glos-main-module&#34;&gt;主模块&lt;/a&gt;将被列出。&lt;/p&gt;
-&lt;h2 id=&#34;关于-incompatible-版本标签的说明&#34;&gt;关于 incompatible 版本标签的说明&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;被导入的包没有选择加入 module 模式，无 go.mod 文件&lt;/li&gt;
-&lt;li&gt;被导入的包有语义化版本号 VCS 标签，且该标签表示的版本主版本号大于1&lt;/li&gt;
-&lt;li&gt;Go Module 核心原则第2点生效，导入路径中没有 &lt;code&gt;/vN&lt;/code&gt;，它将被视为 v1 或 v0 模块，VCS 标签不生效&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;当 Go 处于 Module 模式时，它将假设一个非 module 模式的 V2+ 版本的包不理解 &lt;code&gt;语义化导入版本控制(Semantic Import Versioning)&lt;/code&gt;，从而将其视为该包 V1 版本系列的不兼容扩展。&lt;code&gt;incompatible&lt;/code&gt; 后缀即表示该包是一个不兼容 V1 旧版本的 V1 扩展版本。&lt;/p&gt;
-&lt;h2 id=&#34;版本选择&#34;&gt;版本选择&lt;/h2&gt;
-&lt;p&gt;如果你在你的代码中添加了一个新的导入，而这个导入还没有被 go.mod 中的 require 指令所覆盖。
-大多数go命令如 &lt;code&gt;go build&lt;/code&gt; 和 &lt;code&gt;go test&lt;/code&gt; 会自动查找合适的模块，并将这个新的直接依赖的最高版本作为 require 指令添加到你的模块的 go.mod 中。&lt;/p&gt;
-&lt;p&gt;例如，如果你的新导入对应的依赖 M 包的最新标签发布版本是v1.2.3，你的模块的 go.mod 中将添加指令 &lt;code&gt;require M v1.2.3&lt;/code&gt;，这表明模块 M 是一个允许版本 &lt;code&gt;&amp;gt;= v1.2.3&lt;/code&gt; 的依赖关系，并且 &lt;code&gt;&amp;lt; v2&lt;/code&gt;，因为v2被认为与v1不兼容。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;最小版本选择算法 (Minimal Version Selection Algorithm)&lt;/code&gt; 被用来选择在构建中使用的所有模块的版本。对于构建中的每个模块，通过最小版本选择算法所选择的版本总是语义上最高的版本，该版本由主模块或其依赖关系中的 require 指令明确列出。&lt;/p&gt;
-&lt;p&gt;例如，主模块依赖模块A，而模块A有一个 require D v1.0.0，主模块也依赖模块B，而模块B有一个 require D v1.1.1，那么最小版本选择算法会选择 D 的 v1.1.1 版本用来包含在构建中（因为它是列出的最高 require 版本）。
-即使后来 D 的 v1.2.0 版本发布了，在构建中仍然会选择 v1.1.1。这是一个模块系统如何提供 100% 可重复构建的例子。
-当准备就绪时，模块作者或用户可以选择升级到D的最新可用版本或为D选择一个明确的版本。&lt;/p&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://go.dev/ref/mod&#34;&gt;https://go.dev/ref/mod&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/golang/go/wiki/Modules&#34;&gt;https://github.com/golang/go/wiki/Modules&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description>&lt;p&gt;关于 Go mod 的介绍&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

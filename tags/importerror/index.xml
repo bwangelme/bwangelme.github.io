@@ -1,118 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – ImportError</title>
+    <title>ImportError on 647 Universe</title>
     <link>https://bwangel.me/tags/importerror/</link>
     <description>Recent content in ImportError on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 05 Dec 2017 22:33:57 +0800</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/tags/importerror/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Wed, 18 Oct 2023 09:36:48 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/importerror/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: Python Upgrade Importerror</title>
+      <title>Python Upgrade Importerror</title>
       <link>https://bwangel.me/docs/python/python-upgrade-importerror/</link>
       <pubDate>Tue, 05 Dec 2017 22:33:57 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/python/python-upgrade-importerror/</guid>
-      <description>
-        
-        
-        &lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;记一次因 Python 升级导致的 ImportError&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;我们有一个 Django 应用通过 uwsgi 跑在阿里云的 ECS 上，所用的系统是 Ubuntu 16.04，uwsgi 是通过 supervisord 来管理的，每个应用都在单独的 virtualenv 中运行，这就是大概的软件运行环境。&lt;/p&gt;
-&lt;p&gt;因为一些软件没有升级，阿里云一直提示存在安全漏洞，所以我就想把 ECS 上的系统升级一下。升级的过程并没有什么什么问题，毕竟用的阿里云自己维护的源，基本上不会出现什么版本依赖之类的问题。&lt;/p&gt;
-&lt;h1 id=&#34;出错场景&#34;&gt;出错场景&lt;/h1&gt;
-&lt;p&gt;升级完成后重新启动 Django 应用，发现应用启动不起来，uwsgi 报错&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;from _ssl import HAS_SNI, HAS_ECDH, HAS_NPN, HAS_ALPN, HAS_TLSv1_3
-ImportError: cannot import name &amp;#39;HAS_TLSv1_3&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;原因分析&#34;&gt;原因分析&lt;/h1&gt;
-&lt;h2 id=&#34;从异常入手查找原因&#34;&gt;从异常入手查找原因&lt;/h2&gt;
-&lt;p&gt;抛出的异常意思是在&lt;code&gt;_ssl&lt;/code&gt;模块中没有&lt;code&gt;HAS_TLSv1_3&lt;/code&gt;的属性，于是我就去Python 文档中查询了一下这个属性，它的解释是这样的：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssl.HAS_TLSv1_3
-Whether the OpenSSL library has built-in support for the TLS 1.3 protocol.
-
-New in version 3.6.3.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看到&lt;code&gt;New in version 3.6.3.&lt;/code&gt;的字样，再去查系统的升级记录，我发现刚刚执行的升级中就把宿主机的 Python 从3.6.2升级到了3.6.3，此时我隐隐约约觉得就是因为此次升级导致了 uwsgi 启动时的报错。&lt;/p&gt;
-&lt;p&gt;但我升级的是宿主机的 Python，它又是如何影响到了 Virtualenv 中的 Python 呢？各位别急，我们接着往下挖。&lt;/p&gt;
-&lt;h2 id=&#34;has_tlsv1_3的定义&#34;&gt;&lt;code&gt;HAS_TLSv1_3&lt;/code&gt;的定义&lt;/h2&gt;
-&lt;p&gt;我们接着再去看抛出异常的那行代码，它在 Python 的标准库的&lt;code&gt;ssl.py&lt;/code&gt;的&lt;a href=&#34;https://github.com/python/cpython/blob/v3.6.3/Lib/ssl.py#L118&#34;&gt;118行&lt;/a&gt;，具体内容如下：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;from _ssl import HAS_SNI, HAS_ECDH, HAS_NPN, HAS_ALPN, HAS_TLSv1_3
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们可以看到，抛出异常就是因为Python解释器从&lt;code&gt;_ssl&lt;/code&gt;模块中导入&lt;code&gt;HAS_TLSv1_3&lt;/code&gt;时，出现了导入异常。&lt;/p&gt;
-&lt;p&gt;而&lt;code&gt;_ssl&lt;/code&gt;模块是用C语言编写的，它被编译进入了Python解释器中，它的代码位于 Python 源码的 &lt;a href=&#34;https://github.com/python/cpython/blob/v3.6.3/Lib/ssl.py&#34;&gt;Modules/_ssl.c&lt;/a&gt; 文件中。&lt;/p&gt;
-&lt;p&gt;在它的&lt;a href=&#34;https://github.com/python/cpython/blob/v3.6.3/Modules/_ssl.c#L5154-L5206&#34;&gt;5154-5206&lt;/a&gt;行，我们可以看到它对于&lt;code&gt;_ssl&lt;/code&gt;模块的定义：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;PyModuleDef&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;_sslmodule&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;PyModuleDef_HEAD_INIT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;_ssl&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;module_doc&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;PySSL_methods&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87&#34;&gt;NULL&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87&#34;&gt;NULL&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87&#34;&gt;NULL&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87&#34;&gt;NULL&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;};&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;...&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;PyMODINIT_FUNC&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;PyInit__ssl&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;PyObject&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;m&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;d&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;...&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// _ssl 模块在这里定义，指针m代表了_ssl模块
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000&#34;&gt;m&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;PyModule_Create&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;_sslmodule&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;m&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;NULL&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;NULL&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;...&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;而在它的&lt;a href=&#34;https://github.com/python/cpython/blob/v3.6.3/Modules/_ssl.c#L5462-L5468&#34;&gt;5642-5468&lt;/a&gt;行，我们可以看到&lt;code&gt;_ssl&lt;/code&gt;模块中对于&lt;code&gt;HAS_TLSv1_3&lt;/code&gt;属性的定义：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#if defined(TLS1_3_VERSION) &amp;amp;&amp;amp; !defined(OPENSSL_NO_TLS1_3)
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000&#34;&gt;r&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Py_True&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#else
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000&#34;&gt;r&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Py_False&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#endif
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000&#34;&gt;Py_INCREF&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 下面这条语句向_ssl模块中添加了布尔值 HAS_TLSv1_3
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000&#34;&gt;PyModule_AddObject&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;m&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;HAS_TLSv1_3&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上述的代码主要就是判断当前系统是否支持 TLS 1.3版本，并向&lt;code&gt;_ssl&lt;/code&gt;模块添加了一个布尔值&lt;code&gt;HAS_TLSv1_3&lt;/code&gt;来表明当前系统是否支持 TLS 1.3版本。&lt;/p&gt;
-&lt;h2 id=&#34;错误复现&#34;&gt;错误复现&lt;/h2&gt;
-&lt;p&gt;从上面的分析中我们可以看出，我们可以知道三件事情，&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;HAS_TLSv1_3&lt;/code&gt;这个布尔值是被编译进 Python 解释器中的，&lt;/li&gt;
-&lt;li&gt;根据 &lt;a href=&#34;https://docs.python.org/3/library/ssl.html#ssl.HAS_TLSv1_3&#34;&gt;Python 文档&lt;/a&gt; 的说明，&lt;code&gt;HAS_TLSv1_3&lt;/code&gt;是在 Python 3.6.3中新添加的。&lt;/li&gt;
-&lt;li&gt;我们将宿主机的 Python 从3.6.2升级到了3.6.3，但是我们的 Virtualenv 仍然使用着 3.6.2 版本的 Python 解释器。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;知道了以上三点，我们就可以复现出我们的错误场景，梳理出整个出错的流程：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;uwsgi 启动，使用的是 Virtualenv 中的 3.6.2版本的 Python 解释器&lt;/li&gt;
-&lt;li&gt;Python 3.6.2 的解释器在某些第三方库中执行了&lt;code&gt;import ssl&lt;/code&gt;的语句&lt;/li&gt;
-&lt;li&gt;由于 Virtualenv 创建的时候并没有将标准库的&lt;code&gt;ssl.py&lt;/code&gt;文件一并复制过来，所以 Python 3.6.2 的解释器去系统目录下寻找&lt;code&gt;ssl.py&lt;/code&gt;文件并执行&lt;/li&gt;
-&lt;li&gt;Python 3.6.2 的解释器找到了系统目录下的&lt;code&gt;ssl.py&lt;/code&gt;文件，也就是 Python 3.6.3 的系统库文件。&lt;/li&gt;
-&lt;li&gt;Python 3.6.2 的解释器执行了 Python 3.6.3的库文件&lt;code&gt;ssl.py&lt;/code&gt;中的一条导入语句：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;_ssl&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HAS_SNI&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HAS_ECDH&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HAS_NPN&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HAS_ALPN&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HAS_TLSv1_3&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;Python 3.6.2 的解释器从解释器內建的模块&lt;code&gt;_ssl&lt;/code&gt;中导入&lt;code&gt;HAS_TLSv1_3&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;由于 Python 3.6.2 的解释器中并没有定义&lt;code&gt;HAS_TLSv1_3&lt;/code&gt;这个布尔值，程序抛出&lt;code&gt;ImportError&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;上面这个出错流程也可以用下面这张图来概括:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2019-02-18-2017-10-14-080329.jpg&#34; alt=&#34;Import Error&#34;&gt;&lt;/p&gt;
-&lt;h1 id=&#34;错误总结&#34;&gt;错误总结&lt;/h1&gt;
-&lt;p&gt;看到这里，我想 Virtualenv 创建时没有复制系统库文件&lt;code&gt;ssl.py&lt;/code&gt;过来，是不是因为我没有指定它的 &lt;a href=&#34;https://virtualenv.pypa.io/en/stable/reference/#cmdoption-always-copy&#34;&gt;&amp;ndash;always-copy&lt;/a&gt; 属性，我特意指定了这个属性又来创建了一遍 Virtualenv，发现它还是没有复制&lt;code&gt;ssl.py&lt;/code&gt;文件过来。&lt;/p&gt;
-&lt;p&gt;关于这个问题，我请教了公司的一位大佬。大佬说这样设计其实复合 Virtualenv 的定位，它只是做 Python 第三方库的隔离，并不做 Python 版本的隔离。&lt;/p&gt;
-&lt;p&gt;所以如果我们以后需要在同一个系统上安装多个 Python 版本的话，还是需要使用 &lt;a href=&#34;https://github.com/pyenv/pyenv&#34;&gt;pyenv&lt;/a&gt; 这样的工具，而不能指望 Virutalenv 的 &lt;a href=&#34;https://virtualenv.pypa.io/en/stable/reference/#cmdoption-p&#34;&gt;&amp;ndash;python&lt;/a&gt; 选项。&lt;/p&gt;
-      </description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;记一次因 Python 升级导致的 ImportError&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

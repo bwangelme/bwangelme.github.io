@@ -1,72 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – stty</title>
+    <title>Stty on 647 Universe</title>
     <link>https://bwangel.me/tags/stty/</link>
-    <description>Recent content in stty on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Stty on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 09 Aug 2022 21:43:40 +0800</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/tags/stty/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Mon, 11 Sep 2023 10:46:19 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/stty/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: 查看信号的快捷键</title>
+      <title>查看信号的快捷键</title>
       <link>https://bwangel.me/docs/linux/stty/</link>
       <pubDate>Tue, 09 Aug 2022 21:43:40 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/linux/stty/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;stty&lt;/code&gt;命令的作用是 &lt;code&gt;change and print terminal line settings&lt;/code&gt;，查看或修改 Linux 终端的配置。&lt;/p&gt;
-&lt;p&gt;今天遇到的需求是想查一下 &lt;code&gt;Ctrl-C&lt;/code&gt; 按键发送的系统信号 ( &lt;a href=&#34;https://man7.org/linux/man-pages/man7/signal.7.html&#34;&gt;man 7 signal&lt;/a&gt; )，搜了一下发现 stty 是最方便的查询命令&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; stty -a
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;speed &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;38400&lt;/span&gt; baud&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; rows 68&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; columns 128&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;line&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;####################  我们主要关心这两行的内容&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;intr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^C&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;quit&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^&lt;span style=&#34;color:#4e9a06&#34;&gt;\;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;erase&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^?&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;kill&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^U&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;eof&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^D&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;eol&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &amp;lt;undef&amp;gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;eol2&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &amp;lt;undef&amp;gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;swtch&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &amp;lt;undef&amp;gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;start&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^Q&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;stop&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^S&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;susp&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^Z&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;rprnt&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^R&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;werase&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^W&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;lnext&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^V&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;discard&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; ^O&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;min&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;time&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;####################&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-parenb -parodd -cmspar cs8 -hupcl -cstopb cread -clocal -crtscts
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-ignbrk -brkint -ignpar -parmrk -inpck -istrip -inlcr -igncr icrnl -ixon -ixoff -iuclc -ixany -imaxbel -iutf8
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;isig icanon iexten &lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;stty 输出的解释如下:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;^C&lt;/code&gt; (&lt;code&gt;ctrl+c&lt;/code&gt;) 发送 interrupt 信号&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;^\&lt;/code&gt; (&lt;code&gt;ctr+\&lt;/code&gt;) 发送 quit 信号&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;^?&lt;/code&gt; 清除上一个输入的字符&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;^U&lt;/code&gt; 删除当前行&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;^D&lt;/code&gt; 输入 EOF 字符(结束当前输入)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;^S&lt;/code&gt; 暂停输出&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;^Q&lt;/code&gt; 在暂停输出后，重新开始输出&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;^Z&lt;/code&gt; 发送一个 terminal stop 信号&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;^W&lt;/code&gt; 删除最近输入的一个单词&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;while true;do
-    date;
-    sleep 1
-done
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;(我用上面的代码测试 &lt;code&gt;^S&lt;/code&gt; 和 &lt;code&gt;^Q&lt;/code&gt;, 发现不生效)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;stty 其他输入的含义，请参考 &lt;a href=&#34;https://linux.die.net/man/1/stty&#34;&gt;man 1 stty&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://unix.stackexchange.com/a/362579/191858&#34;&gt;List of terminal generated signals (eg Ctrl-C -&amp;gt; SIGINT)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://linux.die.net/man/1/stty&#34;&gt;man 1 stty&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description></description>
     </item>
-    
   </channel>
 </rss>

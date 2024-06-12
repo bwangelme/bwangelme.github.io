@@ -1,325 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – Ubuntu</title>
+    <title>Ubuntu on 647 Universe</title>
     <link>https://bwangel.me/tags/ubuntu/</link>
     <description>Recent content in Ubuntu on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Sun, 08 May 2022 10:42:22 +0800</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Wed, 13 Dec 2023 10:41:59 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: Ubuntu 初始化</title>
+      <title>Ubuntu 初始化</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu-init/</link>
       <pubDate>Sun, 08 May 2022 10:42:22 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu-init/</guid>
-      <description>
-        
-        
-        &lt;h2 id=&#34;安装软件&#34;&gt;安装软件&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g&amp;#39;&lt;/span&gt; /etc/apt/sources.list
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt update
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/cli/cli/blob/trunk/docs/install_linux.md&#34;&gt;github cli&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.vagrantup.com/downloads&#34;&gt;vagrant&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.google.com/chrome/&#34;&gt;google chrome&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb&#34;&gt;chrome download&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/alacritty/alacritty/blob/master/INSTALL.md&#34;&gt;alacritty&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/moovweb/gvm&#34;&gt;gvm&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://rustup.rs/&#34;&gt;rustup&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/DejaVuSansMono.zip&#34;&gt;nerdfont DejaVuSansMono&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://bwangel.me/647/docs/ubuntu/nvim-web-devicons/&#34;&gt;font&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;ubuntu-将-capslock-映射成-esc&#34;&gt;Ubuntu 将 capslock 映射成 esc&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install dconf-cli
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 使 caps 成为 esc 按键&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dconf write /org/gnome/desktop/input-sources/xkb-options &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;[&amp;#39;caps:escape&amp;#39;]&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 交换 caps 和 esc 按键&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dconf write &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/org/gnome/desktop/input-sources/xkb-options&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;[&amp;#39;caps:swapescape&amp;#39;]&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;caps 配置的说明&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Caps Lock behavior
-
-┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│Option                         Description                                                                          │
-├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│caps:internal                  Caps Lock uses internal capitalization; Shift &amp;#34;pauses&amp;#34; Caps Lock                     │
-│caps:internal_nocancel         Caps Lock uses internal capitalization; Shift does not affect Caps Lock              │
-│caps:shift                     Caps Lock acts as Shift with locking; Shift &amp;#34;pauses&amp;#34; Caps Lock                       │
-│caps:shift_nocancel            Caps Lock acts as Shift with locking; Shift does not affect Caps Lock                │
-│caps:capslock                  Caps Lock toggles normal capitalization of alphabetic characters                     │
-│caps:shiftlock                 Caps Lock toggles Shift Lock (affects all keys)                                      │
-│caps:swapescape                Swap Esc and Caps Lock                                                               │
-│caps:escape                    Make Caps Lock an additional Esc                                                     │
-│caps:escape_shifted_capslock   Make Caps Lock an additional Esc, but Shift + Caps Lock is the regular Caps Lock     │
-│caps:backspace                 Make Caps Lock an additional Backspace                                               │
-│caps:super                     Make Caps Lock an additional Super                                                   │
-│caps:hyper                     Make Caps Lock an additional Hyper                                                   │
-│caps:menu                      Make Caps Lock an additional Menu key                                                │
-│caps:numlock                   Make Caps Lock an additional Num Lock                                                │
-│caps:ctrl_modifier             Make Caps Lock an additional Ctrl                                                    │
-│caps:none                      Caps Lock is disabled                                                                │
-│                                                                                                                    │
-└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;参考链接&#34;&gt;参考链接&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://askubuntu.com/a/365701/581894&#34;&gt;How to permanently switch Caps Lock and Esc&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://askubuntu.com/a/1415659/581894&#34;&gt;jammy 22.04: how to map Capslock to ctrl and esc&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;man 7 xkeyboard-config&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
+      <description>安装软件 sed -i &amp;#39;s/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g&amp;#39; /etc/apt/sources.list sudo apt update sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa github cli vagrant google chrome chrome download alacritty gvm rustup nerdfont DejaVuSansMono font Ubuntu 将 capslock 映射成 esc sudo apt-get install dconf-cli # 使 caps 成为 esc 按键 dconf write /org/gnome/desktop/input-sources/xkb-options &amp;#34;[&amp;#39;caps:escape&amp;#39;]&amp;#34; # 交换 caps 和 esc 按键 dconf write &amp;#34;/org/gnome/desktop/input-sources/xkb-options&amp;#34; &amp;#34;[&amp;#39;caps:swapescape&amp;#39;]&amp;#34; caps 配置的说明 Caps Lock behavior ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐ │Option Description │ ├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤ │caps:internal Caps Lock uses internal capitalization; Shift &amp;#34;pauses&amp;#34; Caps Lock │ │caps:internal_nocancel Caps Lock uses internal capitalization; Shift does not affect Caps Lock │ │caps:shift Caps Lock acts as Shift with locking; Shift &amp;#34;pauses&amp;#34; Caps Lock │ │caps:shift_nocancel Caps Lock acts as Shift with locking; Shift does not affect Caps Lock │ │caps:capslock Caps Lock toggles normal capitalization of alphabetic characters │ │caps:shiftlock Caps Lock toggles Shift Lock (affects all keys) │ │caps:swapescape Swap Esc and Caps Lock │ │caps:escape Make Caps Lock an additional Esc │ │caps:escape_shifted_capslock Make Caps Lock an additional Esc, but Shift + Caps Lock is the regular Caps Lock │ │caps:backspace Make Caps Lock an additional Backspace │ │caps:super Make Caps Lock an additional Super │ │caps:hyper Make Caps Lock an additional Hyper │ │caps:menu Make Caps Lock an additional Menu key │ │caps:numlock Make Caps Lock an additional Num Lock │ │caps:ctrl_modifier Make Caps Lock an additional Ctrl │ │caps:none Caps Lock is disabled │ │ │ └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ 参考链接 How to permanently switch Caps Lock and Esc jammy 22.</description>
     </item>
-    
     <item>
-      <title>Docs: Ubuntu 使用默认的 DNS Server 配置</title>
+      <title>Ubuntu 使用默认的 DNS Server 配置</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu-dns/</link>
       <pubDate>Wed, 20 Apr 2022 02:07:00 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu-dns/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
-&lt;p&gt;Ubuntu 使用 &lt;code&gt;/etc/resolv.conf&lt;/code&gt; 中设置的地址为 DNS Server 地址&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 关闭 systemd-resolved 服务&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl disable systemd-resolved
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl stop systemd-resolved
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在 &lt;code&gt;/etc/NetworkManager/NetworkManager.conf&lt;/code&gt; 文件的 &lt;code&gt;[main]&lt;/code&gt; 部分添加配置&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;dns=default
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;删除原来的软链接文件&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo unlink /etc/resolv.conf
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重启 NetworkManager&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart NetworkManager
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://askubuntu.com/a/907249/581894&#34;&gt;https://askubuntu.com/a/907249/581894&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.gabriel.urdhr.fr/2020/03/17/systemd-revolved-dns-configuration-for-vpn/&#34;&gt;https://www.gabriel.urdhr.fr/2020/03/17/systemd-revolved-dns-configuration-for-vpn/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description></description>
     </item>
-    
     <item>
-      <title>Docs: 修复 Ubuntu 中 chrome vimium-c 插件失效的问题</title>
+      <title>修复 Ubuntu 中 chrome vimium-c 插件失效的问题</title>
       <link>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</link>
       <pubDate>Thu, 24 Feb 2022 22:20:23 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</guid>
-      <description>
-        
-        
-        &lt;blockquote&gt;
-&lt;p&gt;记录一次折腾 Ubuntu 的经历&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;p&gt;下午升级了 Ubuntu 的一些软件之后，发现 Chrome 中的 vimium-c 插件失效了，按 k 不会向上滑动，而是像按下 tab 按键一样，选中 url 链接。weasd 等字符也是一样，同时飞书中输入不了 wkeasd 等字符。&lt;/p&gt;
-&lt;h2 id=&#34;排查-vimium-c&#34;&gt;排查 vimium-c&lt;/h2&gt;
-&lt;p&gt;最开始以为是 vimium-c 软件的 bug，于是去 github 中提 Issue。&lt;a href=&#34;https://github.com/gdh1995/vimium-c/issues/558&#34;&gt;#558&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;和作者排查了半天，使用作者提供了 &lt;a href=&#34;https://gdh1995.cn/vimium-c/keyboard-test.html&#34;&gt;keyboard-test&lt;/a&gt; 工具检查按键能否正常工作，最后得出的结论是，&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;使用 firefox, chromium 等浏览器依然会遇到这个问题&lt;/li&gt;
-&lt;li&gt;换一个用户后，这个问题就解决了。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;由此我认定一定是我的系统配置有问题，和浏览器无关。于是开始排查系统配置&lt;/p&gt;
-&lt;h2 id=&#34;排查按键映射&#34;&gt;排查按键映射&lt;/h2&gt;
-&lt;p&gt;一开始以为是 &lt;code&gt;xmodmap&lt;/code&gt; 设置的问题，因为我用 &lt;code&gt;xmodmap&lt;/code&gt; 改过键，将 caps-lock 改成了 Esc。&lt;/p&gt;
-&lt;p&gt;但是查了半天，发现我原来是用 &lt;code&gt;dconf&lt;/code&gt; 改的，并不是用 &lt;code&gt;xmodmap&lt;/code&gt;，我把 &lt;code&gt;dconf&lt;/code&gt; 中的改键配置删除后，vimium-c 仍然不工作。&lt;/p&gt;
-&lt;p&gt;此时我就很无力了，用 &lt;code&gt;ls -al ~/&lt;/code&gt; 和 &lt;code&gt;ls -al ~/.config&lt;/code&gt; 反复看 HOME 目录下的配置文件，反复想可能是哪个配置文件导致的问题。&lt;/p&gt;
-&lt;h2 id=&#34;最终定位问题&#34;&gt;最终定位问题&lt;/h2&gt;
-&lt;p&gt;后来一想，既然这个问题能够复现，燕过留痕，肯定有个进程拦截了这些按键的事件，导致 chrome 出错了。排查进程比排查配置文件范围小了很多，就开始排查进程。&lt;/p&gt;
-&lt;p&gt;于是用 &lt;code&gt;ps aufx&lt;/code&gt; 查看所有进程，一个一个地排查所有的进程。&lt;/p&gt;
-&lt;p&gt;最后发现罪魁祸首是 &lt;code&gt;orca&lt;/code&gt;(Ubuntu 下屏幕阅读功能的进程) 进程，关掉 Ubuntu 阅读屏幕的辅助功能后，chrome 中就能够正常捕获这些按键的事件了。&lt;/p&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/gdh1995/vimium-c/issues/558&#34;&gt;https://github.com/gdh1995/vimium-c/issues/558&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://manpages.ubuntu.com/manpages/bionic/man1/orca.1.html&#34;&gt;https://manpages.ubuntu.com/manpages/bionic/man1/orca.1.html&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;记录一次折腾 Ubuntu 的经历&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
-      <title>Docs: 【流水账】利用闲置笔记本搭建自己的开发服务器</title>
+      <title>【流水账】利用闲置笔记本搭建自己的开发服务器</title>
       <link>https://bwangel.me/docs/linux/laptop-server/</link>
       <pubDate>Mon, 27 Mar 2017 16:41:36 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/linux/laptop-server/</guid>
-      <description>
-        
-        
-        &lt;ol&gt;
-&lt;li&gt;对Ubuntu服务器进行基础配置&lt;/li&gt;
-&lt;li&gt;配置dnsmasq服务器&lt;/li&gt;
-&lt;li&gt;文章没什么技术含量，主要记录一些配置文件的位置&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
-&lt;p&gt;最近新入手了一台MacBook Air，原来的ThinkPad就闲置下来了，感觉一直放着太浪费了，就重装了一个Ubuntu Server 16.04的系统，用来做自己的开发服务器。折腾了几个小时，就都搞定了，特意写下这篇文章，来记录一下自己折腾的过程。&lt;/p&gt;
-&lt;h2 id=&#34;基础配置&#34;&gt;基础配置&lt;/h2&gt;
-&lt;p&gt;服务器安装的过程就不说了，大都是那么几步。有一个奇怪的问题就是安装的时候，需要设置时区，我竟然没有找到东八区，只好先设置了一个太平洋时区，好尴尬，不知道是不是Ubuntu的文本安装界面没有东八区这个选项，还是我英文太差了，没有找到。&lt;/p&gt;
-&lt;h3 id=&#34;设置时间&#34;&gt;设置时间&lt;/h3&gt;
-&lt;p&gt;由于安装时我们设置了错误的时区，所以首先需要调整一下时区。Ubuntu 16.04已经完全集成了Systemd，所以我们只需要通过&lt;code&gt;sudo timedatectl set-timezone Asia/Shanghai&lt;/code&gt;命令，就可以将时区设置为亚洲/上海了，同时我们也可以运行&lt;code&gt;sudo timedatectl set-ntp 1&lt;/code&gt;命令，打开自动从 NTP 服务器同步时间，一会之后服务器时间就正常了。&lt;code&gt;timedatectl&lt;/code&gt;命令还有一个选项是&lt;code&gt;set-local-rtc&lt;/code&gt;，用来将硬件时间设置为本地时间，而不是UTC时间，这个选项我默认是关闭的。&lt;/p&gt;
-&lt;h3 id=&#34;更改软件源为中科大源&#34;&gt;更改软件源为中科大源&lt;/h3&gt;
-&lt;p&gt;接下来，就是更改源了，打开&lt;code&gt;/etc/apt/sources.list&lt;/code&gt;文件，将所有的&lt;code&gt;us.archive.ubuntu.com&lt;/code&gt;替换成&lt;code&gt;mirrors.ustc.edu.cn&lt;/code&gt;就可以了，注意这里由于我安装的时候选择的是美国的源，所以域名为&lt;code&gt;us.archive.ubuntu.com&lt;/code&gt;，如果选择了其他地方的源，域名可能不一样。&lt;/p&gt;
-&lt;p&gt;同时要注意，&lt;code&gt;security.ubuntu.com&lt;/code&gt;这个源表示的是 Ubuntu 进行安全更新的源，用来推送紧急安全更新的补丁，这个源我建议保持原样，因为紧急安全更新的补丁还是从 Ubuntu 官方下载比较好，不建议从其他地方来下载。&lt;/p&gt;
-&lt;h3 id=&#34;设置关闭盖子不休眠&#34;&gt;设置关闭盖子不休眠&lt;/h3&gt;
-&lt;p&gt;由于我的电脑是笔记本，尽管没有装图形界面，但是在合上盖子之后，系统仍然会自动休眠，所以需要将这个自动休眠的功能关掉。我在网上搜索了一下，在 Askubuntu 上找到了一个相关的&lt;a href=&#34;http://askubuntu.com/questions/141866/keep-ubuntu-server-running-on-a-laptop-with-the-lid-closed&#34;&gt;问题&lt;/a&gt;，按照问题中的答案所说，向&lt;code&gt;/etc/systemd/logind.conf&lt;/code&gt;文件中添加一行&lt;code&gt;HandleLidSwitch=ignore&lt;/code&gt;，然后重启&lt;code&gt;systemd-logind.service&lt;/code&gt;服务，就关闭掉这个功能啦。&lt;/p&gt;
-&lt;h2 id=&#34;配置网络环境&#34;&gt;配置网络环境&lt;/h2&gt;
-&lt;p&gt;将服务器配置好以后，接下来我们就需要配置网络了。&lt;/p&gt;
-&lt;h3 id=&#34;设置dhcp&#34;&gt;设置DHCP&lt;/h3&gt;
-&lt;p&gt;我的笔记本是通过网线连接到路由器上的，所以，首先我们需要将有线网卡通过 DHCP 自动连接网络的功能打开。这里我在网上搜索了一下，搜到了一篇文章：&lt;a href=&#34;http://www.ubuntugeek.com/ubuntu-networking-configuration-using-command-line.html&#34;&gt;Ubuntu Networking Configuration Using Command Line &lt;/a&gt;。这篇文章很详细地介绍了Ubuntu如何设置动态IP和静态IP。我的电脑在刚装好系统的时候，没有任何关于有线网卡的配置文件，仅能够通过&lt;code&gt;ip addr&lt;/code&gt;命令来看到当前系统的网卡，在了解到有线网卡的名称为&lt;code&gt;enp12s0&lt;/code&gt;之后，我新建了一个文件&lt;code&gt;/etc/network/interfaces.d/enp12s0.conf&lt;/code&gt;，然后向其中添加了如下的内容，&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 设置网卡enp12s0在开机的时候通过 DHCP 自动连接到网络。&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;auto enp12s0
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;iface enp12s0 inet dhcp
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面两句配置就表示设置网卡enp12s0在开机的时候通过 DHCP 自动连接到网络。&lt;/p&gt;
-&lt;h3 id=&#34;设置默认网关&#34;&gt;设置默认网关&lt;/h3&gt;
-&lt;p&gt;设置好网卡的 DHCP 以后，我的服务器能够 ping 通路由器网关了，但是仍然无法 ping 通外网，显然，这是由于服务器本机的网关没有配置好，后来我又上网去搜索，发现了&lt;a href=&#34;http://askubuntu.com/questions/522420/how-to-get-default-gateway-with-a-dhcp&#34;&gt;Askubuntu 上一个类似的问题&lt;/a&gt;，其中有个答案提到，&lt;code&gt;dhclient&lt;/code&gt;只在当前服务器没有设置默认网关的时候，才会设置由 DHCP 服务器提供的路由器地址为默认网关。我通过&lt;code&gt;ip route&lt;/code&gt;看了一下我的服务器的路由表，发现默认网关为网卡&lt;code&gt;lo&lt;/code&gt;，所以 DHCP 服务器下发下来的网关地址并不会生效。我又在&lt;code&gt;/etc/network/interfaces&lt;/code&gt;中添加了如下的配置：&lt;code&gt;post-up route del default dev lo&lt;/code&gt;，删除掉默认走&lt;code&gt;lo&lt;/code&gt;设备的路由配置。&lt;/p&gt;
-&lt;p&gt;然后我再来重启电脑，就发现服务器一开机就能够正常 ping 通外网了。&lt;/p&gt;
-&lt;h3 id=&#34;设置路由器&#34;&gt;设置路由器&lt;/h3&gt;
-&lt;p&gt;看到这里，相信大家肯定都有一些疑惑，服务器不应该是默认设置为静态IP吗，为什么你要配置 DHCP 呢。原因就在这一小节，我用的路由器是华硕的RT - N12，它的 DHCP 服务器有一个功能，就是将MAC地址和IP地址进行绑定，所以，我只需要在路由器上配置好MAC地址和IP地址的绑定，这样就相当于起到了静态IP的作用了，而且更改起来也比较方便，不需要服务器和路由器两头改。&lt;/p&gt;
-&lt;h2 id=&#34;配置dns&#34;&gt;配置DNS&lt;/h2&gt;
-&lt;p&gt;由于我访问我的服务器的时候想通过域名来访问(方便以后添加HTTPS证书)，所以我需要在我的内网中自己搭建一个DNS服务器，来负责服务器的域名解析。&lt;/p&gt;
-&lt;h3 id=&#34;安装并设置dnsmasq&#34;&gt;安装并设置dnsmasq&lt;/h3&gt;
-&lt;p&gt;由于我的需求很简单，只需要进行一个域名解析就可以了，所以我选择了&lt;a href=&#34;http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html&#34;&gt;dnsmasq&lt;/a&gt;，而不是比较复杂的bind9。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;dnsmasq&lt;/code&gt;在Ubuntu的源中直接有deb安装包，所以我们直接通过&lt;code&gt;sudo apt install dnsmasq&lt;/code&gt;命令安装即可。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;dnsmasq&lt;/code&gt;的配置我参考了文章&lt;a href=&#34;http://cjting.me/misc/2016-08-20-%E4%BD%BF%E7%94%A8Dnsmasq%E6%90%AD%E5%BB%BA%E5%86%85%E7%BD%91DNS%E6%9C%8D%E5%8A%A1%E5%99%A8.html&#34;&gt;使用Dnsmasq搭建内网DNS服务器&lt;/a&gt;。使用了如下的配置：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 设置服务器的监听地址为192.168.X.X和127.0.0.1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;listen-address&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;192.168.X.X,127.0.0.1
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 所有没有.号的域名(plain names)都不会向上游DNS Server转发，只查询hosts文件&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;domain-needed
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 所有保留IP地址段内的反向查询都不会向上游DNS Server转发，只查询hosts文件&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bogus-priv
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 不要读取/etc/resolver中的DNS Server的配置&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;no-resolv
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 不要poll /etc/resolver文件的更新&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;no-poll
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 配置上游服务器为DNSPod的公共DNS&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;server&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;119.29.29.29
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;server&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;182.254.116.116
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;配置好了以后，我们可以通过&lt;code&gt;dnsmasq --test&lt;/code&gt;命令来检查&lt;code&gt;dnsmasq&lt;/code&gt;的配置文件语法是否正确。&lt;/p&gt;
-&lt;p&gt;然后我们在服务器的&lt;code&gt;/etc/hosts&lt;/code&gt;中添加我们想要设置的解析记录，比如这台服务器我设置了如下的记录：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;192.168.X.X dev.bwangel.me
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后通过&lt;code&gt;sudo systemctl enable dnsmasq &amp;amp;&amp;amp; sudo systemctl restart dnsmasq&lt;/code&gt;命令启动&lt;code&gt;dnsmasq&lt;/code&gt;服务即可。&lt;/p&gt;
-&lt;p&gt;最后我们可以通过&lt;code&gt;dig&lt;/code&gt;命令测试一下，运行如下命令: &lt;code&gt;dig dev.bwangel.me @localhost&lt;/code&gt;，看返回的IP地址是否和我们设置的解析记录相同。&lt;/p&gt;
-&lt;h3 id=&#34;设置路由器-1&#34;&gt;设置路由器&lt;/h3&gt;
-&lt;p&gt;配置好了DNS服务器以后，我们再来修改路由器的 DHCP 策略，设置下发的DNS服务器IP地址为我们的DNS服务器地址，这样内网中所有的DNS查询都会先经过这台DNS服务器。而我们的&lt;code&gt;dev.bwangel.me&lt;/code&gt;域名也就能够成功解析了。至此，我们的开发服务器就已经搭建好了，我们可以通过SSH连接上来，搭建我们想要的服务了。&lt;/p&gt;
-&lt;h2 id=&#34;遇到的一些小坑&#34;&gt;遇到的一些小坑&lt;/h2&gt;
-&lt;h3 id=&#34;dnsmasq没有绑定本地地址&#34;&gt;dnsmasq没有绑定本地地址&lt;/h3&gt;
-&lt;p&gt;配置好了 DNS 服务器以后，我在服务器上 ping 百度的时候会一直卡着，但是 ping 公网 IP 却是可以 ping 通的，当时我第一反应就是DNS解析出错了，只是不知道是DNS服务器配置的有问题，还是DNS服务器的IP地址路由器没有正确地下发下来。&lt;/p&gt;
-&lt;p&gt;接着我就利用dig来测试，发现使用&lt;code&gt;dig www.baidu.com @192.168.X.X&lt;/code&gt;命令可以得到正常结果，而&lt;code&gt;dig www.baidu.com @127.0.0.1&lt;/code&gt;就会卡着。然后我就觉得应该是dnsmasq没有监听&lt;code&gt;127.0.0.1&lt;/code&gt;导致的问题。最后发现服务器DNS的配置文件&lt;code&gt;/etc/resolv.conf&lt;/code&gt;中设置的默认DNS为&lt;code&gt;127.0.0.1&lt;/code&gt;，而它去查询&lt;code&gt;127.0.0.1&lt;/code&gt;的时候会卡着，也不报错，导致服务器不会使用备选的DNS服务器来查询域名，最终导致出现了 ping 百度卡着这种情况。我将dnsmasq的监听地址加上&lt;code&gt;127.0.0.1&lt;/code&gt;之后就OK了。&lt;/p&gt;
-&lt;p&gt;这里还有一点没有搞清楚，路由器的 DHCP 中配置的DNS服务器并没有正确地应用，服务器还是默认遵循&lt;code&gt;/etc/resolv.conf&lt;/code&gt;文件中的配置，这个还需要进一步了解一下。&lt;/p&gt;
-&lt;h3 id=&#34;ssh出现locale报错&#34;&gt;ssh出现locale报错&lt;/h3&gt;
-&lt;p&gt;这个问题经常遇到了，在Mac上通过SSH连接到Ubuntu上之后，在安装更新的过程中，出现了如下的报错：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;perl: warning: Setting locale failed.
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;perl: warning: Please check that your locale settings:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;LANGUAGE&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;unset&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;LC_ALL&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;unset&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;LC_MESSAGES&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;zh_CN.UTF-8&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;LANG&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;zh_CN.UTF-8&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    are supported and installed on your system.
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;perl: warning: Falling back to the standard locale &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;C&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;.
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这是由于终端SSH的时候，会将本地的locale配置传到服务端上去，我的本地设置的语系是&lt;code&gt;zh_CN.UTF-8&lt;/code&gt;，但是服务器上只安装了&lt;code&gt;en_US.UTF-8&lt;/code&gt;，所以就会报错提示说找不到语系&lt;code&gt;zh_CN.UTF-8&lt;/code&gt;相关的文件。这里我们只需要修改一下服务器的&lt;code&gt;/etc/locale.gen&lt;/code&gt;配置文件，将&lt;code&gt;zh_CN.UTF-8&lt;/code&gt;相关的配置取消注释，然后再来运行&lt;code&gt;locale-gen&lt;/code&gt;命令，就会安装上&lt;code&gt;zh_CN.UTF-8&lt;/code&gt;语系相关的文件了，再来运行&lt;code&gt;perl&lt;/code&gt;程序就不会报错了。&lt;/p&gt;
-      </description>
+      <description>&lt;ol&gt;&#xA;&lt;li&gt;对Ubuntu服务器进行基础配置&lt;/li&gt;&#xA;&lt;li&gt;配置dnsmasq服务器&lt;/li&gt;&#xA;&lt;li&gt;文章没什么技术含量，主要记录一些配置文件的位置&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
     </item>
-    
     <item>
-      <title>Docs: Ubuntu缩小磁盘分区大小</title>
+      <title>Ubuntu缩小磁盘分区大小</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu%E7%BC%A9%E5%B0%8F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F/</link>
       <pubDate>Sun, 17 Jul 2016 16:38:06 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu%E7%BC%A9%E5%B0%8F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F/</guid>
-      <description>
-        
-        
-        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;通过resize2fs调整文件系统大小&lt;/li&gt;
-&lt;li&gt;通过parted调整磁盘分区大小&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;我在刚开始装系统的时候，没有考虑到以后的扩展，直接把所有的空间都给使用了，后来发现需要新的分区的时候，已经没有可用的空间了，这时候就需要将一个分区的空间给缩小，后来折腾了半天，终于成功了！下面我以虚拟机中装的Ubuntu 16.04为例子，和大家分享一下。&lt;/p&gt;
-&lt;p&gt;首先查看一下目前的磁盘分区&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;michale@vv2x:~$ lsblk
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sda      8:0    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;   32G  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; disk
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├─sda1   8:1    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  190M  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; part /boot
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├─sda2   8:2    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;    1K  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; part
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├─sda5   8:5    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  7.6G  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; part /home
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├─sda6   8:6    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  487M  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; part &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;SWAP&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─sda7   8:7    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; 23.7G  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; part /
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sr0     11:0    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 1024M  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; rom
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个虚拟机上只有一块硬盘sda，sda分成了5个分区，其中sda2是扩展分区，现在，我想将/home分区的大小缩小为4G，这样可以多出一部分空间来新建一个分区，那该如何做呢，且听我慢慢道来。&lt;/p&gt;
-&lt;h2 id=&#34;卸载home分区&#34;&gt;卸载/home分区&lt;/h2&gt;
-&lt;p&gt;首先，我们需要以root登陆进去，用&lt;code&gt;umount /home&lt;/code&gt;命令卸载/home分区。注意，此时其他用户必须已经退出了，否则就会显示/home分区是busy的，无法卸载。如果卸载时发现/home分区busy无法卸载，可以通过&lt;code&gt;lsof +d /home&lt;/code&gt;命令来查看哪些进程在使用/home分区。&lt;/p&gt;
-&lt;h2 id=&#34;缩小home分区的文件系统大小&#34;&gt;缩小/home分区的文件系统大小&lt;/h2&gt;
-&lt;p&gt;第二步，通过&lt;code&gt;resize2fs&lt;/code&gt;命令来缩小/home分区的__文件系统大小__。（注意：文件系统大小和磁盘分区大小是两个不同的概念。我的理解是，文件系统大小表示的是文件系统实际可用的大小，而磁盘分区大小则是文件系统所安装的磁盘分区的真实大小。通过&lt;code&gt;df -h&lt;/code&gt;命令我们可以查看文件系统大小，通过&lt;code&gt;lsblk&lt;/code&gt;或者&lt;code&gt;fdisk&lt;/code&gt;命令可以查看磁盘分区大小。）&lt;/p&gt;
-&lt;p&gt;在这里，我将我的/home分区大小变成了4G，结果如下所示（需要注意的是，在缩小之前，首先要对文件系统进行检查）：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@vv2x:~# e2fsck -f /dev/sda5
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 上面这条命令强制对/dev/sda5的文件系统进行了检查&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;e2fsck 1.42.13 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;17-May-2015&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Pass 1: Checking inodes, blocks, and sizes
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Pass 2: Checking directory structure
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Pass 3: Checking directory connectivity
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Pass 4: Checking reference counts
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Pass 5: Checking group summary information
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/dev/sda5: 220/499968 files &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;3.6% non-contiguous&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;, 69132/1999872 blocks
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@vv2x:~# resize2fs /dev/sda5 4G
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;resize2fs 1.42.13 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;17-May-2015&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Resizing the filesystem on /dev/sda5 to &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1048576&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;4k&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; blocks.
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;The filesystem on /dev/sda5 is now &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1048576&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;4k&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; blocks long.
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;缩小home分区的磁盘分区大小&#34;&gt;缩小/home分区的磁盘分区大小&lt;/h2&gt;
-&lt;p&gt;调整好文件系统大小以后，我们就需要来调整磁盘分区大小了，这里我们通过&lt;code&gt;parted&lt;/code&gt;命令中的&lt;code&gt;resizepart&lt;/code&gt;命令来调整分区大小。用法如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;parted&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;help&lt;/span&gt; resizepart
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  resizepart NUMBER END                    resize partition NUMBER
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NUMBER is the partition number used by Linux.  On MS-DOS disk labels, the primary
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;partitions number from &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; to 4, logical partitions from &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt; onwards.
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;END is disk location, such as 4GB or 10%.  Negative value counts from the end of the
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;disk.  For example, -1s specifies exactly the last sector.
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中NUMBER代表的是分区号，这里我们的/home分区为5，END代表的是结束的位置，我们可以用4GB来表示。（注意：&lt;strong&gt;parted的分区大小计算方式和lsblk不同&lt;/strong&gt;，所以我们多留一些空间，防止数据丢失）&lt;/p&gt;
-&lt;p&gt;运行结果如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@vv2x:~# parted /dev/sda
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;GNU Parted 3.2
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Using /dev/sda
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Welcome to GNU Parted! Type &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;help&amp;#39;&lt;/span&gt; to view a list of commands.
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;parted&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; resizepart &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt; 5G
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Warning: Shrinking a partition can cause data loss, are you sure you want to &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;continue&lt;/span&gt;?
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Yes/No? Yes
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;parted&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Information: You may need to update /etc/fstab.
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;调整home分区的文件系统大小并重新挂载&#34;&gt;调整/home分区的文件系统大小并重新挂载&lt;/h2&gt;
-&lt;p&gt;在第三步中，为了防止数据丢失，我们多留出了一些空间。在这里我们需要相应地调整文件系统大小，让其和磁盘空间大小匹配，这里我们通过&lt;code&gt;resize2fs&lt;/code&gt;命令来完成这一步。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@vv2x:~# resize2fs /dev/sda7
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# resize2fs如果没有指定大小，那么/dev/sda7的文件系统大小默认和磁盘分区大小相同&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;resize2fs 1.42.13 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;17-May-2015&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Resizing the filesystem on /dev/sda7 to &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1171295&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;4k&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; blocks.
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;The filesystem on /dev/sda7 is now &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1171295&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;4k&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; blocks long.
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最后我们重新把/home分区挂载上就可以了。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@vv2x:~# mount -a
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 这条命令默认挂载/etc/fstab文件中所有指定的分区&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;root@vv2x:~# lsblk
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sda      8:0    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;   32G  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; disk
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├─sda1   8:1    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  190M  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; part /boot
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├─sda5   8:5    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  487M  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; part &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;SWAP&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├─sda6   8:6    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; 23.7G  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; part /
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└─sda7   8:7    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;  4.5G  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; part /home
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sr0     11:0    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 1024M  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; rom
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;注意&#34;&gt;注意&lt;/h2&gt;
-&lt;p&gt;最后需要注意的是调整磁盘分区大小以后，磁盘分区的UUID可能会改变，&lt;code&gt;mount -a&lt;/code&gt;命令可能会失败，此时我们需要通过&lt;code&gt;blkid&lt;/code&gt;命令来查看/home分区的大小，并相应地更改&lt;code&gt;/etc/fstab&lt;/code&gt;配置文件中指定的/home分区的UUID。&lt;/p&gt;
-      </description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;通过resize2fs调整文件系统大小&lt;/li&gt;&#xA;&lt;li&gt;通过parted调整磁盘分区大小&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

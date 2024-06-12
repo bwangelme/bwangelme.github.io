@@ -1,66 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – Vue.js</title>
+    <title>Vue.js on 647 Universe</title>
     <link>https://bwangel.me/tags/vue.js/</link>
     <description>Recent content in Vue.js on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Sun, 10 Apr 2016 10:56:54 +0000</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/tags/vue.js/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Mon, 06 Nov 2023 11:03:48 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/vue.js/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: Vue.js关于组件的笔记</title>
+      <title>Vue.js关于组件的笔记</title>
       <link>https://bwangel.me/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;学习Vue.js官方教程的笔记&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&#34;组件&#34;&gt;组件&lt;/h1&gt;
-&lt;h2 id=&#34;定义组件的步骤&#34;&gt;定义组件的步骤&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;利用&lt;code&gt;extend&lt;/code&gt;定义组件&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;利用&lt;code&gt;component&lt;/code&gt;注册组件&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;利用注册语法糖直接注册组件&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;Vue&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;component&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;my-component&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;template&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&amp;lt;div&amp;gt;A custom component&amp;lt;/div&amp;gt;&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;})&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;注意事项&#34;&gt;注意事项&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;使用函数注册data
-data: function() { return {a:1} }&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;杂项&#34;&gt;杂项&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;资源命名约定&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;vue支持驼峰命名法&lt;/p&gt;
-&lt;h2 id=&#34;疑问&#34;&gt;疑问&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;动态语法和bind是否相同&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;code&gt;&amp;lt;comp :some-prop=&amp;quot;1&amp;quot;&amp;gt;&amp;lt;/comp&amp;gt;&lt;/code&gt; vs &lt;code&gt;&amp;lt;comp v-bind:my-message=&amp;quot;xff&amp;quot;&amp;gt;&amp;lt;/comp&amp;gt;&lt;/code&gt;&lt;/p&gt;
-      </description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;学习Vue.js官方教程的笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

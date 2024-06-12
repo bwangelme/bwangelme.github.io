@@ -1,415 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – Tools</title>
+    <title>Tools on 647 Universe</title>
     <link>https://bwangel.me/docs/tools/</link>
     <description>Recent content in Tools on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Fri, 29 Sep 2023 10:58:15 +0800</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/docs/tools/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Wed, 12 Jun 2024 11:05:12 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/docs/tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: Git Tips</title>
+      <title>chatgpt 常用 prompt</title>
+      <link>https://bwangel.me/docs/tools/chatgpt-prompt/</link>
+      <pubDate>Tue, 11 Jun 2024 10:20:12 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tools/chatgpt-prompt/</guid>
+      <description>充当英语翻译中文 我想让你充当中文翻译员、拼写纠正员和改进员。我会给你发送英语内容，你翻译它并用我的文本的更正和改进版本用中文回答。我希望你用更优美优雅的高级中文描述。保持相同的意思，但使它们更文艺。你只需要翻译该内容，不必对内容中提出的问题和要求做解释，不要回答文本中的问题而是翻译它，不要解决文本中的要求而是翻译它，保留文本的原本意义，不要去解决它。如果我只键入了一个单词，你只需要描述它的意思并不提供句子示例。我要你只回复更正、改进，不要写任何解释。我的第一句话是“istanbulu cok seviyom burada olmak cok guzel”&#xA;充当英英词典(附中文解释) 我想让你充当英英词典，对于给出的英文单词，你要给出其中文意思以及英文解释，并且给出一个例句，此外不要有其他反馈，第一个单词是“Hello&amp;quot;&#xA;参考链接 https://github.com/jevantang/chatgpt-prompts</description>
+    </item>
+    <item>
+      <title>Git Tips</title>
       <link>https://bwangel.me/docs/tools/git/</link>
       <pubDate>Sat, 20 Jan 2024 22:26:51 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/tools/git/</guid>
-      <description>
-        
-        
-        &lt;h2 id=&#34;git-ssh-push-超时&#34;&gt;Git ssh push 超时&lt;/h2&gt;
-&lt;p&gt;修改 &lt;code&gt;~/.git/config&lt;/code&gt; 文件&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Add section below to it
-Host github.com
-  Hostname ssh.github.com
-  Port 443
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;将 push 的端口从 22 改成 443，有可能绕过 GFW&lt;/p&gt;
-&lt;h2 id=&#34;测试&#34;&gt;测试&lt;/h2&gt;
-&lt;p&gt;22 端口超时&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ssh -T git@github.com
-ssh: connect to host github.com port 22: Connection timed out
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;443 端口能联通&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; ssh -T -p 443 git@github.com
-Hi bwangelme! You&amp;#39;ve successfully authenticated, but GitHub does not provide shell access.
-&lt;/code&gt;&lt;/pre&gt;
-      </description>
+      <description>Git ssh push 超时 修改 ~/.git/config 文件&#xA;# Add section below to it Host github.com Hostname ssh.github.com Port 443 将 push 的端口从 22 改成 443，有可能绕过 GFW&#xA;测试 22 端口超时&#xA;$ ssh -T git@github.com ssh: connect to host github.com port 22: Connection timed out 443 端口能联通&#xA;ø&amp;gt; ssh -T -p 443 git@github.com Hi bwangelme! You&amp;#39;ve successfully authenticated, but GitHub does not provide shell access. </description>
     </item>
-    
     <item>
-      <title>Docs: Mac OSX 使用技巧</title>
+      <title>Mac OSX 使用技巧</title>
       <link>https://bwangel.me/docs/tools/mac-tips/</link>
       <pubDate>Mon, 18 Apr 2022 17:06:10 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/tools/mac-tips/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;修改某类文件的默认打开方式&#34;&gt;修改某类文件的默认打开方式&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;获取应用的ID: &lt;code&gt;osascript -e &#39;id of app &amp;quot;Sublime Text&amp;quot;&#39;&lt;/code&gt;，应用的名称可以在&lt;code&gt;/Applications&lt;/code&gt;中获取到&lt;/li&gt;
-&lt;li&gt;安装duti: &lt;code&gt;brew install duti&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;设置某类文件的默认打开方式: &lt;code&gt;duti -s com.sublimetext.3 .py all&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;强制退出应用&#34;&gt;强制退出应用&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;Command&lt;/code&gt; + &lt;code&gt;Option&lt;/code&gt; + &lt;code&gt;Esc&lt;/code&gt; 打开活动监视器，选择应用强制退出&lt;/p&gt;
-&lt;h2 id=&#34;为知笔记&#34;&gt;为知笔记&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;笔记内容的存储位置: &lt;code&gt;/Users/michaeltsui/.wiznote/bwangel.me@gmail.com/data/notes&lt;/code&gt;，是按照 zip 压缩存储的。解压出来就是 markdown 文件或者HTML文件。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;~/.wiznote&lt;/code&gt; 为为知笔记的数据目录&lt;/li&gt;
-&lt;li&gt;参考链接：&lt;a href=&#34;http://www.wiz.cn/faq/mac/data_dir&#34;&gt; Mac版的笔记数据在哪个目录？&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;时间戳&#34;&gt;时间戳&lt;/h2&gt;
-&lt;h3 id=&#34;获取时间戳&#34;&gt;获取时间戳&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; date +%s
-1580006193
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;获取特定时间的时间戳&#34;&gt;获取特定时间的时间戳&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ date -j -f %Y-%m-%d 2015-09-28 +%s
-1443427891
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;时间戳转时间&#34;&gt;时间戳转时间&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; date -r 1443429736
-Mon Sep 28 16:42:16 CST 2015
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;快捷键&#34;&gt;快捷键&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;SPlayer&lt;/code&gt; 会占用 &lt;code&gt;shift+cmd+l&lt;/code&gt; 全局快捷键&lt;/p&gt;
-&lt;h2 id=&#34;brew-编译选项&#34;&gt;brew 编译选项&lt;/h2&gt;
-&lt;p&gt;brew 的编译选项需要在 &lt;code&gt;--&lt;/code&gt; 后加&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;brew install macvim -- --with-override-system-vim --with-lua --with-luajit
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/skwp/dotfiles/issues/817&#34;&gt;https://github.com/skwp/dotfiles/issues/817&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/Homebrew/homebrew-core/issues/31510&#34;&gt;https://github.com/Homebrew/homebrew-core/issues/31510&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description></description>
     </item>
-    
     <item>
-      <title>Docs: Vagrant 添加挂载目录</title>
+      <title>Vagrant 添加挂载目录</title>
       <link>https://bwangel.me/docs/tools/vagrant_add_volume/</link>
       <pubDate>Thu, 02 Dec 2021 21:10:27 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/tools/vagrant_add_volume/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;cfg.vm.synced_folder&lt;/code&gt; 可以设置挂载目录&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 第一个参数为宿主机目录，第二个参数是虚拟机目录&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      node.vm.synced_folder &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/Users/michaeltsui/Github/Golang/&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/code&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/a/18529697/5161084&#34;&gt;https://stackoverflow.com/a/18529697/5161084&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.vagrantup.com/docs/synced-folders/basic_usage&#34;&gt;https://www.vagrantup.com/docs/synced-folders/basic_usage&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description></description>
     </item>
-    
     <item>
-      <title>Docs: Github 客户端 gh 添加搜索仓库的命令</title>
+      <title>Github 客户端 gh 添加搜索仓库的命令</title>
       <link>https://bwangel.me/docs/tools/gh-search-github/</link>
       <pubDate>Tue, 19 Oct 2021 00:01:12 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/tools/gh-search-github/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;gh alias set s &amp;#39;api -X GET search/repositories -f q=&amp;#34;$1&amp;#34; --template &amp;#34;{{range .items}}{{ printf \&amp;#34;%v\\n--------------\\n%v\\n\\n\&amp;#34; .full_name .description }}{{ end }}&amp;#34;&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/cli/cli/pull/830#issuecomment-812972624&#34;&gt;Gh 添加 repoSearch alias&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description></description>
     </item>
-    
     <item>
-      <title>Docs: Java 抛出UnsupportedEncodingException</title>
+      <title>Java 抛出UnsupportedEncodingException</title>
       <link>https://bwangel.me/docs/tools/java-unsupportedencodingexception/</link>
       <pubDate>Mon, 18 Oct 2021 23:55:58 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/tools/java-unsupportedencodingexception/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
-&lt;p&gt;这个异常表示当前系统不支持此编码。大部分系统是支持的，所以没必要抛出这个异常。&lt;/p&gt;
-&lt;p&gt;当我们调用 &lt;code&gt;String.getBytes()&lt;/code&gt; 传入一个 &lt;code&gt;Charset&lt;/code&gt; 参数时，就会调用其重载方法&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;getBytes&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Charset&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;charset&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样就不会抛出异常了&lt;/p&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://skyao.github.io/2016/01/13/java-string-practice/&#34;&gt;java中String和byte数组转换的小技巧&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description></description>
     </item>
-    
     <item>
-      <title>Docs: Rabbitmq Tutorial 学习笔记</title>
+      <title>Rabbitmq Tutorial 学习笔记</title>
       <link>https://bwangel.me/docs/tools/rabbitmq-tutorial/</link>
       <pubDate>Sat, 21 Dec 2019 21:49:45 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/tools/rabbitmq-tutorial/</guid>
-      <description>
-        
-        
-        &lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.rabbitmq.com/getstarted.html&#34;&gt;RabbitMQ Tutorial&lt;/a&gt; 学习笔记&lt;/li&gt;
-&lt;li&gt;本文相关代码放在 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo&#34;&gt;Github@bwangelme/RabbitMQDemo&lt;/a&gt; 中&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;h1 id=&#34;rabbitmq-基础概念介绍&#34;&gt;RabbitMQ 基础概念介绍&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-01-07-152647.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;上图展示的 RabbitMQ 的一些基础概念和它们之间的关系。这里为了方便展示，只显示了一个生产者，且每个消费者只绑定了一个队列。&lt;/p&gt;
-&lt;p&gt;生产者(&lt;code&gt;Producer&lt;/code&gt;)将消息发布(&lt;code&gt;Pubscribe&lt;/code&gt;)到交换机(&lt;code&gt;Exchange&lt;/code&gt;)上，交换机将消息转发给一个或多个（根据交换机的类型确定）队列(&lt;code&gt;Queue&lt;/code&gt;)。队列将收到的消息发送给订阅(&lt;code&gt;Subscribe&lt;/code&gt;)该队列的消费者(&lt;code&gt;Consumer&lt;/code&gt;)。&lt;/p&gt;
-&lt;h2 id=&#34;publish&#34;&gt;Publish&lt;/h2&gt;
-&lt;p&gt;生产者将消息发送到交换机的过程称为&lt;code&gt;Publish&lt;/code&gt;，下面是&lt;code&gt;Publish&lt;/code&gt;的示例代码:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ch&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Publish&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;     &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// exchange
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;abcd&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// Route key
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// mandatory 强制的
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// immediate 即时的
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#000&#34;&gt;amqp&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Publishing&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;DeliveryMode&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;amqp&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Persistent&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;ContentType&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;text/plain&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;Body&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;         &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;body&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;},&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Publish&lt;/code&gt;的前两个参数分别是交换机名称和&lt;code&gt;Route Key&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;我们在这里将消息发送给了无名交换机（即交换机的名称为空字符串&lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt;），这是 RabbitMQ 默认就会创建的交换机，它是&lt;code&gt;direct&lt;/code&gt;类型(关于交换机的类型会在下文中讲述)。&lt;/p&gt;
-&lt;h2 id=&#34;队列与-binding&#34;&gt;队列与 Binding&lt;/h2&gt;
-&lt;p&gt;生产者直接将消息发送给交换机，但是消费者不能直接从交换机读取消息。&lt;/p&gt;
-&lt;p&gt;它需要创建一个队列，将队列和交换机绑定(&lt;code&gt;Bind&lt;/code&gt;)起来，然后才能从队列中收到交换机转发过来的消息。&lt;/p&gt;
-&lt;p&gt;消费者从队列读取消息的过程称为&lt;code&gt;Consume&lt;/code&gt;，队列和交换机的绑定关系叫做&lt;code&gt;Binding&lt;/code&gt;。&lt;/p&gt;
-&lt;h3 id=&#34;创建临时队列&#34;&gt;创建临时队列&lt;/h3&gt;
-&lt;p&gt;当我们需要创建一个只用一次的队列时，可以通过指定&lt;code&gt;exclusive=true&lt;/code&gt;参数来实现:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;q&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ch&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;QueueDeclare&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// name
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// durable
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// delete when unused
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// exclusive
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// no-wait
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// arguments
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上述代码创建了一个临时队列，在 &lt;code&gt;Channel&lt;/code&gt;（客户端和 RabbitMQ 交互的中介）关闭之后，该队列就会被自动删除，注意指定了三个参数，&lt;code&gt;name=&amp;quot;&amp;quot;&lt;/code&gt;, &lt;code&gt;durable=false&lt;/code&gt;(不进行持久化存储), &lt;code&gt;exclusive=true&lt;/code&gt;(只使用一次)。&lt;/p&gt;
-&lt;p&gt;上述代码会返回一个临时队列，队列的名字类似于这样: &lt;code&gt;amq.gen-JzTY20BRgKO-HjmUJj0wLg&lt;/code&gt;。想要了解 Exclusive 队列的更多信息，请参考文档 &lt;a href=&#34;https://www.rabbitmq.com/queues.html&#34;&gt;Guide on Queues&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;通过&lt;code&gt;rabbitmqctl list_queues&lt;/code&gt; 可以查看我们创建的所有队列。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ø&amp;gt; rabbitmqctl list_queues
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Timeout: 60.0 seconds ...
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Listing queues &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; vhost / ...
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;name    messages
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hipri   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;task_queue      &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;second  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;celery  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;创建和查看-binding&#34;&gt;创建和查看 Binding&lt;/h3&gt;
-&lt;p&gt;将队列绑定到交换机的代码如下，前三个参数分别是&lt;code&gt;队列名称&lt;/code&gt;，&lt;code&gt;Bind Key&lt;/code&gt;，和&lt;code&gt;交换机名称&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ch&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;QueueBind&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;q&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// queue name
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;     &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// bind key
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;logs&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// exchange name
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;通过 &lt;code&gt;rabbitmqctl list_bindgs&lt;/code&gt; 命令我们可以查看 RabbitMQ 中所有的 Binding。&lt;/p&gt;
-&lt;h2 id=&#34;consume&#34;&gt;Consume&lt;/h2&gt;
-&lt;p&gt;消费者从队列中读取消息的过程称为&lt;code&gt;Consume&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;下面是&lt;code&gt;Consume&lt;/code&gt;的示例代码，返回值&lt;code&gt;msgs&lt;/code&gt;是Go语言中的 channel 类型，消费者可以从中读取队列返回的的消息。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;msgs&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ch&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Consume&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;q&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// name
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;     &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// consumer
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// auto ack
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// exclusive
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// no-local
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// no-wait
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// args
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;交换机的类型与特性&#34;&gt;交换机的类型与特性&lt;/h1&gt;
-&lt;p&gt;交换机一端接收消息，另外一端发送消息到队列中。&lt;/p&gt;
-&lt;p&gt;交换机处理消息的方式是由它的类型决定的，交换机共有这么几种类型: &lt;code&gt;direct&lt;/code&gt;, &lt;code&gt;topic&lt;/code&gt;, &lt;code&gt;headers&lt;/code&gt;, &lt;code&gt;fanout&lt;/code&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;查看交换机&#34;&gt;查看交换机&lt;/h2&gt;
-&lt;p&gt;通过命令 &lt;code&gt;rabbitmqctl list_exchanges&lt;/code&gt; 就可以列出所有的交换机:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;gt;&amp;gt;&amp;gt; rabbitmqctl list_exchanges
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Listing exchanges &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; vhost / ...
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;name    &lt;span style=&#34;color:#204a87&#34;&gt;type&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;amq.fanout      fanout
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;amq.headers     headers
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;amq.match       headers
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;amq.direct      direct
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;amq.topic       topic
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        direct
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;amq.rabbitmq.log        topic
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;amq.rabbitmq.trace      topic
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们可以看到 RabbitMQ 中已经预置了 &lt;code&gt;amq.*&lt;/code&gt; 交换机和一个无名交换机(&lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt;)。无名交换机是默认交换机，所有未指定交换机名称的消息都会发到这里来。&lt;/p&gt;
-&lt;h2 id=&#34;direct-交换机&#34;&gt;Direct 交换机&lt;/h2&gt;
-&lt;p&gt;我们将&lt;code&gt;Publish&lt;/code&gt;时指定的&lt;code&gt;key&lt;/code&gt;称为&lt;code&gt;Route Key&lt;/code&gt;, 将消费者 Bind 到交换机时指定的&lt;code&gt;key&lt;/code&gt;成为 &lt;code&gt;Bind key&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;Direct 交换机的转发逻辑很简单，就是寻找声明的 &lt;code&gt;Bind key&lt;/code&gt; == &lt;code&gt;Route key&lt;/code&gt; 队列，然后将消息转发到该队列上。&lt;/p&gt;
-&lt;p&gt;它支持一个队列使用多个&lt;code&gt;Bind Key&lt;/code&gt;，也支持多个队列使用同一个 &lt;code&gt;Bind key&lt;/code&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;direct-交换机示例&#34;&gt;Direct 交换机示例&lt;/h2&gt;
-&lt;p&gt;下图是一个 Direct 交换机的完整例子，我们使用日志等级名称作为&lt;code&gt;Route Key&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;2号消费者绑定了&lt;code&gt;debug&lt;/code&gt; key，3号消费者绑定了&lt;code&gt;info&lt;/code&gt; key。可以看到，1号生成者分别发送了两条消息，这些消息根据&lt;code&gt;Route Key&lt;/code&gt;的不同，发送到了不同的消费者上。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-01-11-084105.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;该示例的代码详见 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo/tree/3593d57&#34;&gt;Github@3593d57&lt;/a&gt; 。&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&#34;fanout-交换机&#34;&gt;Fanout 交换机&lt;/h2&gt;
-&lt;p&gt;Fanout 类型交换机的转发策略非常简单，它就是将收到的消息发送给所有绑定的队列，这点从它的名字（&lt;code&gt;Fanout&lt;/code&gt; 扇出）就可以看出。&lt;/p&gt;
-&lt;h2 id=&#34;fanout-交换机示例&#34;&gt;Fanout 交换机示例&lt;/h2&gt;
-&lt;p&gt;下图是 Fanout 交换机的例子，2号消费者和3号消费者将不同的队列绑定到了同一个 Fanout 交换机上，然后1号生产者发出了两条消息，这两个消费者都收到了。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-01-11-084917.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;该示例的代码详见 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo/tree/cf8f902&#34;&gt;Github@cf8f902&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&#34;topic-交换机&#34;&gt;Topic 交换机&lt;/h2&gt;
-&lt;p&gt;Topic 交换机 也是按照&lt;code&gt;Bind Key&lt;/code&gt;对&lt;code&gt;Route Key&lt;/code&gt;进行匹配，不过它可以指定&lt;code&gt;Bind Key&lt;/code&gt;的模式，匹配一批&lt;code&gt;Route Key&lt;/code&gt;。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Route Key&lt;/code&gt;按照&lt;code&gt;.&lt;/code&gt;分割，&lt;code&gt;.&lt;/code&gt;之间的内容称为一个单词。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Bind Key&lt;/code&gt;支持两个通配符&lt;code&gt;#&lt;/code&gt;和&lt;code&gt;*&lt;/code&gt;，&lt;code&gt;#&lt;/code&gt;代表一个或多个单词，&lt;code&gt;*&lt;/code&gt;代表一个单词。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;例如&lt;code&gt;Route Key&lt;/code&gt; &lt;code&gt;a.#&lt;/code&gt; 会匹配 &lt;code&gt;a.b.c.d&lt;/code&gt;, &lt;code&gt;a.b.c&lt;/code&gt; 等，&lt;code&gt;a.*&lt;/code&gt;只会匹配&lt;code&gt;a.b&lt;/code&gt;, &lt;code&gt;a.c&lt;/code&gt;，不会匹配&lt;code&gt;a.b.c&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;如果&lt;code&gt;Bind Key&lt;/code&gt;中没有&lt;code&gt;#&lt;/code&gt;和&lt;code&gt;*&lt;/code&gt;通配符，那么这个 Topic 交换机其实就是一个 Direct 类型的交换机，
-同理，如果&lt;code&gt;Bind Key&lt;/code&gt;是&lt;code&gt;#&lt;/code&gt;，那么这个 Topic 交换机就是一个 Fanout 类型的交换机。&lt;/p&gt;
-&lt;h2 id=&#34;topic-交换机示例&#34;&gt;Topic 交换机示例&lt;/h2&gt;
-&lt;p&gt;下图是一个 Topic 交换机的例子，我们做了一个收集日志的简易客户端，&lt;code&gt;Route Key&lt;/code&gt;遵循&lt;code&gt;模块.级别&lt;/code&gt;的模式。生产者可以订阅不同模式的日志，然后将日志写到不同的文件中。
-其中2号消费者订阅的是所有模块&lt;code&gt;info&lt;/code&gt;级别和所有&lt;code&gt;net&lt;/code&gt;模块的日志，3号消费者订阅的是&lt;code&gt;kernel&lt;/code&gt;模块&lt;code&gt;debug&lt;/code&gt;级别的日志。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2019-12-18-142810.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;该示例的代码详见 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo/tree/b56c3b1&#34;&gt;Github@b56c3b1&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;注意红框内的消息，1号生产者发送了&lt;code&gt;Route Key = net.info&lt;/code&gt;的一条消息，
-但由于2号消费者中__只有一个队列__绑定了&lt;code&gt;*.info&lt;/code&gt;和&lt;code&gt;net.*&lt;/code&gt;这两个模式，所以2号消费者只收到了一条消息。&lt;/p&gt;
-&lt;h1 id=&#34;消息的分发与确认&#34;&gt;消息的分发与确认&lt;/h1&gt;
-&lt;h2 id=&#34;轮询分发&#34;&gt;轮询分发&lt;/h2&gt;
-&lt;p&gt;在 RabbitMQ 中，消息默认是通过&lt;code&gt;轮询分发&lt;/code&gt;的方式进行发送的。具体来说，就是顺序地给绑定同一个队列的每个消费者发送消息，平均下来，每个消费者获得的消息数量是相同的。&lt;/p&gt;
-&lt;p&gt;可以参考下面这个例子:
-&lt;img src=&#34;https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-01-08-144228.png&#34; alt=&#34;round-robin Example&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;该示例的代码详见 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo/tree/41c82064edbde8c3bf74c1474420da821f7ac6dc&#34;&gt;Github@41c82064&lt;/a&gt; 。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;1号窗口是生产者，2，3，4，5号窗口都是消费者。&lt;/p&gt;
-&lt;p&gt;生产者一共发送了10条消息，他们被顺序地发送给四个消费者。&lt;/p&gt;
-&lt;h2 id=&#34;公平分发&#34;&gt;公平分发&lt;/h2&gt;
-&lt;p&gt;轮询分发的策略有时候并不适合实际的业务，可能会导致某些消费者特别忙，但是另一些消费者很闲的情况。&lt;/p&gt;
-&lt;p&gt;例如下面的这个例子，消息中&lt;code&gt;.&lt;/code&gt;的数量表示&lt;code&gt;Sleep&lt;/code&gt;的秒数，&lt;code&gt;.&lt;/code&gt;越多，表示工作越繁重。&lt;/p&gt;
-&lt;p&gt;1号生产者发送的奇数消息都很繁重，偶数消息都很轻松，导致2号消费者很忙，3号消费者很轻松（）。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-01-08-145032.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;该示例的代码详见 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo/tree/14a0414&#34;&gt;Github@14a0414&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;为了避免这种极端情况的发生，我们可以设置预取值(&lt;code&gt;prefetch count&lt;/code&gt;)为1。这样的话，相当于告诉 RabbitMQ，在 Worker 消费完一个消息之前，不要再给他分发新的消息了，这样的话随后的消息就会被分发给其他的空闲的 Worker 了。&lt;/p&gt;
-&lt;p&gt;在具体代码如下:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 在 Worker 的代码中设置
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ch&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Qos&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;     &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// prefetch count
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;     &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// prefetch size
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// global
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行效果如下:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-01-08-150016.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;该示例的代码详见&lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo/tree/ad5507e&#34;&gt;Github@ad5507e&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;可以看到2号窗口和3号窗口中的消费者都分配到了耗时较长的任务。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;注意:&lt;/strong&gt; 这样操作容易让 RabbitMQ 的队列被塞满，需要有合适的监控机制来监控消息的数量。&lt;/p&gt;
-&lt;h2 id=&#34;消息确认&#34;&gt;消息确认&lt;/h2&gt;
-&lt;p&gt;当消费者收到消息后，可能会遇到某种异常崩溃了，此时这条消息就会丢失了。&lt;/p&gt;
-&lt;p&gt;为了避免这种情况，我们可以使用 RabbitMQ 提供的消息确认机制。&lt;/p&gt;
-&lt;p&gt;消费者在消费完消息后，再向 RabbitMQ 发送 ack。收到 ack 之后，RabbitMQ 才会把这条消息标记为可删除的，并择机删除。
-如果 RabbitMQ 没有收到 ack，消费者就死掉了（channel 关闭，连接关闭，或者 TCP 连接关闭）。
-那么 RabbitMQ 就会认为这条消息没有被消费完，它就会重新入队，然后被快速发送给其他消费者。&lt;/p&gt;
-&lt;p&gt;使用了消息确认机制后，我们就可以确保即使存在消费者偶尔崩溃的情况，我们的消息也不会丢失。&lt;/p&gt;
-&lt;p&gt;在消息确认机制中，没有任何的超时限制，所以即使客户端花费很长的时间去处理消息，也不用担心消息会被误重发。&lt;/p&gt;
-&lt;p&gt;具体代码如下，我们在消费者订阅的时候将&lt;code&gt;auto_ack&lt;/code&gt;选项关掉，然后再在消费完消息后手动发送 Ack&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 消费者从队列订阅消息
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000&#34;&gt;msgs&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ch&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Consume&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;q&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// name
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;     &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// consumer
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 关闭掉 autoack
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// exclusive
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// no-local
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// no-wait
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// args
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;func&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;d&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;range&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;msgs&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;log&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Printf&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Received a message: %s&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;d&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Body&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;dot_count&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;bytes&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Count&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;d&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Body&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Duration&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;dot_count&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Sleep&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;time&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Second&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;log&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Printf&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Done&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;d&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Ack&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 手动发送 ack
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}()&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;示例如下，3号消费者在 &lt;code&gt;23:08:54&lt;/code&gt; 收到消息后，还没有确认(确认后会打印 Done )，就被我们 kill 掉了。2号消费者在&lt;code&gt;23:08:55&lt;/code&gt;重新收到了这条消息。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-01-08-151127.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;该示例代码详见&lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo/tree/9cd87dd&#34;&gt;Github@9cd87dd&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;h1 id=&#34;持久化&#34;&gt;持久化&lt;/h1&gt;
-&lt;p&gt;通过消息确认，我们可以在消费者崩溃的情况下，让我们的消息不丢失。但如果 RabbitMQ 崩溃，或者 RabbitMQ 所在的节点宕机的话，消息仍然可能会丢失。&lt;/p&gt;
-&lt;p&gt;在这种情况下，我们可以使用消息和队列持久化，这样的话即使 RabbitMQ 退出，消息和队列也回被持久化到磁盘中，不会丢失。&lt;/p&gt;
-&lt;h2 id=&#34;声明队列持久化&#34;&gt;声明队列持久化&lt;/h2&gt;
-&lt;p&gt;声明队列持久化的代码如下:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;q&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ch&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;QueueDeclare&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;task_queue&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// Queue name
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// durable  持久性
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// delete when unused
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// exclusive 独占
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// no-wait
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;     &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// arguments
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;注意:&lt;/strong&gt; 在声明队列时，如果我们声明一个已经存在的队列，但是初始化参数不同的时候，&lt;code&gt;QueueDeclare&lt;/code&gt;会失败并返回一个 err。&lt;/p&gt;
-&lt;h2 id=&#34;声明消息持久化&#34;&gt;声明消息持久化&lt;/h2&gt;
-&lt;p&gt;在发送消息的时候，我们可以设置一个 &lt;code&gt;amqp.Persistent&lt;/code&gt; 选项，来表明这个消息应该被持久化。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ch&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Publish&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;     &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//exchange
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#000&#34;&gt;q&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// route key
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// mandatory 强制的
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// immediate 即时的
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#000&#34;&gt;amqp&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Publishing&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;DeliveryMode&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;amqp&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Persistent&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 声明消息持久化
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#000&#34;&gt;ContentType&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;text/plain&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#000&#34;&gt;Body&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;body&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;},&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;关于消息持久化注意事项&#34;&gt;关于消息持久化注意事项&lt;/h2&gt;
-&lt;p&gt;上述声明消息持久化的代码，并不能100%保证消息不会丢失，有以下两方面的原因:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;在 RabbitMQ 收到消息和 RabbitMQ 将消息写入磁盘这两个事件中仍然有一个短暂的时间窗口。如果在这个时间窗口内发生宕机的话，消息仍然会丢失。&lt;/li&gt;
-&lt;li&gt;RabbitMQ 并不会每次收到消息后，都调用 &lt;code&gt;fsync(2)&lt;/code&gt;，消息可能被存储在缓存中，过一段时间后才被写入到磁盘中。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;因此，这个持久化策略并不是强健的，如果你想使用更强健的持久化策略，可以考虑 &lt;a href=&#34;https://www.rabbitmq.com/confirms.html&#34;&gt;Publisher Confirms&lt;/a&gt;。&lt;/p&gt;
-      </description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.rabbitmq.com/getstarted.html&#34;&gt;RabbitMQ Tutorial&lt;/a&gt; 学习笔记&lt;/li&gt;&#xA;&lt;li&gt;本文相关代码放在 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo&#34;&gt;Github@bwangelme/RabbitMQDemo&lt;/a&gt; 中&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
-      <title>Docs: Git-submodule</title>
+      <title>Git-submodule</title>
       <link>https://bwangel.me/docs/tools/git-submodule/</link>
       <pubDate>Mon, 11 Apr 2016 07:18:43 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/tools/git-submodule/</guid>
-      <description>
-        
-        
-        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;git submodule&lt;/code&gt;就是git主仓库在本仓库的配置中记录着子模块仓库对应的名字，路径，远端url，然后创建一个特殊文件去记录子模块仓库目前的&lt;code&gt;commit-id&lt;/code&gt;，每次更新子模块就是通过远端路径和&lt;code&gt;commit-id&lt;/code&gt;来进行更新&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;参考文章&#34;&gt;参考文章&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.kafeitu.me/git/2012/03/27/git-submodule.html&#34;&gt;Git Submodule使用完整教程 - 咖啡兔 - HenryYan&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;git-子模块的原理&#34;&gt;Git 子模块的原理&lt;/h2&gt;
-&lt;p&gt;在&lt;code&gt;.git/config&lt;/code&gt;和&lt;code&gt;.gitmodules&lt;/code&gt;中记录的子模块仓库的远端地址和路径，然后使用一个特殊的模式为&lt;code&gt;160000&lt;/code&gt;的文件来记录子模块仓库当前的&lt;code&gt;commit id&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;git-子模块的添加&#34;&gt;Git 子模块的添加&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git submodule add origin:/submd/repos/lib2.git libs/lib2 &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 添加远端origin上的仓库lib2到当前仓库的libs/lib2位置&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;git-子模块的初始化及更新&#34;&gt;Git 子模块的初始化及更新&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;git submodule init&lt;/code&gt;会初始化当前仓库中存在的子模块(根据.gitmodules文件去查找子模块)。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;git submodule update&lt;/code&gt;就是更新当前仓库存在子模块，拉取最新代码。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;git submodule update&lt;/code&gt;是根据父仓库中记录的子模块仓库的&lt;code&gt;commit-id&lt;/code&gt;去更新子模块仓库，如果子模块仓库commit了但是父仓库并没有&lt;code&gt;add&lt;/code&gt;，那么&lt;code&gt;git submodule update&lt;/code&gt;会还原子模块仓库的提交。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;git submodule foreach &amp;lt;command&amp;gt;&lt;/code&gt; 进入到每个子模块，然后执行&lt;code&gt;&amp;lt;command&amp;gt;&lt;/code&gt;命令&lt;/p&gt;
-&lt;h2 id=&#34;git-子模块的移除&#34;&gt;Git 子模块的移除&lt;/h2&gt;
-&lt;p&gt;执行以下命令删除 Git 子模块，相关内容请参考&lt;a href=&#34;http://stackoverflow.com/questions/1260748/how-do-i-remove-a-submodule/21211232#21211232&#34;&gt;Stack Overflow&lt;/a&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git rm the_submodule
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rm -rf .git/modules/the_submodule
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-      </description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;git submodule&lt;/code&gt;就是git主仓库在本仓库的配置中记录着子模块仓库对应的名字，路径，远端url，然后创建一个特殊文件去记录子模块仓库目前的&lt;code&gt;commit-id&lt;/code&gt;，每次更新子模块就是通过远端路径和&lt;code&gt;commit-id&lt;/code&gt;来进行更新&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

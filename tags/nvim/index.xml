@@ -1,55 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – nvim</title>
+    <title>Nvim on 647 Universe</title>
     <link>https://bwangel.me/tags/nvim/</link>
-    <description>Recent content in nvim on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Nvim on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Fri, 21 Oct 2022 15:43:43 +0800</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/tags/nvim/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Wed, 13 Dec 2023 10:39:14 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/nvim/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: Ubuntu 下 alacritty 终端中安装 nvim-tree 插件</title>
+      <title>Ubuntu 下 alacritty 终端中安装 nvim-tree 插件</title>
       <link>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</link>
       <pubDate>Fri, 21 Oct 2022 15:43:43 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
-&lt;p&gt;使用 packer 安装 nvim-tree 的步骤比较简单，这里不再赘述。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;从 &lt;a href=&#34;https://www.nerdfonts.com/font-downloads&#34;&gt;nerdfonts&lt;/a&gt; 选择一个你喜欢的字体并下载下来，我下载的是 DejaVuSansMono.zip&lt;/li&gt;
-&lt;li&gt;安装 nerd 字体&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;unzip -d ~/.fonts/DejaVuSansMono DejaVuSansMono.zip
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 刷新字体缓存&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fc-cache -fv
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;获取字体名称 &lt;code&gt;DejaVuSansM Nerd Font Mono&lt;/code&gt; ，打开终端，在 &lt;strong&gt;配置文件首选项&lt;/strong&gt; 中查看字体名称&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-10-21-155055.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;可以看到字体名称是: &lt;strong&gt;DejaVuSansM Nerd Font Mono&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;修改 &lt;code&gt;~/.alacritty.yml&lt;/code&gt; 文件，将 &lt;code&gt;font -&amp;gt; normal -&amp;gt; family&lt;/code&gt; 改成对应的字体名称&lt;/li&gt;
-&lt;li&gt;最终，我们就能够在终端里看到，图标被正确显示了&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2022-10-21-155427.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.nerdfonts.com/font-downloads&#34;&gt;www.nerdfonts.com&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description></description>
     </item>
-    
   </channel>
 </rss>

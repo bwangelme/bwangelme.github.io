@@ -1,277 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – NodeJS</title>
+    <title>NodeJS on 647 Universe</title>
     <link>https://bwangel.me/docs/nodejs/</link>
     <description>Recent content in NodeJS on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 06 Nov 2023 10:50:58 +0800</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/docs/nodejs/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Mon, 06 Nov 2023 11:03:48 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/docs/nodejs/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: 简单聊聊HTML 5中的Web Storage</title>
+      <title>简单聊聊HTML 5中的Web Storage</title>
       <link>https://bwangel.me/docs/nodejs/web-storage-api/</link>
       <pubDate>Sat, 06 May 2017 02:34:14 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/nodejs/web-storage-api/</guid>
-      <description>
-        
-        
-        &lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;针对HTML5中的 Web Storage进行了介绍&lt;/li&gt;
-&lt;li&gt;主要介绍了存取API，有效周期，可用性检测等&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;基础概念&#34;&gt;基础概念&lt;/h2&gt;
-&lt;p&gt;存储对象是在客户端进行简单的键值对存储的对象，它们有一下特点。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;存储对象分为 localStorage 和 sessionStorage&lt;/li&gt;
-&lt;li&gt;存储对象会在页面载入的时候完好地加载进来&lt;/li&gt;
-&lt;li&gt;它们存储的都是键值对，就像对象一样&lt;/li&gt;
-&lt;li&gt;存储对象的键和值都是__字符串__，数字的键和值会被自动转义成字符串&lt;/li&gt;
-&lt;li&gt;可以使用以下的方式来访问 Web Storage&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;localStorage&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;colorSetting&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;#a4509b&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;localStorage&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;colorSetting&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;#a4509b&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;localStorage&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;setItem&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;colorSetting&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;#a4509b&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;不过建议使用 Web Storage API (setItem, getItem, removeItem, key, length)来访问数据，为了防止使用明文对象作为键值存储时的&lt;a href=&#34;http://www.2ality.com/2012/01/objects-as-maps.html&#34;&gt;陷阱&lt;/a&gt;。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;分类&#34;&gt;分类&lt;/h2&gt;
-&lt;h3 id=&#34;sessionstorage&#34;&gt;sessionStorage&lt;/h3&gt;
-&lt;p&gt;sessionStorage 为每个源 (域名) 分别维护了一个存储区域，有效期为整个页面会话。&lt;/p&gt;
-&lt;p&gt;页面会话有效的情形:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;页面刷新&lt;/li&gt;
-&lt;li&gt;页面通过前进或者后退回到这个页面&lt;/li&gt;
-&lt;li&gt;页面关闭后通过&lt;code&gt;command + shift + T&lt;/code&gt;恢复过来&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;页面会话的失效的情形:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;页面关闭后重新打开&lt;/li&gt;
-&lt;li&gt;另外打开一个页面，域名和本页面域名相同。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;以上有效和失效情形都是我在 Chrome 和 Firefox 中测试的，&lt;strong&gt;文档中并没有详细说明&lt;/strong&gt;，如果有不对的地方，还望指正。&lt;/p&gt;
-&lt;h3 id=&#34;localstorage&#34;&gt;localStorage&lt;/h3&gt;
-&lt;p&gt;localStorage 也是为每个域名提供了一个类对象的存储区域，不过它是持久存储的，就算浏览器关闭并重新打开，它也不会失效。&lt;/p&gt;
-&lt;h3 id=&#34;注意&#34;&gt;注意&lt;/h3&gt;
-&lt;p&gt;浏览器为每个源都提供了两个不同的 localStorage 和 sessionStorage 对象，它们是相互独立的。&lt;/p&gt;
-&lt;h2 id=&#34;localstorage-的可用性检测&#34;&gt;localStorage 的可用性检测&lt;/h2&gt;
-&lt;p&gt;如果在一个浏览器中 localStorage 是可用的，那么就会存在一个对象&lt;code&gt;window.localStorage&lt;/code&gt;来代表本地存储区域。但是由于各种情况，在一个页面中，localStorage 不一定是可用的。例如在 Safari 浏览器的隐身模式下，&lt;code&gt;window.localStorage&lt;/code&gt;就是一个空对象，而且分配给它的容量是0。&lt;/p&gt;
-&lt;p&gt;下面这个代码片段就展示了如何检测 localStorage 和 sessionStorage 是否可用？&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;storageAvailable&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;storage&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;window&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;],&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;__storage_test__&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000&#34;&gt;storage&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;setItem&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#000&#34;&gt;storage&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;removeItem&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;catch&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;storageAvailable&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;localStorage&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// 其中这个&amp;#39;localStorage&amp;#39; 可以替换成 &amp;#39;sessionStorage&amp;#39;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// Yippee! We can use localStorage awesomeness
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;// Too bad, no localStorage for us
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;关于检测 localStorage 的代码的演化历史，可以参考 &lt;a href=&#34;https://gist.github.com/paulirish/5558557&#34;&gt;A brief history of detecting local storage&lt;/a&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;web-storage-api&#34;&gt;Web Storage API&lt;/h2&gt;
-&lt;h3 id=&#34;增删改查-api&#34;&gt;增删改查 API&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;localStorage.getItem(key)&lt;/code&gt; &amp;ndash; 获取一个键的值
-&lt;code&gt;localStorage.setItem(key, value)&lt;/code&gt; &amp;ndash; 创建或者更新(当这个键已经存在的时候)一个键值对
-&lt;code&gt;localStorage.clear()&lt;/code&gt; &amp;ndash; 清空当前域名下的所有键值对
-&lt;code&gt;localStorage.removeItem(key)&lt;/code&gt; &amp;ndash; 删除当前域名下由key所指定的那个数据项&lt;/p&gt;
-&lt;h3 id=&#34;事件监听&#34;&gt;事件监听&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;window&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;addEventListener&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;storage&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;function&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87&#34;&gt;document&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;querySelector&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;.my-key&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;textContent&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;key&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87&#34;&gt;document&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;querySelector&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;.my-old&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;textContent&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;oldValue&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87&#34;&gt;document&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;querySelector&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;.my-new&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;textContent&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;newValue&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87&#34;&gt;document&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;querySelector&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;.my-url&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;textContent&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;url&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87&#34;&gt;document&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;querySelector&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;.my-storage&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;textContent&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;storageArea&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;});&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上述代码展示了向 localStorage 添加事件监听器的方法，当 localStorage 改变的时候，会传入一个事件，其中各个字段意义如下:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;key&lt;/code&gt;: 被改变的key&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;oldValue&lt;/code&gt;: 旧的值&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;newValue&lt;/code&gt;: 新的值&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;url&lt;/code&gt;: 改变这个key的页面的地址&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;storageArea&lt;/code&gt;: 被影响到的存储对象&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;更多内容请参考 &lt;a href=&#34;https://github.com/mdn/dom-examples/tree/master/web-storage&#34;&gt;web-storage-code&lt;/a&gt; 和 &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/Events/storage&#34;&gt;storage&lt;/a&gt; 。&lt;/p&gt;
-&lt;h2 id=&#34;浏览器兼容性&#34;&gt;浏览器兼容性&lt;/h2&gt;
-&lt;p&gt;所有的浏览器对于 localStorage 和 sessionStorage 支持的容量都一直在变化，可以参考 &lt;a href=&#34;http://dev-test.nemikor.com/web-storage/support-test/&#34;&gt;Web Storage Support Test&lt;/a&gt; 获取详细的信息。&lt;/p&gt;
-&lt;h2 id=&#34;其他参考链接&#34;&gt;其他参考链接&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API&#34;&gt;Using the Web Storage API&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://mdn.github.io/dom-examples/web-storage/&#34;&gt;web-storage&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-      </description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;针对HTML5中的 Web Storage进行了介绍&lt;/li&gt;&#xA;&lt;li&gt;主要介绍了存取API，有效周期，可用性检测等&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
-      <title>Docs: npm小记</title>
+      <title>npm小记</title>
       <link>https://bwangel.me/docs/nodejs/npm%E5%B0%8F%E8%AE%B0/</link>
       <pubDate>Fri, 06 May 2016 15:10:25 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/nodejs/npm%E5%B0%8F%E8%AE%B0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;关于npm的小记，记录自己平常学习到的零碎知识点&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;npm-ls&#34;&gt;npm ls&lt;/h2&gt;
-&lt;h3 id=&#34;用法&#34;&gt;用法&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    npm ls &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt;&amp;lt;@scope&amp;gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&amp;lt;pkg&amp;gt; ...&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    别名: list, la, ll
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;说明&#34;&gt;说明&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;这条命令将会在stdout中打印出所有已经安装的包和他们的依赖包，以树形目录的形式打印出来。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;位置参数是&lt;code&gt;name@version-range&lt;/code&gt;形式的标识符，它将会打印结果，只打印出命名包的路径中所含有的包。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;可以通过加上-g参数来打印全局安装的包。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;npm-registry&#34;&gt;npm registry&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;npm模块仓库提供了一个查询服务，叫做registry。例如&lt;a href=&#34;https://registry.npmjs.org/&#34;&gt;https://registry.npmjs.org/&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;在网址后面跟上模块名即可以查询相关模块的信息。例如&lt;a href=&#34;https://registry.npmjs.org/react&#34;&gt;https://registry.npmjs.org/react&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;在模块名后面还可以跟上版本号，例如&lt;a href=&#34;https://registry.npmjs.org/react/v0.14.6&#34;&gt;https://registry.npmjs.org/react/v0.14.6&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;返回的JSON对象里面，有一个dist.tarball属性，是该版本压缩包的地址，将该压缩包解压，即可得到相关模块的源码，npm即通过这种方式来安装模块。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;npm-缓存&#34;&gt;npm 缓存&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;npm的缓存目录在Linux下是$HOME/.npm&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;可以通过&lt;code&gt;npm config get cache&lt;/code&gt;获取缓存目录&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;可以通过&lt;code&gt;npm cache ls&lt;/code&gt;查看当前缓存的模块&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;可以通过&lt;code&gt;npm cache clean&lt;/code&gt;来清除缓存&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;在&lt;code&gt;{cache}/{hostname}/{path}/.cache.json&lt;/code&gt;文件中，存放了&lt;code&gt;{path}&lt;/code&gt;这个模块的版本信息，以及模块最近修改时间和最新一次请求时服务器返回的ETag&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;对于一些不关键的操作(例如&lt;code&gt;npm search&lt;/code&gt;和&lt;code&gt;npm view&lt;/code&gt;)，npm会先查看.cache.json里模块的最近更新时间，跟当前时间的差距，看是不是在可接受的范围内。如果是，就不再向远端服务器请求，而是直接返回.cache.json的数据&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;关于npm的小记，记录自己平常学习到的零碎知识点&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
-      <title>Docs: NodeJS 笔记</title>
+      <title>NodeJS 笔记</title>
       <link>https://bwangel.me/docs/nodejs/note/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/nodejs/note/</guid>
-      <description>
-        
-        
-        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;阮一峰的&lt;a href=&#34;http://javascript.ruanyifeng.com/#toc10&#34;&gt;Node.js&lt;/a&gt;教程笔记&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;nodejs概述&#34;&gt;Node.js概述&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Node约定，如果需要某个回调函数作为参数，则回调函数是最后一个参数。&lt;/li&gt;
-&lt;li&gt;回调函数本身的第一个参数，约定为上一步传入的错误对象。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;模块化结构&#34;&gt;模块化结构&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;每个模块通过module.exports来导出对象，函数，变量等&lt;/li&gt;
-&lt;li&gt;其他模块通过require函数来获取某个模块倒数的exports&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;模块的加载机制&#34;&gt;模块的加载机制&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;CommonJS模块的加载机制是，输入是输出值的拷贝，一旦输出一个值，模块内部的变化就影响不到这个值。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;packagejson文件&#34;&gt;package.json文件&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;scripts&lt;/code&gt;字段定义通过&lt;code&gt;npm run&lt;/code&gt;运行的命令&lt;/p&gt;
-      </description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;阮一峰的&lt;a href=&#34;http://javascript.ruanyifeng.com/#toc10&#34;&gt;Node.js&lt;/a&gt;教程笔记&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
-      <title>Docs: Vue.js关于组件的笔记</title>
+      <title>Vue.js关于组件的笔记</title>
       <link>https://bwangel.me/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-      <description>
-        
-        
-        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;学习Vue.js官方教程的笔记&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&#34;组件&#34;&gt;组件&lt;/h1&gt;
-&lt;h2 id=&#34;定义组件的步骤&#34;&gt;定义组件的步骤&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;利用&lt;code&gt;extend&lt;/code&gt;定义组件&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;利用&lt;code&gt;component&lt;/code&gt;注册组件&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;利用注册语法糖直接注册组件&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;Vue&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;component&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;my-component&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;template&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&amp;lt;div&amp;gt;A custom component&amp;lt;/div&amp;gt;&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;})&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;注意事项&#34;&gt;注意事项&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;使用函数注册data
-data: function() { return {a:1} }&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;杂项&#34;&gt;杂项&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;资源命名约定&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;vue支持驼峰命名法&lt;/p&gt;
-&lt;h2 id=&#34;疑问&#34;&gt;疑问&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;动态语法和bind是否相同&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;code&gt;&amp;lt;comp :some-prop=&amp;quot;1&amp;quot;&amp;gt;&amp;lt;/comp&amp;gt;&lt;/code&gt; vs &lt;code&gt;&amp;lt;comp v-bind:my-message=&amp;quot;xff&amp;quot;&amp;gt;&amp;lt;/comp&amp;gt;&lt;/code&gt;&lt;/p&gt;
-      </description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;学习Vue.js官方教程的笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,66 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – Letsencrypt</title>
+    <title>Letsencrypt on 647 Universe</title>
     <link>https://bwangel.me/tags/letsencrypt/</link>
     <description>Recent content in Letsencrypt on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Sun, 13 Aug 2017 14:04:06 +0000</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/tags/letsencrypt/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Wed, 18 Oct 2023 09:36:48 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/letsencrypt/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: Letsencrypt通过DNS TXT记录来验证域名有效性</title>
+      <title>Letsencrypt通过DNS TXT记录来验证域名有效性</title>
       <link>https://bwangel.me/docs/http/letsencrypt-dns-txt/</link>
       <pubDate>Sun, 13 Aug 2017 14:04:06 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/http/letsencrypt-dns-txt/</guid>
-      <description>
-        
-        
-        &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Letsencrypt 通过dns记录来验证域名&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
-&lt;p&gt;我们在使用&lt;code&gt;letsencrypt&lt;/code&gt;获取免费的HTTPS证书的时候，&lt;code&gt;letsencrypt&lt;/code&gt;需要对域名进行验证。默认情况下它的验证方式是这样的：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;certbot&lt;/code&gt;程序在web目录的根目录下放置一个文件。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;letsencrypt&lt;/code&gt;的服务器通过域名来访问这个文件，来验证你申请的域名是属于你的&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;但有时候我们想为内网的某台主机设置HTTPS，因为内网的主机无法被&lt;code&gt;letsencrypt&lt;/code&gt;的服务器访问到，&lt;code&gt;certbot --nginx certonly&lt;/code&gt;就会出现&lt;code&gt;Connection refused&lt;/code&gt;的错误。&lt;/p&gt;
-&lt;p&gt;为了解决上述问题，我们可以更改验证方式，使用DNS记录来验证域名。&lt;/p&gt;
-&lt;h2 id=&#34;利用certbot获取证书&#34;&gt;利用certbot获取证书&lt;/h2&gt;
-&lt;p&gt;运行&lt;code&gt;sudo certbot --manual --preferred-challenges dns certonly&lt;/code&gt;命令，输入域名并同意记录本机IP后开始获取证书，接着&lt;code&gt;certbot&lt;/code&gt;就会弹出如下的提示：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-------------------------------------------------------------------------------
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Please deploy a DNS TXT record under the name
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;_acme-challenge.example.com with the following value:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IMdfdsfsJDqBRyRaaEgPPQlEuvtxJQAgWZTIVbLuzDi8U
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Once this is deployed,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-------------------------------------------------------------------------------
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Press Enter to Continue
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此时&lt;code&gt;certbot&lt;/code&gt;程序就会暂停，等待我们去添加DNS记录。&lt;/p&gt;
-&lt;h2 id=&#34;添加dns的txt记录&#34;&gt;添加DNS的TXT记录&lt;/h2&gt;
-&lt;p&gt;看到上述的提示后，修改域名的DNS记录，添加一条&lt;code&gt;TXT&lt;/code&gt;记录，主机名为&lt;code&gt;_acme-challenge&lt;/code&gt;，而其中的内容就是&lt;code&gt;letsencrypt&lt;/code&gt;生成的随机字符串&lt;code&gt;IMdfdsfsJDqBRyRaaEgPPQlEuvtxJQAgWZTIVbLuzDi8U&lt;/code&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;验证成功&#34;&gt;验证成功&lt;/h2&gt;
-&lt;p&gt;添加好DNS记录后，我们可以通过&lt;code&gt;dig -t txt _acme-challenge.example.com&lt;/code&gt;来查看域名的内容，域名生效以后，在&lt;code&gt;certbot&lt;/code&gt;程序中下按下回车键，程序继续运行。&lt;code&gt;letsencrypt&lt;/code&gt;对DNS记录验证成功，证书就申请成功了。&lt;/p&gt;
-&lt;h2 id=&#34;参考文献&#34;&gt;参考文献&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;https://certbot.eff.org/docs/using.html#manual&#34;&gt;Certbot User Guide&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;certbot -h certonly&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-      </description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Letsencrypt 通过dns记录来验证域名&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

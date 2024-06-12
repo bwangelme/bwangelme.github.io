@@ -1,17 +1,1474 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – 647号宇宙</title>
+    <title>647号宇宙 on 647 Universe</title>
     <link>https://bwangel.me/</link>
     <description>Recent content in 647号宇宙 on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    
-	  <atom:link href="https://bwangel.me/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-      
-    
-    
+    <atom:link href="https://bwangel.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>QPS 和 RT 的关系</title>
+      <link>https://bwangel.me/docs/performance/qps_rt/</link>
+      <pubDate>Sun, 13 Aug 2023 16:17:52 +0800</pubDate>
+      <guid>https://bwangel.me/docs/performance/qps_rt/</guid>
+      <description>术语说明 QPS: Query Per Second RT: Response Time RT_CPU: 单个请求中的 CPU 时间 RT_WAIT: 单个请求中除了 CPU 时间外的其他时间(等待时间) 结论 单线程情况下, QPS = 1000 / RT&#xA;多线程情况下，最好的情况(最佳线程数)是&#xA;QPS = 1000 / RT_CPU&#xA;最佳线程数 = (RT_CPU+RT_WAIT) / RT_CPU * CPU核心&#xA;线程数超过 最佳线程数 后, 系统的 QPS 不会再增加了，如果进一步增多，因为多个线程抢夺 CPU 资源导致的时间浪费，QPS 还会下降。 说明 一个请求我们除了有 CPU 执行时间外，还有等待时间(等待IO/等待锁资源)。&#xA;如果单个请求的等待时间占比很高，我们可以增加线程数，提升 CPU 的利用率，这样 QPS 也会随之增加。(CPU 利用率达到 85% 以上才比较正常) 线程本身也会消耗资源，它消耗的是 OS 级别的内存，不是进程内存，如果线程数小于 1000, 那么对于系统性能的影响可以忽略不计。 如果单个请求的 CPU 时间占比很高，此时 CPU 成为系统瓶颈，那么系统整体的 QPS 已经没有提升空间了，要么优化程序，减少 CPU 指令数，要么增加 CPU 资源。 我们提升系统 QPS 的目的就是提升 CPU 的利用率，使 CPU 成为系统瓶颈。 </description>
+    </item>
+    <item>
+      <title>Pycharm</title>
+      <link>https://bwangel.me/docs/editor/pycharm/</link>
+      <pubDate>Wed, 09 Aug 2023 10:57:42 +0800</pubDate>
+      <guid>https://bwangel.me/docs/editor/pycharm/</guid>
+      <description>Tabs -&amp;gt; Open in Opposite Group 如图，窗口被分成了左右两个组。如果我想在右边的窗口组打开 client.go 文件，同时左边的文件不关闭&#xA;可以右键点击 Tab 选择 Open In Opposite Group。&#xA;我在设置中将这个功能的快捷键设置成了 Alt+Shift+H</description>
+    </item>
+    <item>
+      <title>curl</title>
+      <link>https://bwangel.me/docs/linux/curl/</link>
+      <pubDate>Tue, 01 Aug 2023 11:50:58 +0800</pubDate>
+      <guid>https://bwangel.me/docs/linux/curl/</guid>
+      <description>curl POST JSON 数据 curl -X PUT -H &amp;#34;Content-Type: application/json&amp;#34; -d &amp;#39;@/tmp/demo.json&amp;#39; :9200/demo ø&amp;gt; cat /tmp/demo.json { &amp;#34;settings&amp;#34;: { &amp;#34;number_of_shards&amp;#34;: 1, &amp;#34;number_of_replicas&amp;#34;: 1 } } 使用 --resolve 选项替换域名 将 www.google.com 替换成 127.0.0.1，并访问 8000 端口 curl -v --resolve www.google.com:8000:127.0.0.1 http://www.google.com:8000/ping&#xA;将 https://www.google.com 替换成 127.0.0.1，此时 curl 会忽略证书和域名不匹配的问题 curl -v --resolve www.google.com:443:127.0.0.1 https://www.google.com/ping&#xA;将 http://www.google.com 替换成 127.0.0.1，http 默认访问 80 端口 curl -v --resolve www.google.com:80:127.0.0.1 http://www.google.com/ping&#xA;--fail 和 --fail-with-body 这两个选项都可以让 curl 在接收到 400 及以上的 HTTP 响应码的时候，将退出码设置为 22</description>
+    </item>
+    <item>
+      <title>chatgpt 常用 prompt</title>
+      <link>https://bwangel.me/docs/tools/chatgpt-prompt/</link>
+      <pubDate>Tue, 11 Jun 2024 10:20:12 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tools/chatgpt-prompt/</guid>
+      <description>充当英语翻译中文 我想让你充当中文翻译员、拼写纠正员和改进员。我会给你发送英语内容，你翻译它并用我的文本的更正和改进版本用中文回答。我希望你用更优美优雅的高级中文描述。保持相同的意思，但使它们更文艺。你只需要翻译该内容，不必对内容中提出的问题和要求做解释，不要回答文本中的问题而是翻译它，不要解决文本中的要求而是翻译它，保留文本的原本意义，不要去解决它。如果我只键入了一个单词，你只需要描述它的意思并不提供句子示例。我要你只回复更正、改进，不要写任何解释。我的第一句话是“istanbulu cok seviyom burada olmak cok guzel”&#xA;充当英英词典(附中文解释) 我想让你充当英英词典，对于给出的英文单词，你要给出其中文意思以及英文解释，并且给出一个例句，此外不要有其他反馈，第一个单词是“Hello&amp;quot;&#xA;参考链接 https://github.com/jevantang/chatgpt-prompts</description>
+    </item>
+    <item>
+      <title>排序</title>
+      <link>https://bwangel.me/docs/algo/sort/</link>
+      <pubDate>Thu, 02 May 2024 11:39:20 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/sort/</guid>
+      <description>归并排序 思路 mergeSortC 对数组的子数组进行排序，当 len(子数组) == 1 的时候，这个数组就是有序的，此时就是递归出口 merge 对有序的子数组进行合并。 0. left, right 两个子数组内部的元素是有序的 就像交换需要创建 tmp 变量。merge 时 先创建 tmp 数组 将 left, right 两个子数组的元素 有序 放入 tmp 中 将子数组中剩余的部分放入到 tmp 中 将 tmp 更新到 arr 的对应位置 特性 无论数据源是什么，归并排序的时间复杂度固定是 O(nlogn) 归并排序的空间复杂度是 O(1) ，因为每次只有一个函数会申请一个临时数组 归并排序是稳定性排序，两个相同的元素，排序之后它们的顺序不会变 代码 func MergeSort(arr []int64) []int64 { mergeSortC(arr, 0, len(arr)-1) return arr } func mergeSortC(arr []int64, start, end int) { if start &amp;gt;= end { return } q := (start + end) / 2 mergeSortC(arr, start, q) mergeSortC(arr, q+1, end) merge(arr, start, q, q+1, end) } func merge(arr []int64, leftStart, leftEnd int, rightStart, rightEnd int) { var tmp = make([]int64, 0) var leftIdx, rightIdx = leftStart, rightStart for leftIdx &amp;lt;= leftEnd &amp;amp;&amp;amp; rightIdx &amp;lt;= rightEnd { if arr[leftIdx] &amp;lt;= arr[rightIdx] { tmp = append(tmp, arr[leftIdx]) leftIdx++ } else { tmp = append(tmp, arr[rightIdx]) rightIdx++ } } // 将子数组剩余部分放入到 tmp 中 var ( remainStart = leftIdx remainEnd = leftEnd ) if leftIdx &amp;gt; leftEnd { remainStart = rightIdx remainEnd = rightEnd } for remainStart &amp;lt;= remainEnd { tmp = append(tmp, arr[remainStart]) remainStart++ } // 将 tmp 的元素放入 arr 对应位置中 for idx := 0; idx &amp;lt;= (rightEnd - leftStart); idx++ { arr[leftStart+idx] = tmp[idx] } } 时间复杂度 N 等于数组长度</description>
+    </item>
+    <item>
+      <title>138: 随机链表的复制</title>
+      <link>https://bwangel.me/docs/algo/leetcode/138/</link>
+      <pubDate>Wed, 01 May 2024 23:14:42 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/138/</guid>
+      <description>题目 给你一个长度为 n 的链表，每个节点包含一个额外增加的随机指针 random ，该指针可以指向链表中的任何节点或空节点。&#xA;构造这个链表的深拷贝。深拷贝应该正好由 n 个全新节点组成，其中每个新节点的值都设为其对应的原节点的值。&#xA;新节点的 next 指针和 random 指针也都应指向复制链表中的新节点，并使原链表和复制链表中的这些指针能够表示相同的链表状态。&#xA;复制链表中的指针都不应指向原链表中的节点 。&#xA;例如，如果原链表中有 X 和 Y 两个节点，其中 X.random &amp;ndash;&amp;gt; Y 。那么在复制链表中对应的两个节点 x 和 y ，同样有 x.random &amp;ndash;&amp;gt; y 。&#xA;返回复制链表的头节点。&#xA;用一个由 n 个节点组成的链表来表示输入/输出中的链表。每个节点用一个 [val, random_index] 表示：&#xA;val：一个表示 Node.val 的整数 random_index：随机指针指向的节点索引（范围从 0 到 n-1）；如果不指向任何节点，则为 null 你的代码只接受原链表的头节点 head 作为传入参数。&#xA;提示：&#xA;0 &amp;lt;= n &amp;lt;= 1000 -10^4 &amp;lt;= Node.val &amp;lt;= 10^4 Node.random 为 null 或指向链表中的节点。 解题思路 假设存在链表 A -&amp;gt; B -&amp;gt; C</description>
+    </item>
+    <item>
+      <title>75: 颜色分类</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-75/</link>
+      <pubDate>Wed, 01 May 2024 16:14:46 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-75/</guid>
+      <description>题目描述 给定一个包含红色、白色和蓝色、共 n 个元素的数组 nums ，原地对它们进行排序，使得相同颜色的元素相邻，并按照红色、白色、蓝色顺序排列。&#xA;我们使用整数 0、 1 和 2 分别表示红色、白色和蓝色。&#xA;必须在不使用库内置的 sort 函数的情况下解决这个问题。&#xA;示例 1： 输入：nums = [2,0,2,1,1,0] 输出：[0,0,1,1,2,2] 示例 2： 输入：nums = [2,0,1] 输出：[0,1,2] 提示：&#xA;n == nums.length 1 &amp;lt;= n &amp;lt;= 300 nums[i] 为 0、1 或 2 进阶：&#xA;你能想出一个仅使用常数空间的一趟扫描算法吗？&#xA;解题思路 程序运行结束后，数组中分为三个区域，0 1 2 区域&#xA;使用两个指针 p_zero 和 p_two, 分别表示 0 区域的尾部后一位和 2 区域的头部前一位&#xA;遍历一遍数组，遇到数字 0 放到 0 区域尾部, 遇到数字2放到 2 区域头部，遍历完成后，数组中的数字也自动分好区了&#xA;注意:&#xA;2 区域中的数字不需要再移动了 ，因此我们遍历时，遍历到2区域的头部就跳出循环。 循环跳出的条件是 i &amp;lt;= p_two， 要遍历数组中每一个数字，因此要遍历到 p_two 代码 func sortColors(nums []int) { var ( p_zero = 0 i = 0 p_two = len(nums) - 1 ) // 注意，这里的条件是 i &amp;lt;= p_two, 必须要比较数组中的所有元素 for i &amp;lt;= p_two { if nums[i] == 0 { swap(nums, i, p_zero) p_zero++ // 当前数字被交换到后面了，当前数字一定是0,因此 i 可以往后移动一位 i++ } else if nums[i] == 1 { // 当前数字是1的时候，不交换 i++ } else { // 当前数字是2的时候，将当前数字交换到数组尾部 swap(nums, i, p_two) // 当前交换过来的数字是从数组后面交换过来的，不确定值，因此 i 不能 ++ p_two-- } } } func swap(nums []int, x, y int) { tmp := nums[x] nums[x] = nums[y] nums[y] = tmp } 复杂度分析 N == len(nums) 时间复杂度: O(N), 数组只遍历了一遍 空间复杂度: O(1), 没有额外申请其他的数据结构 </description>
+    </item>
+    <item>
+      <title>Git Tips</title>
+      <link>https://bwangel.me/docs/tools/git/</link>
+      <pubDate>Sat, 20 Jan 2024 22:26:51 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tools/git/</guid>
+      <description>Git ssh push 超时 修改 ~/.git/config 文件&#xA;# Add section below to it Host github.com Hostname ssh.github.com Port 443 将 push 的端口从 22 改成 443，有可能绕过 GFW&#xA;测试 22 端口超时&#xA;$ ssh -T git@github.com ssh: connect to host github.com port 22: Connection timed out 443 端口能联通&#xA;ø&amp;gt; ssh -T -p 443 git@github.com Hi bwangelme! You&amp;#39;ve successfully authenticated, but GitHub does not provide shell access. </description>
+    </item>
+    <item>
+      <title>Docker Cli</title>
+      <link>https://bwangel.me/docs/container/docker-cli/</link>
+      <pubDate>Thu, 04 Jan 2024 16:53:10 +0800</pubDate>
+      <guid>https://bwangel.me/docs/container/docker-cli/</guid>
+      <description>docker cli 获取所有容器的 IP docker ps -q | xargs docker inspect -f &amp;#39;{{.Name}}{{&amp;#34;\t&amp;#34;}}{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}&amp;#39; </description>
+    </item>
+    <item>
+      <title>CNI</title>
+      <link>https://bwangel.me/docs/k8s/cni/</link>
+      <pubDate>Mon, 25 Dec 2023 18:16:42 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/cni/</guid>
+      <description>CNI 要求 CNI 插件的要求可以被简述成两个&#xA;连通性(Connectivity), 每个 Pod 通过默认的网卡接口 eth0 分配 IP 地址，并且这个 IP 地址，在节点的根网络空间上可达。 可达性(Reachability)，跨节点的 Pod 可以直接用 pod ip 通信（不需要经过 NAT）。 验证连通性 这是我用 kind 在本地搭建的一个三节点集群 kind: Cluster apiVersion: kind.x-k8s.io/v1alpha4 name: demo nodes: - role: control-plane image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f ø&amp;gt; docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3fdffdb2fa2d kindest/node:v1.26.3 &amp;#34;/usr/local/bin/entr…&amp;#34; About a minute ago Up About a minute 127.0.0.1:34309-&amp;gt;6443/tcp demo-control-plane 646f93b78436 kindest/node:v1.</description>
+    </item>
+    <item>
+      <title>Latency</title>
+      <link>https://bwangel.me/docs/performance/latency/</link>
+      <pubDate>Tue, 19 Dec 2023 18:51:09 +0800</pubDate>
+      <guid>https://bwangel.me/docs/performance/latency/</guid>
+      <description>Latency Comparison Numbers (~2012) Operation ns µs ms note L1 cache reference 0.5 ns Branch mispredict 5 ns L2 cache reference 7 ns 14x L1 cache Mutex lock/unlock 25 ns Main memory reference 100 ns 20x L2 cache, 200x L1 cache Compress 1K bytes with Zippy 3,000 ns 3 µs Send 1K bytes over 1 Gbps network 10,000 ns 10 µs Read 4K randomly from SSD* 150,000 ns 150 µs ~1GB/sec SSD Read 1 MB sequentially from memory 250,000 ns 250 µs Round trip within same datacenter 500,000 ns 500 µs Read 1 MB sequentially from SSD* 1,000,000 ns 1,000 µs 1 ms ~1GB/sec SSD, 4X memory Disk seek 10,000,000 ns 10,000 µs 10 ms 20x datacenter roundtrip Read 1 MB sequentially from disk 20,000,000 ns 20,000 µs 20 ms 80x memory, 20X SSD Send packet CA -&amp;gt; Netherlands -&amp;gt; CA 150,000,000 ns 150,000 µs 150 ms Notes 1 ns = 10^-9 seconds 1 us = 10^-6 seconds = 1,000 ns 1 ms = 10^-3 seconds = 1,000 us = 1,000,000 ns Credit By Jeff Dean: http://research.</description>
+    </item>
+    <item>
+      <title>Makefile</title>
+      <link>https://bwangel.me/docs/linux/makefile/</link>
+      <pubDate>Tue, 19 Dec 2023 17:13:40 +0800</pubDate>
+      <guid>https://bwangel.me/docs/linux/makefile/</guid>
+      <description> ?= ?= 指示仅在未设置或没有值时设置 KDIR 变量。&#xA;# make test 将会输出 foo KDIR ?= &amp;#34;foo&amp;#34; KDIR ?= &amp;#34;bar&amp;#34; test: echo $(KDIR) </description>
+    </item>
+    <item>
+      <title>利用 Python 处理字符串</title>
+      <link>https://bwangel.me/docs/linux/python-shell/</link>
+      <pubDate>Thu, 14 Dec 2023 12:06:58 +0800</pubDate>
+      <guid>https://bwangel.me/docs/linux/python-shell/</guid>
+      <description>/tmp/abc.md 中的内容如下&#xA;subject/music antispam/karazhan 我想输出成&#xA;Repo(dir=&amp;#39;music&amp;#39;, name=&amp;#39;subject/music&amp;#39;), Repo(dir=&amp;#39;karazhan&amp;#39;, name=&amp;#39;antispam/karazhan&amp;#39;), 可以利用 Python 来做解析重组字符串的工作, sys.argv[1] 就是每行想要解析的字符串&#xA;parse.py import sys dir_=sys.argv[1].split(&amp;#39;/&amp;#39;)[1] name=sys.argv[1] print(&amp;#34;Repo(dir=&amp;#39;%s&amp;#39;, name=&amp;#39;%s&amp;#39;),&amp;#34; % (dir_, name)) 如果 xargs 不加 -I 那就是将多行内容聚合到一行解析。&#xA;cat /tmp/abc.md | rg -v &amp;#39;^#&amp;#39; | xargs -I{} python3 /tmp/parse.py {} </description>
+    </item>
+    <item>
+      <title>envoy 线程模型</title>
+      <link>https://bwangel.me/docs/envoy/envoy-threading-model/</link>
+      <pubDate>Wed, 13 Dec 2023 13:17:28 +0800</pubDate>
+      <guid>https://bwangel.me/docs/envoy/envoy-threading-model/</guid>
+      <description>线程模型 envoy 的线程可以分成三类&#xA;main thread main thread 负责进程的管理，和 xDS Server 的通信，统计信息 stat 刷新，admin 设置。&#xA;main 线程中所有的工作都是异步 &amp;amp; 非阻塞的， 而且它负责的重要功能通常都不会用到大量的 CPU，所以它可以以单线程的模式运行。&#xA;worker thread worker 线程可以通过 --concurrency 选项来控制个数。&#xA;worekr 线程整体是一个非阻塞的事件循环，它负责创建 Listener 的连接，listen 端口，accept 连接并处理连接生命周期内的所有请求。这使得大多数连接代码都可以像单线程一样编写。&#xA;这种设计可能会导致连接不均衡，即某些 worker 线程比其他线程处理更多的连接。&#xA;file flush thread Envoy 写的每个文件(主要是 access-log)都有一个独立的数据刷新线程。因为将内容写入到操作系统的文件缓存时，即使使用了 O_NONBLOCK 选项，有时也会阻塞住。&#xA;当线程需要写入文件时，他们通常是将内容写入到一块内存区域，然后 flush 线程再将内容刷新到文件中。&#xA;连接处理 连接不均衡的问题，最早就有人在 github上问了，Envoy作者的回答是让操作系统来做负载均衡最好，而且一个线程处理accept，扩展性不高。但是后来作者还是加上了一个均衡连接的可选配置。&#xA;现代内核在连接的负载均衡方面表现得非常出色。 它们采用诸如IO优先级提升( IO priority boosting)之类的功能，试图在开始使用其他正在监听相同套接字的线程之前，填充一个线程的工作。同时，它们也不使用单个自旋锁来处理每个 accpet 操作。&#xA;连接一旦创建，IO 读写一般是绑定在一个线程。&#xA;Envoy 中每个工作线程都会创建一个连接池，因此尽管 HTTP2 会在一个连接上使用多个 Stream, 但是 Envoy 的每个线程还是会针对每个 Upstream 创建一个 TCP 连接。</description>
+    </item>
+    <item>
+      <title>Python2 的正则在 Mac 和 Linux 上的不同表现</title>
+      <link>https://bwangel.me/docs/python/unicode-re/</link>
+      <pubDate>Wed, 06 Dec 2023 12:20:47 +0800</pubDate>
+      <guid>https://bwangel.me/docs/python/unicode-re/</guid>
+      <description>表现 s = u&amp;#39;玛丽黛佳眉笔只-需-18,冲p腹t製o2𝒂I5EfW4xPmTq𝒃o2打🤔开桃o寶&amp;#39; 这个字符串 s 是一段淘口令，核心内容就是 𝒂 和 𝒃 之间的 ID I5EfW4xPmTq, 我们想用一个正则表达式将 ID 捕获出来。&#xA;𝒂 和 𝒃 的 unicode 码点不在基本平面内，在1号平面内。Unicode 各个平面的字符范围参考 维基百科&#xA;在 MacOS 的 Python2 上，可以用下面这段正则捕获&#xA;ur&amp;#34;[\uD800-\uDBFF][\uDC00-\uDFFF]([a-zA-Z0-9]{11})[\uD800-\uDBFF][\uDC00-\uDFFF]&amp;#34; D800-DBFF, DC00-DFFF 表示非基本平面的字符，用 utf-16 编码后，生成的两个字节。&#xA;MacOS 的 Python2 中，编译的时候默认使用了 UCS2 作为 Unicode 的编码实现，sys.maxunicode == 65535， 它不支持展示非基本平面外的 unicode 字符，所以只能用这种办法来绕过。&#xA;在 Linux 的 Python2 中，上述正则就失效了，需要用另外一个正则&#xA;ur&amp;#34;[\U00010000-\U0001FFFF]([a-zA-Z0-9]{11})[\U00010000-\U0001FFFF]&amp;#34; 00010000-0001FFFF 表示1号平面内的所有字符。&#xA;Linux 的 Python2 中，Unicode 的编码实现使用的是 UCS4，sys.maxunicode == 1114111, 它可以展示 Unicode 17 个平面中的所有字符，所以在正则中可以直接写非基本平面的码点&#xA;如何开启 UCS4 编译 Python 的时候，指定 --enable-unicode=ucs4 即可指定 unicode 的编码实现是 UCS4, 从而支持展示所有平面的 Unicode 码点。</description>
+    </item>
+    <item>
+      <title>细说：Unicode, UTF-8, UTF-16, UTF-32, UCS-2, UCS-4</title>
+      <link>https://bwangel.me/docs/encoding/unicode/</link>
+      <pubDate>Tue, 05 Dec 2023 19:18:29 +0800</pubDate>
+      <guid>https://bwangel.me/docs/encoding/unicode/</guid>
+      <description>原文链接: Malecrab 的博客&#xA;这篇文章讲的非常清楚了，我这里复制一份用于备份，查找。&#xA;Unicode与ISO 10646 全世界很多个国家都在为自己的文字编码，并且互不相通，不同的语言字符编码值相同却代表不同的符号（例如：韩文编码 EUC-KR 中 “한국어” 的编码值正好是汉字编码GBK中的“茄惫绢”）。&#xA;因此，同一份文档，拷贝至不同语言的机器，就可能成了乱码，于是人们就想：我们能不能定义一个超大的字符集，它可以容纳全世界所有的文字字符，再对它们统一进行编码，让每一个字符都对应一个不同的编码值，从而就不会再有乱码了。&#xA;如果说“各个国家都在为自己文字独立编码”是百家争鸣，那么“建立世界统一的字符编码”则是一统江湖，谁都想来做这个武林盟主。早前就有两个机构试图来做这个事：&#xA;国际标准化组织（ISO），他们于1984年创建ISO/IEC JTC1/SC2/WG2工作组，试图制定一份“通用字符集”（Universal Character Set，简称UCS），并最终制定了ISO 10646标准。 统一码联盟，他们由Xerox、Apple等软件制造商于1988年组成，并且开发了Unicode标准（The Unicode Standard，这个前缀Uni很牛逼哦 &amp;mdash; Unique, Universal, and Uniform）。 1991年前后，两个项目的参与者都认识到，世界不需要两个不兼容的字符集。于是，它们开始合并双方的工作成果，并为创立一个单一编码表而协同工作。从Unicode 2.0开始，Unicode采用了与ISO 10646-1相同的字库和字码；&#xA;ISO也承诺，ISO 10646将不会替超出U+10FFFF的UCS-4编码赋值，以使得两者保持一致。两个项目仍都独立存在，并独立地公布各自的标准。不过由于Unicode这一名字比较好记，因而它使用更为广泛。&#xA;Unicode编码点分为17个平面（plane），每个平面包含 \( 2^{16} \)（即65536）个码点（code point）。17个平面的码点可表示为从 U+xx0000 到 U+xxFFFF，其中xx表示十六进制值从 0x00 到 0x10，共计17个平面。&#xA;UTF-32 与 UCS-4 在 Unicode 与 ISO 10646 合并之前，ISO 10646标准为 通用字符集（UCS）定义了一种31位的编码形式（即UCS-4），其编码固定占用4个字节，编码空间为 0x00000000~0x7FFFFFFF（可以编码20多亿个字符）。&#xA;UCS-4有20多亿个编码空间，但实际使用范围并不超过 0x10FFFF，并且为了兼容Unicode标准，ISO也承诺将不会为超出 0x10FFFF 的 UCS-4 编码赋值。由此 UTF-32 编码被提出来了，它的编码值与UCS-4相同，只不过其编码空间被限定在了 0~0x10FFFF 之间。因此也可以说：UTF-32是UCS-4的一个子集。&#xA;UTF-16与UCS-2 除了UCS-4，ISO 10646 标准为 “通用字符集”（UCS）定义了一种16位的编码形式（即UCS-2），其编码固定占用2个字节，它包含65536个编码空间（可以为全世界最常用的63K字符编码，为了兼容Unicode，0xD800-0xDFFF 之间的码点未使用）。例：“汉” 的UCS-2编码为6C49。</description>
+    </item>
+    <item>
+      <title>MySQL 事务</title>
+      <link>https://bwangel.me/docs/mysql/transaction/</link>
+      <pubDate>Tue, 28 Nov 2023 22:10:53 +0800</pubDate>
+      <guid>https://bwangel.me/docs/mysql/transaction/</guid>
+      <description>查询持续时间超过 60s 的事务 select * from information_schema.innodb_trx where TIME_TO_SEC(timediff(now(),trx_started))&amp;gt;60; -- innodb_trx 存储了数据库的所有事务 -- trx_started 表示事务的开始时间 </description>
+    </item>
+    <item>
+      <title>Thrift Python Client 解析负数 field id 失败</title>
+      <link>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</link>
+      <pubDate>Thu, 23 Nov 2023 17:27:03 +0800</pubDate>
+      <guid>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</guid>
+      <description>thrift python 的 fastbinary 是什么 thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。&#xA;序列化的方式有多种，JSON, Binary, Compact。&#xA;Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实现。C++ 实现的这份我们叫做 fastbinary。&#xA;使用 TBinaryProtocol 初始化 protocol ，调用的是纯 Python 实现。TBinaryProtocolAccelerated 调用的是 C++ 实现。&#xA;问题描述 Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。&#xA;我们创建一个 thrift 服务，它的 idl 文件定义如下 service Service { string hello(1: string name) i64 add(i64 a, i64 b) } hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)</description>
+    </item>
+    <item>
+      <title>Leetcode第96题</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-96/</link>
+      <pubDate>Fri, 03 Nov 2023 08:45:11 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-96/</guid>
+      <description>题目 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。&#xA;示例 1：&#xA;输入：n = 3 输出：5&#xA;示例 2：&#xA;输入：n = 1 输出：1&#xA;提示：&#xA;1 &amp;lt;= n &amp;lt;= 19 解题思路 这个题目主要的难度在公式推导上，我们可以用动态规划的思路来求解。&#xA;令 \( G(N) \) 表示 n 互不相同的整数组成的二叉搜索树的数量。 \( F(i, N) \) 表示由 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量 可得, \( G(N) \) 是由每个 i 作为根节点的互不相同的二叉搜索树的数量的总和，此公式记做公式(1) $$G(N) = \sum_{i=1}^{N} F(i, N) \tag{1}$$接着，我们需要再推导出 \( F(i, N) \) 和 \( G(N) \) 的关系，就可以得到我们的递推公式了。&#xA;要想求 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量，我们可以先求出左右两个子树的数量，左右两个子树相乘，即是总的数量。</description>
+    </item>
+    <item>
+      <title>Python2 使用 Thrift 为什么会出现 EINTR 错误</title>
+      <link>https://bwangel.me/docs/python/thrift-eintr/</link>
+      <pubDate>Fri, 27 Oct 2023 09:22:30 +0800</pubDate>
+      <guid>https://bwangel.me/docs/python/thrift-eintr/</guid>
+      <description>EINTR 错误是什么 在 man 7 signal 中写到，&#xA;If a signal handler is invoked while a system call or library function call is blocked, then either:&#xA;• the call is automatically restarted after the signal handler returns; or&#xA;• the call fails with the error EINTR.&#xA;如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况&#xA;在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。&#xA;例如&#xA;read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?</description>
+    </item>
+    <item>
+      <title>二分查找</title>
+      <link>https://bwangel.me/docs/algo/binary_search/</link>
+      <pubDate>Tue, 10 Oct 2023 09:31:53 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/binary_search/</guid>
+      <description>二分查找的注意点 循环的条件: left &amp;lt;= right mid 计算方法: # 用移位预算速度更快 mid = left + ((right-left) &amp;gt;&amp;gt; 2)) left 和 right 的更新方法 left = mid + 1 right = mid - 1 </description>
+    </item>
+    <item>
+      <title>Consumer</title>
+      <link>https://bwangel.me/docs/kafka/consumer/</link>
+      <pubDate>Mon, 11 Sep 2023 16:30:55 +0800</pubDate>
+      <guid>https://bwangel.me/docs/kafka/consumer/</guid>
+      <description>Commit 当 Consumer 将 enable.auto.commit 设置为 true 的时候，kafka consumer 会自动提交 offset。 它在 auto.commit.interval.ms 选项的控制下，间隔N秒后，自动将当前 consumer 拉取到的消息 offset 提交到 kafka 中。&#xA;当 enable.auto.commit=false 时，kafka 客户端不会自动提交 offset，需要开发者通过 consumer.commitSync 或 consumer.commitAsync 提交 offset。&#xA;不建议每收到一条消息就提交一次 offset，consumer.commitSync 是有性能损耗的，如果 consumer.commitSync 调用的频率非常高，consumer 消费消息的速度将会变得很慢。&#xA;consumer.commitAsync 是异步提交的，它相对 consumer.commitSync 会有一定的性能提升。consumer.commitAsync 还有一个回调函数参数，让开发者设定在提交失败时做什么。&#xA;一般在 broker 正常时，提交失败的情况很少发生。开发者不需要做提交失败后重试的逻辑。 参考链接 https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md https://docs.confluent.io/platform/current/clients/consumer.html#id1 offset kafka 的消息以 group 为单位给 Consumer 发送。Consumer Group 在 topic 中的 offset 存储在 broker 的 __consumer_offsets topic 中。&#xA;新加入的 consumer group 默认从最新位置读取 message。可以通过修改 Consumer 的auto.</description>
+    </item>
+    <item>
+      <title>Broker</title>
+      <link>https://bwangel.me/docs/kafka/broker/</link>
+      <pubDate>Mon, 11 Sep 2023 16:27:26 +0800</pubDate>
+      <guid>https://bwangel.me/docs/kafka/broker/</guid>
+      <description>优雅地关闭 Kafka Broker 向进程发送 TERM 信号就可以优雅地关闭 Kafka Broker&#xA;这是 bin/kafka-server-stop.sh 的内容，他的思路就是通过 ps 查找 cmd 中包括 kafka.Kafka 的进程，来寻找进程 ID&#xA;SIGNAL=${SIGNAL:-TERM} OSNAME=$(uname -s) if [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS/390&amp;#34; ]]; then if [ -z $JOBNAME ]; then JOBNAME=&amp;#34;KAFKSTRT&amp;#34; fi PIDS=$(ps -A -o pid,jobname,comm | grep -i $JOBNAME | grep java | grep -v grep | awk &amp;#39;{print $1}&amp;#39;) elif [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS400&amp;#34; ]]; then PIDS=$(ps -Af | grep -i &amp;#39;kafka\.Kafka&amp;#39; | grep java | grep -v grep | awk &amp;#39;{print $2}&amp;#39;) else PIDS=$(ps ax | grep &amp;#39; kafka\.</description>
+    </item>
+    <item>
+      <title>DNS</title>
+      <link>https://bwangel.me/docs/linux/dns/</link>
+      <pubDate>Sat, 09 Sep 2023 13:41:16 +0800</pubDate>
+      <guid>https://bwangel.me/docs/linux/dns/</guid>
+      <description>A 记录 Address Mapping records, 指示了对应名称的IPv4地址, A记录用来将域名转换为ip地址.&#xA;AAAA 记录 类似于A记录, 只不过指示的是IPv6的地址。&#xA;因为 IPv6 地址长度是 IPv4 的四倍，所以用 AAAA 表示 IPv6 记录&#xA;NS 记录 Name Server records, 用来指定对应名称的可信名称服务器 (authoritative name server) 例如这段 dig 日志是 j.gtld-servers.net 告诉我们，它不知道 www.baidu.com 的 IP, 但是它告诉我们要查询 baidu.com. 域的地址，可以去 ns[12345].baidu.com 这5个地址中查。&#xA;baidu.com. 172800 IN NS ns2.baidu.com. baidu.com. 172800 IN NS ns3.baidu.com. baidu.com. 172800 IN NS ns4.baidu.com. baidu.com. 172800 IN NS ns1.baidu.com. baidu.com. 172800 IN NS ns7.baidu.com. ;; Received 849 bytes from 192.</description>
+    </item>
+    <item>
+      <title>在 Ubuntu 22.04 上搭建 NFS Server</title>
+      <link>https://bwangel.me/docs/linux/nfs-server/</link>
+      <pubDate>Wed, 06 Sep 2023 08:51:39 +0800</pubDate>
+      <guid>https://bwangel.me/docs/linux/nfs-server/</guid>
+      <description>环境准备 我准备了两台机器&#xA;name ip user user_id server 191.168.58.11 vagrant 1000 client 192.168.58.1 xuyundong 1000 安装组件 服务端安装 nfs server sudo apt update sudo apt install nfs-kernel-server 客户端安装 nfs-common sudo apt update sudo apt install nfs-common 服务端创建目录并导出 在服务端上创建挂载目录，并设置权限 sudo mkdir -p /mnt/share sudo chown vagrant:vagrant /mnt/share sudo chmod 755 /mnt/share 服务端上配置 nfs export 目录 修改 /etc/exports 文件, 加入以下内容&#xA;/mnt/share *(rw,async,no_subtree_check) 关于 export 选项的解释&#xA;rw: 客户端具有读和写的权限 sync: 强制 nfs 在回复 client 之前将更改写入磁盘，这保证了 nfs server 的可靠性，但也降低了写入速度 no_subtree_check: 此选项可防止子树检查，在子树检查过程中，主机必须为每个请求检查文件在导出的树中是否仍然可用。当客户端打开文件时重命名文件时，这可能会导致许多问题。通常建议禁用子树检查。 no_root_squash: 当客户端以 root 权限写入文件时，nfs server 会将文件 owner 改成普通用户，当此选项开启时，nfs server 不修改 root 写入文件的 woner 修改完以后执行以下命令载入配置</description>
+    </item>
+    <item>
+      <title>Thrift golang client 如何设置超时时间</title>
+      <link>https://bwangel.me/docs/thrift/golang-client-timeout/</link>
+      <pubDate>Tue, 05 Sep 2023 21:41:25 +0800</pubDate>
+      <guid>https://bwangel.me/docs/thrift/golang-client-timeout/</guid>
+      <description>简介 本文以 golang thrift binary 协议为例，讲述 thrift golang client 如何设置超时时间&#xA;如何设置超时时间 golang thrift client 有两个超时时间&#xA;socket timeout 在创建 TSocket 的时候，我们可以传入 ConnectTimeout 和 SocketTimeout 两个配置。&#xA;ConnectTimeout 表示建立 TCP 连接的超时时间 SocketTimeout 表示读写 Socket fd 时的超时时间 当这两个超时触发时，thrift 会返回一个 err.Timeout() == true 的 error, 表示超时错误，thrift 会将其包装成 TTransportException，其 typeId == thrift.TIMED_OUT&#xA;rawTransport := thrift.NewTSocketConf(net.JoinHostPort(&amp;#34;localhost&amp;#34;, &amp;#34;7303&amp;#34;), &amp;amp;thrift.TConfiguration{ SocketTimeout: 5 * time.Second, ConnectTimeout: 5 * time.Second, }) context timeout 在调用 thrift 函数时，需要传入 context 参数，我们可以在 ctx 参数中加上超时&#xA;ctx, cancel := context.</description>
+    </item>
+    <item>
+      <title>利用 VirtualBox 和 Ubuntu 22 重现抓包实验</title>
+      <link>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</link>
+      <pubDate>Wed, 23 Aug 2023 10:07:25 +0800</pubDate>
+      <guid>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</guid>
+      <description>实验介绍 在 《Wireshark网络分析就这么简单》 第一章，讲述了一道面试题。&#xA;HostA 和 HostB 在同一个局域网中，它们的 IP 配置如下，请问这两台机器能否 ping 通?&#xA;HostA: IP: 192.168.26.129/24 Gateway: 192.168.26.2 HostB: IP: 192.168.26.3/27 Gateway: 192.168.26.2 答案是能够 ping 通，HostA 和 HostB 连同网关最终会形成一个奇怪的网络&#xA;具体通信过程如下:&#xA;HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 的 IP 和自己的掩码计算，发现 192.168.26.3 和自己是处于同一子网 HostA 通过 ARP 协议广播寻找 192.168.26.3 的 MAC 地址，由于 192.168.26.3 和它在同一局域网中，192.168.26.3 会应答自己的 MAC 地址 HostA 将 ping 请求直接发送给 192.168.26.3, 目的 MAC 地址使用的就是 192.168.26.3 的地址 HostB(192.168.26.3) 收到 ping 请求，给 HostA 发送 ping 响应 HostB 将 HostA 的 IP 和自己的掩码计算，发现 192.</description>
+    </item>
+    <item>
+      <title>泛型</title>
+      <link>https://bwangel.me/docs/golang/generic/</link>
+      <pubDate>Tue, 15 Aug 2023 19:22:52 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/generic/</guid>
+      <description>利用泛型实现的语法糖 // Cond // 条件表达式的简单实现，支持任意类型 func Cond[T any](val bool, a, b T) T { if val { return a } return b } // Or // 返回 vals 中第一个不是对应类型0值的参数，如果没有，则返回对应类型的0值 func Or[T comparable](vals ...T) T { for _, val := range vals { if val != *new(T) { return val } } return *new(T) } 用法 func TestCond(t *testing.T) { assert.Equal(t, 1, Cond(true, 1, 2)) assert.Equal(t, 2, Cond(false, 1, 2)) var req *http.</description>
+    </item>
+    <item>
+      <title>YAML</title>
+      <link>https://bwangel.me/docs/golang/yaml/</link>
+      <pubDate>Tue, 15 Aug 2023 11:48:16 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/yaml/</guid>
+      <description>gopkg.in/yaml.v3 在 Unmarshal 时设置默认值 使用 gopkg.in/yaml.v3 解析 yaml 文件时，我们可以实现结构体的 UnmarshalYAML 接口&#xA;在 UnmarshalYAML 方法中，既可以在结构体创建的时候指定默认值，也可以在结构体 Decode 完成之后，设置更复杂的默认值&#xA;test.yaml application: snowave runtime: golang services: - interface: linaewen.fdoulist handler: services/api/thrift.go type: thrift use_services: - app: fm type: grpc version: 6b15b80 - app: music version: e89b497be9ef0fb932d5e543ed866f920780750f - app: pony version: c5b2e21 main.go package main import ( &amp;#34;fmt&amp;#34; &amp;#34;github.com/pkg/errors&amp;#34; &amp;#34;gopkg.in/yaml.v3&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;strings&amp;#34; ) type UseService struct { App string `yaml:&amp;#34;app,omitempty&amp;#34;` Type string `yaml:&amp;#34;type,omitempty&amp;#34;` Version string `yaml:&amp;#34;version&amp;#34;` } // UnmarshalYAML // //&#x9;此程序演示了，在 Decode 之前设置 Type 字段的默认值为 thrift func (u *UseService) UnmarshalYAML(value *yaml.</description>
+    </item>
+    <item>
+      <title>Statsd Exporter 如何跳过 prom 的指标检查</title>
+      <link>https://bwangel.me/docs/prometheus/statsd-exporter-unchecked-metric/</link>
+      <pubDate>Thu, 01 Jun 2023 07:29:34 +0800</pubDate>
+      <guid>https://bwangel.me/docs/prometheus/statsd-exporter-unchecked-metric/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HTTP 协议中带下划线的 header 说明</title>
+      <link>https://bwangel.me/docs/http/nginx-header-underline/</link>
+      <pubDate>Tue, 09 May 2023 22:40:29 +0800</pubDate>
+      <guid>https://bwangel.me/docs/http/nginx-header-underline/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nginx proxy_set_header 默认会覆盖上一层的设置</title>
+      <link>https://bwangel.me/docs/http/nginx-proxy-set-header/</link>
+      <pubDate>Thu, 27 Apr 2023 15:02:39 +0800</pubDate>
+      <guid>https://bwangel.me/docs/http/nginx-proxy-set-header/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Logrus 添加预设字段</title>
+      <link>https://bwangel.me/docs/golang/logrus-formatter/</link>
+      <pubDate>Thu, 27 Apr 2023 14:55:12 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/logrus-formatter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Golang Build 出错: error obtaining VCS status: exit status 128</title>
+      <link>https://bwangel.me/docs/golang/go-build-vcsmap/</link>
+      <pubDate>Tue, 21 Mar 2023 12:07:05 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-build-vcsmap/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ubuntu 中 Docker 设置容器中 DNS 服务器的地址</title>
+      <link>https://bwangel.me/docs/container/docker-dns/</link>
+      <pubDate>Mon, 20 Mar 2023 18:28:08 +0800</pubDate>
+      <guid>https://bwangel.me/docs/container/docker-dns/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>lsof</title>
+      <link>https://bwangel.me/docs/linux/lsof/</link>
+      <pubDate>Thu, 02 Mar 2023 12:43:09 +0800</pubDate>
+      <guid>https://bwangel.me/docs/linux/lsof/</guid>
+      <description>按照网络状态筛选进程的 fd sudo lsof -i -sTCP:LISTEN -a -p &amp;lt;pid&amp;gt; -a 表示 and, 前后两个条件要一起生效&#xA;-i 和 -s 一起用，表示可以按照 TCP/UDP 状态来筛选 fd&#xA;列出进程 &amp;lt;pid&amp;gt; 建立的所有 TCP 连接&#xA;sudo lsof -i -sTCP:ESTABLISHED -a -p &amp;lt;pid&amp;gt; 列出进程 &amp;lt;pid&amp;gt; 所有 IDLE 状态的 UDP 连接 sudo lsof -i -sUDP:IDLE -a -p &amp;lt;pid&amp;gt; 根据 Unix 发行版本的不同，TCP/UDP 状态也会有不同的名字:&#xA;常用的 TCP 状态是: CLOSED, IDLE, BOUND, LISTEN, ESTABLISHED, SYN_SENT, SYN_RCDV, ESTABLISHED, CLOSE_WAIT, FIN_WAIT1, CLOSING, LAST_ACK, FIN_WAIT_2, TIME_WAIT. 常用的 UDP 状态是: Unbound, Idle 按照 fd number 查找进程的 fd 使用 strace 查看进程的系统调用的时候，经常能够看到在某个 fd 上执行读写操作，例如:</description>
+    </item>
+    <item>
+      <title>Pod Tips</title>
+      <link>https://bwangel.me/docs/k8s/pod-tips/</link>
+      <pubDate>Thu, 02 Mar 2023 09:31:14 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/pod-tips/</guid>
+      <description>Pod 状态计算细节 Pod 的 QoS 分类 request 是最低资源需求，limit 是最高资源需求&#xA;QoS 类别 描述 Guaranteed(确保) Pod 的资源 request 和 limit 相同 Burstable(可破裂) Pod 的资源 request 小于 limit BestEffort(尽力而为) Pod 的资源没有设置任何 request 和 limit 当计算节点上存在内存/磁盘压力时，k8s 会按照 BestEffort -&amp;gt; Burstable -&amp;gt; Guaranteed 的顺序一次驱逐 pod.&#xA;CPU 是可以压缩的资源，当 CPU 存在压力时，k8s 不会驱逐 pod.&#xA;通常情况下，Burstable 是最好的 QoS 策略，对于一些重要的核心 pod，可以设置为 Guaranteed, 确保它最后被驱逐。&#xA;统计集群中运行 pod 的数量 sum(kube_pod_status_phase{phase=&amp;#34;Running&amp;#34;}) kube_pod_container_status_ready 指标有 namespace, cluster, phase Label 可以对指标进行筛选，其他的看起来都是 prom 相关的&#xA;phase 有五种: Pending|Running|Succeeded|Failed|Unknown</description>
+    </item>
+    <item>
+      <title>从 none 开始，用网桥模式启动容器的网络</title>
+      <link>https://bwangel.me/docs/container/docker-none-network/</link>
+      <pubDate>Fri, 20 Jan 2023 10:15:48 +0800</pubDate>
+      <guid>https://bwangel.me/docs/container/docker-none-network/</guid>
+      <description>&lt;p&gt;用 none 网络模式启动的容器，创建一个可以对外通信的网络&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Thrift 协议学习笔记</title>
+      <link>https://bwangel.me/docs/thrift/thrift-protocol/</link>
+      <pubDate>Wed, 11 Jan 2023 11:03:19 +0800</pubDate>
+      <guid>https://bwangel.me/docs/thrift/thrift-protocol/</guid>
+      <description>&lt;p&gt;本文主要讲了 thrift 的协议格式&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Thrft</title>
+      <link>https://bwangel.me/docs/thrift/thrift-concept/</link>
+      <pubDate>Tue, 15 Nov 2022 12:40:19 +0800</pubDate>
+      <guid>https://bwangel.me/docs/thrift/thrift-concept/</guid>
+      <description>thrift 概念 thrift 架构 Thrift 的架构图如下&#xA;Transport 层位于最底部，用户传输字节数据。&#xA;Transport 层提供的接口如下:&#xA;Transport 层可以由多个 TTransport 类组合起来，每个 TTransport 提供不同的功能。处于 TTransport 组合层次最下方，和设备(网络，磁盘，内存)直接打交道的 TTransport 类称为 Endpoint transports。例如 TSocket，它使用 Socket API 在 TCP/IP 网络上传输数据。&#xA;TFramedTransport 有两个作用:&#xA;分帧，它在每个消息的头部加了四字节的长度，让接受者能够准确地得知消息的大小，并申请合适的 buffer 缓存。当 flush 方法调用的时候，缓存的数据才会写入下一层 Transport 当不需要分帧，仅需要缓存的时候，可以使用 TBufferedTransport。某些语言在 Endpoint Transport 中內建了缓存机制，就没有提供 TBufferedTransport 类。&#xA;参考链接 Chapter 2. Apache Thrift architecture </description>
+    </item>
+    <item>
+      <title>日期和时间格式</title>
+      <link>https://bwangel.me/docs/spec/datetime/</link>
+      <pubDate>Wed, 26 Oct 2022 11:32:14 +0800</pubDate>
+      <guid>https://bwangel.me/docs/spec/datetime/</guid>
+      <description>w3 时间规范 ISO 8601 定义了大量的日期/时间格式，为了简化开发 &amp;amp; 减少 bug, w3 规范定义了一个通用的时间格式 YYYY-MM-DDThh:mm:ss.STZD YYYY/MM/DD 四位数年份/月/日 T 表示后面跟了一个时间 hh:mm:ss 两位数的时分秒 S 一位或多位小数表示秒的一部分，最小是1, 最大不限制 TZD 时区指示符 W3 规范规定 TZD 可以有两种形式 表示一个 UTC 时间，TZD 可以写成一个 Z, 例如 1994-11-05T13:15:30Z 表示 utc 时间 表示本地时间, TZD 写成 +HH:MM 或 -HH:MM，表示当地时间相对 utc 时间的偏移量, 例如 1994-11-05T13:15:30+08:00 表示东八区时间，即北京时间 协调世界时的缩写为UTC。国际电信联盟希望协调世界时能够在所有语言有单一的缩写。英语和法语区的人同时希望各自的语言缩写－CUT (Coordinated Universal Time) 和 TUC (Temps Universel Coordonné) 能够成为国际标准，最后妥协使用UTC。 参考链接 Date and Time Formats 关于时间格式 2016-08-9T10:01:54.123Z 20160809100154.123Z 处理方法 协调世界时 </description>
+    </item>
+    <item>
+      <title>Ubuntu 下 alacritty 终端中安装 nvim-tree 插件</title>
+      <link>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</link>
+      <pubDate>Fri, 21 Oct 2022 15:43:43 +0800</pubDate>
+      <guid>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Deployment Tips</title>
+      <link>https://bwangel.me/docs/k8s/deployment-tips/</link>
+      <pubDate>Thu, 15 Sep 2022 10:31:16 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/deployment-tips/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Leetcode 142: 环形链表 II</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-142/</link>
+      <pubDate>Sun, 11 Sep 2022 10:54:04 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-142/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>算法中使用哨兵变量(TODO)</title>
+      <link>https://bwangel.me/docs/algo/algo-sentry/</link>
+      <pubDate>Sun, 11 Sep 2022 10:52:23 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/algo-sentry/</guid>
+      <description>背景 哨兵，现实中是用于解决国家之间的边界问题。&#xA;在算法程序中，我们设置一些冗余的变量，让算法程序处理边界问题时更加容易，这些变量就被称为哨兵。&#xA;本文将会举例说明，哨兵变量在算法程序中的应用。&#xA;插入排序 插入排序是一种常用的排序算法，它的思路是&#xA;用 i 从 1 开始遍历数组中每个元素 从后往前遍历 1-i 的每个元素，找到第一个比当前元素小的元素，将其插入到该元素之后 Note: 先挪位置，循环结束后再在 j 指示的索引中(第一个比当前元素小的元素)插入当前值 func InsertSort[T ttypes.Number](arr []T) []T { res := make([]T, len(arr)) copy(res, arr) for i := 1; i &amp;lt; len(res); i++ { j := i current := res[i] for j &amp;gt; 0 &amp;amp;&amp;amp; res[j-1] &amp;gt; current { res[j] = res[j-1] j-- } res[j] = current } return res } 演示图:&#xA;哨兵模式 哨兵模式的代码如下，它在数组的前面添加一个元素。&#xA;每次开始遍历前，它将当前需要插入的元素放到数组头部(res[0])。这样就算 1-i 中没有比 res[i] 小的元素，但循环到最后还是会触发条件 not (res[0] &amp;gt; current), 达到跳出循环的目的。</description>
+    </item>
+    <item>
+      <title>Ubuntu 下安装 Containerd 及配置代理</title>
+      <link>https://bwangel.me/docs/container/install-containerd/</link>
+      <pubDate>Tue, 23 Aug 2022 08:17:21 +0800</pubDate>
+      <guid>https://bwangel.me/docs/container/install-containerd/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;介绍了安装 containerd 的方法&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>K8S 中观察 CPU Throttling 情况的指标</title>
+      <link>https://bwangel.me/docs/k8s/k8s-cpu-throttle-prom-metric/</link>
+      <pubDate>Tue, 16 Aug 2022 23:14:25 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/k8s-cpu-throttle-prom-metric/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;解释了一下观察 CPU Throttling 情况的指标&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>ls Tips</title>
+      <link>https://bwangel.me/docs/linux/ls-tips.md/</link>
+      <pubDate>Tue, 16 Aug 2022 23:10:06 +0800</pubDate>
+      <guid>https://bwangel.me/docs/linux/ls-tips.md/</guid>
+      <description>ls 按照修改时间排序 -t 按照修改时间排序 -r 逆序排序 xuyundong@Macmini:~/Github/blog$ ls -lt content/tips/ -rw-rw-r-- 1 xuyundong xuyundong 800 8月 16 23:13 ls-tips.md.md -rw-rw-r-- 1 xuyundong xuyundong 2644 8月 16 23:05 docker-registry.md -rw-rw-r-- 1 xuyundong xuyundong 1990 8月 11 22:01 stty.md xuyundong@Macmini:~/Github/blog$ ls -lrt content/tips -rw-rw-r-- 1 xuyundong xuyundong 1990 8月 11 22:01 stty.md -rw-rw-r-- 1 xuyundong xuyundong 2644 8月 16 23:05 docker-registry.md -rw-rw-r-- 1 xuyundong xuyundong 897 8月 16 23:11 ls-tips.md.md </description>
+    </item>
+    <item>
+      <title>查看信号的快捷键</title>
+      <link>https://bwangel.me/docs/linux/stty/</link>
+      <pubDate>Tue, 09 Aug 2022 21:43:40 +0800</pubDate>
+      <guid>https://bwangel.me/docs/linux/stty/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ubuntu 下 Docker 设置 Registry</title>
+      <link>https://bwangel.me/docs/container/docker-registry/</link>
+      <pubDate>Tue, 09 Aug 2022 21:14:49 +0800</pubDate>
+      <guid>https://bwangel.me/docs/container/docker-registry/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>pkg/errors 和 go1.13 中 errors 库发展历史</title>
+      <link>https://bwangel.me/docs/golang/golang-err/</link>
+      <pubDate>Mon, 01 Aug 2022 10:23:16 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/golang-err/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>进程卡住如何 debug</title>
+      <link>https://bwangel.me/docs/k8s/process-block/</link>
+      <pubDate>Thu, 07 Jul 2022 19:56:13 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/process-block/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>《扬名立万》中一些前后呼应的情节</title>
+      <link>https://bwangel.me/docs/life/%E6%89%AC%E5%90%8D%E7%AB%8B%E4%B8%87%E5%BD%B1%E8%AF%84/</link>
+      <pubDate>Wed, 01 Jun 2022 21:16:54 +0800</pubDate>
+      <guid>https://bwangel.me/docs/life/%E6%89%AC%E5%90%8D%E7%AB%8B%E4%B8%87%E5%BD%B1%E8%AF%84/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Golang 的版本发布计划</title>
+      <link>https://bwangel.me/docs/golang/go-release/</link>
+      <pubDate>Sat, 14 May 2022 20:58:10 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-release/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ubuntu 初始化</title>
+      <link>https://bwangel.me/docs/ubuntu/ubuntu-init/</link>
+      <pubDate>Sun, 08 May 2022 10:42:22 +0800</pubDate>
+      <guid>https://bwangel.me/docs/ubuntu/ubuntu-init/</guid>
+      <description>安装软件 sed -i &amp;#39;s/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g&amp;#39; /etc/apt/sources.list sudo apt update sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa github cli vagrant google chrome chrome download alacritty gvm rustup nerdfont DejaVuSansMono font Ubuntu 将 capslock 映射成 esc sudo apt-get install dconf-cli # 使 caps 成为 esc 按键 dconf write /org/gnome/desktop/input-sources/xkb-options &amp;#34;[&amp;#39;caps:escape&amp;#39;]&amp;#34; # 交换 caps 和 esc 按键 dconf write &amp;#34;/org/gnome/desktop/input-sources/xkb-options&amp;#34; &amp;#34;[&amp;#39;caps:swapescape&amp;#39;]&amp;#34; caps 配置的说明 Caps Lock behavior ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐ │Option Description │ ├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤ │caps:internal Caps Lock uses internal capitalization; Shift &amp;#34;pauses&amp;#34; Caps Lock │ │caps:internal_nocancel Caps Lock uses internal capitalization; Shift does not affect Caps Lock │ │caps:shift Caps Lock acts as Shift with locking; Shift &amp;#34;pauses&amp;#34; Caps Lock │ │caps:shift_nocancel Caps Lock acts as Shift with locking; Shift does not affect Caps Lock │ │caps:capslock Caps Lock toggles normal capitalization of alphabetic characters │ │caps:shiftlock Caps Lock toggles Shift Lock (affects all keys) │ │caps:swapescape Swap Esc and Caps Lock │ │caps:escape Make Caps Lock an additional Esc │ │caps:escape_shifted_capslock Make Caps Lock an additional Esc, but Shift + Caps Lock is the regular Caps Lock │ │caps:backspace Make Caps Lock an additional Backspace │ │caps:super Make Caps Lock an additional Super │ │caps:hyper Make Caps Lock an additional Hyper │ │caps:menu Make Caps Lock an additional Menu key │ │caps:numlock Make Caps Lock an additional Num Lock │ │caps:ctrl_modifier Make Caps Lock an additional Ctrl │ │caps:none Caps Lock is disabled │ │ │ └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ 参考链接 How to permanently switch Caps Lock and Esc jammy 22.</description>
+    </item>
+    <item>
+      <title>Ubuntu 使用默认的 DNS Server 配置</title>
+      <link>https://bwangel.me/docs/ubuntu/ubuntu-dns/</link>
+      <pubDate>Wed, 20 Apr 2022 02:07:00 +0800</pubDate>
+      <guid>https://bwangel.me/docs/ubuntu/ubuntu-dns/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mac OSX 使用技巧</title>
+      <link>https://bwangel.me/docs/tools/mac-tips/</link>
+      <pubDate>Mon, 18 Apr 2022 17:06:10 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tools/mac-tips/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>从源码安装 confluent-kafka-python</title>
+      <link>https://bwangel.me/docs/kafka/confluent_python.md/</link>
+      <pubDate>Fri, 11 Mar 2022 14:34:44 +0800</pubDate>
+      <guid>https://bwangel.me/docs/kafka/confluent_python.md/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MySQL 修改 root 密码</title>
+      <link>https://bwangel.me/docs/mysql/mysql-password/</link>
+      <pubDate>Wed, 09 Mar 2022 14:26:24 +0800</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql-password/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>编程语言很重要</title>
+      <link>https://bwangel.me/docs/life/language/</link>
+      <pubDate>Mon, 07 Mar 2022 23:03:41 +0800</pubDate>
+      <guid>https://bwangel.me/docs/life/language/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;一番暴论&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>ZigZag 变长整数编码</title>
+      <link>https://bwangel.me/docs/encoding/variant_zigzag/</link>
+      <pubDate>Tue, 01 Mar 2022 20:16:48 +0800</pubDate>
+      <guid>https://bwangel.me/docs/encoding/variant_zigzag/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;变长整数编码的实现&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>如何阅读网络上的小作文</title>
+      <link>https://bwangel.me/docs/life/read/</link>
+      <pubDate>Sat, 26 Feb 2022 17:19:24 +0800</pubDate>
+      <guid>https://bwangel.me/docs/life/read/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>修复 Ubuntu 中 chrome vimium-c 插件失效的问题</title>
+      <link>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</link>
+      <pubDate>Thu, 24 Feb 2022 22:20:23 +0800</pubDate>
+      <guid>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;记录一次折腾 Ubuntu 的经历&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>11-architecture</title>
+      <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-11/</link>
+      <pubDate>Wed, 26 Jan 2022 23:08:47 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-11/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>10-statefulset</title>
+      <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-10/</link>
+      <pubDate>Tue, 18 Jan 2022 10:11:27 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-10/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go gcflags/ldflags 的说明</title>
+      <link>https://bwangel.me/docs/golang/go_gcflags/</link>
+      <pubDate>Wed, 12 Jan 2022 17:56:10 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go_gcflags/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Go 链接选项和编译选项的说明&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Review 《Don’t use Go’s default HTTP client (in production)》</title>
+      <link>https://bwangel.me/docs/golang/go-http-client/</link>
+      <pubDate>Fri, 31 Dec 2021 11:01:25 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-http-client/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&#34;&gt;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Review 《How eBPF will solve Service Mesh - Goodbye Sidecars》</title>
+      <link>https://bwangel.me/docs/k8s/ebpf-service-mesh/</link>
+      <pubDate>Mon, 20 Dec 2021 19:41:20 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/ebpf-service-mesh/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://isovalent.com/blog/post/2021-12-08-ebpf-servicemesh&#34;&gt;https://isovalent.com/blog/post/2021-12-08-ebpf-servicemesh&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>翻译《Chapter 1. Introduction to Apache Thrift》</title>
+      <link>https://bwangel.me/docs/thrift/introduction-to-apache-thrift/</link>
+      <pubDate>Fri, 17 Dec 2021 14:38:59 +0800</pubDate>
+      <guid>https://bwangel.me/docs/thrift/introduction-to-apache-thrift/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://livebook.manning.com/book/programmers-guide-to-apache-thrift/chapter-1/&#34;&gt;https://livebook.manning.com/book/programmers-guide-to-apache-thrift/chapter-1/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>匹配所有可打印 Ascii 字符的正则</title>
+      <link>https://bwangel.me/docs/python/re-ascii-print/</link>
+      <pubDate>Wed, 15 Dec 2021 19:16:45 +0800</pubDate>
+      <guid>https://bwangel.me/docs/python/re-ascii-print/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go proxy 的说明</title>
+      <link>https://bwangel.me/docs/golang/goproxy/</link>
+      <pubDate>Sat, 11 Dec 2021 21:42:46 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/goproxy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vagrant 添加挂载目录</title>
+      <link>https://bwangel.me/docs/tools/vagrant_add_volume/</link>
+      <pubDate>Thu, 02 Dec 2021 21:10:27 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tools/vagrant_add_volume/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Review 《File Descriptor Transfer over Unix Domain Sockets》</title>
+      <link>https://bwangel.me/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</link>
+      <pubDate>Tue, 30 Nov 2021 11:58:56 +0800</pubDate>
+      <guid>https://bwangel.me/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;使用 Unix 域套接字传输文件描述符&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec&#34;&gt;https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>混杂模式</title>
+      <link>https://bwangel.me/docs/tcp_ip/promisc/</link>
+      <pubDate>Fri, 12 Nov 2021 23:36:02 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tcp_ip/promisc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>使用 Buildkit 和 Containerd 构建运行容器</title>
+      <link>https://bwangel.me/docs/k8s/buildkit/</link>
+      <pubDate>Mon, 08 Nov 2021 12:43:04 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/buildkit/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Redis 备份恢复的正确步骤</title>
+      <link>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</link>
+      <pubDate>Sat, 23 Oct 2021 17:36:43 +0800</pubDate>
+      <guid>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Redis 主从同步细节</title>
+      <link>https://bwangel.me/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</link>
+      <pubDate>Fri, 22 Oct 2021 21:57:55 +0800</pubDate>
+      <guid>https://bwangel.me/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;介绍了 Redis 的主从同步流程及一些配置选项&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Redis 备份机制</title>
+      <link>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</link>
+      <pubDate>Fri, 22 Oct 2021 00:00:45 +0800</pubDate>
+      <guid>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Redis 集群简介</title>
+      <link>https://bwangel.me/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Thu, 21 Oct 2021 23:40:12 +0800</pubDate>
+      <guid>https://bwangel.me/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Golang 中空数组是否是 nil</title>
+      <link>https://bwangel.me/docs/golang/go-array-and-nil/</link>
+      <pubDate>Tue, 19 Oct 2021 00:03:44 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-array-and-nil/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Github 客户端 gh 添加搜索仓库的命令</title>
+      <link>https://bwangel.me/docs/tools/gh-search-github/</link>
+      <pubDate>Tue, 19 Oct 2021 00:01:12 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tools/gh-search-github/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Java 抛出UnsupportedEncodingException</title>
+      <link>https://bwangel.me/docs/tools/java-unsupportedencodingexception/</link>
+      <pubDate>Mon, 18 Oct 2021 23:55:58 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tools/java-unsupportedencodingexception/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TCP Naggle 算法</title>
+      <link>https://bwangel.me/docs/tcp_ip/tcp-naggle/</link>
+      <pubDate>Mon, 18 Oct 2021 23:54:13 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tcp_ip/tcp-naggle/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Glob 语法解析</title>
+      <link>https://bwangel.me/docs/linux/glob-%E8%AF%AD%E6%B3%95/</link>
+      <pubDate>Mon, 18 Oct 2021 11:38:23 +0800</pubDate>
+      <guid>https://bwangel.me/docs/linux/glob-%E8%AF%AD%E6%B3%95/</guid>
+      <description>&lt;p&gt;Glob 语法&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Caps-lock mapping 成 Esc 在 vscode 中不生效</title>
+      <link>https://bwangel.me/docs/editor/vscode-esc-not-work/</link>
+      <pubDate>Mon, 18 Oct 2021 11:27:39 +0800</pubDate>
+      <guid>https://bwangel.me/docs/editor/vscode-esc-not-work/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Docker 客户端连接远程 Docker Daemon</title>
+      <link>https://bwangel.me/docs/container/docker-client-remote-server/</link>
+      <pubDate>Sat, 22 May 2021 11:41:46 +0800</pubDate>
+      <guid>https://bwangel.me/docs/container/docker-client-remote-server/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Docker 客户端连接远程 Docker Daemon&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://dockerlabs.collabnix.com/beginners/components/daemon/access-daemon-externally.html&#34;&gt;参考链接 How to Connect to a Remote Docker Daemon&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Golang 链接时注入额外信息</title>
+      <link>https://bwangel.me/docs/golang/go-build-variable/</link>
+      <pubDate>Fri, 07 May 2021 17:04:21 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-build-variable/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Go 编译器注入 git 版本，时间等信息到可执行文件中&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Review 《Memory Consistency Models: A Tutorial》</title>
+      <link>https://bwangel.me/docs/os/review-memory-consistency-models/</link>
+      <pubDate>Sat, 16 Jan 2021 13:34:40 +0800</pubDate>
+      <guid>https://bwangel.me/docs/os/review-memory-consistency-models/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://www.cs.utexas.edu/~bornholt/post/memory-models.html&#34;&gt;https://www.cs.utexas.edu/~bornholt/post/memory-models.html&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>7-configmap-secert</title>
+      <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-7/</link>
+      <pubDate>Fri, 08 Jan 2021 07:51:51 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-7/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;ConfigMap 和 Secret 配置应用程序&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>《Golang Error》学习笔记</title>
+      <link>https://bwangel.me/docs/golang/golang_error/</link>
+      <pubDate>Wed, 30 Dec 2020 22:28:45 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/golang_error/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Golang Error 学习笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>如何生成自签名 HTTPS 证书</title>
+      <link>https://bwangel.me/docs/http/https-generate-cert/</link>
+      <pubDate>Sun, 29 Nov 2020 13:25:07 +0800</pubDate>
+      <guid>https://bwangel.me/docs/http/https-generate-cert/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>6-volume</title>
+      <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-6/</link>
+      <pubDate>Sun, 11 Oct 2020 14:47:13 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-6/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;卷: 将磁盘挂载到容器&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Review 《Using pipelining to speedup Redis queries》</title>
+      <link>https://bwangel.me/docs/redis/redis-pipelining/</link>
+      <pubDate>Sat, 22 Aug 2020 17:22:37 +0800</pubDate>
+      <guid>https://bwangel.me/docs/redis/redis-pipelining/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://redis.io/topics/pipelining&#34;&gt;https://redis.io/topics/pipelining&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>ElasticSearch 7.6 学习笔记</title>
+      <link>https://bwangel.me/docs/es/es-7-6-note/</link>
+      <pubDate>Sun, 10 May 2020 17:28:40 +0800</pubDate>
+      <guid>https://bwangel.me/docs/es/es-7-6-note/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>5-service</title>
+      <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-5/</link>
+      <pubDate>Wed, 22 Apr 2020 21:44:44 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-5/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;服务：让客户端发现 Pod 并与之通信&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Leetcode 第343题</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-343/</link>
+      <pubDate>Tue, 14 Apr 2020 23:43:14 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-343/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/integer-break/&#34;&gt;LeetCode 343题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Leetcode 第342题</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-342/</link>
+      <pubDate>Tue, 07 Apr 2020 18:14:41 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-342/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/power-of-four/&#34;&gt;LeetCode 342题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Leetcode 第65题</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-65/</link>
+      <pubDate>Fri, 03 Apr 2020 12:37:29 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-65/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/valid-number/&#34;&gt;LeetCode 65题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>4-pod-replicaset</title>
+      <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-4/</link>
+      <pubDate>Wed, 01 Apr 2020 21:21:52 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-4/</guid>
+      <description>&lt;p&gt;副本机制和其他控制器 &amp;ndash; 部署托管的 Pod&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ElasticSearch 学习笔记</title>
+      <link>https://bwangel.me/docs/es/es-note/</link>
+      <pubDate>Sat, 28 Mar 2020 17:16:40 +0800</pubDate>
+      <guid>https://bwangel.me/docs/es/es-note/</guid>
+      <description>&lt;ul&gt;&#xA;&lt;li&gt;ES 6.8 学习笔记&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>3-Pod</title>
+      <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-3/</link>
+      <pubDate>Thu, 19 Mar 2020 00:03:01 +0800</pubDate>
+      <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-3/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Pod - 运行于 Kubernetes 中的容器&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Go 的调度模型学习笔记</title>
+      <link>https://bwangel.me/docs/golang/go-schedule/</link>
+      <pubDate>Mon, 16 Mar 2020 01:18:03 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-schedule/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;阅读 &lt;a href=&#34;https://wudaijun.com/2018/01/go-scheduler/&#34;&gt;Go 调度模型&lt;/a&gt; 后记的笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>关于新闻传播的思考</title>
+      <link>https://bwangel.me/docs/life/%E6%96%B0%E9%97%BB%E4%BC%A0%E6%92%AD/</link>
+      <pubDate>Sat, 07 Mar 2020 11:59:14 +0800</pubDate>
+      <guid>https://bwangel.me/docs/life/%E6%96%B0%E9%97%BB%E4%BC%A0%E6%92%AD/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rabbitmq Tutorial 学习笔记</title>
+      <link>https://bwangel.me/docs/tools/rabbitmq-tutorial/</link>
+      <pubDate>Sat, 21 Dec 2019 21:49:45 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tools/rabbitmq-tutorial/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.rabbitmq.com/getstarted.html&#34;&gt;RabbitMQ Tutorial&lt;/a&gt; 学习笔记&lt;/li&gt;&#xA;&lt;li&gt;本文相关代码放在 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo&#34;&gt;Github@bwangelme/RabbitMQDemo&lt;/a&gt; 中&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>词法分析器生成工具 Lex 简介</title>
+      <link>https://bwangel.me/docs/linux/flex/</link>
+      <pubDate>Sun, 15 Dec 2019 14:53:46 +0800</pubDate>
+      <guid>https://bwangel.me/docs/linux/flex/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;结合例子简单介绍了Lex 程序和 Lex 工具的用法&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Golang 中的 ServeMux 路由简介</title>
+      <link>https://bwangel.me/docs/golang/intro-servemux/</link>
+      <pubDate>Sat, 30 Nov 2019 18:35:05 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/intro-servemux/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;简单介绍了一下 Golang 中 ServeMux 的功能以及路由方式。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>关于学习内容的思考</title>
+      <link>https://bwangel.me/docs/life/%E5%85%B3%E4%BA%8E%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9%E7%9A%84%E6%80%9D%E8%80%83/</link>
+      <pubDate>Wed, 14 Aug 2019 23:21:52 +0800</pubDate>
+      <guid>https://bwangel.me/docs/life/%E5%85%B3%E4%BA%8E%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9%E7%9A%84%E6%80%9D%E8%80%83/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;关于学什么的一点杂想&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>为什么要学习?</title>
+      <link>https://bwangel.me/docs/life/why-to-learn/</link>
+      <pubDate>Tue, 30 Jul 2019 23:25:22 +0800</pubDate>
+      <guid>https://bwangel.me/docs/life/why-to-learn/</guid>
+      <description>&lt;p&gt;如何闭着眼睛挖金矿？&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Leetcode 第2题</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-2/</link>
+      <pubDate>Wed, 19 Jun 2019 23:10:11 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-2/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/add-two-numbers/&#34;&gt;LeetCode 2题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>3: 无重复字符的最长子串</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-3/</link>
+      <pubDate>Wed, 19 Jun 2019 23:03:47 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-3/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/longest-substring-without-repeating-characters/&#34;&gt;LeetCode 3题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>中国制药基地到最近小区的直线距离</title>
+      <link>https://bwangel.me/docs/life/%E4%B8%AD%E5%9B%BD%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0%E7%AE%80%E6%9F%A5/</link>
+      <pubDate>Sun, 16 Jun 2019 17:54:55 +0800</pubDate>
+      <guid>https://bwangel.me/docs/life/%E4%B8%AD%E5%9B%BD%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0%E7%AE%80%E6%9F%A5/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Review 《github.com/stretchr/testify》</title>
+      <link>https://bwangel.me/docs/golang/review-testify/</link>
+      <pubDate>Sun, 02 Jun 2019 22:41:59 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/review-testify/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://github.com/stretchr/testify&#34;&gt;https://github.com/stretchr/testify&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Go 并发模式之发布订阅模型</title>
+      <link>https://bwangel.me/docs/golang/go-pubsub/</link>
+      <pubDate>Thu, 30 May 2019 07:29:04 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-pubsub/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;发布订阅模型的一个简易单机实现&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Review 《JSON and Go》</title>
+      <link>https://bwangel.me/docs/golang/review-json-and-go/</link>
+      <pubDate>Tue, 21 May 2019 21:40:40 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/review-json-and-go/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://blog.golang.org/json-and-go&#34;&gt;https://blog.golang.org/json-and-go&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Leetcode 第29题</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-29/</link>
+      <pubDate>Mon, 13 May 2019 23:27:08 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-29/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problemset/all/&#34;&gt;LeetCode 29题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Leetcode 第191题</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-191/</link>
+      <pubDate>Tue, 30 Apr 2019 13:21:59 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-191/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/number-of-1-bits/&#34;&gt;LeetCode 191题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>strings.Builder 转换字符串的时候为什么比 bytes.Buffer 要快</title>
+      <link>https://bwangel.me/docs/golang/byte-vs-builder/</link>
+      <pubDate>Sun, 28 Apr 2019 23:48:00 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/byte-vs-builder/</guid>
+      <description>&lt;p&gt;&lt;code&gt;strings.Builder&lt;/code&gt;和&lt;code&gt;bytes.Buffer&lt;/code&gt;底层都是&lt;code&gt;[]byte&lt;/code&gt;，&#xA;为什么&lt;code&gt;strings.Builder&lt;/code&gt;的&lt;code&gt;String()&lt;/code&gt;方法比&lt;code&gt;bytes.Buffer&lt;/code&gt;的要快？&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Review 《Golang Trick: Export unexport method for test》</title>
+      <link>https://bwangel.me/docs/golang/golang-trick-export-for-test/</link>
+      <pubDate>Sat, 27 Apr 2019 17:33:52 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/golang-trick-export-for-test/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&#34;&gt;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Leetcode 第338题</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-338/</link>
+      <pubDate>Sun, 21 Apr 2019 23:37:34 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-338/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/reverse-words-in-a-string/&#34;&gt;LeetCode 338题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>urfave/cli 学习笔记</title>
+      <link>https://bwangel.me/docs/golang/go-cli/</link>
+      <pubDate>Sun, 21 Apr 2019 18:23:00 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-cli/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://github.com/urfave/cli/tree/v1.20.0#overview&#34;&gt;https://github.com/urfave/cli/tree/v1.20.0#overview&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Review 《Go Concurrency Patterns: Pipelines and cancellation》</title>
+      <link>https://bwangel.me/docs/golang/review-go-pipelines/</link>
+      <pubDate>Mon, 15 Apr 2019 22:35:48 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/review-go-pipelines/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;【&lt;a href=&#34;https://blog.golang.org/pipelines&#34;&gt;Go Concurrency Patterns: Pipelines and cancellation&lt;/a&gt;】笔记&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Leetcode 第151题</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-151/</link>
+      <pubDate>Sun, 14 Apr 2019 20:44:04 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-151/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/reverse-words-in-a-string/&#34;&gt;LeetCode 151题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>关于线程同步操作的一道面试题</title>
+      <link>https://bwangel.me/docs/golang/go-sync-channel/</link>
+      <pubDate>Sat, 13 Apr 2019 17:27:36 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-sync-channel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go 调度器的一个无法执行陷阱</title>
+      <link>https://bwangel.me/docs/golang/go-scheduler-pitfall/</link>
+      <pubDate>Wed, 10 Apr 2019 22:18:53 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-scheduler-pitfall/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>258: 各位相加</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-258/</link>
+      <pubDate>Tue, 09 Apr 2019 00:28:55 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-258/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/add-digits/&#34;&gt;LeetCode 258题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Go Panic 的触发及恢复过程</title>
+      <link>https://bwangel.me/docs/golang/go-panic/</link>
+      <pubDate>Mon, 08 Apr 2019 22:14:43 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-panic/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Panic 过程&lt;/li&gt;&#xA;&lt;li&gt;recover 函数&lt;/li&gt;&#xA;&lt;li&gt;defer 函数&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Leetcode 第8题</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-8/</link>
+      <pubDate>Tue, 02 Apr 2019 21:51:28 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-8/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://leetcode.com/problems/string-to-integer-atoi/submissions/&#34;&gt;https://leetcode.com/problems/string-to-integer-atoi/submissions/&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>线程同步操作面试题使用锁的解法</title>
+      <link>https://bwangel.me/docs/golang/go-lock/</link>
+      <pubDate>Tue, 26 Mar 2019 21:56:43 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-lock/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Leetcode 661题</title>
+      <link>https://bwangel.me/docs/algo/leetcode/leetcode-661/</link>
+      <pubDate>Sun, 24 Mar 2019 19:58:39 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/leetcode/leetcode-661/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;LeetCode 661题&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/non-decreasing-array/&#34;&gt;https://leetcode.com/problems/non-decreasing-array/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Go 的测试</title>
+      <link>https://bwangel.me/docs/golang/go-test/</link>
+      <pubDate>Sun, 24 Mar 2019 19:40:53 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-test/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;主要讲了 Go 相关的测试&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Dependency injection in Golang using higher order functions</title>
+      <link>https://bwangel.me/docs/golang/go-dep-inject/</link>
+      <pubDate>Sun, 24 Mar 2019 18:37:43 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-dep-inject/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://stein.wtf/posts/2019-03-12/inject/&#34;&gt;https://stein.wtf/posts/2019-03-12/inject/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;相关代码: &lt;a href=&#34;https://github.com/steinfletcher/func-dependency-injection-go&#34;&gt;https://github.com/steinfletcher/func-dependency-injection-go&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Elasticsearch reference v6.5.3 笔记</title>
+      <link>https://bwangel.me/docs/es/elasticsearch_reference/</link>
+      <pubDate>Sat, 15 Dec 2018 20:52:11 +0800</pubDate>
+      <guid>https://bwangel.me/docs/es/elasticsearch_reference/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Elasticsearch reference v6.5.3 的学习笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>HTTP 协议中的分块传输编码</title>
+      <link>https://bwangel.me/docs/http/http-chunked/</link>
+      <pubDate>Thu, 01 Nov 2018 23:32:43 +0800</pubDate>
+      <guid>https://bwangel.me/docs/http/http-chunked/</guid>
+      <description>&lt;p&gt;说明了 HTTP 分块传输编码方式&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go 模板</title>
+      <link>https://bwangel.me/docs/golang/go-template/</link>
+      <pubDate>Thu, 18 Oct 2018 23:24:24 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-template/</guid>
+      <description>&lt;p&gt;关于 Go 模板的笔记&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go mod 说明</title>
+      <link>https://bwangel.me/docs/golang/go_mod/</link>
+      <pubDate>Thu, 11 Oct 2018 08:44:25 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go_mod/</guid>
+      <description>&lt;p&gt;关于 Go mod 的介绍&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>哈希表学习笔记</title>
+      <link>https://bwangel.me/docs/algo/hash/</link>
+      <pubDate>Wed, 29 Aug 2018 23:34:29 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/hash/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>素数生成器</title>
+      <link>https://bwangel.me/docs/golang/prime-generator/</link>
+      <pubDate>Tue, 14 Aug 2018 06:54:09 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/prime-generator/</guid>
+      <description>&lt;p&gt;一个不太优雅的素数生成器，主要用来观察“Go-routine + 管道”的开发方式&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>变态跳台阶问题的解题思路</title>
+      <link>https://bwangel.me/docs/algo/jump-stairs/</link>
+      <pubDate>Sun, 08 Jul 2018 14:46:42 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/jump-stairs/</guid>
+      <description>&lt;p&gt;简介：本文主要记录了 变态跳台阶问题 的推导过程&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>完全二叉树与满二叉树</title>
+      <link>https://bwangel.me/docs/algo/binary-tree/</link>
+      <pubDate>Sat, 31 Mar 2018 22:42:53 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/binary-tree/</guid>
+      <description>&lt;p&gt;本文主要讲述了完全二叉树和满二叉树的定义及一些特性&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Python 面试题汇总</title>
+      <link>https://bwangel.me/docs/python/python-interview/</link>
+      <pubDate>Wed, 14 Mar 2018 09:00:03 +0800</pubDate>
+      <guid>https://bwangel.me/docs/python/python-interview/</guid>
+      <description>&lt;p&gt;Python 面试题集合&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Redis 源码阅读之 dict </title>
+      <link>https://bwangel.me/docs/redis/redis-source-dict/</link>
+      <pubDate>Wed, 14 Mar 2018 00:14:32 +0800</pubDate>
+      <guid>https://bwangel.me/docs/redis/redis-source-dict/</guid>
+      <description>&lt;p&gt;本文主要介绍了 Redis 的基础数据结构 dict 的实现，并描述了其渐进式 rehash 的操作&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 本文基于 Redis 3.0.0 的代码进行分析的&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL 外键分析</title>
+      <link>https://bwangel.me/docs/mysql/mysql-foreign-key/</link>
+      <pubDate>Mon, 05 Mar 2018 23:42:44 +0800</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql-foreign-key/</guid>
+      <description>&lt;p&gt;本文主要介绍了 MySQL 外键的一些特性&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>InnoDB 锁机制</title>
+      <link>https://bwangel.me/docs/mysql/innodb-lock/</link>
+      <pubDate>Sun, 04 Mar 2018 13:22:46 +0800</pubDate>
+      <guid>https://bwangel.me/docs/mysql/innodb-lock/</guid>
+      <description>&lt;p&gt;本文试图讲清楚 InnoDB 中存在的各种锁，以及它们锁定的区别。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go与数据结构之二叉搜索树</title>
+      <link>https://bwangel.me/docs/algo/go-binarysearchtree/</link>
+      <pubDate>Thu, 01 Mar 2018 22:22:52 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/go-binarysearchtree/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;简介&lt;/strong&gt;: 利用Go语言实现二叉搜索树并为其编写单元测试&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go 语言的 Type Switch 语句解析</title>
+      <link>https://bwangel.me/docs/golang/golang-type-switch/</link>
+      <pubDate>Sat, 03 Feb 2018 00:17:00 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/golang-type-switch/</guid>
+      <description>&lt;p&gt;讲述了Go语言中 Type Swith 的用法以及获取对应变量的一些特殊情况。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>InnoDB 行记录格式</title>
+      <link>https://bwangel.me/docs/mysql/innodb-row/</link>
+      <pubDate>Tue, 30 Jan 2018 12:51:59 +0800</pubDate>
+      <guid>https://bwangel.me/docs/mysql/innodb-row/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;简介&lt;/strong&gt;: 本文主要讲述了 InnoDB 的行如何在数据文件中进行存储的，同时简单分析了 InnoDB 的逻辑存储结构&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Django get_or_create 执行过程</title>
+      <link>https://bwangel.me/docs/python/django_get_or_create/</link>
+      <pubDate>Wed, 03 Jan 2018 22:31:01 +0800</pubDate>
+      <guid>https://bwangel.me/docs/python/django_get_or_create/</guid>
+      <description>&lt;p&gt;关于 Django 文档&lt;code&gt;get_or_create&lt;/code&gt;的解释&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL 日志管理</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Mon, 01 Jan 2018 10:34:15 +0800</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;简介&lt;/strong&gt;: 讲述了MySQL中的日志及配置方式&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Python Upgrade Importerror</title>
+      <link>https://bwangel.me/docs/python/python-upgrade-importerror/</link>
+      <pubDate>Tue, 05 Dec 2017 22:33:57 +0800</pubDate>
+      <guid>https://bwangel.me/docs/python/python-upgrade-importerror/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;记一次因 Python 升级导致的 ImportError&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Go的并发编程简述</title>
+      <link>https://bwangel.me/docs/golang/go-concurrency/</link>
+      <pubDate>Tue, 19 Sep 2017 12:49:42 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/go-concurrency/</guid>
+      <description>&lt;p&gt;简述了 Go 中的 goroutine，channel 和 WaitGroup，并通过例子来展示了这些功能的用法&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go 的反射包浅析</title>
+      <link>https://bwangel.me/docs/golang/golang-reflect/</link>
+      <pubDate>Fri, 15 Sep 2017 08:30:38 +0800</pubDate>
+      <guid>https://bwangel.me/docs/golang/golang-reflect/</guid>
+      <description>&lt;p&gt;本文主要介绍了反射包中的常用类型和方法，并使用了几个例子进行了说明。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>算法复杂度小记</title>
+      <link>https://bwangel.me/docs/algo/algorithm-complexity/</link>
+      <pubDate>Fri, 08 Sep 2017 00:24:12 +0800</pubDate>
+      <guid>https://bwangel.me/docs/algo/algorithm-complexity/</guid>
+      <description>&lt;p&gt;本文主要书写了本人对于算法复杂度的一些理解，并辅以一些例子进行说明&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go 学习笔记</title>
+      <link>https://bwangel.me/docs/golang/gotour-notes/</link>
+      <pubDate>Tue, 29 Aug 2017 08:32:02 +0000</pubDate>
+      <guid>https://bwangel.me/docs/golang/gotour-notes/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Golang的基础语法学习&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>TCP/IP 读书笔记</title>
+      <link>https://bwangel.me/docs/tcp_ip/tcp-ip-notes/</link>
+      <pubDate>Mon, 28 Aug 2017 23:50:38 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tcp_ip/tcp-ip-notes/</guid>
+      <description>&lt;p&gt;本文是本人在阅读《TCP/IP 详解：卷一》时所做的一些笔记，记录一些我认为比较重要的知识点或者句子，较为凌乱，仅为本人参考使用，并非是分享知识的博客文章。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>说说Bash中的几个重定向</title>
+      <link>https://bwangel.me/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</link>
+      <pubDate>Sun, 13 Aug 2017 14:10:48 +0000</pubDate>
+      <guid>https://bwangel.me/docs/linux/bash-%E9%87%8D%E5%AE%9A%E5%90%91/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;摘要:&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Bash中&lt;code&gt;&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;amp;&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;gt;&amp;amp;&lt;/code&gt;三者的区别&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Python的collections模块小结</title>
+      <link>https://bwangel.me/docs/python/python-collections/</link>
+      <pubDate>Sun, 13 Aug 2017 14:06:24 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/python-collections/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;本文章的目标是逐步总结Python中&lt;a href=&#34;http://devdocs.io/python~3.6/library/collections&#34;&gt;collection&lt;/a&gt;模块的用法，会不定期进行更新。&lt;/li&gt;&#xA;&lt;li&gt;目前总结了Counter类的用法&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Letsencrypt通过DNS TXT记录来验证域名有效性</title>
+      <link>https://bwangel.me/docs/http/letsencrypt-dns-txt/</link>
+      <pubDate>Sun, 13 Aug 2017 14:04:06 +0000</pubDate>
+      <guid>https://bwangel.me/docs/http/letsencrypt-dns-txt/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Letsencrypt 通过dns记录来验证域名&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Django的override_settings修饰器浅析</title>
+      <link>https://bwangel.me/docs/python/django-override-settings/</link>
+      <pubDate>Sun, 25 Jun 2017 20:17:07 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/django-override-settings/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Django的Settings模块代码说明&lt;/li&gt;&#xA;&lt;li&gt;Django的&lt;code&gt;override_settings&lt;/code&gt;修饰器分析&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL Character Set support</title>
+      <link>https://bwangel.me/docs/mysql/mysql-character-set-support/</link>
+      <pubDate>Thu, 22 Jun 2017 23:32:43 +0800</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql-character-set-support/</guid>
+      <description>摘要:&#xA;本文是对MySQL文档 Character Set Support 的翻译 字符集(character set)和排序规则(collation)概要 一个字符集是一组符号和编码的集合。一个排序规则是一组字符集中用来比较字符的规则的集合。让我们使用一个假想的字符集的例子来分别区分它们。&#xA;假设我们有四个字母：A, B, a, b。我们给每个字母赋值一个数字，A = 0, B = 1, a = 2, b = 3。字母 A 是一个符号，数字0是字母 A 的编码，四个字母和它们编码的集合叫做 字符集 (character set)。&#xA;假设我们想要比较两个字符串值，A 和 B。做这个最简单的方式就是去查看它们的编码，A 是0，B 是1。因为0比1小，所以我们说 A 比 B 小。刚刚我们所做的事情是将一个排序规则(collation)应用到我们的字符集上。排序规则(collation)是一组规则(比较编码)的集合(在这个例子中仅有一个规则)。我们称这个所有可能的排序规则中最简单的排序规则为二进制排序规则(binary collation)。&#xA;但是如果我们想说大写字母和小写字母是等价的，那该怎么排序呢？那么我们将会有至少两个规则：&#xA;将小写字母 a 和 b 等价成大写字母 A 和 B。 然后比较它们的编码。 我们称这个为不区分大小写的排序规则。它比起二进制排序规则来要复杂一些。&#xA;在现实生活中，大多数的字符集都有许多字符；并不仅仅是 A 和 B 而是包括所有的字母，有时还会包括多字母和东方书写系统中成千上万个字符和许多相关的特殊字符和标点符号。同样在现实生活中，大多数的排序规则都有许多条规则，并不仅仅是区分大小写对于多字符映射(比如德语排序规则中的两个规则之一就是Ö = OE)也会区分口音(口音是和字符相关的一个标记例如德语中的Ö)。&#xA;MySQL 能为你做这些事情：&#xA;使用各种各样的字符集来存储字符串。 使用各种各样的排序规则来比较字符串。 在同一台服务器上，在同一个的数据库，甚至是在同一个表中，混合使用不同字符集不同排序规则的字符串。 在任何等级上开启特殊的字符集和排序规则。 为了能够有效地使用这些特性，你必须要知道哪些字符集和排序规则是可用的，如何改变默认的排序规则，以及它们是如何影响到字符串操作符和相关函数的行为的。&#xA;MySQL中的字符集和排序规则 MySQL 服务器支持多种字符集。使用__INFORMATION_SCHEMA.CHARACTER_SETS__表或者__SHOW CHARACTER_SET__语句能够列出所有的可用字符集。下面的例子列出了一部分字符集，如果想要查看完整的信息，请参看 Section 11.</description>
+    </item>
+    <item>
+      <title>Redis Sort 命令简介</title>
+      <link>https://bwangel.me/docs/redis/redis-sort/</link>
+      <pubDate>Wed, 21 Jun 2017 13:29:08 +0000</pubDate>
+      <guid>https://bwangel.me/docs/redis/redis-sort/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;code&gt;sort&lt;/code&gt;命令是Redis中最强大的命令之一，本文试图通过一些例子来总结Redis Sort的常用方法。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Django中import_string的实现</title>
+      <link>https://bwangel.me/docs/python/django-import-string/</link>
+      <pubDate>Thu, 08 Jun 2017 07:17:28 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/django-import-string/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;importlib.import_module 函数的功能&lt;/li&gt;&#xA;&lt;li&gt;import_string 函数的实现&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>简单聊聊Python中的wraps修饰器</title>
+      <link>https://bwangel.me/docs/python/python-wraps/</link>
+      <pubDate>Tue, 09 May 2017 10:40:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/python-wraps/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Python 中的wraps修饰器分析&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>简单聊聊HTML 5中的Web Storage</title>
+      <link>https://bwangel.me/docs/nodejs/web-storage-api/</link>
+      <pubDate>Sat, 06 May 2017 02:34:14 +0000</pubDate>
+      <guid>https://bwangel.me/docs/nodejs/web-storage-api/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;针对HTML5中的 Web Storage进行了介绍&lt;/li&gt;&#xA;&lt;li&gt;主要介绍了存取API，有效周期，可用性检测等&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>【流水账】利用闲置笔记本搭建自己的开发服务器</title>
+      <link>https://bwangel.me/docs/linux/laptop-server/</link>
+      <pubDate>Mon, 27 Mar 2017 16:41:36 +0000</pubDate>
+      <guid>https://bwangel.me/docs/linux/laptop-server/</guid>
+      <description>&lt;ol&gt;&#xA;&lt;li&gt;对Ubuntu服务器进行基础配置&lt;/li&gt;&#xA;&lt;li&gt;配置dnsmasq服务器&lt;/li&gt;&#xA;&lt;li&gt;文章没什么技术含量，主要记录一些配置文件的位置&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+    </item>
+    <item>
+      <title>简单聊聊Vim中的自定义快捷键</title>
+      <link>https://bwangel.me/docs/editor/vim-map/</link>
+      <pubDate>Sun, 26 Mar 2017 17:19:11 +0000</pubDate>
+      <guid>https://bwangel.me/docs/editor/vim-map/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Vim中几个&lt;code&gt;Map&lt;/code&gt;命令的区别&lt;/li&gt;&#xA;&lt;li&gt;分享几个自定义的快捷键&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Werkzeug 的 wsgi-app 说明</title>
+      <link>https://bwangel.me/docs/python/wsgi-app-example/</link>
+      <pubDate>Mon, 23 Jan 2017 17:31:00 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/wsgi-app-example/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;简要说明了一下WSGI&lt;/li&gt;&#xA;&lt;li&gt;分析了Werkzeug的一个官方例子&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>【非技术】 Arch 下的无线自动断开</title>
+      <link>https://bwangel.me/docs/linux/arch-wireless-adapter/</link>
+      <pubDate>Sun, 18 Dec 2016 14:13:44 +0000</pubDate>
+      <guid>https://bwangel.me/docs/linux/arch-wireless-adapter/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;折腾 ThinkPad E430 在 Arch WiFi 自动断开的问题&lt;/li&gt;&#xA;&lt;li&gt;无线网卡型号推荐&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>说说 Python2 中的字符串编码</title>
+      <link>https://bwangel.me/docs/python/python-string-encoding/</link>
+      <pubDate>Wed, 09 Nov 2016 07:39:38 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/python-string-encoding/</guid>
+      <description>摘要:&#xA;Python2 中 Str 和 Unicode 分别存了什么 raw_unicode_escape 编码的作用 Python2 中的一个经典编码问题 Python2 中 Str 和 Unicode 分别存了什么 在 Python2 中，str 存储的是字节流，unicode 存储的是 Unicode 码点&#xA;In [1]: &amp;#39;中&amp;#39; Out[1]: &amp;#39;\xe4\xb8\xad&amp;#39; In [2]: u&amp;#39;中&amp;#39; Out[2]: u&amp;#39;\u4e2d&amp;#39; 例如上面的例子，我们分别输入了一个汉字 中，str(&#39;中&#39;) 显示的是 \xe4\xb8\xad，unicode(&#39;中&#39;) 显示的是 \u4e2d。&#xA;当我们用 str 存储汉字，在终端中输入时，Python 会根据我们系统的编码(通过 locale.getdefaultlocale() 获取)，将其自动 encode 成字节流。&#xA;我系统的编码是 utf-8，所以 str(&#39;中&#39;) 显示的就是 中 经过 utf-8 编码后的内容 \xe4\xb8\xad。&#xA;当我们用 unicode 存储汉字时，Python 会存储这个汉字对应的码点。所以 unicode(&#39;中&#39;) 显示的是 \u4e2d。&#xA;raw_unicode_escape 编码是什么 raw_unicode_escape 编码的作用是将 unicode 码点变成 \uxxxx 形式的字节流。或者将 \uxxx 形式的字节流转换成 unicode 码点。</description>
+    </item>
+    <item>
+      <title>MySQL from 部分的子查询</title>
+      <link>https://bwangel.me/docs/mysql/mysql-subqueries-in-the-from-clause/</link>
+      <pubDate>Sat, 08 Oct 2016 20:28:45 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql-subqueries-in-the-from-clause/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;MySQL 语句中 from 部分的子查询&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>More advanced if usage</title>
+      <link>https://bwangel.me/docs/linux/more-advanced-if-usage/</link>
+      <pubDate>Mon, 03 Oct 2016 09:52:51 +0000</pubDate>
+      <guid>https://bwangel.me/docs/linux/more-advanced-if-usage/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;本文是对&lt;a href=&#34;http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_02.html&#34;&gt;More advanced if usage&lt;/a&gt;的翻译&lt;/li&gt;&#xA;&lt;li&gt;主要讲述了 Bash 中 if 的一些高级用法&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Python concurrent.futures 文档翻译</title>
+      <link>https://bwangel.me/docs/python/concurrent-futures/</link>
+      <pubDate>Fri, 23 Sep 2016 11:19:16 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/concurrent-futures/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;本文主要是对 Python3 标准库 &lt;a href=&#34;https://docs.python.org/3/library/concurrent.futures.html&#34;&gt;concurrent.futures&lt;/a&gt; 文档的翻译&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Gevent 的 KeyError</title>
+      <link>https://bwangel.me/docs/python/gevent-keyerror/</link>
+      <pubDate>Wed, 14 Sep 2016 15:21:40 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/gevent-keyerror/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;本文翻译自 StackOverFlow 上的一篇&lt;a href=&#34;http://stackoverflow.com/questions/8774958/keyerror-in-module-threading-after-a-successful-py-test-run&#34;&gt;答案&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;本文主要解释了&lt;code&gt;gevent&lt;/code&gt;的猴子补丁和一个&lt;code&gt;KeyError&lt;/code&gt;之间的关系&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Python unittesting: run tests in another module</title>
+      <link>https://bwangel.me/docs/python/python_unittesting_run_tests_in_another_module/</link>
+      <pubDate>Sun, 11 Sep 2016 11:46:43 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/python_unittesting_run_tests_in_another_module/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;记录一次解决问题的过程。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Python字符串Format方法示例</title>
+      <link>https://bwangel.me/docs/python/string-format-example/</link>
+      <pubDate>Wed, 31 Aug 2016 15:45:41 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/string-format-example/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;本文翻译自Python3文档&lt;a href=&#34;https://docs.python.org/3/library/string.html#format-examples&#34;&gt;6.1.3.2. Format examples&lt;/a&gt;&#xA;主要讲述了Python&lt;code&gt;str.format()&lt;/code&gt;的一些使用方法&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Python中的生成器和协程</title>
+      <link>https://bwangel.me/docs/python/python%E4%B8%AD%E7%9A%84%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E5%8D%8F%E7%A8%8B/</link>
+      <pubDate>Fri, 05 Aug 2016 21:37:41 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/python%E4%B8%AD%E7%9A%84%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E5%8D%8F%E7%A8%8B/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;今天读了《A Curious Course on Coroutines and Concurrency》的第一部分，以下为我的碎碎念。&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;生成器和协程的异同&lt;/li&gt;&#xA;&lt;li&gt;协程的一些特性&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Python的命名空间解析</title>
+      <link>https://bwangel.me/docs/python/python%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Wed, 03 Aug 2016 22:29:41 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/python%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E8%A7%A3%E6%9E%90/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;什么是命名空间&lt;/li&gt;&#xA;&lt;li&gt;命名空间有哪些&lt;/li&gt;&#xA;&lt;li&gt;变量查找原则&lt;/li&gt;&#xA;&lt;li&gt;分析一个UnboundLocalError的例子&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Ubuntu缩小磁盘分区大小</title>
+      <link>https://bwangel.me/docs/ubuntu/ubuntu%E7%BC%A9%E5%B0%8F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F/</link>
+      <pubDate>Sun, 17 Jul 2016 16:38:06 +0000</pubDate>
+      <guid>https://bwangel.me/docs/ubuntu/ubuntu%E7%BC%A9%E5%B0%8F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;通过resize2fs调整文件系统大小&lt;/li&gt;&#xA;&lt;li&gt;通过parted调整磁盘分区大小&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>npm小记</title>
+      <link>https://bwangel.me/docs/nodejs/npm%E5%B0%8F%E8%AE%B0/</link>
+      <pubDate>Fri, 06 May 2016 15:10:25 +0000</pubDate>
+      <guid>https://bwangel.me/docs/nodejs/npm%E5%B0%8F%E8%AE%B0/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;关于npm的小记，记录自己平常学习到的零碎知识点&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>PEP 343: Python的with语句</title>
+      <link>https://bwangel.me/docs/python/python%E7%9A%84with%E8%AF%AD%E5%8F%A5/</link>
+      <pubDate>Mon, 25 Apr 2016 21:04:33 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/python%E7%9A%84with%E8%AF%AD%E5%8F%A5/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Python的with语句用法以及相关的上下文管理协议&lt;/li&gt;&#xA;&lt;li&gt;如何自己写一个上下文管理器对象，如何利用&lt;code&gt;contextlib&lt;/code&gt;来写一个上下文管理器对象&lt;/li&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://docs.python.org/release/2.5/whatsnew/pep-343.html&#34;&gt;PEP 343: The &amp;lsquo;with&amp;rsquo; statement&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MongoDB分片</title>
+      <link>https://bwangel.me/docs/mongodb/mongodb%E5%88%86%E7%89%87/</link>
+      <pubDate>Fri, 22 Apr 2016 11:18:06 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mongodb/mongodb%E5%88%86%E7%89%87/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;本文主要讲述MongoDB分片的原理以及MongDB如何配置分片服务，设置ChunkSize大小。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MongoDB复制集</title>
+      <link>https://bwangel.me/docs/mongodb/mongodb%E5%A4%8D%E5%88%B6%E9%9B%86/</link>
+      <pubDate>Wed, 20 Apr 2016 10:34:01 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mongodb/mongodb%E5%A4%8D%E5%88%B6%E9%9B%86/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;本文主要讲述了MongoDB复制集的配置，动态修改及部分原理，最后创建了一个自动化部署的脚本。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MongoDB备份与回复</title>
+      <link>https://bwangel.me/docs/mongodb/mongodb%E5%A4%87%E4%BB%BD%E4%B8%8E%E5%9B%9E%E5%A4%8D/</link>
+      <pubDate>Tue, 19 Apr 2016 11:58:26 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mongodb/mongodb%E5%A4%87%E4%BB%BD%E4%B8%8E%E5%9B%9E%E5%A4%8D/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;主要介绍了JSON/CSV格式备份与二进制格式备份两种方式。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Git-submodule</title>
+      <link>https://bwangel.me/docs/tools/git-submodule/</link>
+      <pubDate>Mon, 11 Apr 2016 07:18:43 +0000</pubDate>
+      <guid>https://bwangel.me/docs/tools/git-submodule/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;git submodule&lt;/code&gt;就是git主仓库在本仓库的配置中记录着子模块仓库对应的名字，路径，远端url，然后创建一个特殊文件去记录子模块仓库目前的&lt;code&gt;commit-id&lt;/code&gt;，每次更新子模块就是通过远端路径和&lt;code&gt;commit-id&lt;/code&gt;来进行更新&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>CentOS 下编译安装 Nginx</title>
+      <link>https://bwangel.me/docs/http/nginx_install/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/http/nginx_install/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;主要讲述了编译安装 Nginx&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Emmet学习笔记</title>
+      <link>https://bwangel.me/docs/editor/emmet/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/editor/emmet/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;参考文章：&lt;a href=&#34;http://www.w3cplus.com/tools/emmet-cheat-sheet.html&#34;&gt;前端开发必备！Emmet使用手册&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;记录Emmet的一些语法&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MongoDB索引</title>
+      <link>https://bwangel.me/docs/mongodb/mongodb%E7%B4%A2%E5%BC%95/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mongodb/mongodb%E7%B4%A2%E5%BC%95/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MongoDB的文章，主要介绍索引&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL单表查询</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL单表查询&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL多表查询</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍11. MySQL多表查询&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL存储过程</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 存储过程&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL安全机制</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 安全机制&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL常用函数</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 常用函数&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL技术架构概览</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;学习 MySQL 课程时的相关笔记&#xA;仅仅对 MySQL 的整体做的大概介绍&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL数据类型_数值类型</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL数据类型_数值类型&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL数据类型-字符串类型</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL数据类型-字符串类型&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL索引</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E7%B4%A2%E5%BC%95/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E7%B4%A2%E5%BC%95/</guid>
+      <description>摘要:&#xA;MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用于快速找到记录的一种数据结构&#xA;索引优化应该是对查询性能优化最有效的手段了&#xA;相当于字典中的音序表，如果没有音序表，则需要一页一页去查&#xA;2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&amp;gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&amp;gt; create procedure autoinsert1() -&amp;gt; BEGIN -&amp;gt; declare i int default 1; -&amp;gt; while(i&amp;lt;20000)do -&amp;gt; insert into school.t2 values(i, &amp;#39;xff&amp;#39;); -&amp;gt; set i=i+1 -&amp;gt; end while; -&amp;gt; END$$ mysql&amp;gt; delimiter ; --还原分隔符为; mysql&amp;gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错</description>
+    </item>
+    <item>
+      <title>MySQL编译安装</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 编译安装&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL表的操作和约束</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E5%92%8C%E7%BA%A6%E6%9D%9F/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E5%92%8C%E7%BA%A6%E6%9D%9F/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL表的操作和约束&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL视图</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E8%A7%86%E5%9B%BE/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E8%A7%86%E5%9B%BE/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL视图&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL触发器</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍9. MySQL触发器&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>MySQL运算符的使用</title>
+      <link>https://bwangel.me/docs/mysql/mysql%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mysql/mysql%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 运算符的使用&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>NodeJS 笔记</title>
+      <link>https://bwangel.me/docs/nodejs/note/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/nodejs/note/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;阮一峰的&lt;a href=&#34;http://javascript.ruanyifeng.com/#toc10&#34;&gt;Node.js&lt;/a&gt;教程笔记&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Python参数</title>
+      <link>https://bwangel.me/docs/python/python%E5%8F%82%E6%95%B0/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/python%E5%8F%82%E6%95%B0/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;IntermediatePython的学习笔记&lt;/li&gt;&#xA;&lt;li&gt;Python的三种参数&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Sublime小记</title>
+      <link>https://bwangel.me/docs/editor/sublime_text/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/editor/sublime_text/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;关于Sublime Text的一些小记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>TDD with python 第六章笔记</title>
+      <link>https://bwangel.me/docs/python/tdd_with_python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/python/tdd_with_python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Python Web开发测试驱动方法第六章的笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Vue.js关于组件的笔记</title>
+      <link>https://bwangel.me/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;学习Vue.js官方教程的笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>web框架要素</title>
+      <link>https://bwangel.me/docs/http/web%E6%A1%86%E6%9E%B6%E8%A6%81%E7%B4%A0/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/http/web%E6%A1%86%E6%9E%B6%E8%A6%81%E7%B4%A0/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>深入查询表达式</title>
+      <link>https://bwangel.me/docs/mongodb/%E6%B7%B1%E5%85%A5%E6%9F%A5%E8%AF%A2%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mongodb/%E6%B7%B1%E5%85%A5%E6%9F%A5%E8%AF%A2%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MongoDB的文章，主要介绍深入查询表达式&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>游标操作</title>
+      <link>https://bwangel.me/docs/mongodb/%E6%B8%B8%E6%A0%87%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/mongodb/%E6%B8%B8%E6%A0%87%E6%93%8D%E4%BD%9C/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MongoDB的文章，主要介绍游标操作&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>编辑器需求</title>
+      <link>https://bwangel.me/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</link>
+      <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      <guid>https://bwangel.me/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;关于自己对于编辑器的需求，留作以后定制编辑器用&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+    </item>
   </channel>
 </rss>

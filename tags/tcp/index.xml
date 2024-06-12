@@ -1,48 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>647 Universe – tcp</title>
+    <title>Tcp on 647 Universe</title>
     <link>https://bwangel.me/tags/tcp/</link>
-    <description>Recent content in tcp on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Tcp on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 18 Oct 2021 23:54:13 +0800</lastBuildDate>
-    
-	  <atom:link href="https://bwangel.me/tags/tcp/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <lastBuildDate>Fri, 29 Sep 2023 11:10:24 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/tcp/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Docs: TCP Naggle 算法</title>
+      <title>TCP Naggle 算法</title>
       <link>https://bwangel.me/docs/tcp_ip/tcp-naggle/</link>
       <pubDate>Mon, 18 Oct 2021 23:54:13 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/tcp_ip/tcp-naggle/</guid>
-      <description>
-        
-        
-        &lt;hr&gt;
-&lt;h2 id=&#34;tips&#34;&gt;Tips&lt;/h2&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;if 有数据要发送 {
-    if 可用窗口大小 &amp;gt;= MSS and 可发送的数据 &amp;gt;= MSS {
-        立刻发送MSS大小的数据
-    } else {
-        if 有未确认的数据 {
-            将数据放入缓存等待接收ACK
-        } else {
-            立刻发送数据
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://cloud.tencent.com/developer/article/1784570&#34;&gt;深入浅出TCPIP之Nagle算法&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-      </description>
+      <description></description>
     </item>
-    
   </channel>
 </rss>
