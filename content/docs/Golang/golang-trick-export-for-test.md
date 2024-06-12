@@ -6,7 +6,6 @@ draft: false
 tags: [翻译, Go, ARTS, blog]
 author: "bwangel"
 comment: true
-
 ---
 
 > + 原文地址: https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd
@@ -104,7 +103,7 @@ func TestName(t *testing.T) {
 
 以下是代码链接，大家可以参考阅读。
 
-+ [strings 目录]((https://github.com/golang/go/tree/release-branch.go1.12/src/strings))
++ [strings 目录](https://github.com/golang/go/tree/release-branch.go1.12/src/strings)
 + [search.go](https://github.com/golang/go/blob/release-branch.go1.12/src/strings/search.go#L5)
 + [search_test.go](https://github.com/golang/go/blob/release-branch.go1.12/src/strings/search_test.go#L5)
 + [export_test.go](https://github.com/golang/go/blob/release-branch.go1.12/src/strings/export_test.go#L40-L42)
