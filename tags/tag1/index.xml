@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tag1 on 647 Universe</title>
+    <link>https://bwangel.me/tags/tag1/</link>
+    <description>Recent content in Tag1 on 647 Universe</description>
+    <generator>Hugo</generator>
+    <language>cn</language>
+    <lastBuildDate>Wed, 12 Jun 2024 18:51:37 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/tag1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Calculus(微积分)</title>
+      <link>https://bwangel.me/docs/math/calculus/</link>
+      <pubDate>Wed, 12 Jun 2024 18:46:48 +0800</pubDate>
+      <guid>https://bwangel.me/docs/math/calculus/</guid>
+      <description>复合函数定义域 \( f(g(x)) \) 的定义域, 是 \( g \) 的 定义域中那些使 \( g(x) \) 处于 \( f \) 的定义域中的数 \( x \) 的集合.</description>
+    </item>
+  </channel>
+</rss>

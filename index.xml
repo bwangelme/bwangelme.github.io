@@ -29,6 +29,20 @@
       <description>curl POST JSON 数据 curl -X PUT -H &amp;#34;Content-Type: application/json&amp;#34; -d &amp;#39;@/tmp/demo.json&amp;#39; :9200/demo ø&amp;gt; cat /tmp/demo.json { &amp;#34;settings&amp;#34;: { &amp;#34;number_of_shards&amp;#34;: 1, &amp;#34;number_of_replicas&amp;#34;: 1 } } 使用 --resolve 选项替换域名 将 www.google.com 替换成 127.0.0.1，并访问 8000 端口 curl -v --resolve www.google.com:8000:127.0.0.1 http://www.google.com:8000/ping&#xA;将 https://www.google.com 替换成 127.0.0.1，此时 curl 会忽略证书和域名不匹配的问题 curl -v --resolve www.google.com:443:127.0.0.1 https://www.google.com/ping&#xA;将 http://www.google.com 替换成 127.0.0.1，http 默认访问 80 端口 curl -v --resolve www.google.com:80:127.0.0.1 http://www.google.com/ping&#xA;--fail 和 --fail-with-body 这两个选项都可以让 curl 在接收到 400 及以上的 HTTP 响应码的时候，将退出码设置为 22</description>
     </item>
     <item>
+      <title>UKnowY</title>
+      <link>https://bwangel.me/docs/tools/clash/</link>
+      <pubDate>Wed, 12 Jun 2024 20:58:32 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tools/clash/</guid>
+      <description>Justmysocks 的订阅链接生成 clash 配置文件 启动 subconverter docker run -d --restart=always -p 25500:25500 tindy2013/subconverter:latest 将下面命令中的 https://justmysock.subscribe.url 替换成你的 justmysock 服务的订阅地址, 可以得到一个 curl 命令 python -c &amp;#34;from urllib.parse import urlencode; print(&amp;#39;curl \&amp;#39;http://localhost:25500/sub?%s\&amp;#39; &amp;gt; /tmp/config.yaml &amp;#39; % urlencode({&amp;#39;target&amp;#39;: &amp;#39;clash&amp;#39;, &amp;#39;url&amp;#39;: &amp;#39;https://justmysock.subscribe.url&amp;#39;}))&amp;#34; curl &amp;#39;http://localhost:25500/sub?target=clash&amp;amp;url=https%3A%2F%2Fjustmysock.subscribe.url&amp;#39; &amp;gt; /tmp/config.yaml 执行此 curl 命令, 生成的 clash 配置文件保存到了 /tmp/config.yaml 中,将此文件导入到 clash 中 subconverter README </description>
+    </item>
+    <item>
+      <title>Calculus(微积分)</title>
+      <link>https://bwangel.me/docs/math/calculus/</link>
+      <pubDate>Wed, 12 Jun 2024 18:46:48 +0800</pubDate>
+      <guid>https://bwangel.me/docs/math/calculus/</guid>
+      <description>复合函数定义域 \( f(g(x)) \) 的定义域, 是 \( g \) 的 定义域中那些使 \( g(x) \) 处于 \( f \) 的定义域中的数 \( x \) 的集合.</description>
+    </item>
+    <item>
       <title>chatgpt 常用 prompt</title>
       <link>https://bwangel.me/docs/tools/chatgpt-prompt/</link>
       <pubDate>Tue, 11 Jun 2024 10:20:12 +0800</pubDate>
