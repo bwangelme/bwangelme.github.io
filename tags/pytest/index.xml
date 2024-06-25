@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pytest on 647 Universe</title>
+    <link>https://bwangel.me/tags/pytest/</link>
+    <description>Recent content in Pytest on 647 Universe</description>
+    <generator>Hugo</generator>
+    <language>cn</language>
+    <lastBuildDate>Thu, 13 Jun 2024 15:45:16 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/pytest/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pytest Tips</title>
+      <link>https://bwangel.me/docs/python/pytest/</link>
+      <pubDate>Thu, 13 Jun 2024 15:40:02 +0800</pubDate>
+      <guid>https://bwangel.me/docs/python/pytest/</guid>
+      <description>pytest 启动 pdb 调试 安装 ipython&#xA;在想要打断点的地方, 写入语句 import pdb; pdb.set_trace()&#xA;执行 pytest 测试函数&#xA;pytest dir/test_files --pdb --pdbcls=IPython.terminal.debugger:TerminalPdb Pytest 开启日志记录 在根目录中创建 conftest.py 文件 在 conftest.py 文件中写入以下函数 def pytest_configure(config): logger = logging.getLogger(&amp;#39;&amp;#39;) logger.setLevel(logging.DEBUG) 这将会将所有 logger 的级别设置为 debug, pytest 执行测试的过程中,在 ---Captured log call--- 章节中将会看到捕获的日志输出</description>
+    </item>
+  </channel>
+</rss>
