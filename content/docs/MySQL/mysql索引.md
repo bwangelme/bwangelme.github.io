@@ -170,3 +170,52 @@ mysql> explain select s from T where k between 3 and 5;
 1 row in set, 1 warning (0.00 sec)
 ```
 
+## explain 语句的说明
+
+在 MySQL 中使用 EXPLAIN 语句可以显示 MySQL 如何执行 SQL 查询，从而帮助优化查询性能。EXPLAIN 语句输出的信息包含多个字段，每个字段都有特定的含义。下面是这些字段的详细解释：
+
+- id: 查询的标识符，表示查询中每个子查询或表的执行顺序。id 值越大，优先级越高，先被执行。
+
+- select_type: 查询的类型，表示每个 SELECT 子句的类型。常见的类型有：
+
+    - SIMPLE：简单查询，不包含子查询或 UNION。
+    - PRIMARY：主查询，最外层的查询。
+    - SUBQUERY：子查询，出现在 SELECT 或 WHERE 子句中。
+    - DERIVED：衍生表，出现在 FROM 子句中的子查询。
+    - UNION：UNION 中的第二个或后续的 SELECT 语句。
+    - UNION RESULT：UNION 的结果。
+
+- table: 表示正在访问的表名。
+
+- partitions: 显示匹配的分区信息（如果表使用了分区）。
+
+- type: 连接类型，表示 MySQL 如何找到所需行。常见类型包括：
+
+    - ALL：全表扫描。
+    - index：全索引扫描。
+    - range：索引范围扫描。
+    - ref：使用非唯一索引扫描，返回匹配某个单独值的所有行。
+    - eq_ref：唯一索引扫描，对于每个索引键值，表中有一行与之匹配。
+    - const：表有最多一个匹配行，快速访问。
+    - system：表只有一行（系统表）。
+    - possible_keys: 显示查询中可能使用的索引。
+
+- key: 实际使用的索引。如果没有使用索引，该值为 NULL。
+
+- key_len: 使用的索引长度（字节数）。这个值是计算得出的，表示 MySQL 实际使用了索引的多少部分。
+
+- ref: 显示使用索引时，哪一列或常量与 key 一起用于查询行。
+
+- rows: MySQL 估计为找到所需数据，需要读取的行数。该值是一个估计值，不是准确值。
+
+- filtered: 显示查询条件过滤掉的行的百分比（百分比形式），这个值用于估计返回结果的数量。
+
+- Extra: 额外信息，说明查询的额外细节。常见的值包括：
+
+    - Using where：在存储引擎之后使用 WHERE 子句过滤行。
+    - Using index：表示查询只使用索引访问表数据，而不访问表的实际行。
+    - Using temporary：使用临时表保存中间结果。
+    - Using filesort：使用外部文件排序，而不是从索引中读取顺序行。
+    - Using join buffer：使用连接缓冲区来存储临时结果。
+
+通过理解和分析 EXPLAIN 输出的这些字段，可以找出查询中的性能瓶颈，并进行针对性的优化。
