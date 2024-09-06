@@ -109,3 +109,44 @@ RUN cd ~/app && git reset --hard ${app_commit} && go build .
 # 注意这个 app_commit 是一个不存在的 commit
 docker build -t curl_test --build-arg app_repo=bwangelme/rdcdemo --build-arg app_commit=2f24a0658d7feb0205e7d75b7ae218ff6495e8f3 .
 ```
+
+## 使用代理
+
+- 使用 http 代理
+
+```bash
+curl -x http://127.0.0.1:1087 https://www.google.com/
+
+# 可以简写, 默认的 proxy 协议是 http
+
+curl -x 127.0.0.1:1087 https://www.google.com/
+```
+
+- 使用 socks5 代理
+
+```bash
+curl --socks5-hostname 127.0.0.1:1080 https://www.google.com/
+
+# 可以简写, socks 代理默认端口是 1080
+
+curl --socks5-hostname 127.0.0.1 https://www.google.com/
+
+# 使用 -x 的形式写代理地址, socks5h 等价于 --socks5-hostname
+curl -x 'socks5h://localhost:1080' https://www.google.com
+```
+
+__注意__: socks5 代理必须使用 `--socks5-hostname` 选项, 不能使用 `--socks5` , 要不然 dns 解析不会走代理, 导致请求失败
+
+> socks5 和 socks5h 主要区别在于DNS解析的处理方式：
+> - socks5: 在这种模式下，DNS解析是在客户端（即你本地的计算机）进行的。这意味着你本地的DNS服务器会解析你请求的域名，然后通过SOCKS5代理将请求发送出去。
+> - socks5h: 在这种模式下，DNS解析是在代理服务器上进行的。这意味着代理服务器会解析域名，然后通过代理将请求发往目标服务器。这种方式有助于隐藏你的本地IP地址和DNS查询结果，增加了隐私保护。
+
+- 覆盖环境变量的代理
+
+```bash
+# -x '' 指定代理为空, 使得 curl 不走代理, 覆盖了环境变量 http_proxy 设置的代理
+
+$ http_proxy='http://127.0.0.1:1087' curl -x '' cip.cc
+IP      : 122.190.50.89
+地址    : 中国  湖北  武汉
+```
