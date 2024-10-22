@@ -180,7 +180,7 @@
       <link>https://bwangel.me/docs/algo/binary_search/</link>
       <pubDate>Tue, 10 Oct 2023 09:31:53 +0800</pubDate>
       <guid>https://bwangel.me/docs/algo/binary_search/</guid>
-      <description>二分查找的注意点 循环的条件: left &amp;lt;= right mid 计算方法: # 用移位预算速度更快 mid = left + ((right-left) &amp;gt;&amp;gt; 2)) left 和 right 的更新方法 left = mid + 1 right = mid - 1 </description>
+      <description>二分查找的注意点 循环的条件: left &amp;lt;= right mid 计算方法: # 用移位预算速度更快 mid = left + ((right-left) &amp;gt;&amp;gt; 1)) left 和 right 的更新方法 left = mid + 1 right = mid - 1 // BinarySearchLastV2 /** ## 功能 返回 arr 中最后一个 == num 的数字的索引 **/ func BinarySearchLastV2(arr []int64, num int64) int { var ( low = 0 n = len(arr) high = n - 1 ) /** 1. for 循环结束后, low &amp;gt; high 2.</description>
     </item>
     <item>
       <title>Consumer</title>
