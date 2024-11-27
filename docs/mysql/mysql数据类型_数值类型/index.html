@@ -29,7 +29,7 @@
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
     <meta property="article:published_time" content="2016-04-10T10:56:54+00:00">
-    <meta property="article:modified_time" content="2023-11-06T10:22:28+08:00">
+    <meta property="article:modified_time" content="2024-10-30T14:04:43+08:00">
     <meta property="article:tag" content="MySQL">
     <meta property="article:tag" content="Blog">
 
@@ -37,8 +37,8 @@
   <meta itemprop="description" content="摘要:
 这是一篇关于MySQL的文章，主要介绍MySQL数据类型_数值类型">
   <meta itemprop="datePublished" content="2016-04-10T10:56:54+00:00">
-  <meta itemprop="dateModified" content="2023-11-06T10:22:28+08:00">
-  <meta itemprop="wordCount" content="129">
+  <meta itemprop="dateModified" content="2024-10-30T14:04:43+08:00">
+  <meta itemprop="wordCount" content="153">
   <meta itemprop="keywords" content="MySQL,Blog">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="MySQL数据类型_数值类型">
@@ -454,7 +454,9 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docstools-li">
   <a href="/docs/tools/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docstools"><span class="">Tools</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docstoolstls-certificate-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docstoolshttpie-li">
+  <a href="/docs/tools/httpie/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docstoolshttpie"><span class="">httpie</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docstoolstls-certificate-li">
   <a href="/docs/tools/tls-certificate/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docstoolstls-certificate"><span class="">TLS 验证证书的过程</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docstoolsclash-li">
   <a href="/docs/tools/clash/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docstoolsclash"><span class="">UKnowY</span></a>
@@ -731,6 +733,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">Gomod</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">Http</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">Httpie</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/intermediatepython/" data-taxonomy-term="intermediatepython"><span class="taxonomy-label">IntermediatePython</span><span class="taxonomy-count">1</span></a></li>
@@ -780,6 +783,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">Tips</span><span class="taxonomy-count">42</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tls/" data-taxonomy-term="tls"><span class="taxonomy-label">Tls</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">Tombkeeper</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">5</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">Ucs</span><span class="taxonomy-count">1</span></a></li>
@@ -905,9 +909,24 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">
 </span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#ce5c00;font-weight:bold">#</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#a40000">如果不够显示字段，自动补充</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#a40000">，由于是以</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#a40000">开始，所以默认会是</span><span style="color:#000">unsigned的</span><span style="color:#f8f8f8;text-decoration:underline">
 </span></span></span></code></pre></div><h2 id="2-浮点数类型">2. 浮点数类型</h2>
-<p>|类型|字节|
-|Float|4|
-|Double|8|</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>字节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Float</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Double</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
 <p>也有精度和标度的概念,超过精度会四舍五入</p>
 <p><strong>错误示例</strong></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">create</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">table</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">test5</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">float_test</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87">float</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span><span style="color:#f8f8f8;text-decoration:underline">
@@ -934,15 +953,50 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">
 </span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#ce5c00;font-weight:bold">#</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#a40000">将二进制数</span><span style="color:#000">id</span><span style="color:#a40000">，以二进制，八进制，十六进制的数字字符串的形式来显示。</span><span style="color:#f8f8f8;text-decoration:underline">
 </span></span></span></code></pre></div><h2 id="5-日期和时间类型">5. 日期和时间类型</h2>
-<p>日期和时间类型|字节|最大值|最小值
-&mdash;-|&mdash;-|
-DATE|4|
-DATETIME|8|1000-01-01 00:00:00|9999-12-31 23:59:59|
-TIMESTAMP|4|19700101080001|2038年的某个时刻|
-TIME|3|-835:59:59|838:59:59|
-YEAR|1|1901|2155</p>
-<pre tabindex="0"><code>YEAR &lt;=69 会以20开头，&gt;=70会以19开头
-</code></pre><h2 id="6-建议">6. 建议</h2>
+<table>
+<thead>
+<tr>
+<th>日期和时间类型</th>
+<th>字节</th>
+<th>最大值</th>
+<th>最小值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DATE</td>
+<td>4</td>
+<td>9999-12-31</td>
+<td>1000-01-01</td>
+</tr>
+<tr>
+<td>DATETIME</td>
+<td>8</td>
+<td>1000-01-01 00:00:00</td>
+<td>9999-12-31 23:59:59</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>4</td>
+<td>1970-01-01 00:00:01 UTC</td>
+<td>2038-01-19 03:14:07 UTC</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>3</td>
+<td>-835:59:59</td>
+<td>838:59:59</td>
+</tr>
+<tr>
+<td>YEAR(4)</td>
+<td>1</td>
+<td>1901</td>
+<td>2155</td>
+</tr>
+</tbody>
+</table>
+<p><strong>YEAR &lt;=69 会以20开头，&gt;=70会以19开头</strong></p>
+<h2 id="6-建议">6. 建议</h2>
 <h3 id="1-浮点数">1. 浮点数</h3>
 <p>用户身高，体重，薪水等。</p>
 <h3 id="2-定点数">2. 定点数</h3>

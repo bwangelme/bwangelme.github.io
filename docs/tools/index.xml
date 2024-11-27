@@ -6,8 +6,15 @@
     <description>Recent content in Tools on 647 Universe</description>
     <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 18 Sep 2024 17:25:03 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 27 Nov 2024 16:55:55 +0800</lastBuildDate>
     <atom:link href="https://bwangel.me/docs/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>httpie</title>
+      <link>https://bwangel.me/docs/tools/httpie/</link>
+      <pubDate>Wed, 27 Nov 2024 16:50:23 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tools/httpie/</guid>
+      <description>httpie 使用 jq 解析 JSON 响应 http -v -o - -d https://api.github.com/users/bwangelme | jq &amp;#39;.bio&amp;#39; 命令中选项的说明&#xA;-v 输出请求体，请求 header，响应 header&#xA;-o - 将 response body 输出到 stdout 中&#xA;-d 当 -d 选项开启时，-o 会只将 response body 输出到 stdout 中，其他部分(header, 请求体)会输出到 stderr 中&#xA;| jq &#39;.bio&#39; 输出响应体中的 bio 字段&#xA;ø&amp;gt; http -v -o - -d https://api.github.com/users/bwangelme | jq &amp;#39;.bio&amp;#39; GET /users/bwangelme HTTP/1.1 Accept: */* Accept-Encoding: identity Connection: keep-alive Host: api.github.com User-Agent: HTTPie/3.2.3 HTTP/1.</description>
+    </item>
     <item>
       <title>TLS 验证证书的过程</title>
       <link>https://bwangel.me/docs/tools/tls-certificate/</link>

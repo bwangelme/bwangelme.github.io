@@ -29,6 +29,13 @@
       <description>curl POST JSON 数据 curl -X PUT -H &amp;#34;Content-Type: application/json&amp;#34; -d &amp;#39;@/tmp/demo.json&amp;#39; :9200/demo ø&amp;gt; cat /tmp/demo.json { &amp;#34;settings&amp;#34;: { &amp;#34;number_of_shards&amp;#34;: 1, &amp;#34;number_of_replicas&amp;#34;: 1 } } 使用 --resolve 选项替换域名 将 www.google.com 替换成 127.0.0.1，并访问 8000 端口 curl -v --resolve www.google.com:8000:127.0.0.1 http://www.google.com:8000/ping&#xA;将 https://www.google.com 替换成 127.0.0.1，此时 curl 会忽略证书和域名不匹配的问题 curl -v --resolve www.google.com:443:127.0.0.1 https://www.google.com/ping&#xA;将 http://www.google.com 替换成 127.0.0.1，http 默认访问 80 端口 curl -v --resolve www.google.com:80:127.0.0.1 http://www.google.com/ping&#xA;--fail 和 --fail-with-body 这两个选项都可以让 curl 在接收到 400 及以上的 HTTP 响应码的时候，将退出码设置为 22</description>
     </item>
     <item>
+      <title>httpie</title>
+      <link>https://bwangel.me/docs/tools/httpie/</link>
+      <pubDate>Wed, 27 Nov 2024 16:50:23 +0800</pubDate>
+      <guid>https://bwangel.me/docs/tools/httpie/</guid>
+      <description>httpie 使用 jq 解析 JSON 响应 http -v -o - -d https://api.github.com/users/bwangelme | jq &amp;#39;.bio&amp;#39; 命令中选项的说明&#xA;-v 输出请求体，请求 header，响应 header&#xA;-o - 将 response body 输出到 stdout 中&#xA;-d 当 -d 选项开启时，-o 会只将 response body 输出到 stdout 中，其他部分(header, 请求体)会输出到 stderr 中&#xA;| jq &#39;.bio&#39; 输出响应体中的 bio 字段&#xA;ø&amp;gt; http -v -o - -d https://api.github.com/users/bwangelme | jq &amp;#39;.bio&amp;#39; GET /users/bwangelme HTTP/1.1 Accept: */* Accept-Encoding: identity Connection: keep-alive Host: api.github.com User-Agent: HTTPie/3.2.3 HTTP/1.</description>
+    </item>
+    <item>
       <title>TLS 验证证书的过程</title>
       <link>https://bwangel.me/docs/tools/tls-certificate/</link>
       <pubDate>Wed, 18 Sep 2024 17:20:20 +0800</pubDate>
