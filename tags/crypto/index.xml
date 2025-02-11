@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Crypto on 647 Universe</title>
+    <link>https://bwangel.me/tags/crypto/</link>
+    <description>Recent content in Crypto on 647 Universe</description>
+    <generator>Hugo</generator>
+    <language>cn</language>
+    <lastBuildDate>Tue, 11 Feb 2025 22:15:00 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rsa 使用公钥进行解密</title>
+      <link>https://bwangel.me/docs/crypto/rsa/</link>
+      <pubDate>Wed, 08 Jan 2025 14:25:11 +0800</pubDate>
+      <guid>https://bwangel.me/docs/crypto/rsa/</guid>
+      <description>RSA 加密算法相关的数学概念 互质 如果两个正整数，除了 1 以外没有其他的公因数，则他们互质。比如，14 和 15 互质。注意，两个数构成互质关系，他们不一定需要是质数，比如 7 和 9。&#xA;欧拉函数 欧拉函数是一个数学函数，用来表示一个整数 n 的“相对质数”的个数，也就是说，它计算的是小于 n 且与 n 互质的数的数量。举个例子：&#xA;对于 n = 9，1, 2, 4, 5, 7, 8 都与 9 互质，所以 \( \phi(9) = 6 \)&#xA;对于 n = 10，1, 3, 7, 9 与 10 互质，所以 \( \phi(10) = 4 \)&#xA;质因数分解: 先将 n 分解为质因数的乘积形式。&#xA;欧拉函数的通用公式是&#xA;如果 n 是一个正整数，并且其质因数分解为：&#xA;$$ n = p^{e1}_1 * p^{e2}_2 * p^{e3}_3 \cdots * p^{ek}_k $$</description>
+    </item>
+  </channel>
+</rss>
