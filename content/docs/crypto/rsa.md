@@ -653,3 +653,4 @@ func pubKeyDecrypt(pub *rsa.PublicKey, data []byte) ([]byte, error) {
 * https://juejin.cn/post/6997271445776629768
 * https://cjting.me/2020/03/13/rsa/
 * https://javacfox.github.io/2019/07/18/ASN-1%E5%85%A5%E9%97%A8%EF%BC%88%E8%B6%85%E8%AF%A6%E7%BB%86%EF%BC%89/
+* https://datatracker.ietf.org/doc/html/rfc5208
