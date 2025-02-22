@@ -4,16 +4,19 @@
     <title>PubSub on 647 Universe</title>
     <link>https://bwangel.me/tags/pubsub/</link>
     <description>Recent content in PubSub on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 13 Sep 2023 10:02:01 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/pubsub/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 30 May 2019 07:29:04 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/pubsub/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go 并发模式之发布订阅模型</title>
       <link>https://bwangel.me/docs/golang/go-pubsub/</link>
       <pubDate>Thu, 30 May 2019 07:29:04 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-pubsub/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;发布订阅模型的一个简易单机实现&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;发布订阅模型的一个简易单机实现&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

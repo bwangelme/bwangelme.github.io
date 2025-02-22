@@ -4,16 +4,19 @@
     <title>锁 on 647 Universe</title>
     <link>https://bwangel.me/tags/%E9%94%81/</link>
     <description>Recent content in 锁 on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 13 Sep 2023 10:02:01 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/%E9%94%81/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Mar 2019 21:56:43 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/%E9%94%81/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>线程同步操作面试题使用锁的解法</title>
       <link>https://bwangel.me/docs/golang/go-lock/</link>
       <pubDate>Tue, 26 Mar 2019 21:56:43 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-lock/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

@@ -1,306 +1,421 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tips on 647 Universe</title>
+    <title>tips on 647 Universe</title>
     <link>https://bwangel.me/tags/tips/</link>
-    <description>Recent content in Tips on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in tips on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 22 Oct 2024 13:24:41 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/tips/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Nov 2023 22:10:53 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/tips/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>QPS 和 RT 的关系</title>
       <link>https://bwangel.me/docs/performance/qps_rt/</link>
       <pubDate>Sun, 13 Aug 2023 16:17:52 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/performance/qps_rt/</guid>
-      <description>术语说明 QPS: Query Per Second RT: Response Time RT_CPU: 单个请求中的 CPU 时间 RT_WAIT: 单个请求中除了 CPU 时间外的其他时间(等待时间) 结论 单线程情况下, QPS = 1000 / RT&#xA;多线程情况下，最好的情况(最佳线程数)是&#xA;QPS = 1000 / RT_CPU&#xA;最佳线程数 = (RT_CPU+RT_WAIT) / RT_CPU * CPU核心&#xA;线程数超过 最佳线程数 后, 系统的 QPS 不会再增加了，如果进一步增多，因为多个线程抢夺 CPU 资源导致的时间浪费，QPS 还会下降。 说明 一个请求我们除了有 CPU 执行时间外，还有等待时间(等待IO/等待锁资源)。&#xA;如果单个请求的等待时间占比很高，我们可以增加线程数，提升 CPU 的利用率，这样 QPS 也会随之增加。(CPU 利用率达到 85% 以上才比较正常) 线程本身也会消耗资源，它消耗的是 OS 级别的内存，不是进程内存，如果线程数小于 1000, 那么对于系统性能的影响可以忽略不计。 如果单个请求的 CPU 时间占比很高，此时 CPU 成为系统瓶颈，那么系统整体的 QPS 已经没有提升空间了，要么优化程序，减少 CPU 指令数，要么增加 CPU 资源。 我们提升系统 QPS 的目的就是提升 CPU 的利用率，使 CPU 成为系统瓶颈。 </description>
+      <description>术语说明 QPS: Query Per Second RT: Response Time RT_CPU: 单个请求中的 CPU 时间 RT_WAIT: 单个请求中除了 CPU 时间外的其他时间(等待时间) 结论 单线程情况下, QPS = 1000 / RT
+多线程情况下，最好的情况(最佳线程数)是
+QPS = 1000 / RT_CPU
+最佳线程数 = (RT_CPU+RT_WAIT) / RT_CPU * CPU核心
+线程数超过 最佳线程数 后, 系统的 QPS 不会再增加了，如果进一步增多，因为多个线程抢夺 CPU 资源导致的时间浪费，QPS 还会下降。 说明 一个请求我们除了有 CPU 执行时间外，还有等待时间(等待IO/等待锁资源)。
+如果单个请求的等待时间占比很高，我们可以增加线程数，提升 CPU 的利用率，这样 QPS 也会随之增加。(CPU 利用率达到 85% 以上才比较正常) 线程本身也会消耗资源，它消耗的是 OS 级别的内存，不是进程内存，如果线程数小于 1000, 那么对于系统性能的影响可以忽略不计。 如果单个请求的 CPU 时间占比很高，此时 CPU 成为系统瓶颈，那么系统整体的 QPS 已经没有提升空间了，要么优化程序，减少 CPU 指令数，要么增加 CPU 资源。 我们提升系统 QPS 的目的就是提升 CPU 的利用率，使 CPU 成为系统瓶颈。 </description>
     </item>
+    
     <item>
       <title>MySQL 事务</title>
       <link>https://bwangel.me/docs/mysql/transaction/</link>
       <pubDate>Tue, 28 Nov 2023 22:10:53 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/transaction/</guid>
       <description>查询持续时间超过 60s 的事务 select * from information_schema.innodb_trx where TIME_TO_SEC(timediff(now(),trx_started))&amp;gt;60; -- innodb_trx 存储了数据库的所有事务 -- trx_started 表示事务的开始时间 </description>
     </item>
+    
     <item>
       <title>二分查找</title>
       <link>https://bwangel.me/docs/algo/binary_search/</link>
       <pubDate>Tue, 10 Oct 2023 09:31:53 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/binary_search/</guid>
       <description>二分查找的注意点 循环的条件: left &amp;lt;= right mid 计算方法: # 用移位预算速度更快 mid = left + ((right-left) &amp;gt;&amp;gt; 1)) left 和 right 的更新方法 left = mid + 1 right = mid - 1 // BinarySearchLastV2 /** ## 功能 返回 arr 中最后一个 == num 的数字的索引 **/ func BinarySearchLastV2(arr []int64, num int64) int { var ( low = 0 n = len(arr) high = n - 1 ) /** 1. for 循环结束后, low &amp;gt; high 2.</description>
     </item>
+    
     <item>
       <title>Consumer</title>
       <link>https://bwangel.me/docs/kafka/consumer/</link>
       <pubDate>Mon, 11 Sep 2023 16:30:55 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/kafka/consumer/</guid>
-      <description>Commit 当 Consumer 将 enable.auto.commit 设置为 true 的时候，kafka consumer 会自动提交 offset。 它在 auto.commit.interval.ms 选项的控制下，间隔N秒后，自动将当前 consumer 拉取到的消息 offset 提交到 kafka 中。&#xA;当 enable.auto.commit=false 时，kafka 客户端不会自动提交 offset，需要开发者通过 consumer.commitSync 或 consumer.commitAsync 提交 offset。&#xA;不建议每收到一条消息就提交一次 offset，consumer.commitSync 是有性能损耗的，如果 consumer.commitSync 调用的频率非常高，consumer 消费消息的速度将会变得很慢。&#xA;consumer.commitAsync 是异步提交的，它相对 consumer.commitSync 会有一定的性能提升。consumer.commitAsync 还有一个回调函数参数，让开发者设定在提交失败时做什么。&#xA;一般在 broker 正常时，提交失败的情况很少发生。开发者不需要做提交失败后重试的逻辑。 参考链接 https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md https://docs.confluent.io/platform/current/clients/consumer.html#id1 offset kafka 的消息以 group 为单位给 Consumer 发送。Consumer Group 在 topic 中的 offset 存储在 broker 的 __consumer_offsets topic 中。&#xA;新加入的 consumer group 默认从最新位置读取 message。可以通过修改 Consumer 的auto.</description>
+      <description>Commit 当 Consumer 将 enable.auto.commit 设置为 true 的时候，kafka consumer 会自动提交 offset。 它在 auto.commit.interval.ms 选项的控制下，间隔N秒后，自动将当前 consumer 拉取到的消息 offset 提交到 kafka 中。
+当 enable.auto.commit=false 时，kafka 客户端不会自动提交 offset，需要开发者通过 consumer.commitSync 或 consumer.commitAsync 提交 offset。
+不建议每收到一条消息就提交一次 offset，consumer.commitSync 是有性能损耗的，如果 consumer.commitSync 调用的频率非常高，consumer 消费消息的速度将会变得很慢。
+consumer.commitAsync 是异步提交的，它相对 consumer.commitSync 会有一定的性能提升。consumer.commitAsync 还有一个回调函数参数，让开发者设定在提交失败时做什么。
+一般在 broker 正常时，提交失败的情况很少发生。开发者不需要做提交失败后重试的逻辑。 参考链接 https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md https://docs.confluent.io/platform/current/clients/consumer.html#id1 offset kafka 的消息以 group 为单位给 Consumer 发送。Consumer Group 在 topic 中的 offset 存储在 broker 的 __consumer_offsets topic 中。
+新加入的 consumer group 默认从最新位置读取 message。可以通过修改 Consumer 的auto.</description>
     </item>
+    
     <item>
       <title>Broker</title>
       <link>https://bwangel.me/docs/kafka/broker/</link>
       <pubDate>Mon, 11 Sep 2023 16:27:26 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/kafka/broker/</guid>
-      <description>优雅地关闭 Kafka Broker 向进程发送 TERM 信号就可以优雅地关闭 Kafka Broker&#xA;这是 bin/kafka-server-stop.sh 的内容，他的思路就是通过 ps 查找 cmd 中包括 kafka.Kafka 的进程，来寻找进程 ID&#xA;SIGNAL=${SIGNAL:-TERM} OSNAME=$(uname -s) if [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS/390&amp;#34; ]]; then if [ -z $JOBNAME ]; then JOBNAME=&amp;#34;KAFKSTRT&amp;#34; fi PIDS=$(ps -A -o pid,jobname,comm | grep -i $JOBNAME | grep java | grep -v grep | awk &amp;#39;{print $1}&amp;#39;) elif [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS400&amp;#34; ]]; then PIDS=$(ps -Af | grep -i &amp;#39;kafka\.Kafka&amp;#39; | grep java | grep -v grep | awk &amp;#39;{print $2}&amp;#39;) else PIDS=$(ps ax | grep &amp;#39; kafka\.</description>
+      <description>优雅地关闭 Kafka Broker 向进程发送 TERM 信号就可以优雅地关闭 Kafka Broker
+这是 bin/kafka-server-stop.sh 的内容，他的思路就是通过 ps 查找 cmd 中包括 kafka.Kafka 的进程，来寻找进程 ID
+SIGNAL=${SIGNAL:-TERM} OSNAME=$(uname -s) if [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS/390&amp;#34; ]]; then if [ -z $JOBNAME ]; then JOBNAME=&amp;#34;KAFKSTRT&amp;#34; fi PIDS=$(ps -A -o pid,jobname,comm | grep -i $JOBNAME | grep java | grep -v grep | awk &amp;#39;{print $1}&amp;#39;) elif [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS400&amp;#34; ]]; then PIDS=$(ps -Af | grep -i &amp;#39;kafka\.Kafka&amp;#39; | grep java | grep -v grep | awk &amp;#39;{print $2}&amp;#39;) else PIDS=$(ps ax | grep &amp;#39; kafka\.</description>
     </item>
+    
     <item>
       <title>DNS</title>
       <link>https://bwangel.me/docs/linux/dns/</link>
       <pubDate>Sat, 09 Sep 2023 13:41:16 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/dns/</guid>
-      <description>A 记录 Address Mapping records, 指示了对应名称的IPv4地址, A记录用来将域名转换为ip地址.&#xA;AAAA 记录 类似于A记录, 只不过指示的是IPv6的地址。&#xA;因为 IPv6 地址长度是 IPv4 的四倍，所以用 AAAA 表示 IPv6 记录&#xA;NS 记录 Name Server records, 用来指定对应名称的可信名称服务器 (authoritative name server) 例如这段 dig 日志是 j.gtld-servers.net 告诉我们，它不知道 www.baidu.com 的 IP, 但是它告诉我们要查询 baidu.com. 域的地址，可以去 ns[12345].baidu.com 这5个地址中查。&#xA;baidu.com. 172800 IN NS ns2.baidu.com. baidu.com. 172800 IN NS ns3.baidu.com. baidu.com. 172800 IN NS ns4.baidu.com. baidu.com. 172800 IN NS ns1.baidu.com. baidu.com. 172800 IN NS ns7.baidu.com. ;; Received 849 bytes from 192.</description>
+      <description>A 记录 Address Mapping records, 指示了对应名称的IPv4地址, A记录用来将域名转换为ip地址.
+AAAA 记录 类似于A记录, 只不过指示的是IPv6的地址。
+因为 IPv6 地址长度是 IPv4 的四倍，所以用 AAAA 表示 IPv6 记录
+NS 记录 Name Server records, 用来指定对应名称的可信名称服务器 (authoritative name server) 例如这段 dig 日志是 j.gtld-servers.net 告诉我们，它不知道 www.baidu.com 的 IP, 但是它告诉我们要查询 baidu.com. 域的地址，可以去 ns[12345].baidu.com 这5个地址中查。
+baidu.com. 172800 IN NS ns2.baidu.com. baidu.com. 172800 IN NS ns3.baidu.com. baidu.com. 172800 IN NS ns4.baidu.com. baidu.com. 172800 IN NS ns1.baidu.com. baidu.com. 172800 IN NS ns7.baidu.com. ;; Received 849 bytes from 192.</description>
     </item>
+    
     <item>
       <title>Nginx proxy_set_header 默认会覆盖上一层的设置</title>
       <link>https://bwangel.me/docs/http/nginx-proxy-set-header/</link>
       <pubDate>Thu, 27 Apr 2023 15:02:39 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/http/nginx-proxy-set-header/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Logrus 添加预设字段</title>
       <link>https://bwangel.me/docs/golang/logrus-formatter/</link>
       <pubDate>Thu, 27 Apr 2023 14:55:12 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/logrus-formatter/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Ubuntu 中 Docker 设置容器中 DNS 服务器的地址</title>
       <link>https://bwangel.me/docs/container/docker-dns/</link>
       <pubDate>Mon, 20 Mar 2023 18:28:08 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/container/docker-dns/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Pod Tips</title>
       <link>https://bwangel.me/docs/k8s/pod-tips/</link>
       <pubDate>Thu, 02 Mar 2023 09:31:14 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/k8s/pod-tips/</guid>
-      <description>Pod 状态计算细节 Pod 的 QoS 分类 request 是最低资源需求，limit 是最高资源需求&#xA;QoS 类别 描述 Guaranteed(确保) Pod 的资源 request 和 limit 相同 Burstable(可破裂) Pod 的资源 request 小于 limit BestEffort(尽力而为) Pod 的资源没有设置任何 request 和 limit 当计算节点上存在内存/磁盘压力时，k8s 会按照 BestEffort -&amp;gt; Burstable -&amp;gt; Guaranteed 的顺序一次驱逐 pod.&#xA;CPU 是可以压缩的资源，当 CPU 存在压力时，k8s 不会驱逐 pod.&#xA;通常情况下，Burstable 是最好的 QoS 策略，对于一些重要的核心 pod，可以设置为 Guaranteed, 确保它最后被驱逐。&#xA;统计集群中运行 pod 的数量 sum(kube_pod_status_phase{phase=&amp;#34;Running&amp;#34;}) kube_pod_container_status_ready 指标有 namespace, cluster, phase Label 可以对指标进行筛选，其他的看起来都是 prom 相关的&#xA;phase 有五种: Pending|Running|Succeeded|Failed|Unknown</description>
+      <description>Pod 状态计算细节 Pod 的 QoS 分类 request 是最低资源需求，limit 是最高资源需求
+QoS 类别 描述 Guaranteed(确保) Pod 的资源 request 和 limit 相同 Burstable(可破裂) Pod 的资源 request 小于 limit BestEffort(尽力而为) Pod 的资源没有设置任何 request 和 limit 当计算节点上存在内存/磁盘压力时，k8s 会按照 BestEffort -&amp;gt; Burstable -&amp;gt; Guaranteed 的顺序一次驱逐 pod.
+CPU 是可以压缩的资源，当 CPU 存在压力时，k8s 不会驱逐 pod.
+通常情况下，Burstable 是最好的 QoS 策略，对于一些重要的核心 pod，可以设置为 Guaranteed, 确保它最后被驱逐。
+统计集群中运行 pod 的数量 sum(kube_pod_status_phase{phase=&amp;#34;Running&amp;#34;}) kube_pod_container_status_ready 指标有 namespace, cluster, phase Label 可以对指标进行筛选，其他的看起来都是 prom 相关的
+phase 有五种: Pending|Running|Succeeded|Failed|Unknown</description>
     </item>
+    
     <item>
       <title>Thrft</title>
       <link>https://bwangel.me/docs/thrift/thrift-concept/</link>
       <pubDate>Tue, 15 Nov 2022 12:40:19 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/thrift/thrift-concept/</guid>
-      <description>thrift 概念 thrift 架构 Thrift 的架构图如下&#xA;Transport 层位于最底部，用户传输字节数据。&#xA;Transport 层提供的接口如下:&#xA;Transport 层可以由多个 TTransport 类组合起来，每个 TTransport 提供不同的功能。处于 TTransport 组合层次最下方，和设备(网络，磁盘，内存)直接打交道的 TTransport 类称为 Endpoint transports。例如 TSocket，它使用 Socket API 在 TCP/IP 网络上传输数据。&#xA;TFramedTransport 有两个作用:&#xA;分帧，它在每个消息的头部加了四字节的长度，让接受者能够准确地得知消息的大小，并申请合适的 buffer 缓存。当 flush 方法调用的时候，缓存的数据才会写入下一层 Transport 当不需要分帧，仅需要缓存的时候，可以使用 TBufferedTransport。某些语言在 Endpoint Transport 中內建了缓存机制，就没有提供 TBufferedTransport 类。&#xA;参考链接 Chapter 2. Apache Thrift architecture </description>
+      <description>thrift 概念 thrift 架构 Thrift 的架构图如下
+Transport 层位于最底部，用户传输字节数据。
+Transport 层提供的接口如下:
+Transport 层可以由多个 TTransport 类组合起来，每个 TTransport 提供不同的功能。处于 TTransport 组合层次最下方，和设备(网络，磁盘，内存)直接打交道的 TTransport 类称为 Endpoint transports。例如 TSocket，它使用 Socket API 在 TCP/IP 网络上传输数据。
+TFramedTransport 有两个作用:
+分帧，它在每个消息的头部加了四字节的长度，让接受者能够准确地得知消息的大小，并申请合适的 buffer 缓存。当 flush 方法调用的时候，缓存的数据才会写入下一层 Transport 当不需要分帧，仅需要缓存的时候，可以使用 TBufferedTransport。某些语言在 Endpoint Transport 中內建了缓存机制，就没有提供 TBufferedTransport 类。
+参考链接 Chapter 2. Apache Thrift architecture </description>
     </item>
+    
     <item>
       <title>日期和时间格式</title>
       <link>https://bwangel.me/docs/spec/datetime/</link>
       <pubDate>Wed, 26 Oct 2022 11:32:14 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/spec/datetime/</guid>
       <description>w3 时间规范 ISO 8601 定义了大量的日期/时间格式，为了简化开发 &amp;amp; 减少 bug, w3 规范定义了一个通用的时间格式 YYYY-MM-DDThh:mm:ss.STZD YYYY/MM/DD 四位数年份/月/日 T 表示后面跟了一个时间 hh:mm:ss 两位数的时分秒 S 一位或多位小数表示秒的一部分，最小是1, 最大不限制 TZD 时区指示符 W3 规范规定 TZD 可以有两种形式 表示一个 UTC 时间，TZD 可以写成一个 Z, 例如 1994-11-05T13:15:30Z 表示 utc 时间 表示本地时间, TZD 写成 +HH:MM 或 -HH:MM，表示当地时间相对 utc 时间的偏移量, 例如 1994-11-05T13:15:30+08:00 表示东八区时间，即北京时间 协调世界时的缩写为UTC。国际电信联盟希望协调世界时能够在所有语言有单一的缩写。英语和法语区的人同时希望各自的语言缩写－CUT (Coordinated Universal Time) 和 TUC (Temps Universel Coordonné) 能够成为国际标准，最后妥协使用UTC。 参考链接 Date and Time Formats 关于时间格式 2016-08-9T10:01:54.123Z 20160809100154.123Z 处理方法 协调世界时 </description>
     </item>
+    
     <item>
       <title>Ubuntu 下 alacritty 终端中安装 nvim-tree 插件</title>
       <link>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</link>
       <pubDate>Fri, 21 Oct 2022 15:43:43 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Deployment Tips</title>
       <link>https://bwangel.me/docs/k8s/deployment-tips/</link>
       <pubDate>Thu, 15 Sep 2022 10:31:16 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/k8s/deployment-tips/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>ls Tips</title>
       <link>https://bwangel.me/docs/linux/ls-tips.md/</link>
       <pubDate>Tue, 16 Aug 2022 23:10:06 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/ls-tips.md/</guid>
       <description>ls 按照修改时间排序 -t 按照修改时间排序 -r 逆序排序 xuyundong@Macmini:~/Github/blog$ ls -lt content/tips/ -rw-rw-r-- 1 xuyundong xuyundong 800 8月 16 23:13 ls-tips.md.md -rw-rw-r-- 1 xuyundong xuyundong 2644 8月 16 23:05 docker-registry.md -rw-rw-r-- 1 xuyundong xuyundong 1990 8月 11 22:01 stty.md xuyundong@Macmini:~/Github/blog$ ls -lrt content/tips -rw-rw-r-- 1 xuyundong xuyundong 1990 8月 11 22:01 stty.md -rw-rw-r-- 1 xuyundong xuyundong 2644 8月 16 23:05 docker-registry.md -rw-rw-r-- 1 xuyundong xuyundong 897 8月 16 23:11 ls-tips.md.md </description>
     </item>
+    
     <item>
       <title>查看信号的快捷键</title>
       <link>https://bwangel.me/docs/linux/stty/</link>
       <pubDate>Tue, 09 Aug 2022 21:43:40 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/stty/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Ubuntu 下 Docker 设置 Registry</title>
       <link>https://bwangel.me/docs/container/docker-registry/</link>
       <pubDate>Tue, 09 Aug 2022 21:14:49 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/container/docker-registry/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>pkg/errors 和 go1.13 中 errors 库发展历史</title>
       <link>https://bwangel.me/docs/golang/golang-err/</link>
       <pubDate>Mon, 01 Aug 2022 10:23:16 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/golang-err/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>进程卡住如何 debug</title>
       <link>https://bwangel.me/docs/k8s/process-block/</link>
       <pubDate>Thu, 07 Jul 2022 19:56:13 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/k8s/process-block/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Golang 的版本发布计划</title>
       <link>https://bwangel.me/docs/golang/go-release/</link>
       <pubDate>Sat, 14 May 2022 20:58:10 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-release/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Ubuntu 初始化</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu-init/</link>
       <pubDate>Sun, 08 May 2022 10:42:22 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu-init/</guid>
       <description>安装软件 sed -i &amp;#39;s/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g&amp;#39; /etc/apt/sources.list sudo apt update sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa github cli vagrant google chrome chrome download alacritty gvm rustup nerdfont DejaVuSansMono font Ubuntu 将 capslock 映射成 esc sudo apt-get install dconf-cli # 使 caps 成为 esc 按键 dconf write /org/gnome/desktop/input-sources/xkb-options &amp;#34;[&amp;#39;caps:escape&amp;#39;]&amp;#34; # 交换 caps 和 esc 按键 dconf write &amp;#34;/org/gnome/desktop/input-sources/xkb-options&amp;#34; &amp;#34;[&amp;#39;caps:swapescape&amp;#39;]&amp;#34; caps 配置的说明 Caps Lock behavior ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐ │Option Description │ ├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤ │caps:internal Caps Lock uses internal capitalization; Shift &amp;#34;pauses&amp;#34; Caps Lock │ │caps:internal_nocancel Caps Lock uses internal capitalization; Shift does not affect Caps Lock │ │caps:shift Caps Lock acts as Shift with locking; Shift &amp;#34;pauses&amp;#34; Caps Lock │ │caps:shift_nocancel Caps Lock acts as Shift with locking; Shift does not affect Caps Lock │ │caps:capslock Caps Lock toggles normal capitalization of alphabetic characters │ │caps:shiftlock Caps Lock toggles Shift Lock (affects all keys) │ │caps:swapescape Swap Esc and Caps Lock │ │caps:escape Make Caps Lock an additional Esc │ │caps:escape_shifted_capslock Make Caps Lock an additional Esc, but Shift + Caps Lock is the regular Caps Lock │ │caps:backspace Make Caps Lock an additional Backspace │ │caps:super Make Caps Lock an additional Super │ │caps:hyper Make Caps Lock an additional Hyper │ │caps:menu Make Caps Lock an additional Menu key │ │caps:numlock Make Caps Lock an additional Num Lock │ │caps:ctrl_modifier Make Caps Lock an additional Ctrl │ │caps:none Caps Lock is disabled │ │ │ └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ 参考链接 How to permanently switch Caps Lock and Esc jammy 22.</description>
     </item>
+    
     <item>
       <title>Ubuntu 使用默认的 DNS Server 配置</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu-dns/</link>
       <pubDate>Wed, 20 Apr 2022 02:07:00 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu-dns/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Mac OSX 使用技巧</title>
       <link>https://bwangel.me/docs/tools/mac-tips/</link>
       <pubDate>Mon, 18 Apr 2022 17:06:10 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/tools/mac-tips/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>从源码安装 confluent-kafka-python</title>
       <link>https://bwangel.me/docs/kafka/confluent_python.md/</link>
       <pubDate>Fri, 11 Mar 2022 14:34:44 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/kafka/confluent_python.md/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>MySQL 修改 root 密码</title>
       <link>https://bwangel.me/docs/mysql/mysql-password/</link>
       <pubDate>Wed, 09 Mar 2022 14:26:24 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql-password/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>编程语言很重要</title>
       <link>https://bwangel.me/docs/life/language/</link>
       <pubDate>Mon, 07 Mar 2022 23:03:41 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/life/language/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;一番暴论&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;一番暴论&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>如何阅读网络上的小作文</title>
       <link>https://bwangel.me/docs/life/read/</link>
       <pubDate>Sat, 26 Feb 2022 17:19:24 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/life/read/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>匹配所有可打印 Ascii 字符的正则</title>
       <link>https://bwangel.me/docs/python/re-ascii-print/</link>
       <pubDate>Wed, 15 Dec 2021 19:16:45 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/python/re-ascii-print/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Go proxy 的说明</title>
       <link>https://bwangel.me/docs/golang/goproxy/</link>
       <pubDate>Sat, 11 Dec 2021 21:42:46 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/goproxy/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Vagrant 添加挂载目录</title>
       <link>https://bwangel.me/docs/tools/vagrant_add_volume/</link>
       <pubDate>Thu, 02 Dec 2021 21:10:27 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/tools/vagrant_add_volume/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>混杂模式</title>
       <link>https://bwangel.me/docs/tcp_ip/promisc/</link>
       <pubDate>Fri, 12 Nov 2021 23:36:02 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/tcp_ip/promisc/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>使用 Buildkit 和 Containerd 构建运行容器</title>
       <link>https://bwangel.me/docs/k8s/buildkit/</link>
       <pubDate>Mon, 08 Nov 2021 12:43:04 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/k8s/buildkit/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Redis 备份恢复的正确步骤</title>
       <link>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</link>
       <pubDate>Sat, 23 Oct 2021 17:36:43 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Redis 备份机制</title>
       <link>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</link>
       <pubDate>Fri, 22 Oct 2021 00:00:45 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Redis 集群简介</title>
       <link>https://bwangel.me/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Thu, 21 Oct 2021 23:40:12 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Golang 中空数组是否是 nil</title>
       <link>https://bwangel.me/docs/golang/go-array-and-nil/</link>
       <pubDate>Tue, 19 Oct 2021 00:03:44 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-array-and-nil/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Github 客户端 gh 添加搜索仓库的命令</title>
       <link>https://bwangel.me/docs/tools/gh-search-github/</link>
       <pubDate>Tue, 19 Oct 2021 00:01:12 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/tools/gh-search-github/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Java 抛出UnsupportedEncodingException</title>
       <link>https://bwangel.me/docs/tools/java-unsupportedencodingexception/</link>
       <pubDate>Mon, 18 Oct 2021 23:55:58 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/tools/java-unsupportedencodingexception/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>TCP Naggle 算法</title>
       <link>https://bwangel.me/docs/tcp_ip/tcp-naggle/</link>
       <pubDate>Mon, 18 Oct 2021 23:54:13 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/tcp_ip/tcp-naggle/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Glob 语法解析</title>
       <link>https://bwangel.me/docs/linux/glob-%E8%AF%AD%E6%B3%95/</link>
       <pubDate>Mon, 18 Oct 2021 11:38:23 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/glob-%E8%AF%AD%E6%B3%95/</guid>
       <description>&lt;p&gt;Glob 语法&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Caps-lock mapping 成 Esc 在 vscode 中不生效</title>
       <link>https://bwangel.me/docs/editor/vscode-esc-not-work/</link>
       <pubDate>Mon, 18 Oct 2021 11:27:39 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/editor/vscode-esc-not-work/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>CentOS 下编译安装 Nginx</title>
       <link>https://bwangel.me/docs/http/nginx_install/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/http/nginx_install/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;主要讲述了编译安装 Nginx&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;主要讲述了编译安装 Nginx&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

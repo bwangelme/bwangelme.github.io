@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Cni on 647 Universe</title>
+    <title>cni on 647 Universe</title>
     <link>https://bwangel.me/tags/cni/</link>
-    <description>Recent content in Cni on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in cni on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 26 Dec 2023 19:14:05 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/cni/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Dec 2023 18:16:42 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/cni/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CNI</title>
       <link>https://bwangel.me/docs/k8s/cni/</link>
       <pubDate>Mon, 25 Dec 2023 18:16:42 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/k8s/cni/</guid>
-      <description>CNI 要求 CNI 插件的要求可以被简述成两个&#xA;连通性(Connectivity), 每个 Pod 通过默认的网卡接口 eth0 分配 IP 地址，并且这个 IP 地址，在节点的根网络空间上可达。 可达性(Reachability)，跨节点的 Pod 可以直接用 pod ip 通信（不需要经过 NAT）。 验证连通性 这是我用 kind 在本地搭建的一个三节点集群 kind: Cluster apiVersion: kind.x-k8s.io/v1alpha4 name: demo nodes: - role: control-plane image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f ø&amp;gt; docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3fdffdb2fa2d kindest/node:v1.26.3 &amp;#34;/usr/local/bin/entr…&amp;#34; About a minute ago Up About a minute 127.0.0.1:34309-&amp;gt;6443/tcp demo-control-plane 646f93b78436 kindest/node:v1.</description>
+      <description>CNI 要求 CNI 插件的要求可以被简述成两个
+连通性(Connectivity), 每个 Pod 通过默认的网卡接口 eth0 分配 IP 地址，并且这个 IP 地址，在节点的根网络空间上可达。 可达性(Reachability)，跨节点的 Pod 可以直接用 pod ip 通信（不需要经过 NAT）。 验证连通性 这是我用 kind 在本地搭建的一个三节点集群 kind: Cluster apiVersion: kind.x-k8s.io/v1alpha4 name: demo nodes: - role: control-plane image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f ø&amp;gt; docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3fdffdb2fa2d kindest/node:v1.26.3 &amp;#34;/usr/local/bin/entr…&amp;#34; About a minute ago Up About a minute 127.0.0.1:34309-&amp;gt;6443/tcp demo-control-plane 646f93b78436 kindest/node:v1.</description>
     </item>
+    
   </channel>
 </rss>

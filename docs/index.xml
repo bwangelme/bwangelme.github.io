@@ -4,8 +4,7 @@
     <title>Documentation on 647 Universe</title>
     <link>https://bwangel.me/docs/</link>
     <description>Recent content in Documentation on 647 Universe</description>
-    <generator>Hugo</generator>
-    <language>cn</language>
-    <atom:link href="https://bwangel.me/docs/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <language>cn</language><atom:link href="https://bwangel.me/docs/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

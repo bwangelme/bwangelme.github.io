@@ -1,54 +1,92 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Thrift on 647 Universe</title>
+    <title>thrift on 647 Universe</title>
     <link>https://bwangel.me/tags/thrift/</link>
-    <description>Recent content in Thrift on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in thrift on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 13 Dec 2023 13:25:27 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/thrift/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Nov 2023 17:27:03 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/thrift/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Thrift Python Client 解析负数 field id 失败</title>
       <link>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</link>
       <pubDate>Thu, 23 Nov 2023 17:27:03 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</guid>
-      <description>thrift python 的 fastbinary 是什么 thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。&#xA;序列化的方式有多种，JSON, Binary, Compact。&#xA;Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实现。C++ 实现的这份我们叫做 fastbinary。&#xA;使用 TBinaryProtocol 初始化 protocol ，调用的是纯 Python 实现。TBinaryProtocolAccelerated 调用的是 C++ 实现。&#xA;问题描述 Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。&#xA;我们创建一个 thrift 服务，它的 idl 文件定义如下 service Service { string hello(1: string name) i64 add(i64 a, i64 b) } hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)</description>
+      <description>thrift python 的 fastbinary 是什么 thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。
+序列化的方式有多种，JSON, Binary, Compact。
+Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实现。C++ 实现的这份我们叫做 fastbinary。
+使用 TBinaryProtocol 初始化 protocol ，调用的是纯 Python 实现。TBinaryProtocolAccelerated 调用的是 C++ 实现。
+问题描述 Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。
+我们创建一个 thrift 服务，它的 idl 文件定义如下 service Service { string hello(1: string name) i64 add(i64 a, i64 b) } hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)</description>
     </item>
+    
     <item>
       <title>Python2 使用 Thrift 为什么会出现 EINTR 错误</title>
       <link>https://bwangel.me/docs/python/thrift-eintr/</link>
       <pubDate>Fri, 27 Oct 2023 09:22:30 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/python/thrift-eintr/</guid>
-      <description>EINTR 错误是什么 在 man 7 signal 中写到，&#xA;If a signal handler is invoked while a system call or library function call is blocked, then either:&#xA;• the call is automatically restarted after the signal handler returns; or&#xA;• the call fails with the error EINTR.&#xA;如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况&#xA;在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。&#xA;例如&#xA;read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?</description>
+      <description>EINTR 错误是什么 在 man 7 signal 中写到，
+If a signal handler is invoked while a system call or library function call is blocked, then either:
+• the call is automatically restarted after the signal handler returns; or
+• the call fails with the error EINTR.
+如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况
+在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。
+例如
+read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?</description>
     </item>
+    
     <item>
       <title>Thrift golang client 如何设置超时时间</title>
       <link>https://bwangel.me/docs/thrift/golang-client-timeout/</link>
       <pubDate>Tue, 05 Sep 2023 21:41:25 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/thrift/golang-client-timeout/</guid>
-      <description>简介 本文以 golang thrift binary 协议为例，讲述 thrift golang client 如何设置超时时间&#xA;如何设置超时时间 golang thrift client 有两个超时时间&#xA;socket timeout 在创建 TSocket 的时候，我们可以传入 ConnectTimeout 和 SocketTimeout 两个配置。&#xA;ConnectTimeout 表示建立 TCP 连接的超时时间 SocketTimeout 表示读写 Socket fd 时的超时时间 当这两个超时触发时，thrift 会返回一个 err.Timeout() == true 的 error, 表示超时错误，thrift 会将其包装成 TTransportException，其 typeId == thrift.TIMED_OUT&#xA;rawTransport := thrift.NewTSocketConf(net.JoinHostPort(&amp;#34;localhost&amp;#34;, &amp;#34;7303&amp;#34;), &amp;amp;thrift.TConfiguration{ SocketTimeout: 5 * time.Second, ConnectTimeout: 5 * time.Second, }) context timeout 在调用 thrift 函数时，需要传入 context 参数，我们可以在 ctx 参数中加上超时&#xA;ctx, cancel := context.</description>
+      <description>简介 本文以 golang thrift binary 协议为例，讲述 thrift golang client 如何设置超时时间
+如何设置超时时间 golang thrift client 有两个超时时间
+socket timeout 在创建 TSocket 的时候，我们可以传入 ConnectTimeout 和 SocketTimeout 两个配置。
+ConnectTimeout 表示建立 TCP 连接的超时时间 SocketTimeout 表示读写 Socket fd 时的超时时间 当这两个超时触发时，thrift 会返回一个 err.Timeout() == true 的 error, 表示超时错误，thrift 会将其包装成 TTransportException，其 typeId == thrift.TIMED_OUT
+rawTransport := thrift.NewTSocketConf(net.JoinHostPort(&amp;#34;localhost&amp;#34;, &amp;#34;7303&amp;#34;), &amp;amp;thrift.TConfiguration{ SocketTimeout: 5 * time.Second, ConnectTimeout: 5 * time.Second, }) context timeout 在调用 thrift 函数时，需要传入 context 参数，我们可以在 ctx 参数中加上超时
+ctx, cancel := context.</description>
     </item>
+    
     <item>
       <title>Thrift 协议学习笔记</title>
       <link>https://bwangel.me/docs/thrift/thrift-protocol/</link>
       <pubDate>Wed, 11 Jan 2023 11:03:19 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/thrift/thrift-protocol/</guid>
       <description>&lt;p&gt;本文主要讲了 thrift 的协议格式&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Thrft</title>
       <link>https://bwangel.me/docs/thrift/thrift-concept/</link>
       <pubDate>Tue, 15 Nov 2022 12:40:19 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/thrift/thrift-concept/</guid>
-      <description>thrift 概念 thrift 架构 Thrift 的架构图如下&#xA;Transport 层位于最底部，用户传输字节数据。&#xA;Transport 层提供的接口如下:&#xA;Transport 层可以由多个 TTransport 类组合起来，每个 TTransport 提供不同的功能。处于 TTransport 组合层次最下方，和设备(网络，磁盘，内存)直接打交道的 TTransport 类称为 Endpoint transports。例如 TSocket，它使用 Socket API 在 TCP/IP 网络上传输数据。&#xA;TFramedTransport 有两个作用:&#xA;分帧，它在每个消息的头部加了四字节的长度，让接受者能够准确地得知消息的大小，并申请合适的 buffer 缓存。当 flush 方法调用的时候，缓存的数据才会写入下一层 Transport 当不需要分帧，仅需要缓存的时候，可以使用 TBufferedTransport。某些语言在 Endpoint Transport 中內建了缓存机制，就没有提供 TBufferedTransport 类。&#xA;参考链接 Chapter 2. Apache Thrift architecture </description>
+      <description>thrift 概念 thrift 架构 Thrift 的架构图如下
+Transport 层位于最底部，用户传输字节数据。
+Transport 层提供的接口如下:
+Transport 层可以由多个 TTransport 类组合起来，每个 TTransport 提供不同的功能。处于 TTransport 组合层次最下方，和设备(网络，磁盘，内存)直接打交道的 TTransport 类称为 Endpoint transports。例如 TSocket，它使用 Socket API 在 TCP/IP 网络上传输数据。
+TFramedTransport 有两个作用:
+分帧，它在每个消息的头部加了四字节的长度，让接受者能够准确地得知消息的大小，并申请合适的 buffer 缓存。当 flush 方法调用的时候，缓存的数据才会写入下一层 Transport 当不需要分帧，仅需要缓存的时候，可以使用 TBufferedTransport。某些语言在 Endpoint Transport 中內建了缓存机制，就没有提供 TBufferedTransport 类。
+参考链接 Chapter 2. Apache Thrift architecture </description>
     </item>
+    
     <item>
       <title>翻译《Chapter 1. Introduction to Apache Thrift》</title>
       <link>https://bwangel.me/docs/thrift/introduction-to-apache-thrift/</link>
       <pubDate>Fri, 17 Dec 2021 14:38:59 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/thrift/introduction-to-apache-thrift/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://livebook.manning.com/book/programmers-guide-to-apache-thrift/chapter-1/&#34;&gt;https://livebook.manning.com/book/programmers-guide-to-apache-thrift/chapter-1/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://livebook.manning.com/book/programmers-guide-to-apache-thrift/chapter-1/&#34;&gt;https://livebook.manning.com/book/programmers-guide-to-apache-thrift/chapter-1/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

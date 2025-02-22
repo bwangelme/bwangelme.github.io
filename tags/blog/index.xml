@@ -1,663 +1,1147 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blog on 647 Universe</title>
+    <title>blog on 647 Universe</title>
     <link>https://bwangel.me/tags/blog/</link>
-    <description>Recent content in Blog on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in blog on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 30 Oct 2024 14:04:43 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Dec 2023 13:17:28 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>envoy 线程模型</title>
       <link>https://bwangel.me/docs/envoy/envoy-threading-model/</link>
       <pubDate>Wed, 13 Dec 2023 13:17:28 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/envoy/envoy-threading-model/</guid>
-      <description>线程模型 envoy 的线程可以分成三类&#xA;main thread main thread 负责进程的管理，和 xDS Server 的通信，统计信息 stat 刷新，admin 设置。&#xA;main 线程中所有的工作都是异步 &amp;amp; 非阻塞的， 而且它负责的重要功能通常都不会用到大量的 CPU，所以它可以以单线程的模式运行。&#xA;worker thread worker 线程可以通过 --concurrency 选项来控制个数。&#xA;worekr 线程整体是一个非阻塞的事件循环，它负责创建 Listener 的连接，listen 端口，accept 连接并处理连接生命周期内的所有请求。这使得大多数连接代码都可以像单线程一样编写。&#xA;这种设计可能会导致连接不均衡，即某些 worker 线程比其他线程处理更多的连接。&#xA;file flush thread Envoy 写的每个文件(主要是 access-log)都有一个独立的数据刷新线程。因为将内容写入到操作系统的文件缓存时，即使使用了 O_NONBLOCK 选项，有时也会阻塞住。&#xA;当线程需要写入文件时，他们通常是将内容写入到一块内存区域，然后 flush 线程再将内容刷新到文件中。&#xA;连接处理 连接不均衡的问题，最早就有人在 github上问了，Envoy作者的回答是让操作系统来做负载均衡最好，而且一个线程处理accept，扩展性不高。但是后来作者还是加上了一个均衡连接的可选配置。&#xA;现代内核在连接的负载均衡方面表现得非常出色。 它们采用诸如IO优先级提升( IO priority boosting)之类的功能，试图在开始使用其他正在监听相同套接字的线程之前，填充一个线程的工作。同时，它们也不使用单个自旋锁来处理每个 accpet 操作。&#xA;连接一旦创建，IO 读写一般是绑定在一个线程。&#xA;Envoy 中每个工作线程都会创建一个连接池，因此尽管 HTTP2 会在一个连接上使用多个 Stream, 但是 Envoy 的每个线程还是会针对每个 Upstream 创建一个 TCP 连接。</description>
+      <description>线程模型 envoy 的线程可以分成三类
+main thread main thread 负责进程的管理，和 xDS Server 的通信，统计信息 stat 刷新，admin 设置。
+main 线程中所有的工作都是异步 &amp;amp; 非阻塞的， 而且它负责的重要功能通常都不会用到大量的 CPU，所以它可以以单线程的模式运行。
+worker thread worker 线程可以通过 --concurrency 选项来控制个数。
+worekr 线程整体是一个非阻塞的事件循环，它负责创建 Listener 的连接，listen 端口，accept 连接并处理连接生命周期内的所有请求。这使得大多数连接代码都可以像单线程一样编写。
+这种设计可能会导致连接不均衡，即某些 worker 线程比其他线程处理更多的连接。
+file flush thread Envoy 写的每个文件(主要是 access-log)都有一个独立的数据刷新线程。因为将内容写入到操作系统的文件缓存时，即使使用了 O_NONBLOCK 选项，有时也会阻塞住。
+当线程需要写入文件时，他们通常是将内容写入到一块内存区域，然后 flush 线程再将内容刷新到文件中。
+连接处理 连接不均衡的问题，最早就有人在 github上问了，Envoy作者的回答是让操作系统来做负载均衡最好，而且一个线程处理accept，扩展性不高。但是后来作者还是加上了一个均衡连接的可选配置。
+现代内核在连接的负载均衡方面表现得非常出色。 它们采用诸如IO优先级提升( IO priority boosting)之类的功能，试图在开始使用其他正在监听相同套接字的线程之前，填充一个线程的工作。同时，它们也不使用单个自旋锁来处理每个 accpet 操作。
+连接一旦创建，IO 读写一般是绑定在一个线程。
+Envoy 中每个工作线程都会创建一个连接池，因此尽管 HTTP2 会在一个连接上使用多个 Stream, 但是 Envoy 的每个线程还是会针对每个 Upstream 创建一个 TCP 连接。</description>
     </item>
+    
     <item>
       <title>Python2 的正则在 Mac 和 Linux 上的不同表现</title>
       <link>https://bwangel.me/docs/python/unicode-re/</link>
       <pubDate>Wed, 06 Dec 2023 12:20:47 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/python/unicode-re/</guid>
-      <description>表现 s = u&amp;#39;玛丽黛佳眉笔只-需-18,冲p腹t製o2𝒂I5EfW4xPmTq𝒃o2打🤔开桃o寶&amp;#39; 这个字符串 s 是一段淘口令，核心内容就是 𝒂 和 𝒃 之间的 ID I5EfW4xPmTq, 我们想用一个正则表达式将 ID 捕获出来。&#xA;𝒂 和 𝒃 的 unicode 码点不在基本平面内，在1号平面内。Unicode 各个平面的字符范围参考 维基百科&#xA;在 MacOS 的 Python2 上，可以用下面这段正则捕获&#xA;ur&amp;#34;[\uD800-\uDBFF][\uDC00-\uDFFF]([a-zA-Z0-9]{11})[\uD800-\uDBFF][\uDC00-\uDFFF]&amp;#34; D800-DBFF, DC00-DFFF 表示非基本平面的字符，用 utf-16 编码后，生成的两个字节。&#xA;MacOS 的 Python2 中，编译的时候默认使用了 UCS2 作为 Unicode 的编码实现，sys.maxunicode == 65535， 它不支持展示非基本平面外的 unicode 字符，所以只能用这种办法来绕过。&#xA;在 Linux 的 Python2 中，上述正则就失效了，需要用另外一个正则&#xA;ur&amp;#34;[\U00010000-\U0001FFFF]([a-zA-Z0-9]{11})[\U00010000-\U0001FFFF]&amp;#34; 00010000-0001FFFF 表示1号平面内的所有字符。&#xA;Linux 的 Python2 中，Unicode 的编码实现使用的是 UCS4，sys.maxunicode == 1114111, 它可以展示 Unicode 17 个平面中的所有字符，所以在正则中可以直接写非基本平面的码点&#xA;如何开启 UCS4 编译 Python 的时候，指定 --enable-unicode=ucs4 即可指定 unicode 的编码实现是 UCS4, 从而支持展示所有平面的 Unicode 码点。</description>
+      <description>表现 s = u&amp;#39;玛丽黛佳眉笔只-需-18,冲p腹t製o2𝒂I5EfW4xPmTq𝒃o2打🤔开桃o寶&amp;#39; 这个字符串 s 是一段淘口令，核心内容就是 𝒂 和 𝒃 之间的 ID I5EfW4xPmTq, 我们想用一个正则表达式将 ID 捕获出来。
+𝒂 和 𝒃 的 unicode 码点不在基本平面内，在1号平面内。Unicode 各个平面的字符范围参考 维基百科
+在 MacOS 的 Python2 上，可以用下面这段正则捕获
+ur&amp;#34;[\uD800-\uDBFF][\uDC00-\uDFFF]([a-zA-Z0-9]{11})[\uD800-\uDBFF][\uDC00-\uDFFF]&amp;#34; D800-DBFF, DC00-DFFF 表示非基本平面的字符，用 utf-16 编码后，生成的两个字节。
+MacOS 的 Python2 中，编译的时候默认使用了 UCS2 作为 Unicode 的编码实现，sys.maxunicode == 65535， 它不支持展示非基本平面外的 unicode 字符，所以只能用这种办法来绕过。
+在 Linux 的 Python2 中，上述正则就失效了，需要用另外一个正则
+ur&amp;#34;[\U00010000-\U0001FFFF]([a-zA-Z0-9]{11})[\U00010000-\U0001FFFF]&amp;#34; 00010000-0001FFFF 表示1号平面内的所有字符。
+Linux 的 Python2 中，Unicode 的编码实现使用的是 UCS4，sys.maxunicode == 1114111, 它可以展示 Unicode 17 个平面中的所有字符，所以在正则中可以直接写非基本平面的码点
+如何开启 UCS4 编译 Python 的时候，指定 --enable-unicode=ucs4 即可指定 unicode 的编码实现是 UCS4, 从而支持展示所有平面的 Unicode 码点。</description>
     </item>
+    
     <item>
       <title>细说：Unicode, UTF-8, UTF-16, UTF-32, UCS-2, UCS-4</title>
       <link>https://bwangel.me/docs/encoding/unicode/</link>
       <pubDate>Tue, 05 Dec 2023 19:18:29 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/encoding/unicode/</guid>
-      <description>原文链接: Malecrab 的博客&#xA;这篇文章讲的非常清楚了，我这里复制一份用于备份，查找。&#xA;Unicode与ISO 10646 全世界很多个国家都在为自己的文字编码，并且互不相通，不同的语言字符编码值相同却代表不同的符号（例如：韩文编码 EUC-KR 中 “한국어” 的编码值正好是汉字编码GBK中的“茄惫绢”）。&#xA;因此，同一份文档，拷贝至不同语言的机器，就可能成了乱码，于是人们就想：我们能不能定义一个超大的字符集，它可以容纳全世界所有的文字字符，再对它们统一进行编码，让每一个字符都对应一个不同的编码值，从而就不会再有乱码了。&#xA;如果说“各个国家都在为自己文字独立编码”是百家争鸣，那么“建立世界统一的字符编码”则是一统江湖，谁都想来做这个武林盟主。早前就有两个机构试图来做这个事：&#xA;国际标准化组织（ISO），他们于1984年创建ISO/IEC JTC1/SC2/WG2工作组，试图制定一份“通用字符集”（Universal Character Set，简称UCS），并最终制定了ISO 10646标准。 统一码联盟，他们由Xerox、Apple等软件制造商于1988年组成，并且开发了Unicode标准（The Unicode Standard，这个前缀Uni很牛逼哦 &amp;mdash; Unique, Universal, and Uniform）。 1991年前后，两个项目的参与者都认识到，世界不需要两个不兼容的字符集。于是，它们开始合并双方的工作成果，并为创立一个单一编码表而协同工作。从Unicode 2.0开始，Unicode采用了与ISO 10646-1相同的字库和字码；&#xA;ISO也承诺，ISO 10646将不会替超出U+10FFFF的UCS-4编码赋值，以使得两者保持一致。两个项目仍都独立存在，并独立地公布各自的标准。不过由于Unicode这一名字比较好记，因而它使用更为广泛。&#xA;Unicode编码点分为17个平面（plane），每个平面包含 \( 2^{16} \)（即65536）个码点（code point）。17个平面的码点可表示为从 U+xx0000 到 U+xxFFFF，其中xx表示十六进制值从 0x00 到 0x10，共计17个平面。&#xA;UTF-32 与 UCS-4 在 Unicode 与 ISO 10646 合并之前，ISO 10646标准为 通用字符集（UCS）定义了一种31位的编码形式（即UCS-4），其编码固定占用4个字节，编码空间为 0x00000000~0x7FFFFFFF（可以编码20多亿个字符）。&#xA;UCS-4有20多亿个编码空间，但实际使用范围并不超过 0x10FFFF，并且为了兼容Unicode标准，ISO也承诺将不会为超出 0x10FFFF 的 UCS-4 编码赋值。由此 UTF-32 编码被提出来了，它的编码值与UCS-4相同，只不过其编码空间被限定在了 0~0x10FFFF 之间。因此也可以说：UTF-32是UCS-4的一个子集。&#xA;UTF-16与UCS-2 除了UCS-4，ISO 10646 标准为 “通用字符集”（UCS）定义了一种16位的编码形式（即UCS-2），其编码固定占用2个字节，它包含65536个编码空间（可以为全世界最常用的63K字符编码，为了兼容Unicode，0xD800-0xDFFF 之间的码点未使用）。例：“汉” 的UCS-2编码为6C49。</description>
+      <description>原文链接: Malecrab 的博客
+这篇文章讲的非常清楚了，我这里复制一份用于备份，查找。
+Unicode与ISO 10646 全世界很多个国家都在为自己的文字编码，并且互不相通，不同的语言字符编码值相同却代表不同的符号（例如：韩文编码 EUC-KR 中 “한국어” 的编码值正好是汉字编码GBK中的“茄惫绢”）。
+因此，同一份文档，拷贝至不同语言的机器，就可能成了乱码，于是人们就想：我们能不能定义一个超大的字符集，它可以容纳全世界所有的文字字符，再对它们统一进行编码，让每一个字符都对应一个不同的编码值，从而就不会再有乱码了。
+如果说“各个国家都在为自己文字独立编码”是百家争鸣，那么“建立世界统一的字符编码”则是一统江湖，谁都想来做这个武林盟主。早前就有两个机构试图来做这个事：
+国际标准化组织（ISO），他们于1984年创建ISO/IEC JTC1/SC2/WG2工作组，试图制定一份“通用字符集”（Universal Character Set，简称UCS），并最终制定了ISO 10646标准。 统一码联盟，他们由Xerox、Apple等软件制造商于1988年组成，并且开发了Unicode标准（The Unicode Standard，这个前缀Uni很牛逼哦 &amp;mdash; Unique, Universal, and Uniform）。 1991年前后，两个项目的参与者都认识到，世界不需要两个不兼容的字符集。于是，它们开始合并双方的工作成果，并为创立一个单一编码表而协同工作。从Unicode 2.0开始，Unicode采用了与ISO 10646-1相同的字库和字码；
+ISO也承诺，ISO 10646将不会替超出U+10FFFF的UCS-4编码赋值，以使得两者保持一致。两个项目仍都独立存在，并独立地公布各自的标准。不过由于Unicode这一名字比较好记，因而它使用更为广泛。
+Unicode编码点分为17个平面（plane），每个平面包含 \( 2^{16} \)（即65536）个码点（code point）。17个平面的码点可表示为从 U+xx0000 到 U+xxFFFF，其中xx表示十六进制值从 0x00 到 0x10，共计17个平面。
+UTF-32 与 UCS-4 在 Unicode 与 ISO 10646 合并之前，ISO 10646标准为 通用字符集（UCS）定义了一种31位的编码形式（即UCS-4），其编码固定占用4个字节，编码空间为 0x00000000~0x7FFFFFFF（可以编码20多亿个字符）。
+UCS-4有20多亿个编码空间，但实际使用范围并不超过 0x10FFFF，并且为了兼容Unicode标准，ISO也承诺将不会为超出 0x10FFFF 的 UCS-4 编码赋值。由此 UTF-32 编码被提出来了，它的编码值与UCS-4相同，只不过其编码空间被限定在了 0~0x10FFFF 之间。因此也可以说：UTF-32是UCS-4的一个子集。
+UTF-16与UCS-2 除了UCS-4，ISO 10646 标准为 “通用字符集”（UCS）定义了一种16位的编码形式（即UCS-2），其编码固定占用2个字节，它包含65536个编码空间（可以为全世界最常用的63K字符编码，为了兼容Unicode，0xD800-0xDFFF 之间的码点未使用）。例：“汉” 的UCS-2编码为6C49。</description>
     </item>
+    
     <item>
       <title>Thrift Python Client 解析负数 field id 失败</title>
       <link>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</link>
       <pubDate>Thu, 23 Nov 2023 17:27:03 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</guid>
-      <description>thrift python 的 fastbinary 是什么 thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。&#xA;序列化的方式有多种，JSON, Binary, Compact。&#xA;Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实现。C++ 实现的这份我们叫做 fastbinary。&#xA;使用 TBinaryProtocol 初始化 protocol ，调用的是纯 Python 实现。TBinaryProtocolAccelerated 调用的是 C++ 实现。&#xA;问题描述 Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。&#xA;我们创建一个 thrift 服务，它的 idl 文件定义如下 service Service { string hello(1: string name) i64 add(i64 a, i64 b) } hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)</description>
+      <description>thrift python 的 fastbinary 是什么 thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。
+序列化的方式有多种，JSON, Binary, Compact。
+Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实现。C++ 实现的这份我们叫做 fastbinary。
+使用 TBinaryProtocol 初始化 protocol ，调用的是纯 Python 实现。TBinaryProtocolAccelerated 调用的是 C++ 实现。
+问题描述 Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。
+我们创建一个 thrift 服务，它的 idl 文件定义如下 service Service { string hello(1: string name) i64 add(i64 a, i64 b) } hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)</description>
     </item>
+    
     <item>
       <title>Leetcode第96题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-96/</link>
       <pubDate>Fri, 03 Nov 2023 08:45:11 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-96/</guid>
-      <description>题目 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。&#xA;示例 1：&#xA;输入：n = 3 输出：5&#xA;示例 2：&#xA;输入：n = 1 输出：1&#xA;提示：&#xA;1 &amp;lt;= n &amp;lt;= 19 解题思路 这个题目主要的难度在公式推导上，我们可以用动态规划的思路来求解。&#xA;令 \( G(N) \) 表示 n 互不相同的整数组成的二叉搜索树的数量。 \( F(i, N) \) 表示由 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量 可得, \( G(N) \) 是由每个 i 作为根节点的互不相同的二叉搜索树的数量的总和，此公式记做公式(1) $$G(N) = \sum_{i=1}^{N} F(i, N) \tag{1}$$接着，我们需要再推导出 \( F(i, N) \) 和 \( G(N) \) 的关系，就可以得到我们的递推公式了。&#xA;要想求 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量，我们可以先求出左右两个子树的数量，左右两个子树相乘，即是总的数量。</description>
+      <description>题目 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。
+示例 1：
+输入：n = 3 输出：5
+示例 2：
+输入：n = 1 输出：1
+提示：
+1 &amp;lt;= n &amp;lt;= 19 解题思路 这个题目主要的难度在公式推导上，我们可以用动态规划的思路来求解。
+令 \( G(N) \) 表示 n 互不相同的整数组成的二叉搜索树的数量。 \( F(i, N) \) 表示由 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量 可得, \( G(N) \) 是由每个 i 作为根节点的互不相同的二叉搜索树的数量的总和，此公式记做公式(1) $$G(N) = \sum_{i=1}^{N} F(i, N) \tag{1}$$接着，我们需要再推导出 \( F(i, N) \) 和 \( G(N) \) 的关系，就可以得到我们的递推公式了。
+要想求 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量，我们可以先求出左右两个子树的数量，左右两个子树相乘，即是总的数量。</description>
     </item>
+    
     <item>
       <title>Python2 使用 Thrift 为什么会出现 EINTR 错误</title>
       <link>https://bwangel.me/docs/python/thrift-eintr/</link>
       <pubDate>Fri, 27 Oct 2023 09:22:30 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/python/thrift-eintr/</guid>
-      <description>EINTR 错误是什么 在 man 7 signal 中写到，&#xA;If a signal handler is invoked while a system call or library function call is blocked, then either:&#xA;• the call is automatically restarted after the signal handler returns; or&#xA;• the call fails with the error EINTR.&#xA;如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况&#xA;在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。&#xA;例如&#xA;read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?</description>
+      <description>EINTR 错误是什么 在 man 7 signal 中写到，
+If a signal handler is invoked while a system call or library function call is blocked, then either:
+• the call is automatically restarted after the signal handler returns; or
+• the call fails with the error EINTR.
+如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况
+在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。
+例如
+read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?</description>
     </item>
+    
     <item>
       <title>在 Ubuntu 22.04 上搭建 NFS Server</title>
       <link>https://bwangel.me/docs/linux/nfs-server/</link>
       <pubDate>Wed, 06 Sep 2023 08:51:39 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/nfs-server/</guid>
-      <description>环境准备 我准备了两台机器&#xA;name ip user user_id server 191.168.58.11 vagrant 1000 client 192.168.58.1 xuyundong 1000 安装组件 服务端安装 nfs server sudo apt update sudo apt install nfs-kernel-server 客户端安装 nfs-common sudo apt update sudo apt install nfs-common 服务端创建目录并导出 在服务端上创建挂载目录，并设置权限 sudo mkdir -p /mnt/share sudo chown vagrant:vagrant /mnt/share sudo chmod 755 /mnt/share 服务端上配置 nfs export 目录 修改 /etc/exports 文件, 加入以下内容&#xA;/mnt/share *(rw,async,no_subtree_check) 关于 export 选项的解释&#xA;rw: 客户端具有读和写的权限 sync: 强制 nfs 在回复 client 之前将更改写入磁盘，这保证了 nfs server 的可靠性，但也降低了写入速度 no_subtree_check: 此选项可防止子树检查，在子树检查过程中，主机必须为每个请求检查文件在导出的树中是否仍然可用。当客户端打开文件时重命名文件时，这可能会导致许多问题。通常建议禁用子树检查。 no_root_squash: 当客户端以 root 权限写入文件时，nfs server 会将文件 owner 改成普通用户，当此选项开启时，nfs server 不修改 root 写入文件的 woner 修改完以后执行以下命令载入配置</description>
+      <description>环境准备 我准备了两台机器
+name ip user user_id server 191.168.58.11 vagrant 1000 client 192.168.58.1 xuyundong 1000 安装组件 服务端安装 nfs server sudo apt update sudo apt install nfs-kernel-server 客户端安装 nfs-common sudo apt update sudo apt install nfs-common 服务端创建目录并导出 在服务端上创建挂载目录，并设置权限 sudo mkdir -p /mnt/share sudo chown vagrant:vagrant /mnt/share sudo chmod 755 /mnt/share 服务端上配置 nfs export 目录 修改 /etc/exports 文件, 加入以下内容
+/mnt/share *(rw,async,no_subtree_check) 关于 export 选项的解释
+rw: 客户端具有读和写的权限 sync: 强制 nfs 在回复 client 之前将更改写入磁盘，这保证了 nfs server 的可靠性，但也降低了写入速度 no_subtree_check: 此选项可防止子树检查，在子树检查过程中，主机必须为每个请求检查文件在导出的树中是否仍然可用。当客户端打开文件时重命名文件时，这可能会导致许多问题。通常建议禁用子树检查。 no_root_squash: 当客户端以 root 权限写入文件时，nfs server 会将文件 owner 改成普通用户，当此选项开启时，nfs server 不修改 root 写入文件的 woner 修改完以后执行以下命令载入配置</description>
     </item>
+    
     <item>
       <title>Thrift golang client 如何设置超时时间</title>
       <link>https://bwangel.me/docs/thrift/golang-client-timeout/</link>
       <pubDate>Tue, 05 Sep 2023 21:41:25 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/thrift/golang-client-timeout/</guid>
-      <description>简介 本文以 golang thrift binary 协议为例，讲述 thrift golang client 如何设置超时时间&#xA;如何设置超时时间 golang thrift client 有两个超时时间&#xA;socket timeout 在创建 TSocket 的时候，我们可以传入 ConnectTimeout 和 SocketTimeout 两个配置。&#xA;ConnectTimeout 表示建立 TCP 连接的超时时间 SocketTimeout 表示读写 Socket fd 时的超时时间 当这两个超时触发时，thrift 会返回一个 err.Timeout() == true 的 error, 表示超时错误，thrift 会将其包装成 TTransportException，其 typeId == thrift.TIMED_OUT&#xA;rawTransport := thrift.NewTSocketConf(net.JoinHostPort(&amp;#34;localhost&amp;#34;, &amp;#34;7303&amp;#34;), &amp;amp;thrift.TConfiguration{ SocketTimeout: 5 * time.Second, ConnectTimeout: 5 * time.Second, }) context timeout 在调用 thrift 函数时，需要传入 context 参数，我们可以在 ctx 参数中加上超时&#xA;ctx, cancel := context.</description>
+      <description>简介 本文以 golang thrift binary 协议为例，讲述 thrift golang client 如何设置超时时间
+如何设置超时时间 golang thrift client 有两个超时时间
+socket timeout 在创建 TSocket 的时候，我们可以传入 ConnectTimeout 和 SocketTimeout 两个配置。
+ConnectTimeout 表示建立 TCP 连接的超时时间 SocketTimeout 表示读写 Socket fd 时的超时时间 当这两个超时触发时，thrift 会返回一个 err.Timeout() == true 的 error, 表示超时错误，thrift 会将其包装成 TTransportException，其 typeId == thrift.TIMED_OUT
+rawTransport := thrift.NewTSocketConf(net.JoinHostPort(&amp;#34;localhost&amp;#34;, &amp;#34;7303&amp;#34;), &amp;amp;thrift.TConfiguration{ SocketTimeout: 5 * time.Second, ConnectTimeout: 5 * time.Second, }) context timeout 在调用 thrift 函数时，需要传入 context 参数，我们可以在 ctx 参数中加上超时
+ctx, cancel := context.</description>
     </item>
+    
     <item>
       <title>利用 VirtualBox 和 Ubuntu 22 重现抓包实验</title>
       <link>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</link>
       <pubDate>Wed, 23 Aug 2023 10:07:25 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</guid>
-      <description>实验介绍 在 《Wireshark网络分析就这么简单》 第一章，讲述了一道面试题。&#xA;HostA 和 HostB 在同一个局域网中，它们的 IP 配置如下，请问这两台机器能否 ping 通?&#xA;HostA: IP: 192.168.26.129/24 Gateway: 192.168.26.2 HostB: IP: 192.168.26.3/27 Gateway: 192.168.26.2 答案是能够 ping 通，HostA 和 HostB 连同网关最终会形成一个奇怪的网络&#xA;具体通信过程如下:&#xA;HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 的 IP 和自己的掩码计算，发现 192.168.26.3 和自己是处于同一子网 HostA 通过 ARP 协议广播寻找 192.168.26.3 的 MAC 地址，由于 192.168.26.3 和它在同一局域网中，192.168.26.3 会应答自己的 MAC 地址 HostA 将 ping 请求直接发送给 192.168.26.3, 目的 MAC 地址使用的就是 192.168.26.3 的地址 HostB(192.168.26.3) 收到 ping 请求，给 HostA 发送 ping 响应 HostB 将 HostA 的 IP 和自己的掩码计算，发现 192.</description>
+      <description>实验介绍 在 《Wireshark网络分析就这么简单》 第一章，讲述了一道面试题。
+HostA 和 HostB 在同一个局域网中，它们的 IP 配置如下，请问这两台机器能否 ping 通?
+HostA: IP: 192.168.26.129/24 Gateway: 192.168.26.2 HostB: IP: 192.168.26.3/27 Gateway: 192.168.26.2 答案是能够 ping 通，HostA 和 HostB 连同网关最终会形成一个奇怪的网络
+具体通信过程如下:
+HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 的 IP 和自己的掩码计算，发现 192.168.26.3 和自己是处于同一子网 HostA 通过 ARP 协议广播寻找 192.168.26.3 的 MAC 地址，由于 192.168.26.3 和它在同一局域网中，192.168.26.3 会应答自己的 MAC 地址 HostA 将 ping 请求直接发送给 192.168.26.3, 目的 MAC 地址使用的就是 192.168.26.3 的地址 HostB(192.168.26.3) 收到 ping 请求，给 HostA 发送 ping 响应 HostB 将 HostA 的 IP 和自己的掩码计算，发现 192.</description>
     </item>
+    
     <item>
       <title>HTTP 协议中带下划线的 header 说明</title>
       <link>https://bwangel.me/docs/http/nginx-header-underline/</link>
       <pubDate>Tue, 09 May 2023 22:40:29 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/http/nginx-header-underline/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>lsof</title>
       <link>https://bwangel.me/docs/linux/lsof/</link>
       <pubDate>Thu, 02 Mar 2023 12:43:09 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/lsof/</guid>
-      <description>按照网络状态筛选进程的 fd sudo lsof -i -sTCP:LISTEN -a -p &amp;lt;pid&amp;gt; -a 表示 and, 前后两个条件要一起生效&#xA;-i 和 -s 一起用，表示可以按照 TCP/UDP 状态来筛选 fd&#xA;列出进程 &amp;lt;pid&amp;gt; 建立的所有 TCP 连接&#xA;sudo lsof -i -sTCP:ESTABLISHED -a -p &amp;lt;pid&amp;gt; 列出进程 &amp;lt;pid&amp;gt; 所有 IDLE 状态的 UDP 连接 sudo lsof -i -sUDP:IDLE -a -p &amp;lt;pid&amp;gt; 根据 Unix 发行版本的不同，TCP/UDP 状态也会有不同的名字:&#xA;常用的 TCP 状态是: CLOSED, IDLE, BOUND, LISTEN, ESTABLISHED, SYN_SENT, SYN_RCDV, ESTABLISHED, CLOSE_WAIT, FIN_WAIT1, CLOSING, LAST_ACK, FIN_WAIT_2, TIME_WAIT. 常用的 UDP 状态是: Unbound, Idle 按照 fd number 查找进程的 fd 使用 strace 查看进程的系统调用的时候，经常能够看到在某个 fd 上执行读写操作，例如:</description>
+      <description>按照网络状态筛选进程的 fd sudo lsof -i -sTCP:LISTEN -a -p &amp;lt;pid&amp;gt; -a 表示 and, 前后两个条件要一起生效
+-i 和 -s 一起用，表示可以按照 TCP/UDP 状态来筛选 fd
+列出进程 &amp;lt;pid&amp;gt; 建立的所有 TCP 连接
+sudo lsof -i -sTCP:ESTABLISHED -a -p &amp;lt;pid&amp;gt; 列出进程 &amp;lt;pid&amp;gt; 所有 IDLE 状态的 UDP 连接 sudo lsof -i -sUDP:IDLE -a -p &amp;lt;pid&amp;gt; 根据 Unix 发行版本的不同，TCP/UDP 状态也会有不同的名字:
+常用的 TCP 状态是: CLOSED, IDLE, BOUND, LISTEN, ESTABLISHED, SYN_SENT, SYN_RCDV, ESTABLISHED, CLOSE_WAIT, FIN_WAIT1, CLOSING, LAST_ACK, FIN_WAIT_2, TIME_WAIT. 常用的 UDP 状态是: Unbound, Idle 按照 fd number 查找进程的 fd 使用 strace 查看进程的系统调用的时候，经常能够看到在某个 fd 上执行读写操作，例如:</description>
     </item>
+    
     <item>
       <title>从 none 开始，用网桥模式启动容器的网络</title>
       <link>https://bwangel.me/docs/container/docker-none-network/</link>
       <pubDate>Fri, 20 Jan 2023 10:15:48 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/container/docker-none-network/</guid>
       <description>&lt;p&gt;用 none 网络模式启动的容器，创建一个可以对外通信的网络&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Thrift 协议学习笔记</title>
       <link>https://bwangel.me/docs/thrift/thrift-protocol/</link>
       <pubDate>Wed, 11 Jan 2023 11:03:19 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/thrift/thrift-protocol/</guid>
       <description>&lt;p&gt;本文主要讲了 thrift 的协议格式&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Leetcode 142: 环形链表 II</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-142/</link>
       <pubDate>Sun, 11 Sep 2022 10:54:04 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-142/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Ubuntu 下安装 Containerd 及配置代理</title>
       <link>https://bwangel.me/docs/container/install-containerd/</link>
       <pubDate>Tue, 23 Aug 2022 08:17:21 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/container/install-containerd/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;介绍了安装 containerd 的方法&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;介绍了安装 containerd 的方法&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>K8S 中观察 CPU Throttling 情况的指标</title>
       <link>https://bwangel.me/docs/k8s/k8s-cpu-throttle-prom-metric/</link>
       <pubDate>Tue, 16 Aug 2022 23:14:25 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/k8s/k8s-cpu-throttle-prom-metric/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;解释了一下观察 CPU Throttling 情况的指标&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;解释了一下观察 CPU Throttling 情况的指标&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>ZigZag 变长整数编码</title>
       <link>https://bwangel.me/docs/encoding/variant_zigzag/</link>
       <pubDate>Tue, 01 Mar 2022 20:16:48 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/encoding/variant_zigzag/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;变长整数编码的实现&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;变长整数编码的实现&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>修复 Ubuntu 中 chrome vimium-c 插件失效的问题</title>
       <link>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</link>
       <pubDate>Thu, 24 Feb 2022 22:20:23 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;记录一次折腾 Ubuntu 的经历&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;记录一次折腾 Ubuntu 的经历&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Go gcflags/ldflags 的说明</title>
       <link>https://bwangel.me/docs/golang/go_gcflags/</link>
       <pubDate>Wed, 12 Jan 2022 17:56:10 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go_gcflags/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Go 链接选项和编译选项的说明&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;Go 链接选项和编译选项的说明&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Review 《Don’t use Go’s default HTTP client (in production)》</title>
       <link>https://bwangel.me/docs/golang/go-http-client/</link>
       <pubDate>Fri, 31 Dec 2021 11:01:25 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-http-client/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&#34;&gt;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&#34;&gt;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Review 《How eBPF will solve Service Mesh - Goodbye Sidecars》</title>
       <link>https://bwangel.me/docs/k8s/ebpf-service-mesh/</link>
       <pubDate>Mon, 20 Dec 2021 19:41:20 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/k8s/ebpf-service-mesh/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://isovalent.com/blog/post/2021-12-08-ebpf-servicemesh&#34;&gt;https://isovalent.com/blog/post/2021-12-08-ebpf-servicemesh&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://isovalent.com/blog/post/2021-12-08-ebpf-servicemesh&#34;&gt;https://isovalent.com/blog/post/2021-12-08-ebpf-servicemesh&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Review 《File Descriptor Transfer over Unix Domain Sockets》</title>
       <link>https://bwangel.me/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</link>
       <pubDate>Tue, 30 Nov 2021 11:58:56 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/file-descriptor-transfer-over-unix-domain-sockets/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;使用 Unix 域套接字传输文件描述符&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec&#34;&gt;https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;使用 Unix 域套接字传输文件描述符&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec&#34;&gt;https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Redis 主从同步细节</title>
       <link>https://bwangel.me/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</link>
       <pubDate>Fri, 22 Oct 2021 21:57:55 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;介绍了 Redis 的主从同步流程及一些配置选项&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;介绍了 Redis 的主从同步流程及一些配置选项&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Docker 客户端连接远程 Docker Daemon</title>
       <link>https://bwangel.me/docs/container/docker-client-remote-server/</link>
       <pubDate>Sat, 22 May 2021 11:41:46 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/container/docker-client-remote-server/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Docker 客户端连接远程 Docker Daemon&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://dockerlabs.collabnix.com/beginners/components/daemon/access-daemon-externally.html&#34;&gt;参考链接 How to Connect to a Remote Docker Daemon&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Docker 客户端连接远程 Docker Daemon&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://dockerlabs.collabnix.com/beginners/components/daemon/access-daemon-externally.html&#34;&gt;参考链接 How to Connect to a Remote Docker Daemon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Golang 链接时注入额外信息</title>
       <link>https://bwangel.me/docs/golang/go-build-variable/</link>
       <pubDate>Fri, 07 May 2021 17:04:21 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-build-variable/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Go 编译器注入 git 版本，时间等信息到可执行文件中&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;Go 编译器注入 git 版本，时间等信息到可执行文件中&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>《Golang Error》学习笔记</title>
       <link>https://bwangel.me/docs/golang/golang_error/</link>
       <pubDate>Wed, 30 Dec 2020 22:28:45 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/golang_error/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Golang Error 学习笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;Golang Error 学习笔记&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>如何生成自签名 HTTPS 证书</title>
       <link>https://bwangel.me/docs/http/https-generate-cert/</link>
       <pubDate>Sun, 29 Nov 2020 13:25:07 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/http/https-generate-cert/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Review 《Using pipelining to speedup Redis queries》</title>
       <link>https://bwangel.me/docs/redis/redis-pipelining/</link>
       <pubDate>Sat, 22 Aug 2020 17:22:37 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/redis/redis-pipelining/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://redis.io/topics/pipelining&#34;&gt;https://redis.io/topics/pipelining&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://redis.io/topics/pipelining&#34;&gt;https://redis.io/topics/pipelining&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Go 的调度模型学习笔记</title>
       <link>https://bwangel.me/docs/golang/go-schedule/</link>
       <pubDate>Mon, 16 Mar 2020 01:18:03 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-schedule/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;阅读 &lt;a href=&#34;https://wudaijun.com/2018/01/go-scheduler/&#34;&gt;Go 调度模型&lt;/a&gt; 后记的笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;阅读 &lt;a href=&#34;https://wudaijun.com/2018/01/go-scheduler/&#34;&gt;Go 调度模型&lt;/a&gt; 后记的笔记&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Rabbitmq Tutorial 学习笔记</title>
       <link>https://bwangel.me/docs/tools/rabbitmq-tutorial/</link>
       <pubDate>Sat, 21 Dec 2019 21:49:45 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/tools/rabbitmq-tutorial/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.rabbitmq.com/getstarted.html&#34;&gt;RabbitMQ Tutorial&lt;/a&gt; 学习笔记&lt;/li&gt;&#xA;&lt;li&gt;本文相关代码放在 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo&#34;&gt;Github@bwangelme/RabbitMQDemo&lt;/a&gt; 中&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.rabbitmq.com/getstarted.html&#34;&gt;RabbitMQ Tutorial&lt;/a&gt; 学习笔记&lt;/li&gt;
+&lt;li&gt;本文相关代码放在 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo&#34;&gt;Github@bwangelme/RabbitMQDemo&lt;/a&gt; 中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>词法分析器生成工具 Lex 简介</title>
       <link>https://bwangel.me/docs/linux/flex/</link>
       <pubDate>Sun, 15 Dec 2019 14:53:46 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/flex/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;结合例子简单介绍了Lex 程序和 Lex 工具的用法&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;结合例子简单介绍了Lex 程序和 Lex 工具的用法&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Golang 中的 ServeMux 路由简介</title>
       <link>https://bwangel.me/docs/golang/intro-servemux/</link>
       <pubDate>Sat, 30 Nov 2019 18:35:05 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/intro-servemux/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;简单介绍了一下 Golang 中 ServeMux 的功能以及路由方式。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;简单介绍了一下 Golang 中 ServeMux 的功能以及路由方式。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Review 《github.com/stretchr/testify》</title>
       <link>https://bwangel.me/docs/golang/review-testify/</link>
       <pubDate>Sun, 02 Jun 2019 22:41:59 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/review-testify/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://github.com/stretchr/testify&#34;&gt;https://github.com/stretchr/testify&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://github.com/stretchr/testify&#34;&gt;https://github.com/stretchr/testify&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Go 并发模式之发布订阅模型</title>
       <link>https://bwangel.me/docs/golang/go-pubsub/</link>
       <pubDate>Thu, 30 May 2019 07:29:04 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-pubsub/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;发布订阅模型的一个简易单机实现&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;发布订阅模型的一个简易单机实现&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Review 《JSON and Go》</title>
       <link>https://bwangel.me/docs/golang/review-json-and-go/</link>
       <pubDate>Tue, 21 May 2019 21:40:40 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/review-json-and-go/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://blog.golang.org/json-and-go&#34;&gt;https://blog.golang.org/json-and-go&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://blog.golang.org/json-and-go&#34;&gt;https://blog.golang.org/json-and-go&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>strings.Builder 转换字符串的时候为什么比 bytes.Buffer 要快</title>
       <link>https://bwangel.me/docs/golang/byte-vs-builder/</link>
       <pubDate>Sun, 28 Apr 2019 23:48:00 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/byte-vs-builder/</guid>
-      <description>&lt;p&gt;&lt;code&gt;strings.Builder&lt;/code&gt;和&lt;code&gt;bytes.Buffer&lt;/code&gt;底层都是&lt;code&gt;[]byte&lt;/code&gt;，&#xA;为什么&lt;code&gt;strings.Builder&lt;/code&gt;的&lt;code&gt;String()&lt;/code&gt;方法比&lt;code&gt;bytes.Buffer&lt;/code&gt;的要快？&lt;/p&gt;</description>
+      <description>&lt;p&gt;&lt;code&gt;strings.Builder&lt;/code&gt;和&lt;code&gt;bytes.Buffer&lt;/code&gt;底层都是&lt;code&gt;[]byte&lt;/code&gt;，
+为什么&lt;code&gt;strings.Builder&lt;/code&gt;的&lt;code&gt;String()&lt;/code&gt;方法比&lt;code&gt;bytes.Buffer&lt;/code&gt;的要快？&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Review 《Golang Trick: Export unexport method for test》</title>
       <link>https://bwangel.me/docs/golang/golang-trick-export-for-test/</link>
       <pubDate>Sat, 27 Apr 2019 17:33:52 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/golang-trick-export-for-test/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&#34;&gt;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&#34;&gt;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>urfave/cli 学习笔记</title>
       <link>https://bwangel.me/docs/golang/go-cli/</link>
       <pubDate>Sun, 21 Apr 2019 18:23:00 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-cli/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://github.com/urfave/cli/tree/v1.20.0#overview&#34;&gt;https://github.com/urfave/cli/tree/v1.20.0#overview&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://github.com/urfave/cli/tree/v1.20.0#overview&#34;&gt;https://github.com/urfave/cli/tree/v1.20.0#overview&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Review 《Go Concurrency Patterns: Pipelines and cancellation》</title>
       <link>https://bwangel.me/docs/golang/review-go-pipelines/</link>
       <pubDate>Mon, 15 Apr 2019 22:35:48 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/review-go-pipelines/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;【&lt;a href=&#34;https://blog.golang.org/pipelines&#34;&gt;Go Concurrency Patterns: Pipelines and cancellation&lt;/a&gt;】笔记&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;【&lt;a href=&#34;https://blog.golang.org/pipelines&#34;&gt;Go Concurrency Patterns: Pipelines and cancellation&lt;/a&gt;】笔记&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>关于线程同步操作的一道面试题</title>
       <link>https://bwangel.me/docs/golang/go-sync-channel/</link>
       <pubDate>Sat, 13 Apr 2019 17:27:36 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-sync-channel/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Go 调度器的一个无法执行陷阱</title>
       <link>https://bwangel.me/docs/golang/go-scheduler-pitfall/</link>
       <pubDate>Wed, 10 Apr 2019 22:18:53 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-scheduler-pitfall/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Go Panic 的触发及恢复过程</title>
       <link>https://bwangel.me/docs/golang/go-panic/</link>
       <pubDate>Mon, 08 Apr 2019 22:14:43 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-panic/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Panic 过程&lt;/li&gt;&#xA;&lt;li&gt;recover 函数&lt;/li&gt;&#xA;&lt;li&gt;defer 函数&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Panic 过程&lt;/li&gt;
+&lt;li&gt;recover 函数&lt;/li&gt;
+&lt;li&gt;defer 函数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>线程同步操作面试题使用锁的解法</title>
       <link>https://bwangel.me/docs/golang/go-lock/</link>
       <pubDate>Tue, 26 Mar 2019 21:56:43 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-lock/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Go 的测试</title>
       <link>https://bwangel.me/docs/golang/go-test/</link>
       <pubDate>Sun, 24 Mar 2019 19:40:53 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-test/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;主要讲了 Go 相关的测试&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;主要讲了 Go 相关的测试&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>HTTP 协议中的分块传输编码</title>
       <link>https://bwangel.me/docs/http/http-chunked/</link>
       <pubDate>Thu, 01 Nov 2018 23:32:43 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/http/http-chunked/</guid>
       <description>&lt;p&gt;说明了 HTTP 分块传输编码方式&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Go 模板</title>
       <link>https://bwangel.me/docs/golang/go-template/</link>
       <pubDate>Thu, 18 Oct 2018 23:24:24 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-template/</guid>
       <description>&lt;p&gt;关于 Go 模板的笔记&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Go mod 说明</title>
       <link>https://bwangel.me/docs/golang/go_mod/</link>
       <pubDate>Thu, 11 Oct 2018 08:44:25 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go_mod/</guid>
       <description>&lt;p&gt;关于 Go mod 的介绍&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>哈希表学习笔记</title>
       <link>https://bwangel.me/docs/algo/hash/</link>
       <pubDate>Wed, 29 Aug 2018 23:34:29 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/hash/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>素数生成器</title>
       <link>https://bwangel.me/docs/golang/prime-generator/</link>
       <pubDate>Tue, 14 Aug 2018 06:54:09 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/prime-generator/</guid>
       <description>&lt;p&gt;一个不太优雅的素数生成器，主要用来观察“Go-routine + 管道”的开发方式&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>变态跳台阶问题的解题思路</title>
       <link>https://bwangel.me/docs/algo/jump-stairs/</link>
       <pubDate>Sun, 08 Jul 2018 14:46:42 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/jump-stairs/</guid>
       <description>&lt;p&gt;简介：本文主要记录了 变态跳台阶问题 的推导过程&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Redis 源码阅读之 dict </title>
       <link>https://bwangel.me/docs/redis/redis-source-dict/</link>
       <pubDate>Wed, 14 Mar 2018 00:14:32 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/redis/redis-source-dict/</guid>
-      <description>&lt;p&gt;本文主要介绍了 Redis 的基础数据结构 dict 的实现，并描述了其渐进式 rehash 的操作&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 本文基于 Redis 3.0.0 的代码进行分析的&lt;/p&gt;</description>
+      <description>&lt;p&gt;本文主要介绍了 Redis 的基础数据结构 dict 的实现，并描述了其渐进式 rehash 的操作&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 本文基于 Redis 3.0.0 的代码进行分析的&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>MySQL 外键分析</title>
       <link>https://bwangel.me/docs/mysql/mysql-foreign-key/</link>
       <pubDate>Mon, 05 Mar 2018 23:42:44 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql-foreign-key/</guid>
       <description>&lt;p&gt;本文主要介绍了 MySQL 外键的一些特性&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>InnoDB 锁机制</title>
       <link>https://bwangel.me/docs/mysql/innodb-lock/</link>
       <pubDate>Sun, 04 Mar 2018 13:22:46 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/innodb-lock/</guid>
       <description>&lt;p&gt;本文试图讲清楚 InnoDB 中存在的各种锁，以及它们锁定的区别。&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Go与数据结构之二叉搜索树</title>
       <link>https://bwangel.me/docs/algo/go-binarysearchtree/</link>
       <pubDate>Thu, 01 Mar 2018 22:22:52 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/go-binarysearchtree/</guid>
       <description>&lt;p&gt;&lt;strong&gt;简介&lt;/strong&gt;: 利用Go语言实现二叉搜索树并为其编写单元测试&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Go 语言的 Type Switch 语句解析</title>
       <link>https://bwangel.me/docs/golang/golang-type-switch/</link>
       <pubDate>Sat, 03 Feb 2018 00:17:00 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/golang-type-switch/</guid>
       <description>&lt;p&gt;讲述了Go语言中 Type Swith 的用法以及获取对应变量的一些特殊情况。&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>InnoDB 行记录格式</title>
       <link>https://bwangel.me/docs/mysql/innodb-row/</link>
       <pubDate>Tue, 30 Jan 2018 12:51:59 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/innodb-row/</guid>
       <description>&lt;p&gt;&lt;strong&gt;简介&lt;/strong&gt;: 本文主要讲述了 InnoDB 的行如何在数据文件中进行存储的，同时简单分析了 InnoDB 的逻辑存储结构&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Django get_or_create 执行过程</title>
       <link>https://bwangel.me/docs/python/django_get_or_create/</link>
       <pubDate>Wed, 03 Jan 2018 22:31:01 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/python/django_get_or_create/</guid>
       <description>&lt;p&gt;关于 Django 文档&lt;code&gt;get_or_create&lt;/code&gt;的解释&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>MySQL 日志管理</title>
       <link>https://bwangel.me/docs/mysql/mysql%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</link>
       <pubDate>Mon, 01 Jan 2018 10:34:15 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</guid>
       <description>&lt;p&gt;&lt;strong&gt;简介&lt;/strong&gt;: 讲述了MySQL中的日志及配置方式&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Python Upgrade Importerror</title>
       <link>https://bwangel.me/docs/python/python-upgrade-importerror/</link>
       <pubDate>Tue, 05 Dec 2017 22:33:57 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/python/python-upgrade-importerror/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;记一次因 Python 升级导致的 ImportError&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;记一次因 Python 升级导致的 ImportError&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Go的并发编程简述</title>
       <link>https://bwangel.me/docs/golang/go-concurrency/</link>
       <pubDate>Tue, 19 Sep 2017 12:49:42 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-concurrency/</guid>
       <description>&lt;p&gt;简述了 Go 中的 goroutine，channel 和 WaitGroup，并通过例子来展示了这些功能的用法&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Go 的反射包浅析</title>
       <link>https://bwangel.me/docs/golang/golang-reflect/</link>
       <pubDate>Fri, 15 Sep 2017 08:30:38 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/golang-reflect/</guid>
       <description>&lt;p&gt;本文主要介绍了反射包中的常用类型和方法，并使用了几个例子进行了说明。&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>算法复杂度小记</title>
       <link>https://bwangel.me/docs/algo/algorithm-complexity/</link>
       <pubDate>Fri, 08 Sep 2017 00:24:12 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/algorithm-complexity/</guid>
       <description>&lt;p&gt;本文主要书写了本人对于算法复杂度的一些理解，并辅以一些例子进行说明&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Go 学习笔记</title>
       <link>https://bwangel.me/docs/golang/gotour-notes/</link>
       <pubDate>Tue, 29 Aug 2017 08:32:02 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/gotour-notes/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Golang的基础语法学习&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Golang的基础语法学习&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Python的collections模块小结</title>
       <link>https://bwangel.me/docs/python/python-collections/</link>
       <pubDate>Sun, 13 Aug 2017 14:06:24 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/python-collections/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;本文章的目标是逐步总结Python中&lt;a href=&#34;http://devdocs.io/python~3.6/library/collections&#34;&gt;collection&lt;/a&gt;模块的用法，会不定期进行更新。&lt;/li&gt;&#xA;&lt;li&gt;目前总结了Counter类的用法&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;本文章的目标是逐步总结Python中&lt;a href=&#34;http://devdocs.io/python~3.6/library/collections&#34;&gt;collection&lt;/a&gt;模块的用法，会不定期进行更新。&lt;/li&gt;
+&lt;li&gt;目前总结了Counter类的用法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Letsencrypt通过DNS TXT记录来验证域名有效性</title>
       <link>https://bwangel.me/docs/http/letsencrypt-dns-txt/</link>
       <pubDate>Sun, 13 Aug 2017 14:04:06 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/http/letsencrypt-dns-txt/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Letsencrypt 通过dns记录来验证域名&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Letsencrypt 通过dns记录来验证域名&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Django的override_settings修饰器浅析</title>
       <link>https://bwangel.me/docs/python/django-override-settings/</link>
       <pubDate>Sun, 25 Jun 2017 20:17:07 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/django-override-settings/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Django的Settings模块代码说明&lt;/li&gt;&#xA;&lt;li&gt;Django的&lt;code&gt;override_settings&lt;/code&gt;修饰器分析&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;Django的Settings模块代码说明&lt;/li&gt;
+&lt;li&gt;Django的&lt;code&gt;override_settings&lt;/code&gt;修饰器分析&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL Character Set support</title>
       <link>https://bwangel.me/docs/mysql/mysql-character-set-support/</link>
       <pubDate>Thu, 22 Jun 2017 23:32:43 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql-character-set-support/</guid>
-      <description>摘要:&#xA;本文是对MySQL文档 Character Set Support 的翻译 字符集(character set)和排序规则(collation)概要 一个字符集是一组符号和编码的集合。一个排序规则是一组字符集中用来比较字符的规则的集合。让我们使用一个假想的字符集的例子来分别区分它们。&#xA;假设我们有四个字母：A, B, a, b。我们给每个字母赋值一个数字，A = 0, B = 1, a = 2, b = 3。字母 A 是一个符号，数字0是字母 A 的编码，四个字母和它们编码的集合叫做 字符集 (character set)。&#xA;假设我们想要比较两个字符串值，A 和 B。做这个最简单的方式就是去查看它们的编码，A 是0，B 是1。因为0比1小，所以我们说 A 比 B 小。刚刚我们所做的事情是将一个排序规则(collation)应用到我们的字符集上。排序规则(collation)是一组规则(比较编码)的集合(在这个例子中仅有一个规则)。我们称这个所有可能的排序规则中最简单的排序规则为二进制排序规则(binary collation)。&#xA;但是如果我们想说大写字母和小写字母是等价的，那该怎么排序呢？那么我们将会有至少两个规则：&#xA;将小写字母 a 和 b 等价成大写字母 A 和 B。 然后比较它们的编码。 我们称这个为不区分大小写的排序规则。它比起二进制排序规则来要复杂一些。&#xA;在现实生活中，大多数的字符集都有许多字符；并不仅仅是 A 和 B 而是包括所有的字母，有时还会包括多字母和东方书写系统中成千上万个字符和许多相关的特殊字符和标点符号。同样在现实生活中，大多数的排序规则都有许多条规则，并不仅仅是区分大小写对于多字符映射(比如德语排序规则中的两个规则之一就是Ö = OE)也会区分口音(口音是和字符相关的一个标记例如德语中的Ö)。&#xA;MySQL 能为你做这些事情：&#xA;使用各种各样的字符集来存储字符串。 使用各种各样的排序规则来比较字符串。 在同一台服务器上，在同一个的数据库，甚至是在同一个表中，混合使用不同字符集不同排序规则的字符串。 在任何等级上开启特殊的字符集和排序规则。 为了能够有效地使用这些特性，你必须要知道哪些字符集和排序规则是可用的，如何改变默认的排序规则，以及它们是如何影响到字符串操作符和相关函数的行为的。&#xA;MySQL中的字符集和排序规则 MySQL 服务器支持多种字符集。使用__INFORMATION_SCHEMA.CHARACTER_SETS__表或者__SHOW CHARACTER_SET__语句能够列出所有的可用字符集。下面的例子列出了一部分字符集，如果想要查看完整的信息，请参看 Section 11.</description>
+      <description>摘要:
+本文是对MySQL文档 Character Set Support 的翻译 字符集(character set)和排序规则(collation)概要 一个字符集是一组符号和编码的集合。一个排序规则是一组字符集中用来比较字符的规则的集合。让我们使用一个假想的字符集的例子来分别区分它们。
+假设我们有四个字母：A, B, a, b。我们给每个字母赋值一个数字，A = 0, B = 1, a = 2, b = 3。字母 A 是一个符号，数字0是字母 A 的编码，四个字母和它们编码的集合叫做 字符集 (character set)。
+假设我们想要比较两个字符串值，A 和 B。做这个最简单的方式就是去查看它们的编码，A 是0，B 是1。因为0比1小，所以我们说 A 比 B 小。刚刚我们所做的事情是将一个排序规则(collation)应用到我们的字符集上。排序规则(collation)是一组规则(比较编码)的集合(在这个例子中仅有一个规则)。我们称这个所有可能的排序规则中最简单的排序规则为二进制排序规则(binary collation)。
+但是如果我们想说大写字母和小写字母是等价的，那该怎么排序呢？那么我们将会有至少两个规则：
+将小写字母 a 和 b 等价成大写字母 A 和 B。 然后比较它们的编码。 我们称这个为不区分大小写的排序规则。它比起二进制排序规则来要复杂一些。
+在现实生活中，大多数的字符集都有许多字符；并不仅仅是 A 和 B 而是包括所有的字母，有时还会包括多字母和东方书写系统中成千上万个字符和许多相关的特殊字符和标点符号。同样在现实生活中，大多数的排序规则都有许多条规则，并不仅仅是区分大小写对于多字符映射(比如德语排序规则中的两个规则之一就是Ö = OE)也会区分口音(口音是和字符相关的一个标记例如德语中的Ö)。
+MySQL 能为你做这些事情：
+使用各种各样的字符集来存储字符串。 使用各种各样的排序规则来比较字符串。 在同一台服务器上，在同一个的数据库，甚至是在同一个表中，混合使用不同字符集不同排序规则的字符串。 在任何等级上开启特殊的字符集和排序规则。 为了能够有效地使用这些特性，你必须要知道哪些字符集和排序规则是可用的，如何改变默认的排序规则，以及它们是如何影响到字符串操作符和相关函数的行为的。
+MySQL中的字符集和排序规则 MySQL 服务器支持多种字符集。使用__INFORMATION_SCHEMA.CHARACTER_SETS__表或者__SHOW CHARACTER_SET__语句能够列出所有的可用字符集。下面的例子列出了一部分字符集，如果想要查看完整的信息，请参看 Section 11.</description>
     </item>
+    
     <item>
       <title>Redis Sort 命令简介</title>
       <link>https://bwangel.me/docs/redis/redis-sort/</link>
       <pubDate>Wed, 21 Jun 2017 13:29:08 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/redis/redis-sort/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;code&gt;sort&lt;/code&gt;命令是Redis中最强大的命令之一，本文试图通过一些例子来总结Redis Sort的常用方法。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;sort&lt;/code&gt;命令是Redis中最强大的命令之一，本文试图通过一些例子来总结Redis Sort的常用方法。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Django中import_string的实现</title>
       <link>https://bwangel.me/docs/python/django-import-string/</link>
       <pubDate>Thu, 08 Jun 2017 07:17:28 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/django-import-string/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;importlib.import_module 函数的功能&lt;/li&gt;&#xA;&lt;li&gt;import_string 函数的实现&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;importlib.import_module 函数的功能&lt;/li&gt;
+&lt;li&gt;import_string 函数的实现&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>简单聊聊Python中的wraps修饰器</title>
       <link>https://bwangel.me/docs/python/python-wraps/</link>
       <pubDate>Tue, 09 May 2017 10:40:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/python-wraps/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Python 中的wraps修饰器分析&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Python 中的wraps修饰器分析&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>【流水账】利用闲置笔记本搭建自己的开发服务器</title>
       <link>https://bwangel.me/docs/linux/laptop-server/</link>
       <pubDate>Mon, 27 Mar 2017 16:41:36 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/laptop-server/</guid>
-      <description>&lt;ol&gt;&#xA;&lt;li&gt;对Ubuntu服务器进行基础配置&lt;/li&gt;&#xA;&lt;li&gt;配置dnsmasq服务器&lt;/li&gt;&#xA;&lt;li&gt;文章没什么技术含量，主要记录一些配置文件的位置&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+      <description>&lt;ol&gt;
+&lt;li&gt;对Ubuntu服务器进行基础配置&lt;/li&gt;
+&lt;li&gt;配置dnsmasq服务器&lt;/li&gt;
+&lt;li&gt;文章没什么技术含量，主要记录一些配置文件的位置&lt;/li&gt;
+&lt;/ol&gt;</description>
     </item>
+    
     <item>
       <title>【非技术】 Arch 下的无线自动断开</title>
       <link>https://bwangel.me/docs/linux/arch-wireless-adapter/</link>
       <pubDate>Sun, 18 Dec 2016 14:13:44 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/arch-wireless-adapter/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;折腾 ThinkPad E430 在 Arch WiFi 自动断开的问题&lt;/li&gt;&#xA;&lt;li&gt;无线网卡型号推荐&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;折腾 ThinkPad E430 在 Arch WiFi 自动断开的问题&lt;/li&gt;
+&lt;li&gt;无线网卡型号推荐&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>说说 Python2 中的字符串编码</title>
       <link>https://bwangel.me/docs/python/python-string-encoding/</link>
       <pubDate>Wed, 09 Nov 2016 07:39:38 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/python-string-encoding/</guid>
-      <description>摘要:&#xA;Python2 中 Str 和 Unicode 分别存了什么 raw_unicode_escape 编码的作用 Python2 中的一个经典编码问题 Python2 中 Str 和 Unicode 分别存了什么 在 Python2 中，str 存储的是字节流，unicode 存储的是 Unicode 码点&#xA;In [1]: &amp;#39;中&amp;#39; Out[1]: &amp;#39;\xe4\xb8\xad&amp;#39; In [2]: u&amp;#39;中&amp;#39; Out[2]: u&amp;#39;\u4e2d&amp;#39; 例如上面的例子，我们分别输入了一个汉字 中，str(&#39;中&#39;) 显示的是 \xe4\xb8\xad，unicode(&#39;中&#39;) 显示的是 \u4e2d。&#xA;当我们用 str 存储汉字，在终端中输入时，Python 会根据我们系统的编码(通过 locale.getdefaultlocale() 获取)，将其自动 encode 成字节流。&#xA;我系统的编码是 utf-8，所以 str(&#39;中&#39;) 显示的就是 中 经过 utf-8 编码后的内容 \xe4\xb8\xad。&#xA;当我们用 unicode 存储汉字时，Python 会存储这个汉字对应的码点。所以 unicode(&#39;中&#39;) 显示的是 \u4e2d。&#xA;raw_unicode_escape 编码是什么 raw_unicode_escape 编码的作用是将 unicode 码点变成 \uxxxx 形式的字节流。或者将 \uxxx 形式的字节流转换成 unicode 码点。</description>
+      <description>摘要:
+Python2 中 Str 和 Unicode 分别存了什么 raw_unicode_escape 编码的作用 Python2 中的一个经典编码问题 Python2 中 Str 和 Unicode 分别存了什么 在 Python2 中，str 存储的是字节流，unicode 存储的是 Unicode 码点
+In [1]: &amp;#39;中&amp;#39; Out[1]: &amp;#39;\xe4\xb8\xad&amp;#39; In [2]: u&amp;#39;中&amp;#39; Out[2]: u&amp;#39;\u4e2d&amp;#39; 例如上面的例子，我们分别输入了一个汉字 中，str(&#39;中&#39;) 显示的是 \xe4\xb8\xad，unicode(&#39;中&#39;) 显示的是 \u4e2d。
+当我们用 str 存储汉字，在终端中输入时，Python 会根据我们系统的编码(通过 locale.getdefaultlocale() 获取)，将其自动 encode 成字节流。
+我系统的编码是 utf-8，所以 str(&#39;中&#39;) 显示的就是 中 经过 utf-8 编码后的内容 \xe4\xb8\xad。
+当我们用 unicode 存储汉字时，Python 会存储这个汉字对应的码点。所以 unicode(&#39;中&#39;) 显示的是 \u4e2d。
+raw_unicode_escape 编码是什么 raw_unicode_escape 编码的作用是将 unicode 码点变成 \uxxxx 形式的字节流。或者将 \uxxx 形式的字节流转换成 unicode 码点。</description>
     </item>
+    
     <item>
       <title>MySQL from 部分的子查询</title>
       <link>https://bwangel.me/docs/mysql/mysql-subqueries-in-the-from-clause/</link>
       <pubDate>Sat, 08 Oct 2016 20:28:45 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql-subqueries-in-the-from-clause/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;MySQL 语句中 from 部分的子查询&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;MySQL 语句中 from 部分的子查询&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Python concurrent.futures 文档翻译</title>
       <link>https://bwangel.me/docs/python/concurrent-futures/</link>
       <pubDate>Fri, 23 Sep 2016 11:19:16 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/concurrent-futures/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;本文主要是对 Python3 标准库 &lt;a href=&#34;https://docs.python.org/3/library/concurrent.futures.html&#34;&gt;concurrent.futures&lt;/a&gt; 文档的翻译&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文主要是对 Python3 标准库 &lt;a href=&#34;https://docs.python.org/3/library/concurrent.futures.html&#34;&gt;concurrent.futures&lt;/a&gt; 文档的翻译&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Gevent 的 KeyError</title>
       <link>https://bwangel.me/docs/python/gevent-keyerror/</link>
       <pubDate>Wed, 14 Sep 2016 15:21:40 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/gevent-keyerror/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;本文翻译自 StackOverFlow 上的一篇&lt;a href=&#34;http://stackoverflow.com/questions/8774958/keyerror-in-module-threading-after-a-successful-py-test-run&#34;&gt;答案&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;本文主要解释了&lt;code&gt;gevent&lt;/code&gt;的猴子补丁和一个&lt;code&gt;KeyError&lt;/code&gt;之间的关系&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;本文翻译自 StackOverFlow 上的一篇&lt;a href=&#34;http://stackoverflow.com/questions/8774958/keyerror-in-module-threading-after-a-successful-py-test-run&#34;&gt;答案&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;本文主要解释了&lt;code&gt;gevent&lt;/code&gt;的猴子补丁和一个&lt;code&gt;KeyError&lt;/code&gt;之间的关系&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Python unittesting: run tests in another module</title>
       <link>https://bwangel.me/docs/python/python_unittesting_run_tests_in_another_module/</link>
       <pubDate>Sun, 11 Sep 2016 11:46:43 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/python_unittesting_run_tests_in_another_module/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;记录一次解决问题的过程。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;记录一次解决问题的过程。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Python字符串Format方法示例</title>
       <link>https://bwangel.me/docs/python/string-format-example/</link>
       <pubDate>Wed, 31 Aug 2016 15:45:41 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/string-format-example/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;本文翻译自Python3文档&lt;a href=&#34;https://docs.python.org/3/library/string.html#format-examples&#34;&gt;6.1.3.2. Format examples&lt;/a&gt;&#xA;主要讲述了Python&lt;code&gt;str.format()&lt;/code&gt;的一些使用方法&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文翻译自Python3文档&lt;a href=&#34;https://docs.python.org/3/library/string.html#format-examples&#34;&gt;6.1.3.2. Format examples&lt;/a&gt;
+主要讲述了Python&lt;code&gt;str.format()&lt;/code&gt;的一些使用方法&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Python中的生成器和协程</title>
       <link>https://bwangel.me/docs/python/python%E4%B8%AD%E7%9A%84%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E5%8D%8F%E7%A8%8B/</link>
       <pubDate>Fri, 05 Aug 2016 21:37:41 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/python%E4%B8%AD%E7%9A%84%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E5%8D%8F%E7%A8%8B/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;今天读了《A Curious Course on Coroutines and Concurrency》的第一部分，以下为我的碎碎念。&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;生成器和协程的异同&lt;/li&gt;&#xA;&lt;li&gt;协程的一些特性&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;今天读了《A Curious Course on Coroutines and Concurrency》的第一部分，以下为我的碎碎念。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;生成器和协程的异同&lt;/li&gt;
+&lt;li&gt;协程的一些特性&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Python的命名空间解析</title>
       <link>https://bwangel.me/docs/python/python%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E8%A7%A3%E6%9E%90/</link>
       <pubDate>Wed, 03 Aug 2016 22:29:41 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/python%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E8%A7%A3%E6%9E%90/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;什么是命名空间&lt;/li&gt;&#xA;&lt;li&gt;命名空间有哪些&lt;/li&gt;&#xA;&lt;li&gt;变量查找原则&lt;/li&gt;&#xA;&lt;li&gt;分析一个UnboundLocalError的例子&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;什么是命名空间&lt;/li&gt;
+&lt;li&gt;命名空间有哪些&lt;/li&gt;
+&lt;li&gt;变量查找原则&lt;/li&gt;
+&lt;li&gt;分析一个UnboundLocalError的例子&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Ubuntu缩小磁盘分区大小</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu%E7%BC%A9%E5%B0%8F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F/</link>
       <pubDate>Sun, 17 Jul 2016 16:38:06 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu%E7%BC%A9%E5%B0%8F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;通过resize2fs调整文件系统大小&lt;/li&gt;&#xA;&lt;li&gt;通过parted调整磁盘分区大小&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;通过resize2fs调整文件系统大小&lt;/li&gt;
+&lt;li&gt;通过parted调整磁盘分区大小&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>PEP 343: Python的with语句</title>
       <link>https://bwangel.me/docs/python/python%E7%9A%84with%E8%AF%AD%E5%8F%A5/</link>
       <pubDate>Mon, 25 Apr 2016 21:04:33 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/python%E7%9A%84with%E8%AF%AD%E5%8F%A5/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Python的with语句用法以及相关的上下文管理协议&lt;/li&gt;&#xA;&lt;li&gt;如何自己写一个上下文管理器对象，如何利用&lt;code&gt;contextlib&lt;/code&gt;来写一个上下文管理器对象&lt;/li&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://docs.python.org/release/2.5/whatsnew/pep-343.html&#34;&gt;PEP 343: The &amp;lsquo;with&amp;rsquo; statement&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;Python的with语句用法以及相关的上下文管理协议&lt;/li&gt;
+&lt;li&gt;如何自己写一个上下文管理器对象，如何利用&lt;code&gt;contextlib&lt;/code&gt;来写一个上下文管理器对象&lt;/li&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://docs.python.org/release/2.5/whatsnew/pep-343.html&#34;&gt;PEP 343: The &amp;lsquo;with&amp;rsquo; statement&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL单表查询</title>
       <link>https://bwangel.me/docs/mysql/mysql%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL单表查询&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL单表查询&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL多表查询</title>
       <link>https://bwangel.me/docs/mysql/mysql%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍11. MySQL多表查询&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍11. MySQL多表查询&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL存储过程</title>
       <link>https://bwangel.me/docs/mysql/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 存储过程&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 存储过程&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL安全机制</title>
       <link>https://bwangel.me/docs/mysql/mysql%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 安全机制&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 安全机制&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL常用函数</title>
       <link>https://bwangel.me/docs/mysql/mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 常用函数&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 常用函数&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL数据类型_数值类型</title>
       <link>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL数据类型_数值类型&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL数据类型_数值类型&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL数据类型-字符串类型</title>
       <link>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL数据类型-字符串类型&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL数据类型-字符串类型&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL索引</title>
       <link>https://bwangel.me/docs/mysql/mysql%E7%B4%A2%E5%BC%95/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E7%B4%A2%E5%BC%95/</guid>
-      <description>摘要:&#xA;MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用于快速找到记录的一种数据结构&#xA;索引优化应该是对查询性能优化最有效的手段了&#xA;相当于字典中的音序表，如果没有音序表，则需要一页一页去查&#xA;2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&amp;gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&amp;gt; create procedure autoinsert1() -&amp;gt; BEGIN -&amp;gt; declare i int default 1; -&amp;gt; while(i&amp;lt;20000)do -&amp;gt; insert into school.t2 values(i, &amp;#39;xff&amp;#39;); -&amp;gt; set i=i+1 -&amp;gt; end while; -&amp;gt; END$$ mysql&amp;gt; delimiter ; --还原分隔符为; mysql&amp;gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错</description>
+      <description>摘要:
+MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用于快速找到记录的一种数据结构
+索引优化应该是对查询性能优化最有效的手段了
+相当于字典中的音序表，如果没有音序表，则需要一页一页去查
+2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&amp;gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&amp;gt; create procedure autoinsert1() -&amp;gt; BEGIN -&amp;gt; declare i int default 1; -&amp;gt; while(i&amp;lt;20000)do -&amp;gt; insert into school.t2 values(i, &amp;#39;xff&amp;#39;); -&amp;gt; set i=i+1 -&amp;gt; end while; -&amp;gt; END$$ mysql&amp;gt; delimiter ; --还原分隔符为; mysql&amp;gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错</description>
     </item>
+    
     <item>
       <title>MySQL视图</title>
       <link>https://bwangel.me/docs/mysql/mysql%E8%A7%86%E5%9B%BE/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E8%A7%86%E5%9B%BE/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL视图&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL视图&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL触发器</title>
       <link>https://bwangel.me/docs/mysql/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍9. MySQL触发器&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍9. MySQL触发器&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>Python参数</title>
       <link>https://bwangel.me/docs/python/python%E5%8F%82%E6%95%B0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/python%E5%8F%82%E6%95%B0/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;IntermediatePython的学习笔记&lt;/li&gt;&#xA;&lt;li&gt;Python的三种参数&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;IntermediatePython的学习笔记&lt;/li&gt;
+&lt;li&gt;Python的三种参数&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

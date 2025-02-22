@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Language on 647 Universe</title>
+    <title>language on 647 Universe</title>
     <link>https://bwangel.me/tags/language/</link>
-    <description>Recent content in Language on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in language on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Fri, 29 Sep 2023 11:10:24 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/language/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Mar 2022 23:03:41 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/language/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>编程语言很重要</title>
       <link>https://bwangel.me/docs/life/language/</link>
       <pubDate>Mon, 07 Mar 2022 23:03:41 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/life/language/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;一番暴论&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;一番暴论&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

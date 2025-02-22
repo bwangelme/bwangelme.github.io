@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Dig on 647 Universe</title>
+    <title>dig on 647 Universe</title>
     <link>https://bwangel.me/tags/dig/</link>
-    <description>Recent content in Dig on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in dig on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Sat, 09 Sep 2023 15:10:33 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/dig/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 Sep 2023 13:41:16 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/dig/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DNS</title>
       <link>https://bwangel.me/docs/linux/dns/</link>
       <pubDate>Sat, 09 Sep 2023 13:41:16 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/dns/</guid>
-      <description>A 记录 Address Mapping records, 指示了对应名称的IPv4地址, A记录用来将域名转换为ip地址.&#xA;AAAA 记录 类似于A记录, 只不过指示的是IPv6的地址。&#xA;因为 IPv6 地址长度是 IPv4 的四倍，所以用 AAAA 表示 IPv6 记录&#xA;NS 记录 Name Server records, 用来指定对应名称的可信名称服务器 (authoritative name server) 例如这段 dig 日志是 j.gtld-servers.net 告诉我们，它不知道 www.baidu.com 的 IP, 但是它告诉我们要查询 baidu.com. 域的地址，可以去 ns[12345].baidu.com 这5个地址中查。&#xA;baidu.com. 172800 IN NS ns2.baidu.com. baidu.com. 172800 IN NS ns3.baidu.com. baidu.com. 172800 IN NS ns4.baidu.com. baidu.com. 172800 IN NS ns1.baidu.com. baidu.com. 172800 IN NS ns7.baidu.com. ;; Received 849 bytes from 192.</description>
+      <description>A 记录 Address Mapping records, 指示了对应名称的IPv4地址, A记录用来将域名转换为ip地址.
+AAAA 记录 类似于A记录, 只不过指示的是IPv6的地址。
+因为 IPv6 地址长度是 IPv4 的四倍，所以用 AAAA 表示 IPv6 记录
+NS 记录 Name Server records, 用来指定对应名称的可信名称服务器 (authoritative name server) 例如这段 dig 日志是 j.gtld-servers.net 告诉我们，它不知道 www.baidu.com 的 IP, 但是它告诉我们要查询 baidu.com. 域的地址，可以去 ns[12345].baidu.com 这5个地址中查。
+baidu.com. 172800 IN NS ns2.baidu.com. baidu.com. 172800 IN NS ns3.baidu.com. baidu.com. 172800 IN NS ns4.baidu.com. baidu.com. 172800 IN NS ns1.baidu.com. baidu.com. 172800 IN NS ns7.baidu.com. ;; Received 849 bytes from 192.</description>
     </item>
+    
   </channel>
 </rss>

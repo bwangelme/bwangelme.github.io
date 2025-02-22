@@ -4,16 +4,21 @@
     <title>JSON on 647 Universe</title>
     <link>https://bwangel.me/tags/json/</link>
     <description>Recent content in JSON on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 06 Nov 2023 11:16:52 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/json/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 May 2019 21:40:40 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/json/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Review 《JSON and Go》</title>
       <link>https://bwangel.me/docs/golang/review-json-and-go/</link>
       <pubDate>Tue, 21 May 2019 21:40:40 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/review-json-and-go/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://blog.golang.org/json-and-go&#34;&gt;https://blog.golang.org/json-and-go&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;原文地址: &lt;a href=&#34;https://blog.golang.org/json-and-go&#34;&gt;https://blog.golang.org/json-and-go&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Nginx on 647 Universe</title>
+    <title>nginx on 647 Universe</title>
     <link>https://bwangel.me/tags/nginx/</link>
-    <description>Recent content in Nginx on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in nginx on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Fri, 29 Sep 2023 10:27:46 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 09 May 2023 22:40:29 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HTTP 协议中带下划线的 header 说明</title>
       <link>https://bwangel.me/docs/http/nginx-header-underline/</link>
       <pubDate>Tue, 09 May 2023 22:40:29 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/http/nginx-header-underline/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Nginx proxy_set_header 默认会覆盖上一层的设置</title>
       <link>https://bwangel.me/docs/http/nginx-proxy-set-header/</link>
       <pubDate>Thu, 27 Apr 2023 15:02:39 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/http/nginx-proxy-set-header/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>CentOS 下编译安装 Nginx</title>
       <link>https://bwangel.me/docs/http/nginx_install/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/http/nginx_install/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;主要讲述了编译安装 Nginx&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;主要讲述了编译安装 Nginx&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

@@ -4,44 +4,65 @@
     <title>Ubuntu on 647 Universe</title>
     <link>https://bwangel.me/tags/ubuntu/</link>
     <description>Recent content in Ubuntu on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 13 Dec 2023 10:41:59 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 08 May 2022 10:42:22 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ubuntu 初始化</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu-init/</link>
       <pubDate>Sun, 08 May 2022 10:42:22 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu-init/</guid>
       <description>安装软件 sed -i &amp;#39;s/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g&amp;#39; /etc/apt/sources.list sudo apt update sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa github cli vagrant google chrome chrome download alacritty gvm rustup nerdfont DejaVuSansMono font Ubuntu 将 capslock 映射成 esc sudo apt-get install dconf-cli # 使 caps 成为 esc 按键 dconf write /org/gnome/desktop/input-sources/xkb-options &amp;#34;[&amp;#39;caps:escape&amp;#39;]&amp;#34; # 交换 caps 和 esc 按键 dconf write &amp;#34;/org/gnome/desktop/input-sources/xkb-options&amp;#34; &amp;#34;[&amp;#39;caps:swapescape&amp;#39;]&amp;#34; caps 配置的说明 Caps Lock behavior ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐ │Option Description │ ├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤ │caps:internal Caps Lock uses internal capitalization; Shift &amp;#34;pauses&amp;#34; Caps Lock │ │caps:internal_nocancel Caps Lock uses internal capitalization; Shift does not affect Caps Lock │ │caps:shift Caps Lock acts as Shift with locking; Shift &amp;#34;pauses&amp;#34; Caps Lock │ │caps:shift_nocancel Caps Lock acts as Shift with locking; Shift does not affect Caps Lock │ │caps:capslock Caps Lock toggles normal capitalization of alphabetic characters │ │caps:shiftlock Caps Lock toggles Shift Lock (affects all keys) │ │caps:swapescape Swap Esc and Caps Lock │ │caps:escape Make Caps Lock an additional Esc │ │caps:escape_shifted_capslock Make Caps Lock an additional Esc, but Shift + Caps Lock is the regular Caps Lock │ │caps:backspace Make Caps Lock an additional Backspace │ │caps:super Make Caps Lock an additional Super │ │caps:hyper Make Caps Lock an additional Hyper │ │caps:menu Make Caps Lock an additional Menu key │ │caps:numlock Make Caps Lock an additional Num Lock │ │caps:ctrl_modifier Make Caps Lock an additional Ctrl │ │caps:none Caps Lock is disabled │ │ │ └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ 参考链接 How to permanently switch Caps Lock and Esc jammy 22.</description>
     </item>
+    
     <item>
       <title>Ubuntu 使用默认的 DNS Server 配置</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu-dns/</link>
       <pubDate>Wed, 20 Apr 2022 02:07:00 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu-dns/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>修复 Ubuntu 中 chrome vimium-c 插件失效的问题</title>
       <link>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</link>
       <pubDate>Thu, 24 Feb 2022 22:20:23 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;记录一次折腾 Ubuntu 的经历&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;记录一次折腾 Ubuntu 的经历&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>【流水账】利用闲置笔记本搭建自己的开发服务器</title>
       <link>https://bwangel.me/docs/linux/laptop-server/</link>
       <pubDate>Mon, 27 Mar 2017 16:41:36 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/laptop-server/</guid>
-      <description>&lt;ol&gt;&#xA;&lt;li&gt;对Ubuntu服务器进行基础配置&lt;/li&gt;&#xA;&lt;li&gt;配置dnsmasq服务器&lt;/li&gt;&#xA;&lt;li&gt;文章没什么技术含量，主要记录一些配置文件的位置&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+      <description>&lt;ol&gt;
+&lt;li&gt;对Ubuntu服务器进行基础配置&lt;/li&gt;
+&lt;li&gt;配置dnsmasq服务器&lt;/li&gt;
+&lt;li&gt;文章没什么技术含量，主要记录一些配置文件的位置&lt;/li&gt;
+&lt;/ol&gt;</description>
     </item>
+    
     <item>
       <title>Ubuntu缩小磁盘分区大小</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu%E7%BC%A9%E5%B0%8F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F/</link>
       <pubDate>Sun, 17 Jul 2016 16:38:06 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu%E7%BC%A9%E5%B0%8F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;通过resize2fs调整文件系统大小&lt;/li&gt;&#xA;&lt;li&gt;通过parted调整磁盘分区大小&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;通过resize2fs调整文件系统大小&lt;/li&gt;
+&lt;li&gt;通过parted调整磁盘分区大小&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

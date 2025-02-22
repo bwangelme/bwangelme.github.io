@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Clash on 647 Universe</title>
+    <title>clash on 647 Universe</title>
     <link>https://bwangel.me/tags/clash/</link>
-    <description>Recent content in Clash on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in clash on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 12 Jun 2024 21:09:49 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/clash/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Jun 2024 20:58:32 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/clash/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>UKnowY</title>
       <link>https://bwangel.me/docs/tools/clash/</link>
       <pubDate>Wed, 12 Jun 2024 20:58:32 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/tools/clash/</guid>
       <description>Justmysocks 的订阅链接生成 clash 配置文件 启动 subconverter docker run -d --restart=always -p 25500:25500 tindy2013/subconverter:latest 将下面命令中的 https://justmysock.subscribe.url 替换成你的 justmysock 服务的订阅地址, 可以得到一个 curl 命令 python -c &amp;#34;from urllib.parse import urlencode; print(&amp;#39;curl \&amp;#39;http://localhost:25500/sub?%s\&amp;#39; &amp;gt; /tmp/config.yaml &amp;#39; % urlencode({&amp;#39;target&amp;#39;: &amp;#39;clash&amp;#39;, &amp;#39;url&amp;#39;: &amp;#39;https://justmysock.subscribe.url&amp;#39;}))&amp;#34; curl &amp;#39;http://localhost:25500/sub?target=clash&amp;amp;url=https%3A%2F%2Fjustmysock.subscribe.url&amp;#39; &amp;gt; /tmp/config.yaml 执行此 curl 命令, 生成的 clash 配置文件保存到了 /tmp/config.yaml 中,将此文件导入到 clash 中 subconverter README </description>
     </item>
+    
   </channel>
 </rss>

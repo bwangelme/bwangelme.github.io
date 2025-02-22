@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tombkeeper on 647 Universe</title>
+    <title>tombkeeper on 647 Universe</title>
     <link>https://bwangel.me/tags/tombkeeper/</link>
-    <description>Recent content in Tombkeeper on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in tombkeeper on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Sat, 09 Dec 2023 19:16:20 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/tombkeeper/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Feb 2022 17:19:24 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/tombkeeper/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如何阅读网络上的小作文</title>
       <link>https://bwangel.me/docs/life/read/</link>
       <pubDate>Sat, 26 Feb 2022 17:19:24 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/life/read/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>为什么要学习?</title>
       <link>https://bwangel.me/docs/life/why-to-learn/</link>
       <pubDate>Tue, 30 Jul 2019 23:25:22 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/life/why-to-learn/</guid>
       <description>&lt;p&gt;如何闭着眼睛挖金矿？&lt;/p&gt;</description>
     </item>
+    
   </channel>
 </rss>

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Containerd on 647 Universe</title>
+    <title>containerd on 647 Universe</title>
     <link>https://bwangel.me/tags/containerd/</link>
-    <description>Recent content in Containerd on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in containerd on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 13 Sep 2023 10:02:01 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/containerd/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 Aug 2022 08:17:21 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/containerd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ubuntu 下安装 Containerd 及配置代理</title>
       <link>https://bwangel.me/docs/container/install-containerd/</link>
       <pubDate>Tue, 23 Aug 2022 08:17:21 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/container/install-containerd/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;介绍了安装 containerd 的方法&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;介绍了安装 containerd 的方法&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

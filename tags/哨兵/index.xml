@@ -4,16 +4,23 @@
     <title>哨兵 on 647 Universe</title>
     <link>https://bwangel.me/tags/%E5%93%A8%E5%85%B5/</link>
     <description>Recent content in 哨兵 on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Fri, 15 Dec 2023 10:00:01 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/%E5%93%A8%E5%85%B5/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 11 Sep 2022 10:52:23 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/%E5%93%A8%E5%85%B5/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>算法中使用哨兵变量(TODO)</title>
       <link>https://bwangel.me/docs/algo/algo-sentry/</link>
       <pubDate>Sun, 11 Sep 2022 10:52:23 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/algo-sentry/</guid>
-      <description>背景 哨兵，现实中是用于解决国家之间的边界问题。&#xA;在算法程序中，我们设置一些冗余的变量，让算法程序处理边界问题时更加容易，这些变量就被称为哨兵。&#xA;本文将会举例说明，哨兵变量在算法程序中的应用。&#xA;插入排序 插入排序是一种常用的排序算法，它的思路是&#xA;用 i 从 1 开始遍历数组中每个元素 从后往前遍历 1-i 的每个元素，找到第一个比当前元素小的元素，将其插入到该元素之后 Note: 先挪位置，循环结束后再在 j 指示的索引中(第一个比当前元素小的元素)插入当前值 func InsertSort[T ttypes.Number](arr []T) []T { res := make([]T, len(arr)) copy(res, arr) for i := 1; i &amp;lt; len(res); i++ { j := i current := res[i] for j &amp;gt; 0 &amp;amp;&amp;amp; res[j-1] &amp;gt; current { res[j] = res[j-1] j-- } res[j] = current } return res } 演示图:&#xA;哨兵模式 哨兵模式的代码如下，它在数组的前面添加一个元素。&#xA;每次开始遍历前，它将当前需要插入的元素放到数组头部(res[0])。这样就算 1-i 中没有比 res[i] 小的元素，但循环到最后还是会触发条件 not (res[0] &amp;gt; current), 达到跳出循环的目的。</description>
+      <description>背景 哨兵，现实中是用于解决国家之间的边界问题。
+在算法程序中，我们设置一些冗余的变量，让算法程序处理边界问题时更加容易，这些变量就被称为哨兵。
+本文将会举例说明，哨兵变量在算法程序中的应用。
+插入排序 插入排序是一种常用的排序算法，它的思路是
+用 i 从 1 开始遍历数组中每个元素 从后往前遍历 1-i 的每个元素，找到第一个比当前元素小的元素，将其插入到该元素之后 Note: 先挪位置，循环结束后再在 j 指示的索引中(第一个比当前元素小的元素)插入当前值 func InsertSort[T ttypes.Number](arr []T) []T { res := make([]T, len(arr)) copy(res, arr) for i := 1; i &amp;lt; len(res); i++ { j := i current := res[i] for j &amp;gt; 0 &amp;amp;&amp;amp; res[j-1] &amp;gt; current { res[j] = res[j-1] j-- } res[j] = current } return res } 演示图:
+哨兵模式 哨兵模式的代码如下，它在数组的前面添加一个元素。
+每次开始遍历前，它将当前需要插入的元素放到数组头部(res[0])。这样就算 1-i 中没有比 res[i] 小的元素，但循环到最后还是会触发条件 not (res[0] &amp;gt; current), 达到跳出循环的目的。</description>
     </item>
+    
   </channel>
 </rss>

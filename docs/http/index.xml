@@ -4,58 +4,79 @@
     <title>HTTP on 647 Universe</title>
     <link>https://bwangel.me/docs/http/</link>
     <description>Recent content in HTTP on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 06 Nov 2023 11:03:48 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/docs/http/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Sep 2023 10:28:40 +0800</lastBuildDate><atom:link href="https://bwangel.me/docs/http/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HTTP 协议中带下划线的 header 说明</title>
       <link>https://bwangel.me/docs/http/nginx-header-underline/</link>
       <pubDate>Tue, 09 May 2023 22:40:29 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/http/nginx-header-underline/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Nginx proxy_set_header 默认会覆盖上一层的设置</title>
       <link>https://bwangel.me/docs/http/nginx-proxy-set-header/</link>
       <pubDate>Thu, 27 Apr 2023 15:02:39 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/http/nginx-proxy-set-header/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>如何生成自签名 HTTPS 证书</title>
       <link>https://bwangel.me/docs/http/https-generate-cert/</link>
       <pubDate>Sun, 29 Nov 2020 13:25:07 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/http/https-generate-cert/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>HTTP 协议中的分块传输编码</title>
       <link>https://bwangel.me/docs/http/http-chunked/</link>
       <pubDate>Thu, 01 Nov 2018 23:32:43 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/http/http-chunked/</guid>
       <description>&lt;p&gt;说明了 HTTP 分块传输编码方式&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Letsencrypt通过DNS TXT记录来验证域名有效性</title>
       <link>https://bwangel.me/docs/http/letsencrypt-dns-txt/</link>
       <pubDate>Sun, 13 Aug 2017 14:04:06 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/http/letsencrypt-dns-txt/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Letsencrypt 通过dns记录来验证域名&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Letsencrypt 通过dns记录来验证域名&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>CentOS 下编译安装 Nginx</title>
       <link>https://bwangel.me/docs/http/nginx_install/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/http/nginx_install/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;主要讲述了编译安装 Nginx&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;主要讲述了编译安装 Nginx&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>web框架要素</title>
       <link>https://bwangel.me/docs/http/web%E6%A1%86%E6%9E%B6%E8%A6%81%E7%B4%A0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/http/web%E6%A1%86%E6%9E%B6%E8%A6%81%E7%B4%A0/</guid>
       <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;</description>
     </item>
+    
   </channel>
 </rss>

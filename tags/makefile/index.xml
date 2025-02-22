@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Makefile on 647 Universe</title>
+    <title>makefile on 647 Universe</title>
     <link>https://bwangel.me/tags/makefile/</link>
-    <description>Recent content in Makefile on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in makefile on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 19 Dec 2023 18:56:31 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/makefile/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Dec 2023 17:13:40 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/makefile/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Makefile</title>
       <link>https://bwangel.me/docs/linux/makefile/</link>
       <pubDate>Tue, 19 Dec 2023 17:13:40 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/makefile/</guid>
-      <description> ?= ?= 指示仅在未设置或没有值时设置 KDIR 变量。&#xA;# make test 将会输出 foo KDIR ?= &amp;#34;foo&amp;#34; KDIR ?= &amp;#34;bar&amp;#34; test: echo $(KDIR) </description>
+      <description> ?= ?= 指示仅在未设置或没有值时设置 KDIR 变量。
+# make test 将会输出 foo KDIR ?= &amp;#34;foo&amp;#34; KDIR ?= &amp;#34;bar&amp;#34; test: echo $(KDIR) </description>
     </item>
+    
   </channel>
 </rss>

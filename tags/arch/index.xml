@@ -4,16 +4,23 @@
     <title>Arch on 647 Universe</title>
     <link>https://bwangel.me/tags/arch/</link>
     <description>Recent content in Arch on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 10 Oct 2023 09:44:04 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/arch/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 18 Dec 2016 14:13:44 +0000</lastBuildDate><atom:link href="https://bwangel.me/tags/arch/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>【非技术】 Arch 下的无线自动断开</title>
       <link>https://bwangel.me/docs/linux/arch-wireless-adapter/</link>
       <pubDate>Sun, 18 Dec 2016 14:13:44 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/arch-wireless-adapter/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;折腾 ThinkPad E430 在 Arch WiFi 自动断开的问题&lt;/li&gt;&#xA;&lt;li&gt;无线网卡型号推荐&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;折腾 ThinkPad E430 在 Arch WiFi 自动断开的问题&lt;/li&gt;
+&lt;li&gt;无线网卡型号推荐&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

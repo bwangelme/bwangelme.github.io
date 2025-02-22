@@ -4,23 +4,38 @@
     <title>编码 on 647 Universe</title>
     <link>https://bwangel.me/docs/encoding/</link>
     <description>Recent content in 编码 on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 13 Dec 2023 13:25:27 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/docs/encoding/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Sep 2023 09:50:51 +0800</lastBuildDate><atom:link href="https://bwangel.me/docs/encoding/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>细说：Unicode, UTF-8, UTF-16, UTF-32, UCS-2, UCS-4</title>
       <link>https://bwangel.me/docs/encoding/unicode/</link>
       <pubDate>Tue, 05 Dec 2023 19:18:29 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/encoding/unicode/</guid>
-      <description>原文链接: Malecrab 的博客&#xA;这篇文章讲的非常清楚了，我这里复制一份用于备份，查找。&#xA;Unicode与ISO 10646 全世界很多个国家都在为自己的文字编码，并且互不相通，不同的语言字符编码值相同却代表不同的符号（例如：韩文编码 EUC-KR 中 “한국어” 的编码值正好是汉字编码GBK中的“茄惫绢”）。&#xA;因此，同一份文档，拷贝至不同语言的机器，就可能成了乱码，于是人们就想：我们能不能定义一个超大的字符集，它可以容纳全世界所有的文字字符，再对它们统一进行编码，让每一个字符都对应一个不同的编码值，从而就不会再有乱码了。&#xA;如果说“各个国家都在为自己文字独立编码”是百家争鸣，那么“建立世界统一的字符编码”则是一统江湖，谁都想来做这个武林盟主。早前就有两个机构试图来做这个事：&#xA;国际标准化组织（ISO），他们于1984年创建ISO/IEC JTC1/SC2/WG2工作组，试图制定一份“通用字符集”（Universal Character Set，简称UCS），并最终制定了ISO 10646标准。 统一码联盟，他们由Xerox、Apple等软件制造商于1988年组成，并且开发了Unicode标准（The Unicode Standard，这个前缀Uni很牛逼哦 &amp;mdash; Unique, Universal, and Uniform）。 1991年前后，两个项目的参与者都认识到，世界不需要两个不兼容的字符集。于是，它们开始合并双方的工作成果，并为创立一个单一编码表而协同工作。从Unicode 2.0开始，Unicode采用了与ISO 10646-1相同的字库和字码；&#xA;ISO也承诺，ISO 10646将不会替超出U+10FFFF的UCS-4编码赋值，以使得两者保持一致。两个项目仍都独立存在，并独立地公布各自的标准。不过由于Unicode这一名字比较好记，因而它使用更为广泛。&#xA;Unicode编码点分为17个平面（plane），每个平面包含 \( 2^{16} \)（即65536）个码点（code point）。17个平面的码点可表示为从 U+xx0000 到 U+xxFFFF，其中xx表示十六进制值从 0x00 到 0x10，共计17个平面。&#xA;UTF-32 与 UCS-4 在 Unicode 与 ISO 10646 合并之前，ISO 10646标准为 通用字符集（UCS）定义了一种31位的编码形式（即UCS-4），其编码固定占用4个字节，编码空间为 0x00000000~0x7FFFFFFF（可以编码20多亿个字符）。&#xA;UCS-4有20多亿个编码空间，但实际使用范围并不超过 0x10FFFF，并且为了兼容Unicode标准，ISO也承诺将不会为超出 0x10FFFF 的 UCS-4 编码赋值。由此 UTF-32 编码被提出来了，它的编码值与UCS-4相同，只不过其编码空间被限定在了 0~0x10FFFF 之间。因此也可以说：UTF-32是UCS-4的一个子集。&#xA;UTF-16与UCS-2 除了UCS-4，ISO 10646 标准为 “通用字符集”（UCS）定义了一种16位的编码形式（即UCS-2），其编码固定占用2个字节，它包含65536个编码空间（可以为全世界最常用的63K字符编码，为了兼容Unicode，0xD800-0xDFFF 之间的码点未使用）。例：“汉” 的UCS-2编码为6C49。</description>
+      <description>原文链接: Malecrab 的博客
+这篇文章讲的非常清楚了，我这里复制一份用于备份，查找。
+Unicode与ISO 10646 全世界很多个国家都在为自己的文字编码，并且互不相通，不同的语言字符编码值相同却代表不同的符号（例如：韩文编码 EUC-KR 中 “한국어” 的编码值正好是汉字编码GBK中的“茄惫绢”）。
+因此，同一份文档，拷贝至不同语言的机器，就可能成了乱码，于是人们就想：我们能不能定义一个超大的字符集，它可以容纳全世界所有的文字字符，再对它们统一进行编码，让每一个字符都对应一个不同的编码值，从而就不会再有乱码了。
+如果说“各个国家都在为自己文字独立编码”是百家争鸣，那么“建立世界统一的字符编码”则是一统江湖，谁都想来做这个武林盟主。早前就有两个机构试图来做这个事：
+国际标准化组织（ISO），他们于1984年创建ISO/IEC JTC1/SC2/WG2工作组，试图制定一份“通用字符集”（Universal Character Set，简称UCS），并最终制定了ISO 10646标准。 统一码联盟，他们由Xerox、Apple等软件制造商于1988年组成，并且开发了Unicode标准（The Unicode Standard，这个前缀Uni很牛逼哦 &amp;mdash; Unique, Universal, and Uniform）。 1991年前后，两个项目的参与者都认识到，世界不需要两个不兼容的字符集。于是，它们开始合并双方的工作成果，并为创立一个单一编码表而协同工作。从Unicode 2.0开始，Unicode采用了与ISO 10646-1相同的字库和字码；
+ISO也承诺，ISO 10646将不会替超出U+10FFFF的UCS-4编码赋值，以使得两者保持一致。两个项目仍都独立存在，并独立地公布各自的标准。不过由于Unicode这一名字比较好记，因而它使用更为广泛。
+Unicode编码点分为17个平面（plane），每个平面包含 \( 2^{16} \)（即65536）个码点（code point）。17个平面的码点可表示为从 U+xx0000 到 U+xxFFFF，其中xx表示十六进制值从 0x00 到 0x10，共计17个平面。
+UTF-32 与 UCS-4 在 Unicode 与 ISO 10646 合并之前，ISO 10646标准为 通用字符集（UCS）定义了一种31位的编码形式（即UCS-4），其编码固定占用4个字节，编码空间为 0x00000000~0x7FFFFFFF（可以编码20多亿个字符）。
+UCS-4有20多亿个编码空间，但实际使用范围并不超过 0x10FFFF，并且为了兼容Unicode标准，ISO也承诺将不会为超出 0x10FFFF 的 UCS-4 编码赋值。由此 UTF-32 编码被提出来了，它的编码值与UCS-4相同，只不过其编码空间被限定在了 0~0x10FFFF 之间。因此也可以说：UTF-32是UCS-4的一个子集。
+UTF-16与UCS-2 除了UCS-4，ISO 10646 标准为 “通用字符集”（UCS）定义了一种16位的编码形式（即UCS-2），其编码固定占用2个字节，它包含65536个编码空间（可以为全世界最常用的63K字符编码，为了兼容Unicode，0xD800-0xDFFF 之间的码点未使用）。例：“汉” 的UCS-2编码为6C49。</description>
     </item>
+    
     <item>
       <title>ZigZag 变长整数编码</title>
       <link>https://bwangel.me/docs/encoding/variant_zigzag/</link>
       <pubDate>Tue, 01 Mar 2022 20:16:48 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/encoding/variant_zigzag/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;变长整数编码的实现&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;变长整数编码的实现&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

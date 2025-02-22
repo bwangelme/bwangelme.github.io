@@ -4,156 +4,255 @@
     <title>MySQL on 647 Universe</title>
     <link>https://bwangel.me/tags/mysql/</link>
     <description>Recent content in MySQL on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 30 Oct 2024 14:04:43 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Nov 2023 22:10:53 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL 事务</title>
       <link>https://bwangel.me/docs/mysql/transaction/</link>
       <pubDate>Tue, 28 Nov 2023 22:10:53 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/transaction/</guid>
       <description>查询持续时间超过 60s 的事务 select * from information_schema.innodb_trx where TIME_TO_SEC(timediff(now(),trx_started))&amp;gt;60; -- innodb_trx 存储了数据库的所有事务 -- trx_started 表示事务的开始时间 </description>
     </item>
+    
     <item>
       <title>MySQL 外键分析</title>
       <link>https://bwangel.me/docs/mysql/mysql-foreign-key/</link>
       <pubDate>Mon, 05 Mar 2018 23:42:44 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql-foreign-key/</guid>
       <description>&lt;p&gt;本文主要介绍了 MySQL 外键的一些特性&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>InnoDB 锁机制</title>
       <link>https://bwangel.me/docs/mysql/innodb-lock/</link>
       <pubDate>Sun, 04 Mar 2018 13:22:46 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/innodb-lock/</guid>
       <description>&lt;p&gt;本文试图讲清楚 InnoDB 中存在的各种锁，以及它们锁定的区别。&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>InnoDB 行记录格式</title>
       <link>https://bwangel.me/docs/mysql/innodb-row/</link>
       <pubDate>Tue, 30 Jan 2018 12:51:59 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/innodb-row/</guid>
       <description>&lt;p&gt;&lt;strong&gt;简介&lt;/strong&gt;: 本文主要讲述了 InnoDB 的行如何在数据文件中进行存储的，同时简单分析了 InnoDB 的逻辑存储结构&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>MySQL 日志管理</title>
       <link>https://bwangel.me/docs/mysql/mysql%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</link>
       <pubDate>Mon, 01 Jan 2018 10:34:15 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</guid>
       <description>&lt;p&gt;&lt;strong&gt;简介&lt;/strong&gt;: 讲述了MySQL中的日志及配置方式&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>MySQL Character Set support</title>
       <link>https://bwangel.me/docs/mysql/mysql-character-set-support/</link>
       <pubDate>Thu, 22 Jun 2017 23:32:43 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql-character-set-support/</guid>
-      <description>摘要:&#xA;本文是对MySQL文档 Character Set Support 的翻译 字符集(character set)和排序规则(collation)概要 一个字符集是一组符号和编码的集合。一个排序规则是一组字符集中用来比较字符的规则的集合。让我们使用一个假想的字符集的例子来分别区分它们。&#xA;假设我们有四个字母：A, B, a, b。我们给每个字母赋值一个数字，A = 0, B = 1, a = 2, b = 3。字母 A 是一个符号，数字0是字母 A 的编码，四个字母和它们编码的集合叫做 字符集 (character set)。&#xA;假设我们想要比较两个字符串值，A 和 B。做这个最简单的方式就是去查看它们的编码，A 是0，B 是1。因为0比1小，所以我们说 A 比 B 小。刚刚我们所做的事情是将一个排序规则(collation)应用到我们的字符集上。排序规则(collation)是一组规则(比较编码)的集合(在这个例子中仅有一个规则)。我们称这个所有可能的排序规则中最简单的排序规则为二进制排序规则(binary collation)。&#xA;但是如果我们想说大写字母和小写字母是等价的，那该怎么排序呢？那么我们将会有至少两个规则：&#xA;将小写字母 a 和 b 等价成大写字母 A 和 B。 然后比较它们的编码。 我们称这个为不区分大小写的排序规则。它比起二进制排序规则来要复杂一些。&#xA;在现实生活中，大多数的字符集都有许多字符；并不仅仅是 A 和 B 而是包括所有的字母，有时还会包括多字母和东方书写系统中成千上万个字符和许多相关的特殊字符和标点符号。同样在现实生活中，大多数的排序规则都有许多条规则，并不仅仅是区分大小写对于多字符映射(比如德语排序规则中的两个规则之一就是Ö = OE)也会区分口音(口音是和字符相关的一个标记例如德语中的Ö)。&#xA;MySQL 能为你做这些事情：&#xA;使用各种各样的字符集来存储字符串。 使用各种各样的排序规则来比较字符串。 在同一台服务器上，在同一个的数据库，甚至是在同一个表中，混合使用不同字符集不同排序规则的字符串。 在任何等级上开启特殊的字符集和排序规则。 为了能够有效地使用这些特性，你必须要知道哪些字符集和排序规则是可用的，如何改变默认的排序规则，以及它们是如何影响到字符串操作符和相关函数的行为的。&#xA;MySQL中的字符集和排序规则 MySQL 服务器支持多种字符集。使用__INFORMATION_SCHEMA.CHARACTER_SETS__表或者__SHOW CHARACTER_SET__语句能够列出所有的可用字符集。下面的例子列出了一部分字符集，如果想要查看完整的信息，请参看 Section 11.</description>
+      <description>摘要:
+本文是对MySQL文档 Character Set Support 的翻译 字符集(character set)和排序规则(collation)概要 一个字符集是一组符号和编码的集合。一个排序规则是一组字符集中用来比较字符的规则的集合。让我们使用一个假想的字符集的例子来分别区分它们。
+假设我们有四个字母：A, B, a, b。我们给每个字母赋值一个数字，A = 0, B = 1, a = 2, b = 3。字母 A 是一个符号，数字0是字母 A 的编码，四个字母和它们编码的集合叫做 字符集 (character set)。
+假设我们想要比较两个字符串值，A 和 B。做这个最简单的方式就是去查看它们的编码，A 是0，B 是1。因为0比1小，所以我们说 A 比 B 小。刚刚我们所做的事情是将一个排序规则(collation)应用到我们的字符集上。排序规则(collation)是一组规则(比较编码)的集合(在这个例子中仅有一个规则)。我们称这个所有可能的排序规则中最简单的排序规则为二进制排序规则(binary collation)。
+但是如果我们想说大写字母和小写字母是等价的，那该怎么排序呢？那么我们将会有至少两个规则：
+将小写字母 a 和 b 等价成大写字母 A 和 B。 然后比较它们的编码。 我们称这个为不区分大小写的排序规则。它比起二进制排序规则来要复杂一些。
+在现实生活中，大多数的字符集都有许多字符；并不仅仅是 A 和 B 而是包括所有的字母，有时还会包括多字母和东方书写系统中成千上万个字符和许多相关的特殊字符和标点符号。同样在现实生活中，大多数的排序规则都有许多条规则，并不仅仅是区分大小写对于多字符映射(比如德语排序规则中的两个规则之一就是Ö = OE)也会区分口音(口音是和字符相关的一个标记例如德语中的Ö)。
+MySQL 能为你做这些事情：
+使用各种各样的字符集来存储字符串。 使用各种各样的排序规则来比较字符串。 在同一台服务器上，在同一个的数据库，甚至是在同一个表中，混合使用不同字符集不同排序规则的字符串。 在任何等级上开启特殊的字符集和排序规则。 为了能够有效地使用这些特性，你必须要知道哪些字符集和排序规则是可用的，如何改变默认的排序规则，以及它们是如何影响到字符串操作符和相关函数的行为的。
+MySQL中的字符集和排序规则 MySQL 服务器支持多种字符集。使用__INFORMATION_SCHEMA.CHARACTER_SETS__表或者__SHOW CHARACTER_SET__语句能够列出所有的可用字符集。下面的例子列出了一部分字符集，如果想要查看完整的信息，请参看 Section 11.</description>
     </item>
+    
     <item>
       <title>MySQL from 部分的子查询</title>
       <link>https://bwangel.me/docs/mysql/mysql-subqueries-in-the-from-clause/</link>
       <pubDate>Sat, 08 Oct 2016 20:28:45 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql-subqueries-in-the-from-clause/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;MySQL 语句中 from 部分的子查询&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;MySQL 语句中 from 部分的子查询&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL单表查询</title>
       <link>https://bwangel.me/docs/mysql/mysql%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL单表查询&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL单表查询&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL多表查询</title>
       <link>https://bwangel.me/docs/mysql/mysql%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍11. MySQL多表查询&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍11. MySQL多表查询&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL存储过程</title>
       <link>https://bwangel.me/docs/mysql/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 存储过程&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 存储过程&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL安全机制</title>
       <link>https://bwangel.me/docs/mysql/mysql%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 安全机制&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 安全机制&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL常用函数</title>
       <link>https://bwangel.me/docs/mysql/mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 常用函数&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 常用函数&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL技术架构概览</title>
       <link>https://bwangel.me/docs/mysql/mysql%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;学习 MySQL 课程时的相关笔记&#xA;仅仅对 MySQL 的整体做的大概介绍&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;学习 MySQL 课程时的相关笔记
+仅仅对 MySQL 的整体做的大概介绍&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL数据类型_数值类型</title>
       <link>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL数据类型_数值类型&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL数据类型_数值类型&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL数据类型-字符串类型</title>
       <link>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL数据类型-字符串类型&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL数据类型-字符串类型&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL索引</title>
       <link>https://bwangel.me/docs/mysql/mysql%E7%B4%A2%E5%BC%95/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E7%B4%A2%E5%BC%95/</guid>
-      <description>摘要:&#xA;MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用于快速找到记录的一种数据结构&#xA;索引优化应该是对查询性能优化最有效的手段了&#xA;相当于字典中的音序表，如果没有音序表，则需要一页一页去查&#xA;2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&amp;gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&amp;gt; create procedure autoinsert1() -&amp;gt; BEGIN -&amp;gt; declare i int default 1; -&amp;gt; while(i&amp;lt;20000)do -&amp;gt; insert into school.t2 values(i, &amp;#39;xff&amp;#39;); -&amp;gt; set i=i+1 -&amp;gt; end while; -&amp;gt; END$$ mysql&amp;gt; delimiter ; --还原分隔符为; mysql&amp;gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错</description>
+      <description>摘要:
+MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用于快速找到记录的一种数据结构
+索引优化应该是对查询性能优化最有效的手段了
+相当于字典中的音序表，如果没有音序表，则需要一页一页去查
+2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&amp;gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&amp;gt; create procedure autoinsert1() -&amp;gt; BEGIN -&amp;gt; declare i int default 1; -&amp;gt; while(i&amp;lt;20000)do -&amp;gt; insert into school.t2 values(i, &amp;#39;xff&amp;#39;); -&amp;gt; set i=i+1 -&amp;gt; end while; -&amp;gt; END$$ mysql&amp;gt; delimiter ; --还原分隔符为; mysql&amp;gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错</description>
     </item>
+    
     <item>
       <title>MySQL编译安装</title>
       <link>https://bwangel.me/docs/mysql/mysql%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 编译安装&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 编译安装&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL表的操作和约束</title>
       <link>https://bwangel.me/docs/mysql/mysql%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E5%92%8C%E7%BA%A6%E6%9D%9F/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E5%92%8C%E7%BA%A6%E6%9D%9F/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL表的操作和约束&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL表的操作和约束&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL视图</title>
       <link>https://bwangel.me/docs/mysql/mysql%E8%A7%86%E5%9B%BE/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E8%A7%86%E5%9B%BE/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL视图&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍MySQL视图&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL触发器</title>
       <link>https://bwangel.me/docs/mysql/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E8%A7%A6%E5%8F%91%E5%99%A8/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍9. MySQL触发器&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍9. MySQL触发器&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>MySQL运算符的使用</title>
       <link>https://bwangel.me/docs/mysql/mysql%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/mysql/mysql%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 运算符的使用&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是一篇关于MySQL的文章，主要介绍 MySQL 运算符的使用&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

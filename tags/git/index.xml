@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Git on 647 Universe</title>
+    <title>git on 647 Universe</title>
     <link>https://bwangel.me/tags/git/</link>
-    <description>Recent content in Git on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in git on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Sat, 20 Jan 2024 22:51:47 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 20 Jan 2024 22:26:51 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/git/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Git Tips</title>
       <link>https://bwangel.me/docs/tools/git/</link>
       <pubDate>Sat, 20 Jan 2024 22:26:51 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/tools/git/</guid>
-      <description>Git ssh push 超时 修改 ~/.git/config 文件&#xA;# Add section below to it Host github.com Hostname ssh.github.com Port 443 将 push 的端口从 22 改成 443，有可能绕过 GFW&#xA;测试 22 端口超时&#xA;$ ssh -T git@github.com ssh: connect to host github.com port 22: Connection timed out 443 端口能联通&#xA;ø&amp;gt; ssh -T -p 443 git@github.com Hi bwangelme! You&amp;#39;ve successfully authenticated, but GitHub does not provide shell access. </description>
+      <description>Git ssh push 超时 修改 ~/.git/config 文件
+# Add section below to it Host github.com Hostname ssh.github.com Port 443 将 push 的端口从 22 改成 443，有可能绕过 GFW
+测试 22 端口超时
+$ ssh -T git@github.com ssh: connect to host github.com port 22: Connection timed out 443 端口能联通
+ø&amp;gt; ssh -T -p 443 git@github.com Hi bwangelme! You&amp;#39;ve successfully authenticated, but GitHub does not provide shell access. </description>
     </item>
+    
     <item>
       <title>Golang Build 出错: error obtaining VCS status: exit status 128</title>
       <link>https://bwangel.me/docs/golang/go-build-vcsmap/</link>
       <pubDate>Tue, 21 Mar 2023 12:07:05 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-build-vcsmap/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Git-submodule</title>
       <link>https://bwangel.me/docs/tools/git-submodule/</link>
       <pubDate>Mon, 11 Apr 2016 07:18:43 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/tools/git-submodule/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;git submodule&lt;/code&gt;就是git主仓库在本仓库的配置中记录着子模块仓库对应的名字，路径，远端url，然后创建一个特殊文件去记录子模块仓库目前的&lt;code&gt;commit-id&lt;/code&gt;，每次更新子模块就是通过远端路径和&lt;code&gt;commit-id&lt;/code&gt;来进行更新&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git submodule&lt;/code&gt;就是git主仓库在本仓库的配置中记录着子模块仓库对应的名字，路径，远端url，然后创建一个特殊文件去记录子模块仓库目前的&lt;code&gt;commit-id&lt;/code&gt;，每次更新子模块就是通过远端路径和&lt;code&gt;commit-id&lt;/code&gt;来进行更新&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

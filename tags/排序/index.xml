@@ -4,16 +4,17 @@
     <title>排序 on 647 Universe</title>
     <link>https://bwangel.me/tags/%E6%8E%92%E5%BA%8F/</link>
     <description>Recent content in 排序 on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Thu, 02 May 2024 12:11:52 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/%E6%8E%92%E5%BA%8F/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 02 May 2024 11:39:20 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/%E6%8E%92%E5%BA%8F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>排序</title>
       <link>https://bwangel.me/docs/algo/sort/</link>
       <pubDate>Thu, 02 May 2024 11:39:20 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/sort/</guid>
       <description>归并排序 思路 mergeSortC 对数组的子数组进行排序，当 len(子数组) == 1 的时候，这个数组就是有序的，此时就是递归出口 merge 对有序的子数组进行合并。 0. left, right 两个子数组内部的元素是有序的 就像交换需要创建 tmp 变量。merge 时 先创建 tmp 数组 将 left, right 两个子数组的元素 有序 放入 tmp 中 将子数组中剩余的部分放入到 tmp 中 将 tmp 更新到 arr 的对应位置 特性 无论数据源是什么，归并排序的时间复杂度固定是 O(nlogn) 归并排序的空间复杂度是 O(1) ，因为每次只有一个函数会申请一个临时数组 归并排序是稳定性排序，两个相同的元素，排序之后它们的顺序不会变 代码 func MergeSort(arr []int64) []int64 { mergeSortC(arr, 0, len(arr)-1) return arr } func mergeSortC(arr []int64, start, end int) { if start &amp;gt;= end { return } q := (start + end) / 2 mergeSortC(arr, start, q) mergeSortC(arr, q+1, end) merge(arr, start, q, q+1, end) } func merge(arr []int64, leftStart, leftEnd int, rightStart, rightEnd int) { var tmp = make([]int64, 0) var leftIdx, rightIdx = leftStart, rightStart for leftIdx &amp;lt;= leftEnd &amp;amp;&amp;amp; rightIdx &amp;lt;= rightEnd { if arr[leftIdx] &amp;lt;= arr[rightIdx] { tmp = append(tmp, arr[leftIdx]) leftIdx++ } else { tmp = append(tmp, arr[rightIdx]) rightIdx++ } } // 将子数组剩余部分放入到 tmp 中 var ( remainStart = leftIdx remainEnd = leftEnd ) if leftIdx &amp;gt; leftEnd { remainStart = rightIdx remainEnd = rightEnd } for remainStart &amp;lt;= remainEnd { tmp = append(tmp, arr[remainStart]) remainStart++ } // 将 tmp 的元素放入 arr 对应位置中 for idx := 0; idx &amp;lt;= (rightEnd - leftStart); idx++ { arr[leftStart+idx] = tmp[idx] } } 时间复杂度 N 等于数组长度</description>
     </item>
+    
   </channel>
 </rss>

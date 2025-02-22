@@ -4,16 +4,25 @@
     <title>Python标准库 on 647 Universe</title>
     <link>https://bwangel.me/tags/python%E6%A0%87%E5%87%86%E5%BA%93/</link>
     <description>Recent content in Python标准库 on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 06 Nov 2023 10:36:40 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/python%E6%A0%87%E5%87%86%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 13 Aug 2017 14:06:24 +0000</lastBuildDate><atom:link href="https://bwangel.me/tags/python%E6%A0%87%E5%87%86%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python的collections模块小结</title>
       <link>https://bwangel.me/docs/python/python-collections/</link>
       <pubDate>Sun, 13 Aug 2017 14:06:24 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/python-collections/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;本文章的目标是逐步总结Python中&lt;a href=&#34;http://devdocs.io/python~3.6/library/collections&#34;&gt;collection&lt;/a&gt;模块的用法，会不定期进行更新。&lt;/li&gt;&#xA;&lt;li&gt;目前总结了Counter类的用法&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;本文章的目标是逐步总结Python中&lt;a href=&#34;http://devdocs.io/python~3.6/library/collections&#34;&gt;collection&lt;/a&gt;模块的用法，会不定期进行更新。&lt;/li&gt;
+&lt;li&gt;目前总结了Counter类的用法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

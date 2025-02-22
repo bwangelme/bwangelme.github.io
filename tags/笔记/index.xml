@@ -4,37 +4,50 @@
     <title>笔记 on 647 Universe</title>
     <link>https://bwangel.me/tags/%E7%AC%94%E8%AE%B0/</link>
     <description>Recent content in 笔记 on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 06 Nov 2023 10:49:23 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Dec 2020 22:28:45 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>《Golang Error》学习笔记</title>
       <link>https://bwangel.me/docs/golang/golang_error/</link>
       <pubDate>Wed, 30 Dec 2020 22:28:45 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/golang_error/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Golang Error 学习笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;Golang Error 学习笔记&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
     <item>
       <title>ElasticSearch 7.6 学习笔记</title>
       <link>https://bwangel.me/docs/es/es-7-6-note/</link>
       <pubDate>Sun, 10 May 2020 17:28:40 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/es/es-7-6-note/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>ElasticSearch 学习笔记</title>
       <link>https://bwangel.me/docs/es/es-note/</link>
       <pubDate>Sat, 28 Mar 2020 17:16:40 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/es/es-note/</guid>
-      <description>&lt;ul&gt;&#xA;&lt;li&gt;ES 6.8 学习笔记&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+      <description>&lt;ul&gt;
+&lt;li&gt;ES 6.8 学习笔记&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
+    
     <item>
       <title>Go 的调度模型学习笔记</title>
       <link>https://bwangel.me/docs/golang/go-schedule/</link>
       <pubDate>Mon, 16 Mar 2020 01:18:03 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/go-schedule/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;阅读 &lt;a href=&#34;https://wudaijun.com/2018/01/go-scheduler/&#34;&gt;Go 调度模型&lt;/a&gt; 后记的笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;阅读 &lt;a href=&#34;https://wudaijun.com/2018/01/go-scheduler/&#34;&gt;Go 调度模型&lt;/a&gt; 后记的笔记&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

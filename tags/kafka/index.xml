@@ -1,33 +1,45 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Kafka on 647 Universe</title>
+    <title>kafka on 647 Universe</title>
     <link>https://bwangel.me/tags/kafka/</link>
-    <description>Recent content in Kafka on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in kafka on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Fri, 29 Sep 2023 11:10:24 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Sep 2023 16:30:55 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Consumer</title>
       <link>https://bwangel.me/docs/kafka/consumer/</link>
       <pubDate>Mon, 11 Sep 2023 16:30:55 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/kafka/consumer/</guid>
-      <description>Commit 当 Consumer 将 enable.auto.commit 设置为 true 的时候，kafka consumer 会自动提交 offset。 它在 auto.commit.interval.ms 选项的控制下，间隔N秒后，自动将当前 consumer 拉取到的消息 offset 提交到 kafka 中。&#xA;当 enable.auto.commit=false 时，kafka 客户端不会自动提交 offset，需要开发者通过 consumer.commitSync 或 consumer.commitAsync 提交 offset。&#xA;不建议每收到一条消息就提交一次 offset，consumer.commitSync 是有性能损耗的，如果 consumer.commitSync 调用的频率非常高，consumer 消费消息的速度将会变得很慢。&#xA;consumer.commitAsync 是异步提交的，它相对 consumer.commitSync 会有一定的性能提升。consumer.commitAsync 还有一个回调函数参数，让开发者设定在提交失败时做什么。&#xA;一般在 broker 正常时，提交失败的情况很少发生。开发者不需要做提交失败后重试的逻辑。 参考链接 https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md https://docs.confluent.io/platform/current/clients/consumer.html#id1 offset kafka 的消息以 group 为单位给 Consumer 发送。Consumer Group 在 topic 中的 offset 存储在 broker 的 __consumer_offsets topic 中。&#xA;新加入的 consumer group 默认从最新位置读取 message。可以通过修改 Consumer 的auto.</description>
+      <description>Commit 当 Consumer 将 enable.auto.commit 设置为 true 的时候，kafka consumer 会自动提交 offset。 它在 auto.commit.interval.ms 选项的控制下，间隔N秒后，自动将当前 consumer 拉取到的消息 offset 提交到 kafka 中。
+当 enable.auto.commit=false 时，kafka 客户端不会自动提交 offset，需要开发者通过 consumer.commitSync 或 consumer.commitAsync 提交 offset。
+不建议每收到一条消息就提交一次 offset，consumer.commitSync 是有性能损耗的，如果 consumer.commitSync 调用的频率非常高，consumer 消费消息的速度将会变得很慢。
+consumer.commitAsync 是异步提交的，它相对 consumer.commitSync 会有一定的性能提升。consumer.commitAsync 还有一个回调函数参数，让开发者设定在提交失败时做什么。
+一般在 broker 正常时，提交失败的情况很少发生。开发者不需要做提交失败后重试的逻辑。 参考链接 https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md https://docs.confluent.io/platform/current/clients/consumer.html#id1 offset kafka 的消息以 group 为单位给 Consumer 发送。Consumer Group 在 topic 中的 offset 存储在 broker 的 __consumer_offsets topic 中。
+新加入的 consumer group 默认从最新位置读取 message。可以通过修改 Consumer 的auto.</description>
     </item>
+    
     <item>
       <title>Broker</title>
       <link>https://bwangel.me/docs/kafka/broker/</link>
       <pubDate>Mon, 11 Sep 2023 16:27:26 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/kafka/broker/</guid>
-      <description>优雅地关闭 Kafka Broker 向进程发送 TERM 信号就可以优雅地关闭 Kafka Broker&#xA;这是 bin/kafka-server-stop.sh 的内容，他的思路就是通过 ps 查找 cmd 中包括 kafka.Kafka 的进程，来寻找进程 ID&#xA;SIGNAL=${SIGNAL:-TERM} OSNAME=$(uname -s) if [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS/390&amp;#34; ]]; then if [ -z $JOBNAME ]; then JOBNAME=&amp;#34;KAFKSTRT&amp;#34; fi PIDS=$(ps -A -o pid,jobname,comm | grep -i $JOBNAME | grep java | grep -v grep | awk &amp;#39;{print $1}&amp;#39;) elif [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS400&amp;#34; ]]; then PIDS=$(ps -Af | grep -i &amp;#39;kafka\.Kafka&amp;#39; | grep java | grep -v grep | awk &amp;#39;{print $2}&amp;#39;) else PIDS=$(ps ax | grep &amp;#39; kafka\.</description>
+      <description>优雅地关闭 Kafka Broker 向进程发送 TERM 信号就可以优雅地关闭 Kafka Broker
+这是 bin/kafka-server-stop.sh 的内容，他的思路就是通过 ps 查找 cmd 中包括 kafka.Kafka 的进程，来寻找进程 ID
+SIGNAL=${SIGNAL:-TERM} OSNAME=$(uname -s) if [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS/390&amp;#34; ]]; then if [ -z $JOBNAME ]; then JOBNAME=&amp;#34;KAFKSTRT&amp;#34; fi PIDS=$(ps -A -o pid,jobname,comm | grep -i $JOBNAME | grep java | grep -v grep | awk &amp;#39;{print $1}&amp;#39;) elif [[ &amp;#34;$OSNAME&amp;#34; == &amp;#34;OS400&amp;#34; ]]; then PIDS=$(ps -Af | grep -i &amp;#39;kafka\.Kafka&amp;#39; | grep java | grep -v grep | awk &amp;#39;{print $2}&amp;#39;) else PIDS=$(ps ax | grep &amp;#39; kafka\.</description>
     </item>
+    
     <item>
       <title>从源码安装 confluent-kafka-python</title>
       <link>https://bwangel.me/docs/kafka/confluent_python.md/</link>
       <pubDate>Fri, 11 Mar 2022 14:34:44 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/kafka/confluent_python.md/</guid>
       <description></description>
     </item>
+    
   </channel>
 </rss>

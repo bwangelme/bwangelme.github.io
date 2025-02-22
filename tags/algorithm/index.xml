@@ -4,37 +4,44 @@
     <title>Algorithm on 647 Universe</title>
     <link>https://bwangel.me/tags/algorithm/</link>
     <description>Recent content in Algorithm on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 06 Nov 2023 11:03:48 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 29 Aug 2018 23:34:29 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>哈希表学习笔记</title>
       <link>https://bwangel.me/docs/algo/hash/</link>
       <pubDate>Wed, 29 Aug 2018 23:34:29 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/hash/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>变态跳台阶问题的解题思路</title>
       <link>https://bwangel.me/docs/algo/jump-stairs/</link>
       <pubDate>Sun, 08 Jul 2018 14:46:42 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/jump-stairs/</guid>
       <description>&lt;p&gt;简介：本文主要记录了 变态跳台阶问题 的推导过程&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>完全二叉树与满二叉树</title>
       <link>https://bwangel.me/docs/algo/binary-tree/</link>
       <pubDate>Sat, 31 Mar 2018 22:42:53 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/binary-tree/</guid>
       <description>&lt;p&gt;本文主要讲述了完全二叉树和满二叉树的定义及一些特性&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>算法复杂度小记</title>
       <link>https://bwangel.me/docs/algo/algorithm-complexity/</link>
       <pubDate>Fri, 08 Sep 2017 00:24:12 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/algo/algorithm-complexity/</guid>
       <description>&lt;p&gt;本文主要书写了本人对于算法复杂度的一些理解，并辅以一些例子进行说明&lt;/p&gt;</description>
     </item>
+    
   </channel>
 </rss>

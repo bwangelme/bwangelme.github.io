@@ -4,16 +4,22 @@
     <title>Werkzeug on 647 Universe</title>
     <link>https://bwangel.me/tags/werkzeug/</link>
     <description>Recent content in Werkzeug on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 06 Nov 2023 11:03:48 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/werkzeug/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 23 Jan 2017 17:31:00 +0000</lastBuildDate><atom:link href="https://bwangel.me/tags/werkzeug/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Werkzeug 的 wsgi-app 说明</title>
       <link>https://bwangel.me/docs/python/wsgi-app-example/</link>
       <pubDate>Mon, 23 Jan 2017 17:31:00 +0000</pubDate>
+      
       <guid>https://bwangel.me/docs/python/wsgi-app-example/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;简要说明了一下WSGI&lt;/li&gt;&#xA;&lt;li&gt;分析了Werkzeug的一个官方例子&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;简要说明了一下WSGI&lt;/li&gt;
+&lt;li&gt;分析了Werkzeug的一个官方例子&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

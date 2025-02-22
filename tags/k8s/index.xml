@@ -1,40 +1,55 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>K8s on 647 Universe</title>
+    <title>k8s on 647 Universe</title>
     <link>https://bwangel.me/tags/k8s/</link>
-    <description>Recent content in K8s on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in k8s on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 26 Dec 2023 19:14:05 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Dec 2023 18:16:42 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/k8s/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CNI</title>
       <link>https://bwangel.me/docs/k8s/cni/</link>
       <pubDate>Mon, 25 Dec 2023 18:16:42 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/k8s/cni/</guid>
-      <description>CNI 要求 CNI 插件的要求可以被简述成两个&#xA;连通性(Connectivity), 每个 Pod 通过默认的网卡接口 eth0 分配 IP 地址，并且这个 IP 地址，在节点的根网络空间上可达。 可达性(Reachability)，跨节点的 Pod 可以直接用 pod ip 通信（不需要经过 NAT）。 验证连通性 这是我用 kind 在本地搭建的一个三节点集群 kind: Cluster apiVersion: kind.x-k8s.io/v1alpha4 name: demo nodes: - role: control-plane image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f ø&amp;gt; docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3fdffdb2fa2d kindest/node:v1.26.3 &amp;#34;/usr/local/bin/entr…&amp;#34; About a minute ago Up About a minute 127.0.0.1:34309-&amp;gt;6443/tcp demo-control-plane 646f93b78436 kindest/node:v1.</description>
+      <description>CNI 要求 CNI 插件的要求可以被简述成两个
+连通性(Connectivity), 每个 Pod 通过默认的网卡接口 eth0 分配 IP 地址，并且这个 IP 地址，在节点的根网络空间上可达。 可达性(Reachability)，跨节点的 Pod 可以直接用 pod ip 通信（不需要经过 NAT）。 验证连通性 这是我用 kind 在本地搭建的一个三节点集群 kind: Cluster apiVersion: kind.x-k8s.io/v1alpha4 name: demo nodes: - role: control-plane image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f ø&amp;gt; docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3fdffdb2fa2d kindest/node:v1.26.3 &amp;#34;/usr/local/bin/entr…&amp;#34; About a minute ago Up About a minute 127.0.0.1:34309-&amp;gt;6443/tcp demo-control-plane 646f93b78436 kindest/node:v1.</description>
     </item>
+    
     <item>
       <title>Pod Tips</title>
       <link>https://bwangel.me/docs/k8s/pod-tips/</link>
       <pubDate>Thu, 02 Mar 2023 09:31:14 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/k8s/pod-tips/</guid>
-      <description>Pod 状态计算细节 Pod 的 QoS 分类 request 是最低资源需求，limit 是最高资源需求&#xA;QoS 类别 描述 Guaranteed(确保) Pod 的资源 request 和 limit 相同 Burstable(可破裂) Pod 的资源 request 小于 limit BestEffort(尽力而为) Pod 的资源没有设置任何 request 和 limit 当计算节点上存在内存/磁盘压力时，k8s 会按照 BestEffort -&amp;gt; Burstable -&amp;gt; Guaranteed 的顺序一次驱逐 pod.&#xA;CPU 是可以压缩的资源，当 CPU 存在压力时，k8s 不会驱逐 pod.&#xA;通常情况下，Burstable 是最好的 QoS 策略，对于一些重要的核心 pod，可以设置为 Guaranteed, 确保它最后被驱逐。&#xA;统计集群中运行 pod 的数量 sum(kube_pod_status_phase{phase=&amp;#34;Running&amp;#34;}) kube_pod_container_status_ready 指标有 namespace, cluster, phase Label 可以对指标进行筛选，其他的看起来都是 prom 相关的&#xA;phase 有五种: Pending|Running|Succeeded|Failed|Unknown</description>
+      <description>Pod 状态计算细节 Pod 的 QoS 分类 request 是最低资源需求，limit 是最高资源需求
+QoS 类别 描述 Guaranteed(确保) Pod 的资源 request 和 limit 相同 Burstable(可破裂) Pod 的资源 request 小于 limit BestEffort(尽力而为) Pod 的资源没有设置任何 request 和 limit 当计算节点上存在内存/磁盘压力时，k8s 会按照 BestEffort -&amp;gt; Burstable -&amp;gt; Guaranteed 的顺序一次驱逐 pod.
+CPU 是可以压缩的资源，当 CPU 存在压力时，k8s 不会驱逐 pod.
+通常情况下，Burstable 是最好的 QoS 策略，对于一些重要的核心 pod，可以设置为 Guaranteed, 确保它最后被驱逐。
+统计集群中运行 pod 的数量 sum(kube_pod_status_phase{phase=&amp;#34;Running&amp;#34;}) kube_pod_container_status_ready 指标有 namespace, cluster, phase Label 可以对指标进行筛选，其他的看起来都是 prom 相关的
+phase 有五种: Pending|Running|Succeeded|Failed|Unknown</description>
     </item>
+    
     <item>
       <title>Deployment Tips</title>
       <link>https://bwangel.me/docs/k8s/deployment-tips/</link>
       <pubDate>Thu, 15 Sep 2022 10:31:16 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/k8s/deployment-tips/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Ubuntu 下安装 Containerd 及配置代理</title>
       <link>https://bwangel.me/docs/container/install-containerd/</link>
       <pubDate>Tue, 23 Aug 2022 08:17:21 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/container/install-containerd/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;介绍了安装 containerd 的方法&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;介绍了安装 containerd 的方法&lt;/p&gt;
+&lt;/blockquote&gt;</description>
     </item>
+    
   </channel>
 </rss>

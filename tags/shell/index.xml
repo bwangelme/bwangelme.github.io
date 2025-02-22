@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Shell on 647 Universe</title>
+    <title>shell on 647 Universe</title>
     <link>https://bwangel.me/tags/shell/</link>
-    <description>Recent content in Shell on 647 Universe</description>
-    <generator>Hugo</generator>
+    <description>Recent content in shell on 647 Universe</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 18 Dec 2023 17:50:57 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Dec 2023 12:06:58 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/shell/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>利用 Python 处理字符串</title>
       <link>https://bwangel.me/docs/linux/python-shell/</link>
       <pubDate>Thu, 14 Dec 2023 12:06:58 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/linux/python-shell/</guid>
-      <description>/tmp/abc.md 中的内容如下&#xA;subject/music antispam/karazhan 我想输出成&#xA;Repo(dir=&amp;#39;music&amp;#39;, name=&amp;#39;subject/music&amp;#39;), Repo(dir=&amp;#39;karazhan&amp;#39;, name=&amp;#39;antispam/karazhan&amp;#39;), 可以利用 Python 来做解析重组字符串的工作, sys.argv[1] 就是每行想要解析的字符串&#xA;parse.py import sys dir_=sys.argv[1].split(&amp;#39;/&amp;#39;)[1] name=sys.argv[1] print(&amp;#34;Repo(dir=&amp;#39;%s&amp;#39;, name=&amp;#39;%s&amp;#39;),&amp;#34; % (dir_, name)) 如果 xargs 不加 -I 那就是将多行内容聚合到一行解析。&#xA;cat /tmp/abc.md | rg -v &amp;#39;^#&amp;#39; | xargs -I{} python3 /tmp/parse.py {} </description>
+      <description>/tmp/abc.md 中的内容如下
+subject/music antispam/karazhan 我想输出成
+Repo(dir=&amp;#39;music&amp;#39;, name=&amp;#39;subject/music&amp;#39;), Repo(dir=&amp;#39;karazhan&amp;#39;, name=&amp;#39;antispam/karazhan&amp;#39;), 可以利用 Python 来做解析重组字符串的工作, sys.argv[1] 就是每行想要解析的字符串
+parse.py import sys dir_=sys.argv[1].split(&amp;#39;/&amp;#39;)[1] name=sys.argv[1] print(&amp;#34;Repo(dir=&amp;#39;%s&amp;#39;, name=&amp;#39;%s&amp;#39;),&amp;#34; % (dir_, name)) 如果 xargs 不加 -I 那就是将多行内容聚合到一行解析。
+cat /tmp/abc.md | rg -v &amp;#39;^#&amp;#39; | xargs -I{} python3 /tmp/parse.py {} </description>
     </item>
+    
   </channel>
 </rss>

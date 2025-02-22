@@ -4,23 +4,31 @@
     <title>Golang on 647 Universe</title>
     <link>https://bwangel.me/tags/golang/</link>
     <description>Recent content in Golang on 647 Universe</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 05 Sep 2023 23:18:01 +0800</lastBuildDate>
-    <atom:link href="https://bwangel.me/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Sep 2023 21:41:25 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Thrift golang client 如何设置超时时间</title>
       <link>https://bwangel.me/docs/thrift/golang-client-timeout/</link>
       <pubDate>Tue, 05 Sep 2023 21:41:25 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/thrift/golang-client-timeout/</guid>
-      <description>简介 本文以 golang thrift binary 协议为例，讲述 thrift golang client 如何设置超时时间&#xA;如何设置超时时间 golang thrift client 有两个超时时间&#xA;socket timeout 在创建 TSocket 的时候，我们可以传入 ConnectTimeout 和 SocketTimeout 两个配置。&#xA;ConnectTimeout 表示建立 TCP 连接的超时时间 SocketTimeout 表示读写 Socket fd 时的超时时间 当这两个超时触发时，thrift 会返回一个 err.Timeout() == true 的 error, 表示超时错误，thrift 会将其包装成 TTransportException，其 typeId == thrift.TIMED_OUT&#xA;rawTransport := thrift.NewTSocketConf(net.JoinHostPort(&amp;#34;localhost&amp;#34;, &amp;#34;7303&amp;#34;), &amp;amp;thrift.TConfiguration{ SocketTimeout: 5 * time.Second, ConnectTimeout: 5 * time.Second, }) context timeout 在调用 thrift 函数时，需要传入 context 参数，我们可以在 ctx 参数中加上超时&#xA;ctx, cancel := context.</description>
+      <description>简介 本文以 golang thrift binary 协议为例，讲述 thrift golang client 如何设置超时时间
+如何设置超时时间 golang thrift client 有两个超时时间
+socket timeout 在创建 TSocket 的时候，我们可以传入 ConnectTimeout 和 SocketTimeout 两个配置。
+ConnectTimeout 表示建立 TCP 连接的超时时间 SocketTimeout 表示读写 Socket fd 时的超时时间 当这两个超时触发时，thrift 会返回一个 err.Timeout() == true 的 error, 表示超时错误，thrift 会将其包装成 TTransportException，其 typeId == thrift.TIMED_OUT
+rawTransport := thrift.NewTSocketConf(net.JoinHostPort(&amp;#34;localhost&amp;#34;, &amp;#34;7303&amp;#34;), &amp;amp;thrift.TConfiguration{ SocketTimeout: 5 * time.Second, ConnectTimeout: 5 * time.Second, }) context timeout 在调用 thrift 函数时，需要传入 context 参数，我们可以在 ctx 参数中加上超时
+ctx, cancel := context.</description>
     </item>
+    
     <item>
       <title>泛型</title>
       <link>https://bwangel.me/docs/golang/generic/</link>
       <pubDate>Tue, 15 Aug 2023 19:22:52 +0800</pubDate>
+      
       <guid>https://bwangel.me/docs/golang/generic/</guid>
       <description>利用泛型实现的语法糖 // Cond // 条件表达式的简单实现，支持任意类型 func Cond[T any](val bool, a, b T) T { if val { return a } return b } // Or // 返回 vals 中第一个不是对应类型0值的参数，如果没有，则返回对应类型的0值 func Or[T comparable](vals ...T) T { for _, val := range vals { if val != *new(T) { return val } } return *new(T) } 用法 func TestCond(t *testing.T) { assert.Equal(t, 1, Cond(true, 1, 2)) assert.Equal(t, 2, Cond(false, 1, 2)) var req *http.</description>
     </item>
+    
   </channel>
 </rss>
