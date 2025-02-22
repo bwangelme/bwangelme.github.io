@@ -196,7 +196,7 @@ $$
 解出明文 m=3
 
 
-## RSA 秘钥对的格式
+## 解析 OpenSSH RSA 密钥
 
 [rsademo](https://github.com/cj1128/rsademo.git) 程序实现了 OpenSSH 公私钥的解析功能。
 
@@ -227,6 +227,227 @@ OpenSSH Private Key
   d: 0x4F24AB699A02326B9DDE603A1F8D3E2B10B5C4EBB8C9829B85852735204B9A5C8E853C2DF696F876064630F385055071CACECC772DEAC9329A03EC7201742F41C0E627FB423A5F133A5F072AA6BCF5CD96A2508725207B997200C44476C253FCAF61C4B1F64925683242EE2E8F8D984FDE0ED92492C923B30896CB43BF4E9C7C4AA44A6567D042F82B8F73BDB494CF8B1456060793DB7607D652A859F177E6B552D9A0D4AFF8EE544139247F161636561F5C2EBEAD34AC612260FF4C90A2F54D57972DE74B3DFC00EF9CEC72B91037A02D05ACA3CB353AEFFBAB8046997CD8859A98F32E2590FC2B5630981E8FA7DA7C8CFA8C15C549585335142853EDD1587D583CA711BFCB43F1B1D7852549F793F3F1EC39F9F0D8E4284BA0AA3D0CFDE04A00D5165A9AD82FC0DCB06A0EC01195EE09299BB76EE9397D58F1FFD635C8FFDC903593738CC70263A9A53AEE57B66B1437F8182F654DCC421929C5710B165CF16966FDFC035B0EB25B85455238D1D7B80CAE470D85898DF54C2280322FA347F1
   p: 0xFF5B9A8C23FB76C20819F696DBC3998B3CA756F7228DB2851833B245BC611DCB0E23B231FA5EB42787D09AC95A2409F674DA257F4444AFE07F51C3E24669D1EF3A6466255A49C0FDF41FBD59DA8753E0303AF7243C19DFC060ACA6ED7EA899A4A2313F1FF4A4C7B5DAEA351E57F80B4BE3595D4499D595C3BC0997BBFB5C23D72F948F30718DFB3161952388462BB74ED764A427750ADDF2CDF213747FFC8D9C628E7135EA8332A19A292C971FCA9A3311A24CDA5F4BEC3D05D51DD1DC26FAD9
   q: 0xCDA22D18CE6E5CCC86C99681EE5087D4A5B1019717A991939FCD9603FC89081FDD63D630662A2EA1BF32C61538D709E8207C5778D37071851442161E06369F8F16A72111E3E4D5FF92090F87D4053A7BA2C78303A1CBDE7919CAB9FE1627EB5BCC42D72C4C79061D2326384B7F25B09081C12828E2B5F000778EC746E6395D9381946E6DB0F52988CCF82DDFD66CBF24ABBB5C9532DE66681C3B9D0169B785084216FDC6E2790CA83460B27CD0926842A2A23D64B448BA49B5483340BC2DE1D7
+```
+
+## RSA 密钥对的存储格式
+
+### ASN.1
+
+__ASN.1(Abstract Syntax Notation dotone)__，抽象语法标记1。
+是定义抽象数据类型形式的标准，描绘了与任何表示数据的编码技术无关的通用数据结构。
+
+它提供了一些基本和组合的数据类型，例如 INTEGER, String, BOOLEAN，SET, SEQUENCE 等，我们可以通过 ASN.1 定义数据结构，并通过它将值转换成二进制。
+
+### PEM
+
+__PEM(Privacy-Enhanced Mail)__ 是存储数据的一种文件格式。它使用 base64 编码将二进制数据表示为 ASCII 字符串，并通过特定的标头和标尾标识文件类型
+
+### PKCS#1, PKCS#8, PKIX, ASN.1, PEM 等格式的关系
+
+将 RSA 密钥转换成 pem 文件需要经过三步
+
+1. 定义一个 ANS.1 格式的数据结构，规定保存的密钥中的数据（例如模数n，公钥指数e，私钥指数d，质数 p,q等），根据数据结构的不同，密钥的格式分为 PKCS#1, PKCS#8, PKIX
+2. 将第一步定义的数据结构的值，通过 ASN.1 转换成二进制，此时将二进制存储到文件中，它就是 .der 格式的密钥
+3. 将二进制编码成 base64，并在文件开头结尾加上密钥的格式，将文本数据写入到文件中，它就是 .pem 格式的密钥
+
+### PKCS#1
+
+PKCS#1 是用于 RSA 密钥的标准，它定义了 RSA 公钥和私钥的格式以及与 RSA 算法相关的加密操作。
+
+* 主要内容：
+  - RSA 公钥：RSA 公钥主要包括两个字段：
+    - 模数（n） 和 公钥指数（e）
+  - RSA 私钥：私钥包括多个字段，最重要的是：
+    - 模数（n）
+    - 私钥指数（d）
+    - 与公钥指数相关的私钥参数（例如 p, q, dp, dq 等，表示素数因子以及加速加密过程的参数）
+
+* 典型格式：
+  - PKCS#1 格式的私钥：通常以 PEM 格式表示，首尾有 `-----BEGIN RSA PRIVATE KEY-----` 和 `-----END RSA PRIVATE KEY-----` 标识
+  - PKCS#1 格式的公钥：通常以 PEM 格式表示，首尾有 `-----BEGIN RSA PUBLIC KEY-----` 和 `-----END RSA PUBLIC KEY----` 标识
+
+- 以下程序展示了生成 PKCS#1 格式的 RSA 密钥对
+
+```go
+package main
+
+import (
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/x509"
+	"encoding/pem"
+	"fmt"
+)
+
+func printPKCS1RSAKey() {
+	// 生成 RSA 密钥对
+	privKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	if err != nil {
+		fmt.Println("Error generating RSA key:", err)
+		return
+	}
+
+	// 提取公钥
+	pubKey := &privKey.PublicKey
+
+	// 将公钥编码为 PKCS#1 格式
+	// 将公钥数据写入文件
+	pubKeyBytes := x509.MarshalPKCS1PublicKey(pubKey)
+	data := pem.EncodeToMemory(&pem.Block{
+		Type:  "RSA PUBLIC KEY",
+		Bytes: pubKeyBytes,
+	})
+	fmt.Println("Public key pem")
+	fmt.Println(string(data))
+
+	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privKey)
+	data = pem.EncodeToMemory(&pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: privateKeyBytes,
+	})
+	fmt.Println("Private key pem")
+	fmt.Println(string(data))
+}
+```
+
+### PKCS#8
+
+PKCS#8 是一个更通用的标准，定义了 __私钥__ 信息的格式，不仅仅支持 RSA 私钥，还支持多种不同类型的私钥（如 DSA、ECDSA 等）。它的设计目标是提供一种更通用的格式，可以用来存储和交换各种类型的私钥信息。
+
+PKCS#8 只用了定义私钥数据结构，不能定义公钥
+
+* PKCS#8 格式中的主要内容：
+  - 版本：标识 PKCS#8 格式的版本号。
+  - 算法标识符：指示所用加密算法（例如 RSA、DSA 或 ECDSA 等）。 
+  - 私钥：私钥数据本身，通常是一个二进制编码（DER 格式）表示的私钥。
+
+* PKCS#8 的优势：
+  - 与 PKCS#1 不同，PKCS#8 支持多种加密算法，而不仅仅是 RSA。
+  - PKCS#8 格式支持通过密码加密私钥数据，从而提高私钥的安全性。
+
+* 典型格式：
+  PKCS#8 的 pem 文件以 `-----BEGIN PRIVATE KEY-----` 和 `-----END PRIVATE KEY-----` 来标识
+
+以下代码展示了使用 Golang 生成 pem 格式的 rsa 密钥
+
+```go
+package main
+
+import (
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/x509"
+	"encoding/pem"
+	"fmt"
+)
+
+func printPKCS8PrivateKey() {
+	// 生成 RSA 密钥对
+	privKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	if err != nil {
+		fmt.Println("Error generating RSA key:", err)
+		return
+	}
+
+	// 将 rsa 私钥序列化成 pkcs#8 格式
+	privateKeyBytes, err := x509.MarshalPKCS8PrivateKey(privKey)
+	if err != nil {
+		fmt.Println("Error marshal RSA key:", err)
+		return
+	}
+	data := pem.EncodeToMemory(&pem.Block{
+		Type:  "PRIVATE KEY",
+		Bytes: privateKeyBytes,
+	})
+	fmt.Println("Private key pem")
+	fmt.Println(string(data))
+}
+```
+
+### PKIX
+
+__PKIX（Public Key Infrastructure X.509）__ 是一个标准格式，用于描述和存储公钥及其相关信息，通常用于公钥基础设施（PKI）中。
+PKIX格式的典型应用场景包括数字证书（如X.509证书）和公钥交换。
+
+__RSA公钥被存储为X.509证书的一部分，或者可以单独以PKIX格式存储。__
+
+PKIX格式实际上通常是指X.509证书格式，它包含的字段如下
+
+1. 版本（Version）
+描述证书的版本。常见的版本为v3。
+2. 序列号（Serial Number）
+证书的唯一标识符。通常由证书颁发机构（CA）分配。
+3. 签名算法（Signature Algorithm）
+证书使用的签名算法，通常包括哈希算法（如SHA256）和签名算法（如RSA）。
+4. 颁发者（Issuer）
+证书的颁发机构的名称。通常是CA的名称。
+5. 有效期（Validity）
+证书的有效期，包括开始日期和结束日期。
+6. 主体（Subject）
+证书的主体信息，通常是持有证书的实体的信息（如组织、个人等）。
+7. 主体公钥信息（Subject Public Key Info）
+
+* 这是证书中最关键的部分，包含公钥的详细信息。包括：
+  * 算法（Algorithm）: 表明公钥使用的算法类型（如RSA、EC等）。
+  * 公钥（Public Key）: 具体的公钥数据，RSA公钥则是一个大整数。
+  * 扩展（Extensions）: 可选字段，提供额外的信息，如密钥用法、证书策略等。
+ 
+8. 签名（Signature）
+证书颁发机构对证书内容的签名，用于验证证书的真实性和完整性。
+
+PKIX(X.509) 格式既可以用来表示一个证书，也可以只包含 __主体公钥信息（Subject Public Key Info）__ 用来表示一个公钥，它不仅支持 RSA，还支持 ecdsa, ed25519, ecdh 等多种公钥。
+
+当我们将RSA公钥编码为PKIX格式时，公钥信息部分的结构如下：
+
+```
+Subject Public Key Info:
+  Algorithm:
+    Algorithm: rsaEncryption (1.2.840.113549.1.1.1)
+  Public Key:
+    [Modulus] [Exponent]
+```
+
+* Algorithm:
+  * 包含公钥使用的算法类型（对于RSA公钥，算法是rsaEncryption）。
+* Public Key: 包括两个部分：
+  * Modulus (n)：RSA公钥的模数。
+  * Exponent (e)：RSA公钥的指数。
+
+以下代码展示了生成一个 pkix 格式的 RSA 公钥
+
+```go
+package main
+
+import (
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/x509"
+	"encoding/pem"
+	"fmt"
+)
+
+func printPKIXPublicKey() {
+	// 生成 RSA 密钥对
+	privKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	if err != nil {
+		fmt.Println("Error generating RSA key:", err)
+		return
+	}
+
+	// 将 rsa 公钥序列号成 pkix 格式
+	pubKey := privKey.PublicKey
+	pubKeyBytes, err := x509.MarshalPKIXPublicKey(&pubKey)
+	if err != nil {
+		fmt.Println("Error marshal RSA key:", err)
+		return
+	}
+	data := pem.EncodeToMemory(&pem.Block{
+		Type:  "PUBLIC KEY",
+		Bytes: pubKeyBytes,
+	})
+	fmt.Println("Public key pem")
+	fmt.Println(string(data))
+}
 ```
 
 ## RSA 明文的填充方式 (padding)
@@ -431,3 +652,4 @@ func pubKeyDecrypt(pub *rsa.PublicKey, data []byte) ([]byte, error) {
 * https://en.wikipedia.org/wiki/RSA_(cryptosystem)
 * https://juejin.cn/post/6997271445776629768
 * https://cjting.me/2020/03/13/rsa/
+* https://javacfox.github.io/2019/07/18/ASN-1%E5%85%A5%E9%97%A8%EF%BC%88%E8%B6%85%E8%AF%A6%E7%BB%86%EF%BC%89/

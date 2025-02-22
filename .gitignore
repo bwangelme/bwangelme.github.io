@@ -47,3 +47,4 @@ node_modules/
 resources/
 .hugo_build.lock
 .deploy_git/
+.idea/
