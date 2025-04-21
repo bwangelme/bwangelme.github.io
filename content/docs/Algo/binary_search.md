@@ -59,4 +59,57 @@ func BinarySearchLastV2(arr []int64, num int64) int {
 
 	return -1
 }
+
+// BinarySearchFirstV2
+/**
+## 功能
+
+返回 arr 中第一个 == num 的数字的索引
+
+ **/
+func BinarySearchFirstV2(arr []int64, num int64) int {
+	var (
+		low  = 0
+		n    = len(arr)
+		high = n - 1
+	)
+
+	/**
+	## 对于 num 存在的情况
+	1. for 循环结束后，low > high
+	2. 由于判断条件 midNum >= num 先检查，所以循环结束后， arr[high] != num
+	3. low > high, arr[high] != num, 所以 arr[low] 是第一个 num
+
+	## 对于 arr 所有数比 num 小的情况
+	1. for 循环结束后，low > high
+	2. high 一次也没移动，low = n
+	3. 此时 low 超出数组长度，arr[low] 会异常，所以要先判断 low < n
+
+	## 对于 arr 所有数比 num 大的情况
+	1. for 循环结束后，low > high
+	2. low 一次也没移动，low = 0, high = -1
+	3. 此时 arr[low] != num 不存在
+
+	## 对于 num 处于 arr 中部但不存在的情况
+	1. for 循环结束后，low > high
+	2. low < n, arr[low] != num, return -1
+	*/
+
+	for low <= high {
+		mid := low + ((high - low) >> 1)
+		midNum := arr[mid]
+		if midNum >= num {
+			high = mid - 1
+		} else {
+			low = mid + 1
+		}
+	}
+
+	if low < n && arr[low] == num {
+		return low
+	}
+
+	return -1
+}
+
 ```
