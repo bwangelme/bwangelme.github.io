@@ -2,7 +2,7 @@
 title: "Rsa 使用公钥进行解密"
 date: 2025-01-08T14:25:11+08:00
 lastmod: 2025-01-08T14:25:11+08:00
-tags: [rsa, crypto]
+tags: [rsa, crypto, blog]
 author: "bwangel"
 ---
 
@@ -20,9 +20,11 @@ author: "bwangel"
 
 对于 n = 10，1, 3, 7, 9 与 10 互质，所以 \\( \phi(10) = 4 \\)
 
-__质因数分解:__ 先将 n 分解为质因数的乘积形式。
+> __概念补充 【质因数分解】__
+>
+> 将 n 分解为质因数的乘积形式。
 
-欧拉函数的通用公式是
+__欧拉函数的通用公式__ 是
 
 如果 n 是一个正整数，并且其质因数分解为：
 
@@ -46,7 +48,7 @@ $$
 \phi(12) = 12 * (1 - \frac{1}{2}) * (1 - \frac{1}{3}) = 4
 $$
 
-如果 p 是一个质数，代入到上述公式中
+如果 p 是一个质数，代入到 __欧拉函数的通用公式__ 中
 
 $$
 p = p
@@ -58,7 +60,7 @@ $$
 
 ### 欧拉定理和费马小定理
 
-欧拉定理的定义是
+__欧拉定理__ 的定义是
 
 如果两个正整数 a 和 n 互质，则如下等式成立。
 
@@ -68,13 +70,13 @@ $$
 
 这个公式表达的是\\( a^{\phi(n)} \\) 减去 1，可以整除 n。
 
-如果 n 是质数，且 a 不是 p 的倍数，则可以写成
+如果 p 是质数，且 a 不是 p 的倍数，则可以写成
 
 $$
-a^{p-1} \equiv 1 \pmod n
+a^{p-1} \equiv 1 \pmod p
 $$
 
-这就是 费马小定理，它是欧拉定理的特例。
+这就是 __费马小定理__ ，它是欧拉定理的特例。
 
 ### 模反元素
 
@@ -109,36 +111,18 @@ $$
 $$
 
 3. 选择一个数 e 使得 e 与 \\( \phi(n) \\) 互质。\\( 1 < e < \phi(n) \\)，我们选择 13
-4. 计算 e 相对 \\( \phi(n) \\) 的模反元素 d。根据上面的知识，因为 e 和 \\( \phi(n) \\) 互质，我们可以用如下公式计算 d
+4. 计算 e 相对 \\( \phi(n) \\) 的模反元素 d。根据上面的知识，因为 e 和 \\( \phi(n) \\) 互质，我们可以通过 __扩展欧几里得算法__ 直接搜索找到满足以下公式的 d：
 
 $$
-d = e^{\phi(\phi(n)) - 1} \\
+e \times d \equiv 1 \pmod {\phi(n)}
 $$
 
-计算过程如下
+对于我们的例子，我们需要找到满足 \\( 13 \times d \equiv 1 \pmod {40} \\) 的 d。
+
+通过计算可以得到 d = 37，验证：
 
 $$
-\phi(55) = 40
-$$
-
-$$
-\phi(40) = 40 * (1 - \frac{1}{5}) * (1 - \frac{1}{2}) = 16
-$$
-
-$$
-d = e^{15} = 13^{15} = 51185893014090757
-$$
-
-计算出来 d 是 51185893014090757，为了方便计算，我们对 40 取余，得到一个最小的 d 是 37。
-
-$$
-51185893014090757 \pmod {40} = 37
-$$
-
-最终我们选择的模反元素 d 是 37，
-
-$$
-13 * 37 \equiv 1 \pmod {40}
+13 \times 37 = 481 = 12 \times 40 + 1 \equiv 1 \pmod {40}
 $$
 
 经过以上的步骤，我们就生成了 rsa 的秘钥对
@@ -164,6 +148,22 @@ $$
 
 ## RSA 执行加解密
 
+RSA 加解密的数学原理基于以下性质：
+
+由于 \\( e \times d \equiv 1 \pmod {\phi(n)} \\)，可以写成 \\( ed = 1 + k\phi(n) \\)，其中 k 是某个整数。
+
+根据欧拉定理，对于与 n 互质的任意整数 m，有：
+$$
+m^{\phi(n)} \equiv 1 \pmod n
+$$
+
+因此：
+$$
+m^{ed} = m^{1 + k\phi(n)} = m \cdot (m^{\phi(n)})^k \equiv m \cdot 1^k \equiv m \pmod n
+$$
+
+这就证明了 RSA 加密和解密的正确性。
+
 加密的公式是
 
 $$
@@ -182,7 +182,7 @@ $$
 我们将明文 3 代入加密公式，
 
 $$
-3^13 \equiv c \pmod 55
+3^{13} \equiv c \pmod {55}
 $$
 
 得到 c = 38
@@ -246,7 +246,7 @@ __PEM(Privacy-Enhanced Mail)__ 是存储数据的一种文件格式。它使用 
 
 将 RSA 密钥转换成 pem 文件需要经过三步
 
-1. 定义一个 ANS.1 格式的数据结构，规定保存的密钥中的数据（例如模数n，公钥指数e，私钥指数d，质数 p,q等），根据数据结构的不同，密钥的格式分为 PKCS#1, PKCS#8, PKIX
+1. 定义一个 ASN.1 格式的数据结构，规定保存的密钥中的数据（例如模数n，公钥指数e，私钥指数d，质数 p,q等），根据数据结构的不同，密钥的格式分为 PKCS#1, PKCS#8, PKIX
 2. 将第一步定义的数据结构的值，通过 ASN.1 转换成二进制，此时将二进制存储到文件中，它就是 .der 格式的密钥
 3. 将二进制编码成 base64，并在文件开头结尾加上密钥的格式，将文本数据写入到文件中，它就是 .pem 格式的密钥
 
@@ -314,7 +314,7 @@ func printPKCS1RSAKey() {
 
 PKCS#8 是一个更通用的标准，定义了 __私钥__ 信息的格式，不仅仅支持 RSA 私钥，还支持多种不同类型的私钥（如 DSA、ECDSA 等）。它的设计目标是提供一种更通用的格式，可以用来存储和交换各种类型的私钥信息。
 
-PKCS#8 只用了定义私钥数据结构，不能定义公钥
+PKCS#8 只用于定义私钥数据结构，不能定义公钥
 
 * PKCS#8 格式中的主要内容：
   - 版本：标识 PKCS#8 格式的版本号。
@@ -582,33 +582,34 @@ func main() {
 下面的程序展示了 Java 如何使用公钥进行解密，可以看到，声明 cipher 的模式是解密模式，就可以使用公钥进行解密了。
 
 ```java
-    public static String decryptByPublicKey(String data, String pubKey) throws Exception {
-        byte[] decodePubKey = DECODER.decode(pubKey);
-        X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(decodePubKey);
-        java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-        RSAPublicKey publicKey = (RSAPublicKey)KeyFactory.getInstance(ALGORITHM).generatePublic(x509KeySpec);
-        System.out.println(publicKey.getModulus());
-        System.out.println(publicKey.getPublicExponent());
+public static String decryptByPublicKey(String data, String pubKey) throws Exception {
+	byte[] decodePubKey = DECODER.decode(pubKey);
+	X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(decodePubKey);
+	java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+	RSAPublicKey publicKey = (RSAPublicKey)KeyFactory.getInstance(ALGORITHM).generatePublic(x509KeySpec);
+	System.out.println(publicKey.getModulus());
+	System.out.println(publicKey.getPublicExponent());
 
-        return decryptByPublicKey(data, publicKey);
+	return decryptByPublicKey(data, publicKey);
 
-    }
+}
 
-    public static String decryptByPublicKey(String data, RSAPublicKey publicKey) throws Exception {
-        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-        cipher.init(Cipher.DECRYPT_MODE, publicKey);
+public static String decryptByPublicKey(String data, RSAPublicKey publicKey) throws Exception {
+	Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+	// 声明了 cipher 的模式为解密模式
+	cipher.init(Cipher.DECRYPT_MODE, publicKey);
 
-        byte[] b1 = DECODER.decode(data);
+	byte[] b1 = DECODER.decode(data);
 
-        /* 执行解密操作 */
+	/* 执行解密操作 */
 
-        byte[] b = cipher.doFinal(b1);
-        return new String(b);
+	byte[] b = cipher.doFinal(b1);
+	return new String(b);
 
-    }
+}
 ```
 
-## 公钥解密的数学原理是什么以及Go 三方库的实现
+## 公钥解密的数学原理是什么以及 Go 三方库的实现
 
 Go 标准库中没有实现公钥解密，我在 GitHub 上找到了一个实现此功能的三方库 [wenzhenxi/gorsa](https://github.com/wenzhenxi/gorsa)
 
