@@ -4,28 +4,16 @@
     <title>Envoy on 647 Universe</title>
     <link>https://bwangel.me/docs/envoy/</link>
     <description>Recent content in Envoy on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 13 Dec 2023 13:16:42 +0800</lastBuildDate><atom:link href="https://bwangel.me/docs/envoy/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Dec 2023 13:25:27 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/docs/envoy/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>envoy 线程模型</title>
       <link>https://bwangel.me/docs/envoy/envoy-threading-model/</link>
       <pubDate>Wed, 13 Dec 2023 13:17:28 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/envoy/envoy-threading-model/</guid>
-      <description>线程模型 envoy 的线程可以分成三类
-main thread main thread 负责进程的管理，和 xDS Server 的通信，统计信息 stat 刷新，admin 设置。
-main 线程中所有的工作都是异步 &amp;amp; 非阻塞的， 而且它负责的重要功能通常都不会用到大量的 CPU，所以它可以以单线程的模式运行。
-worker thread worker 线程可以通过 --concurrency 选项来控制个数。
-worekr 线程整体是一个非阻塞的事件循环，它负责创建 Listener 的连接，listen 端口，accept 连接并处理连接生命周期内的所有请求。这使得大多数连接代码都可以像单线程一样编写。
-这种设计可能会导致连接不均衡，即某些 worker 线程比其他线程处理更多的连接。
-file flush thread Envoy 写的每个文件(主要是 access-log)都有一个独立的数据刷新线程。因为将内容写入到操作系统的文件缓存时，即使使用了 O_NONBLOCK 选项，有时也会阻塞住。
-当线程需要写入文件时，他们通常是将内容写入到一块内存区域，然后 flush 线程再将内容刷新到文件中。
-连接处理 连接不均衡的问题，最早就有人在 github上问了，Envoy作者的回答是让操作系统来做负载均衡最好，而且一个线程处理accept，扩展性不高。但是后来作者还是加上了一个均衡连接的可选配置。
-现代内核在连接的负载均衡方面表现得非常出色。 它们采用诸如IO优先级提升( IO priority boosting)之类的功能，试图在开始使用其他正在监听相同套接字的线程之前，填充一个线程的工作。同时，它们也不使用单个自旋锁来处理每个 accpet 操作。
-连接一旦创建，IO 读写一般是绑定在一个线程。
-Envoy 中每个工作线程都会创建一个连接池，因此尽管 HTTP2 会在一个连接上使用多个 Stream, 但是 Envoy 的每个线程还是会针对每个 Upstream 创建一个 TCP 连接。</description>
+      <description>&lt;h2 id=&#34;线程模型&#34;&gt;线程模型&lt;/h2&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-12-13-114846.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;envoy 的线程可以分成三类&lt;/p&gt;&#xA;&lt;h3 id=&#34;main-thread&#34;&gt;main thread&lt;/h3&gt;&#xA;&lt;p&gt;main thread 负责进程的管理，和 xDS Server 的通信，统计信息 stat 刷新，admin 设置。&lt;/p&gt;&#xA;&lt;p&gt;main 线程中所有的工作都是异步 &amp;amp; 非阻塞的， 而且它负责的重要功能通常都不会用到大量的 CPU，所以它可以以单线程的模式运行。&lt;/p&gt;&#xA;&lt;h3 id=&#34;worker-thread&#34;&gt;worker thread&lt;/h3&gt;&#xA;&lt;p&gt;worker 线程可以通过 &lt;code&gt;--concurrency&lt;/code&gt; 选项来控制个数。&lt;/p&gt;&#xA;&lt;p&gt;worekr 线程整体是一个非阻塞的事件循环，它负责创建 Listener 的连接，listen 端口，accept 连接并处理连接生命周期内的所有请求。这使得大多数连接代码都可以像单线程一样编写。&lt;/p&gt;&#xA;&lt;p&gt;这种设计可能会导致连接不均衡，即某些 worker 线程比其他线程处理更多的连接。&lt;/p&gt;&#xA;&lt;h3 id=&#34;file-flush-thread&#34;&gt;file flush thread&lt;/h3&gt;&#xA;&lt;p&gt;Envoy 写的每个文件(主要是 access-log)都有一个独立的数据刷新线程。因为将内容写入到操作系统的文件缓存时，即使使用了 &lt;code&gt;O_NONBLOCK&lt;/code&gt; 选项，有时也会阻塞住。&lt;/p&gt;&#xA;&lt;p&gt;当线程需要写入文件时，他们通常是将内容写入到一块内存区域，然后 flush 线程再将内容刷新到文件中。&lt;/p&gt;&#xA;&lt;h2 id=&#34;连接处理&#34;&gt;连接处理&lt;/h2&gt;&#xA;&lt;p&gt;连接不均衡的问题，最早就有人在 &lt;a href=&#34;https://github.com/envoyproxy/envoy/issues/2961&#34;&gt;github上问了&lt;/a&gt;，Envoy作者的回答是让操作系统来做负载均衡最好，而且一个线程处理accept，扩展性不高。但是后来作者还是加上了一个&lt;a href=&#34;https://www.envoyproxy.io/docs/envoy/v1.28.0/intro/arch_overview/intro/threading_model#listener-connection-balancing&#34;&gt;均衡连接的可选配置&lt;/a&gt;。&lt;/p&gt;&#xA;&lt;p&gt;现代内核在连接的负载均衡方面表现得非常出色。&#xA;它们采用诸如IO优先级提升( IO priority boosting)之类的功能，试图在开始使用其他正在监听相同套接字的线程之前，填充一个线程的工作。同时，它们也不使用单个自旋锁来处理每个 accpet 操作。&lt;/p&gt;&#xA;&lt;p&gt;连接一旦创建，IO 读写一般是绑定在一个线程。&lt;/p&gt;&#xA;&lt;p&gt;Envoy 中每个工作线程都会创建一个连接池，因此尽管 HTTP2 会在一个连接上使用多个 Stream, 但是 Envoy 的每个线程还是会针对每个 Upstream 创建一个 TCP 连接。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

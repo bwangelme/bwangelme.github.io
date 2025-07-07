@@ -4,82 +4,51 @@
     <title>编辑器 on 647 Universe</title>
     <link>https://bwangel.me/docs/editor/</link>
     <description>Recent content in 编辑器 on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 09 Aug 2023 10:57:48 +0800</lastBuildDate><atom:link href="https://bwangel.me/docs/editor/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Nov 2023 10:49:23 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/docs/editor/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Pycharm</title>
       <link>https://bwangel.me/docs/editor/pycharm/</link>
       <pubDate>Wed, 09 Aug 2023 10:57:42 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/editor/pycharm/</guid>
-      <description>Tabs -&amp;gt; Open in Opposite Group 如图，窗口被分成了左右两个组。如果我想在右边的窗口组打开 client.go 文件，同时左边的文件不关闭
-可以右键点击 Tab 选择 Open In Opposite Group。
-我在设置中将这个功能的快捷键设置成了 Alt+Shift+H</description>
+      <description>&lt;h2 id=&#34;tabs---open-in-opposite-group&#34;&gt;Tabs -&amp;gt; Open in Opposite Group&lt;/h2&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-07-122300.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;如图，窗口被分成了左右两个组。如果我想在右边的窗口组打开 &lt;code&gt;client.go&lt;/code&gt; 文件，&lt;strong&gt;同时左边的文件不关闭&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;可以右键点击 Tab 选择 &lt;code&gt;Open In Opposite Group&lt;/code&gt;。&lt;/p&gt;&#xA;&lt;p&gt;我在设置中将这个功能的快捷键设置成了 &lt;code&gt;Alt+Shift+H&lt;/code&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Caps-lock mapping 成 Esc 在 vscode 中不生效</title>
       <link>https://bwangel.me/docs/editor/vscode-esc-not-work/</link>
       <pubDate>Mon, 18 Oct 2021 11:27:39 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/editor/vscode-esc-not-work/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>简单聊聊Vim中的自定义快捷键</title>
       <link>https://bwangel.me/docs/editor/vim-map/</link>
       <pubDate>Sun, 26 Mar 2017 17:19:11 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/editor/vim-map/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;Vim中几个&lt;code&gt;Map&lt;/code&gt;命令的区别&lt;/li&gt;
-&lt;li&gt;分享几个自定义的快捷键&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Vim中几个&lt;code&gt;Map&lt;/code&gt;命令的区别&lt;/li&gt;&#xA;&lt;li&gt;分享几个自定义的快捷键&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Emmet学习笔记</title>
       <link>https://bwangel.me/docs/editor/emmet/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/editor/emmet/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;参考文章：&lt;a href=&#34;http://www.w3cplus.com/tools/emmet-cheat-sheet.html&#34;&gt;前端开发必备！Emmet使用手册&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;记录Emmet的一些语法&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;参考文章：&lt;a href=&#34;http://www.w3cplus.com/tools/emmet-cheat-sheet.html&#34;&gt;前端开发必备！Emmet使用手册&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;记录Emmet的一些语法&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Sublime小记</title>
       <link>https://bwangel.me/docs/editor/sublime_text/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/editor/sublime_text/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;关于Sublime Text的一些小记&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;关于Sublime Text的一些小记&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>编辑器需求</title>
       <link>https://bwangel.me/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/editor/%E7%BC%96%E8%BE%91%E5%99%A8%E9%9C%80%E6%B1%82/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;关于自己对于编辑器的需求，留作以后定制编辑器用&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;关于自己对于编辑器的需求，留作以后定制编辑器用&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>pytest on 647 Universe</title>
+    <title>Pytest on 647 Universe</title>
     <link>https://bwangel.me/tags/pytest/</link>
-    <description>Recent content in pytest on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Pytest on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Thu, 13 Jun 2024 15:40:02 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/pytest/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Jun 2024 15:45:16 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/pytest/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Pytest Tips</title>
       <link>https://bwangel.me/docs/python/pytest/</link>
       <pubDate>Thu, 13 Jun 2024 15:40:02 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/python/pytest/</guid>
-      <description>pytest 启动 pdb 调试 安装 ipython
-在想要打断点的地方, 写入语句 import pdb; pdb.set_trace()
-执行 pytest 测试函数
-pytest dir/test_files --pdb --pdbcls=IPython.terminal.debugger:TerminalPdb Pytest 开启日志记录 在根目录中创建 conftest.py 文件 在 conftest.py 文件中写入以下函数 def pytest_configure(config): logger = logging.getLogger(&amp;#39;&amp;#39;) logger.setLevel(logging.DEBUG) 这将会将所有 logger 的级别设置为 debug, pytest 执行测试的过程中,在 ---Captured log call--- 章节中将会看到捕获的日志输出</description>
+      <description>&lt;h2 id=&#34;pytest-启动-pdb-调试&#34;&gt;pytest 启动 pdb 调试&lt;/h2&gt;&#xA;&lt;ol start=&#34;0&#34;&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;安装 ipython&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;在想要打断点的地方, 写入语句 &lt;code&gt;import pdb; pdb.set_trace()&lt;/code&gt;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;执行 pytest 测试函数&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pytest dir/test_files --pdb --pdbcls=IPython.terminal.debugger:TerminalPdb&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;pytest-开启日志记录&#34;&gt;Pytest 开启日志记录&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;在根目录中创建 &lt;code&gt;conftest.py&lt;/code&gt; 文件&lt;/li&gt;&#xA;&lt;li&gt;在 &lt;code&gt;conftest.py&lt;/code&gt; 文件中写入以下函数&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;def pytest_configure(config):&#xA;    logger = logging.getLogger(&amp;#39;&amp;#39;)&#xA;    logger.setLevel(logging.DEBUG)&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这将会将所有 logger 的级别设置为 debug, pytest 执行测试的过程中,在 &lt;code&gt;---Captured log call---&lt;/code&gt; 章节中将会看到捕获的日志输出&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -22,38 +22,46 @@
 MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用于快速找到记录的一种数据结构
 索引优化应该是对查询性能优化最有效的手段了
 相当于字典中的音序表，如果没有音序表，则需要一页一页去查
-2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&amp;gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&amp;gt; create procedure autoinsert1() -&amp;gt; BEGIN -&amp;gt; declare i int default 1; -&amp;gt; while(i&amp;lt;20000)do -&amp;gt; insert into school.t2 values(i, &amp;#39;xff&amp;#39;); -&amp;gt; set i=i&#43;1 -&amp;gt; end while; -&amp;gt; END$$ mysql&amp;gt; delimiter ; --还原分隔符为; mysql&amp;gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错">
-<meta property="og:title" content="MySQL索引" />
-<meta property="og:description" content="摘要:
+2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&gt; create procedure autoinsert1() -&gt; BEGIN -&gt; declare i int default 1; -&gt; while(i&lt;20000)do -&gt; insert into school.t2 values(i, &#39;xff&#39;); -&gt; set i=i&#43;1 -&gt; end while; -&gt; END$$ mysql&gt; delimiter ; --还原分隔符为; mysql&gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错">
+<meta property="og:url" content="https://bwangel.me/docs/mysql/mysql%E7%B4%A2%E5%BC%95/">
+  <meta property="og:site_name" content="647 Universe">
+  <meta property="og:title" content="MySQL索引">
+  <meta property="og:description" content="摘要:
 MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用于快速找到记录的一种数据结构
 索引优化应该是对查询性能优化最有效的手段了
 相当于字典中的音序表，如果没有音序表，则需要一页一页去查
-2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&gt; create procedure autoinsert1() -&gt; BEGIN -&gt; declare i int default 1; -&gt; while(i&lt;20000)do -&gt; insert into school.t2 values(i, &#39;xff&#39;); -&gt; set i=i&#43;1 -&gt; end while; -&gt; END$$ mysql&gt; delimiter ; --还原分隔符为; mysql&gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://bwangel.me/docs/mysql/mysql%E7%B4%A2%E5%BC%95/" /><meta property="article:section" content="docs" />
-<meta property="article:published_time" content="2016-04-10T10:56:54+00:00" />
-<meta property="article:modified_time" content="2024-06-25T17:35:47+08:00" /><meta property="og:site_name" content="647号宇宙" />
-<meta itemprop="name" content="MySQL索引">
-<meta itemprop="description" content="摘要:
+2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&gt; create procedure autoinsert1() -&gt; BEGIN -&gt; declare i int default 1; -&gt; while(i&lt;20000)do -&gt; insert into school.t2 values(i, &#39;xff&#39;); -&gt; set i=i&#43;1 -&gt; end while; -&gt; END$$ mysql&gt; delimiter ; --还原分隔符为; mysql&gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错">
+  <meta property="og:locale" content="cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2016-04-10T10:56:54+00:00">
+    <meta property="article:modified_time" content="2025-02-25T17:45:51+08:00">
+    <meta property="article:tag" content="MySQL">
+    <meta property="article:tag" content="Blog">
+
+  <meta itemprop="name" content="MySQL索引">
+  <meta itemprop="description" content="摘要:
 MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用于快速找到记录的一种数据结构
 索引优化应该是对查询性能优化最有效的手段了
 相当于字典中的音序表，如果没有音序表，则需要一页一页去查
-2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&gt; create procedure autoinsert1() -&gt; BEGIN -&gt; declare i int default 1; -&gt; while(i&lt;20000)do -&gt; insert into school.t2 values(i, &#39;xff&#39;); -&gt; set i=i&#43;1 -&gt; end while; -&gt; END$$ mysql&gt; delimiter ; --还原分隔符为; mysql&gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错"><meta itemprop="datePublished" content="2016-04-10T10:56:54+00:00" />
-<meta itemprop="dateModified" content="2024-06-25T17:35:47+08:00" />
-<meta itemprop="wordCount" content="512">
-<meta itemprop="keywords" content="MySQL,blog," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="MySQL索引"/>
-<meta name="twitter:description" content="摘要:
+2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&gt; create procedure autoinsert1() -&gt; BEGIN -&gt; declare i int default 1; -&gt; while(i&lt;20000)do -&gt; insert into school.t2 values(i, &#39;xff&#39;); -&gt; set i=i&#43;1 -&gt; end while; -&gt; END$$ mysql&gt; delimiter ; --还原分隔符为; mysql&gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错">
+  <meta itemprop="datePublished" content="2016-04-10T10:56:54+00:00">
+  <meta itemprop="dateModified" content="2025-02-25T17:45:51+08:00">
+  <meta itemprop="wordCount" content="648">
+  <meta itemprop="keywords" content="MySQL,Blog">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="MySQL索引">
+  <meta name="twitter:description" content="摘要:
 MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用于快速找到记录的一种数据结构
 索引优化应该是对查询性能优化最有效的手段了
 相当于字典中的音序表，如果没有音序表，则需要一页一页去查
-2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&gt; create procedure autoinsert1() -&gt; BEGIN -&gt; declare i int default 1; -&gt; while(i&lt;20000)do -&gt; insert into school.t2 values(i, &#39;xff&#39;); -&gt; set i=i&#43;1 -&gt; end while; -&gt; END$$ mysql&gt; delimiter ; --还原分隔符为; mysql&gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错"/>
+2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&gt; create procedure autoinsert1() -&gt; BEGIN -&gt; declare i int default 1; -&gt; while(i&lt;20000)do -&gt; insert into school.t2 values(i, &#39;xff&#39;); -&gt; set i=i&#43;1 -&gt; end while; -&gt; END$$ mysql&gt; delimiter ; --还原分隔符为; mysql&gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错">
 
 
 
 
-<link rel="preload" href="/scss/main.min.8f0c41d9c8b10a66c094aaa5e4f3dbc0297d5418757f7c4b3af70b2ec5959efd.css" as="style">
-<link href="/scss/main.min.8f0c41d9c8b10a66c094aaa5e4f3dbc0297d5418757f7c4b3af70b2ec5959efd.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" as="style">
+<link href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -268,7 +276,9 @@ MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用�
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsgolang-li">
   <a href="/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsgolang"><span class="">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggeneric-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
+  <a href="/docs/golang/go-inner/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggo-inner"><span class="">Go 内部实现</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggeneric-li">
   <a href="/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggeneric"><span class="">泛型</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolangyaml-li">
   <a href="/docs/golang/yaml/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolangyaml"><span class="">YAML</span></a>
@@ -702,6 +712,7 @@ MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用�
     <li><a href="#4-管理索引">4. 管理索引</a></li>
     <li><a href="#explain-语句解释">explain 语句解释</a></li>
     <li><a href="#explain-语句的说明">explain 语句的说明</a></li>
+    <li><a href="#索引条件下推">索引条件下推</a></li>
   </ul>
 </nav>
       </div>
@@ -715,103 +726,103 @@ MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用�
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/atomicinteger/" data-taxonomy-term="atomicinteger"><span class="taxonomy-label">AtomicInteger</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/bash/" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span><span class="taxonomy-count">93</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">buildkit</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">94</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">Buildkit</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/channel/" data-taxonomy-term="channel"><span class="taxonomy-label">Channel</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">chatgpt</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/clash/" data-taxonomy-term="clash"><span class="taxonomy-label">clash</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">cli</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cni/" data-taxonomy-term="cni"><span class="taxonomy-label">cni</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">Chatgpt</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/clash/" data-taxonomy-term="clash"><span class="taxonomy-label">Clash</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">Cli</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cni/" data-taxonomy-term="cni"><span class="taxonomy-label">Cni</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/concurrency/" data-taxonomy-term="concurrency"><span class="taxonomy-label">Concurrency</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/containerd/" data-taxonomy-term="containerd"><span class="taxonomy-label">containerd</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/crypto/" data-taxonomy-term="crypto"><span class="taxonomy-label">crypto</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/containerd/" data-taxonomy-term="containerd"><span class="taxonomy-label">Containerd</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/crypto/" data-taxonomy-term="crypto"><span class="taxonomy-label">Crypto</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/c%E8%AF%AD%E8%A8%80/" data-taxonomy-term="c%E8%AF%AD%E8%A8%80"><span class="taxonomy-label">C语言</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">datetime</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">dig</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">Datetime</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">Dig</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/django/" data-taxonomy-term="django"><span class="taxonomy-label">Django</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dlv/" data-taxonomy-term="dlv"><span class="taxonomy-label">dlv</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">dns</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">docker</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dlv/" data-taxonomy-term="dlv"><span class="taxonomy-label">Dlv</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">DNS</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">5</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/elasticsearch/" data-taxonomy-term="elasticsearch"><span class="taxonomy-label">ElasticSearch</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/envoy/" data-taxonomy-term="envoy"><span class="taxonomy-label">Envoy</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/flex/" data-taxonomy-term="flex"><span class="taxonomy-label">Flex</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/gevent/" data-taxonomy-term="gevent"><span class="taxonomy-label">Gevent</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gh/" data-taxonomy-term="gh"><span class="taxonomy-label">gh</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">git</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">glob</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span><span class="taxonomy-count">37</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">gomod</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gh/" data-taxonomy-term="gh"><span class="taxonomy-label">Gh</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">Git</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">Glob</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span><span class="taxonomy-count">37</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">Gomod</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">HTTP</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">httpie</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">Http</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">Httpie</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/intermediatepython/" data-taxonomy-term="intermediatepython"><span class="taxonomy-label">IntermediatePython</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">java</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">Java</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/json/" data-taxonomy-term="json"><span class="taxonomy-label">JSON</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">k8s</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">kafka</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">kubernetes</span><span class="taxonomy-count">8</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">language</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">13</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">K8s</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">Kafka</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">Kubernetes</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">Language</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">Leetcode</span><span class="taxonomy-count">13</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">life</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span><span class="taxonomy-count">9</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">lsof</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">makefile</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">mariadb</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">Life</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span><span class="taxonomy-count">9</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">Lsof</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">Makefile</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">Mariadb</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mongodb/" data-taxonomy-term="mongodb"><span class="taxonomy-label">MongoDB</span><span class="taxonomy-count">6</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">21</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">network</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">nfs</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">nginx</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">Network</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">Nfs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/node.js/" data-taxonomy-term="node.js"><span class="taxonomy-label">Node.js</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/notes/" data-taxonomy-term="notes"><span class="taxonomy-label">Notes</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nvim/" data-taxonomy-term="nvim"><span class="taxonomy-label">nvim</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/openssl/" data-taxonomy-term="openssl"><span class="taxonomy-label">openssl</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">performance</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/process/" data-taxonomy-term="process"><span class="taxonomy-label">process</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">prom</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">prometheus</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nvim/" data-taxonomy-term="nvim"><span class="taxonomy-label">Nvim</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/openssl/" data-taxonomy-term="openssl"><span class="taxonomy-label">Openssl</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">Performance</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/process/" data-taxonomy-term="process"><span class="taxonomy-label">Process</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">Prom</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">Prometheus</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/pubsub/" data-taxonomy-term="pubsub"><span class="taxonomy-label">PubSub</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/pytest/" data-taxonomy-term="pytest"><span class="taxonomy-label">pytest</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">24</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/pytest/" data-taxonomy-term="pytest"><span class="taxonomy-label">Pytest</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">24</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/python%E6%A0%87%E5%87%86%E5%BA%93/" data-taxonomy-term="python%E6%A0%87%E5%87%86%E5%BA%93"><span class="taxonomy-label">Python标准库</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/rabbitmq/" data-taxonomy-term="rabbitmq"><span class="taxonomy-label">RabbitMQ</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">re</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">Re</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/redis/" data-taxonomy-term="redis"><span class="taxonomy-label">Redis</span><span class="taxonomy-count">7</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/rsa/" data-taxonomy-term="rsa"><span class="taxonomy-label">rsa</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/shell/" data-taxonomy-term="shell"><span class="taxonomy-label">shell</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">stackoverflow</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">stty</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/rsa/" data-taxonomy-term="rsa"><span class="taxonomy-label">Rsa</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/shell/" data-taxonomy-term="shell"><span class="taxonomy-label">Shell</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">Stackoverflow</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">Stty</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tag1/" data-taxonomy-term="tag1"><span class="taxonomy-label">Tag1</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tag2/" data-taxonomy-term="tag2"><span class="taxonomy-label">Tag2</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">tcp</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">Tcp</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tdd/" data-taxonomy-term="tdd"><span class="taxonomy-label">TDD</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/template/" data-taxonomy-term="template"><span class="taxonomy-label">Template</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/test/" data-taxonomy-term="test"><span class="taxonomy-label">Test</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">6</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">42</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tls/" data-taxonomy-term="tls"><span class="taxonomy-label">tls</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">tombkeeper</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">tools</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">Thrift</span><span class="taxonomy-count">6</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">Tips</span><span class="taxonomy-count">42</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tls/" data-taxonomy-term="tls"><span class="taxonomy-label">Tls</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">Tombkeeper</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">5</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">ucs</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unicode/" data-taxonomy-term="unicode"><span class="taxonomy-label">unicode</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unittest/" data-taxonomy-term="unittest"><span class="taxonomy-label">unittest</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/utf-16/" data-taxonomy-term="utf-16"><span class="taxonomy-label">utf-16</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">vagrant</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">Ucs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unicode/" data-taxonomy-term="unicode"><span class="taxonomy-label">Unicode</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unittest/" data-taxonomy-term="unittest"><span class="taxonomy-label">Unittest</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/utf-16/" data-taxonomy-term="utf-16"><span class="taxonomy-label">Utf-16</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">Vagrant</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/vim/" data-taxonomy-term="vim"><span class="taxonomy-label">Vim</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">vimium-c</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">vscode</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">Vimium-C</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">Vscode</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/vue.js/" data-taxonomy-term="vue.js"><span class="taxonomy-label">Vue.js</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/web/" data-taxonomy-term="web"><span class="taxonomy-label">Web</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/web%E6%A1%86%E6%9E%B6/" data-taxonomy-term="web%E6%A1%86%E6%9E%B6"><span class="taxonomy-label">web框架</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/web%E6%A1%86%E6%9E%B6/" data-taxonomy-term="web%E6%A1%86%E6%9E%B6"><span class="taxonomy-label">Web框架</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/werkzeug/" data-taxonomy-term="werkzeug"><span class="taxonomy-label">Werkzeug</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">wireshark</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">zigzag</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">Wireshark</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">Zigzag</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83/" data-taxonomy-term="%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83"><span class="taxonomy-label">人生思考</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0/" data-taxonomy-term="%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0"><span class="taxonomy-label">制药基地</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E5%93%A8%E5%85%B5/" data-taxonomy-term="%E5%93%A8%E5%85%B5"><span class="taxonomy-label">哨兵</span><span class="taxonomy-count">1</span></a></li>
@@ -861,7 +872,7 @@ MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用�
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
     <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
     </ul>
 </div>
 
@@ -874,37 +885,37 @@ MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用�
 <p>相当于字典中的音序表，如果没有音序表，则需要一页一页去查</p>
 <h2 id="2-索引分类">2. 索引分类</h2>
 <table>
-<thead>
-<tr>
-<th>说明</th>
-<th>普通索引</th>
-<th>唯一索引</th>
-<th>全文索引</th>
-<th>单列索引</th>
-<th>多列索引</th>
-<th>空间索引</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>存储引擎</td>
-<td>所有存储引擎支持(同样的索引，不同存储类型，实现不同)</td>
-<td>只有Memory支持</td>
-<td>5.5及之前前仅MyISAM支持</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>特点</td>
-<td>允许字段重复</td>
-<td>不允许字段重复</td>
-<td>针对<code>varchar</code>类型支持</td>
-<td></td>
-<td>select语句条件有第一个字段时才会使用多列索引</td>
-<td></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>说明</th>
+          <th>普通索引</th>
+          <th>唯一索引</th>
+          <th>全文索引</th>
+          <th>单列索引</th>
+          <th>多列索引</th>
+          <th>空间索引</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>存储引擎</td>
+          <td>所有存储引擎支持(同样的索引，不同存储类型，实现不同)</td>
+          <td>只有Memory支持</td>
+          <td>5.5及之前前仅MyISAM支持</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>特点</td>
+          <td>允许字段重复</td>
+          <td>不允许字段重复</td>
+          <td>针对<code>varchar</code>类型支持</td>
+          <td></td>
+          <td>select语句条件有第一个字段时才会使用多列索引</td>
+          <td></td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="3-测试">3. 测试</h2>
 <h3 id="利用存储过程插入数据">利用存储过程插入数据</h3>
@@ -1071,10 +1082,58 @@ MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用�
 <li>Using temporary：使用临时表保存中间结果。</li>
 <li>Using filesort：使用外部文件排序，而不是从索引中读取顺序行。</li>
 <li>Using join buffer：使用连接缓冲区来存储临时结果。</li>
+<li>Backward index scan: 使用索引的倒序来进行扫描，通常和 SQL 中有 order by xx desc limit 有关</li>
+<li>Using index condition: 查询使用了索引条件下推 (Index Condition Pushdown, ICP)，并通过索引过滤行，需要扫描表中的某些数据行来满足查询条件</li>
 </ul>
 </li>
 </ul>
 <p>通过理解和分析 EXPLAIN 输出的这些字段，可以找出查询中的性能瓶颈，并进行针对性的优化。</p>
+<h2 id="索引条件下推">索引条件下推</h2>
+<p>索引条件下推（Index Condition Pushdown，ICP） 是 MySQL 在执行查询时的一项优化技术，它将查询中的某些条件“下推”到索引扫描阶段，而不是等到数据被读取到内存后再应用过滤条件。这可以显著提高查询性能，特别是在处理大数据量时。</p>
+<p><strong>工作原理</strong></p>
+<p>通常，MySQL 在使用索引扫描时，会首先读取索引中的值，然后通过访问表数据行来获取符合条件的记录。而索引条件下推的优化则是将查询中的某些 WHERE 子句中的过滤条件直接下推到索引扫描的过程中，减少了不必要的数据行访问，提升了性能。</p>
+<p>具体而言，MySQL 会尝试将 WHERE 子句中的某些条件直接应用于索引扫描时，而不是等到数据行完全读取后才应用这些条件。这样可以提前过滤掉不符合条件的记录，从而减少扫描的数据量。</p>
+<p>举例
+假设有如下的表结构和索引：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">CREATE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">TABLE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">users</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000;font-weight:bold">(</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#000">id</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87">INT</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#000">name</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87">VARCHAR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">255</span><span style="color:#000;font-weight:bold">),</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#000">age</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87">INT</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#000">gender</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">ENUM</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;male&#39;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#4e9a06">&#39;female&#39;</span><span style="color:#000;font-weight:bold">),</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span><span style="color:#204a87;font-weight:bold">INDEX</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">idx_id_age</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">id</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">age</span><span style="color:#000;font-weight:bold">)</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#000;font-weight:bold">);</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span></code></pre></div><p>执行如下查询：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">SELECT</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">FROM</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">users</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">WHERE</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">id</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">100</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">AND</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">age</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#0000cf;font-weight:bold">30</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8;text-decoration:underline">
+</span></span></span></code></pre></div><ol>
+<li>没有索引条件下推：
+如果没有使用索引条件下推，MySQL 可能会按以下步骤执行：</li>
+</ol>
+<ul>
+<li>首先使用 idx_id_age 索引查找 id &gt; 100 的记录；</li>
+<li>然后读取这些记录的 age 列，并在内存中应用 age &lt; 30 这个条件；</li>
+<li>最后返回符合 id &gt; 100 AND age &lt; 30 条件的记录。</li>
+</ul>
+<ol start="2">
+<li>使用索引条件下推：
+如果启用了索引条件下推，MySQL 会进行优化，按以下步骤执行：</li>
+</ol>
+<ul>
+<li>使用 idx_id_age 索引来查找 id &gt; 100 的记录；</li>
+<li>在扫描过程中，MySQL 会直接使用索引中的 age 值（索引已经包含了 id 和 age 列）来判断 age &lt; 30 是否满足；</li>
+<li>如果某个记录不满足 age &lt; 30 条件，MySQL 会在索引扫描阶段直接跳过该记录，而不需要再访问对应的数据行。</li>
+</ul>
+<p><strong>优势</strong></p>
+<ul>
+<li>提高性能：索引条件下推可以减少对不符合条件的记录的访问，尤其是在大数据量的表中。通过在索引扫描过程中就过滤掉不符合条件的记录，可以显著减少扫描的数据量，降低 I/O 操作。</li>
+<li>避免不必要的回表操作：当查询使用覆盖索引时（即索引中包含查询所需的所有列），索引条件下推可以避免回表，从而进一步提高查询效率。</li>
+</ul>
+<p><strong>何时使用</strong></p>
+<ul>
+<li>复杂的 WHERE 条件：如果查询的 WHERE 子句包含多个条件，并且索引已经覆盖了这些条件中的一部分或全部，启用索引条件下推能够提升查询效率。</li>
+<li>大表查询：对于大表，使用索引条件下推能有效减少扫描的数据量，提升查询速度。</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>索引条件下推（ICP）是一种优化技术，通过将查询中的过滤条件尽早应用到索引扫描阶段，避免了在数据行读取后再进行过滤，进而提高了查询性能。它适用于涉及多个条件的查询，尤其是条件中有索引列时。</p>
 
 	<div class="text-muted mt-5 pt-3 border-top">
    2016年04月10日 / 10:56</div>
@@ -1121,7 +1180,7 @@ MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用�
        integrity="sha512-YJVxTjqttjsU3cSvaTRqsSl0wbRgZUNF+NGGCgto/MUbIvaLdXQzGTCQu4CvyJZbZctgflVB0PXw9LLmTWm5/w==" crossorigin="anonymous"
        onload='renderMathInElement(document.body, null);'>
 </script>
-<script src="/js/main.min.04ae8cb44cf587d6a2d6e50f7d0276bee94133052ab39f783da0b290f7986c6c.js" integrity="sha256-BK6MtEz1h9ai1uUPfQJ2vulBMwUqs594PaCykPeYbGw=" crossorigin="anonymous"></script>
+<script src="/js/main.min.85d1295e77b8cb64a3e7ac5b9239aa65c4410a289bbe21c0ae8359f1617c0461.js" integrity="sha256-hdEpXne4y2Sj56xbkjmqZcRBCiibviHAroNZ8WF8BGE=" crossorigin="anonymous"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 

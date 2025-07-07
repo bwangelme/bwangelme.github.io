@@ -20,34 +20,37 @@
 <title>Python concurrent.futures 文档翻译 | 647 Universe</title>
 <meta name="description" content="摘要:
 本文主要是对 Python3 标准库 concurrent.futures 文档的翻译">
-<meta property="og:title" content="Python concurrent.futures 文档翻译" />
-<meta property="og:description" content="摘要:
+<meta property="og:url" content="https://bwangel.me/docs/python/concurrent-futures/">
+  <meta property="og:site_name" content="647 Universe">
+  <meta property="og:title" content="Python concurrent.futures 文档翻译">
+  <meta property="og:description" content="摘要:
+本文主要是对 Python3 标准库 concurrent.futures 文档的翻译">
+  <meta property="og:locale" content="cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2016-09-23T11:19:16+00:00">
+    <meta property="article:modified_time" content="2023-11-06T11:16:52+08:00">
+    <meta property="article:tag" content="Python">
+    <meta property="article:tag" content="翻译">
+    <meta property="article:tag" content="Blog">
 
-本文主要是对 Python3 标准库 concurrent.futures 文档的翻译
-" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://bwangel.me/docs/python/concurrent-futures/" /><meta property="article:section" content="docs" />
-<meta property="article:published_time" content="2016-09-23T11:19:16+00:00" />
-<meta property="article:modified_time" content="2023-11-06T11:16:52+08:00" /><meta property="og:site_name" content="647号宇宙" />
-<meta itemprop="name" content="Python concurrent.futures 文档翻译">
-<meta itemprop="description" content="摘要:
-
-本文主要是对 Python3 标准库 concurrent.futures 文档的翻译
-"><meta itemprop="datePublished" content="2016-09-23T11:19:16+00:00" />
-<meta itemprop="dateModified" content="2023-11-06T11:16:52+08:00" />
-<meta itemprop="wordCount" content="497">
-<meta itemprop="keywords" content="Python,翻译,blog," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Python concurrent.futures 文档翻译"/>
-<meta name="twitter:description" content="摘要:
-
-本文主要是对 Python3 标准库 concurrent.futures 文档的翻译
-"/>
+  <meta itemprop="name" content="Python concurrent.futures 文档翻译">
+  <meta itemprop="description" content="摘要:
+本文主要是对 Python3 标准库 concurrent.futures 文档的翻译">
+  <meta itemprop="datePublished" content="2016-09-23T11:19:16+00:00">
+  <meta itemprop="dateModified" content="2023-11-06T11:16:52+08:00">
+  <meta itemprop="wordCount" content="497">
+  <meta itemprop="keywords" content="Python,翻译,Blog">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Python concurrent.futures 文档翻译">
+  <meta name="twitter:description" content="摘要:
+本文主要是对 Python3 标准库 concurrent.futures 文档的翻译">
 
 
 
 
-<link rel="preload" href="/scss/main.min.8f0c41d9c8b10a66c094aaa5e4f3dbc0297d5418757f7c4b3af70b2ec5959efd.css" as="style">
-<link href="/scss/main.min.8f0c41d9c8b10a66c094aaa5e4f3dbc0297d5418757f7c4b3af70b2ec5959efd.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" as="style">
+<link href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -262,7 +265,9 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsgolang-li">
   <a href="/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsgolang"><span class="">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggeneric-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
+  <a href="/docs/golang/go-inner/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggo-inner"><span class="">Go 内部实现</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggeneric-li">
   <a href="/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggeneric"><span class="">泛型</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolangyaml-li">
   <a href="/docs/golang/yaml/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolangyaml"><span class="">YAML</span></a>
@@ -712,103 +717,103 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/atomicinteger/" data-taxonomy-term="atomicinteger"><span class="taxonomy-label">AtomicInteger</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/bash/" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span><span class="taxonomy-count">93</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">buildkit</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">94</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">Buildkit</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/channel/" data-taxonomy-term="channel"><span class="taxonomy-label">Channel</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">chatgpt</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/clash/" data-taxonomy-term="clash"><span class="taxonomy-label">clash</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">cli</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cni/" data-taxonomy-term="cni"><span class="taxonomy-label">cni</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">Chatgpt</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/clash/" data-taxonomy-term="clash"><span class="taxonomy-label">Clash</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">Cli</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cni/" data-taxonomy-term="cni"><span class="taxonomy-label">Cni</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/concurrency/" data-taxonomy-term="concurrency"><span class="taxonomy-label">Concurrency</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/containerd/" data-taxonomy-term="containerd"><span class="taxonomy-label">containerd</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/crypto/" data-taxonomy-term="crypto"><span class="taxonomy-label">crypto</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/containerd/" data-taxonomy-term="containerd"><span class="taxonomy-label">Containerd</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/crypto/" data-taxonomy-term="crypto"><span class="taxonomy-label">Crypto</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/c%E8%AF%AD%E8%A8%80/" data-taxonomy-term="c%E8%AF%AD%E8%A8%80"><span class="taxonomy-label">C语言</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">datetime</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">dig</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">Datetime</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">Dig</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/django/" data-taxonomy-term="django"><span class="taxonomy-label">Django</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dlv/" data-taxonomy-term="dlv"><span class="taxonomy-label">dlv</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">dns</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">docker</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dlv/" data-taxonomy-term="dlv"><span class="taxonomy-label">Dlv</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">DNS</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">5</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/elasticsearch/" data-taxonomy-term="elasticsearch"><span class="taxonomy-label">ElasticSearch</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/envoy/" data-taxonomy-term="envoy"><span class="taxonomy-label">Envoy</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/flex/" data-taxonomy-term="flex"><span class="taxonomy-label">Flex</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/gevent/" data-taxonomy-term="gevent"><span class="taxonomy-label">Gevent</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gh/" data-taxonomy-term="gh"><span class="taxonomy-label">gh</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">git</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">glob</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span><span class="taxonomy-count">37</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">gomod</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gh/" data-taxonomy-term="gh"><span class="taxonomy-label">Gh</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">Git</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">Glob</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span><span class="taxonomy-count">37</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">Gomod</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">HTTP</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">httpie</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">Http</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">Httpie</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/intermediatepython/" data-taxonomy-term="intermediatepython"><span class="taxonomy-label">IntermediatePython</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">java</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">Java</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/json/" data-taxonomy-term="json"><span class="taxonomy-label">JSON</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">k8s</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">kafka</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">kubernetes</span><span class="taxonomy-count">8</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">language</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">13</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">K8s</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">Kafka</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">Kubernetes</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">Language</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">Leetcode</span><span class="taxonomy-count">13</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">life</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span><span class="taxonomy-count">9</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">lsof</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">makefile</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">mariadb</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">Life</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span><span class="taxonomy-count">9</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">Lsof</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">Makefile</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">Mariadb</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mongodb/" data-taxonomy-term="mongodb"><span class="taxonomy-label">MongoDB</span><span class="taxonomy-count">6</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">21</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">network</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">nfs</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">nginx</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">Network</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">Nfs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/node.js/" data-taxonomy-term="node.js"><span class="taxonomy-label">Node.js</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/notes/" data-taxonomy-term="notes"><span class="taxonomy-label">Notes</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nvim/" data-taxonomy-term="nvim"><span class="taxonomy-label">nvim</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/openssl/" data-taxonomy-term="openssl"><span class="taxonomy-label">openssl</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">performance</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/process/" data-taxonomy-term="process"><span class="taxonomy-label">process</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">prom</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">prometheus</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nvim/" data-taxonomy-term="nvim"><span class="taxonomy-label">Nvim</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/openssl/" data-taxonomy-term="openssl"><span class="taxonomy-label">Openssl</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">Performance</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/process/" data-taxonomy-term="process"><span class="taxonomy-label">Process</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">Prom</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">Prometheus</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/pubsub/" data-taxonomy-term="pubsub"><span class="taxonomy-label">PubSub</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/pytest/" data-taxonomy-term="pytest"><span class="taxonomy-label">pytest</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">24</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/pytest/" data-taxonomy-term="pytest"><span class="taxonomy-label">Pytest</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">24</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/python%E6%A0%87%E5%87%86%E5%BA%93/" data-taxonomy-term="python%E6%A0%87%E5%87%86%E5%BA%93"><span class="taxonomy-label">Python标准库</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/rabbitmq/" data-taxonomy-term="rabbitmq"><span class="taxonomy-label">RabbitMQ</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">re</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">Re</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/redis/" data-taxonomy-term="redis"><span class="taxonomy-label">Redis</span><span class="taxonomy-count">7</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/rsa/" data-taxonomy-term="rsa"><span class="taxonomy-label">rsa</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/shell/" data-taxonomy-term="shell"><span class="taxonomy-label">shell</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">stackoverflow</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">stty</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/rsa/" data-taxonomy-term="rsa"><span class="taxonomy-label">Rsa</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/shell/" data-taxonomy-term="shell"><span class="taxonomy-label">Shell</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">Stackoverflow</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">Stty</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tag1/" data-taxonomy-term="tag1"><span class="taxonomy-label">Tag1</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tag2/" data-taxonomy-term="tag2"><span class="taxonomy-label">Tag2</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">tcp</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">Tcp</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tdd/" data-taxonomy-term="tdd"><span class="taxonomy-label">TDD</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/template/" data-taxonomy-term="template"><span class="taxonomy-label">Template</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/test/" data-taxonomy-term="test"><span class="taxonomy-label">Test</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">6</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">42</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tls/" data-taxonomy-term="tls"><span class="taxonomy-label">tls</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">tombkeeper</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">tools</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">Thrift</span><span class="taxonomy-count">6</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">Tips</span><span class="taxonomy-count">42</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tls/" data-taxonomy-term="tls"><span class="taxonomy-label">Tls</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">Tombkeeper</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">5</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">ucs</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unicode/" data-taxonomy-term="unicode"><span class="taxonomy-label">unicode</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unittest/" data-taxonomy-term="unittest"><span class="taxonomy-label">unittest</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/utf-16/" data-taxonomy-term="utf-16"><span class="taxonomy-label">utf-16</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">vagrant</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">Ucs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unicode/" data-taxonomy-term="unicode"><span class="taxonomy-label">Unicode</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unittest/" data-taxonomy-term="unittest"><span class="taxonomy-label">Unittest</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/utf-16/" data-taxonomy-term="utf-16"><span class="taxonomy-label">Utf-16</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">Vagrant</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/vim/" data-taxonomy-term="vim"><span class="taxonomy-label">Vim</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">vimium-c</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">vscode</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">Vimium-C</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">Vscode</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/vue.js/" data-taxonomy-term="vue.js"><span class="taxonomy-label">Vue.js</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/web/" data-taxonomy-term="web"><span class="taxonomy-label">Web</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/web%E6%A1%86%E6%9E%B6/" data-taxonomy-term="web%E6%A1%86%E6%9E%B6"><span class="taxonomy-label">web框架</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/web%E6%A1%86%E6%9E%B6/" data-taxonomy-term="web%E6%A1%86%E6%9E%B6"><span class="taxonomy-label">Web框架</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/werkzeug/" data-taxonomy-term="werkzeug"><span class="taxonomy-label">Werkzeug</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">wireshark</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">zigzag</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">Wireshark</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">Zigzag</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83/" data-taxonomy-term="%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83"><span class="taxonomy-label">人生思考</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0/" data-taxonomy-term="%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0"><span class="taxonomy-label">制药基地</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E5%93%A8%E5%85%B5/" data-taxonomy-term="%E5%93%A8%E5%85%B5"><span class="taxonomy-label">哨兵</span><span class="taxonomy-count">1</span></a></li>
@@ -857,28 +862,25 @@
 		<div class="taxonomy taxonomy-terms-article taxo-tags">
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span></a></li>
     <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E7%BF%BB%E8%AF%91/" data-taxonomy-term="%E7%BF%BB%E8%AF%91"><span class="taxonomy-label">翻译</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
     </ul>
 </div>
 
   </header>
 	<p><strong>摘要</strong>:</p>
 <blockquote>
-<p>本文主要是对 Python3 标准库 <a href="https://docs.python.org/3/library/concurrent.futures.html">concurrent.futures</a> 文档的翻译</p>
-</blockquote>
+<p>本文主要是对 Python3 标准库 <a href="https://docs.python.org/3/library/concurrent.futures.html">concurrent.futures</a> 文档的翻译</p></blockquote>
 <p>concurrent.futures 模块为异步执行可调用的对象提供了一个高级的接口。</p>
 <p>异步执行可以通过线程来实现，使用 <a href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor">ThreadPoolExecutor</a> 模块，或者使用 <a href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor">ProcessPoolExecutor</a> 模块通过分离进程来实现。两种实现都有同样的接口，他们都是通过抽象类 <a href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Executor">Executor</a> 来定义的。</p>
 <h2 id="executor-对象">Executor 对象</h2>
 <blockquote>
 <p><code>class concurrent.futures.Executor</code></p>
-<p>这是一个抽象类，用来提供方法去支持异步地执行调用，它不应该被直接调用，而是应该通过具体的子类来使用。</p>
-</blockquote>
+<p>这是一个抽象类，用来提供方法去支持异步地执行调用，它不应该被直接调用，而是应该通过具体的子类来使用。</p></blockquote>
 <blockquote>
 <p><code>submit(fn, *args, **kwargs)</code></p>
-<p>可调用对象的调度器，<code>fn</code>参数将会以<code>fn(*args, **kwargs)</code>的形式来调用，同时返回一个 Future 对象代表了可调用对象的执行情况。</p>
-</blockquote>
+<p>可调用对象的调度器，<code>fn</code>参数将会以<code>fn(*args, **kwargs)</code>的形式来调用，同时返回一个 Future 对象代表了可调用对象的执行情况。</p></blockquote>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">with</span> <span style="color:#000">ThreadPoolExecutor</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">max_workers</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">executor</span><span style="color:#000;font-weight:bold">:</span>
 </span></span><span style="display:flex;"><span>     <span style="color:#000">future</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">executor</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">submit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">pow</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">323</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1235</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>     <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">future</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">result</span><span style="color:#000;font-weight:bold">())</span>
@@ -886,14 +888,12 @@
 <p><code>map(func, *iterables, timeout=None, chunksize=1)</code></p>
 <p>和<code>map(func, *iterables)</code>函数的作用基本相同，除了<code>func</code>是被异步执行的，而且几个对于<code>func</code>调用可能是同时执行的。这个函数返回的迭代器调用<code>__next__()</code>方法的时候，如果在<code>timeout</code>秒内结果不可用，那么迭代器将会从原始调用的函数向<code>Executor.map()</code>抛出一个<code>concurrent.futures.TimeoutError</code>的异常。<code>timeout</code>既能是一个整数，也能是一个浮点数。如果<code>timeout</code>没有指定的话或者等于 None 的话，那么等待时间就没有限制。如果调用函数抛出了一个异常，那么当迭代器取到这个函数的时候，异常将会被抛出。</p>
 <p>当使用<code>ProcessPoolExecutor</code>的时候，这个方法将<code>iterables</code>切成许多块，然后将这些内容作为分离的任务提交到进程池中。每个块的大概的尺寸能够通过<code>chunksize</code>(大于0的正整数)的参数来指定。当<code>iterables</code>非常大的时候，和<code>chunksize</code>默认等于1相比，将<code>chunksize</code>设置为一个很大的值，将会显著地提升性能。在使用<code>ThreadPoolExecutor</code>的情况下，<code>chunksize</code>的大小没有影响。</p>
-<p>Python 3.5新增功能：添加了<code>chunksize</code>参数</p>
-</blockquote>
+<p>Python 3.5新增功能：添加了<code>chunksize</code>参数</p></blockquote>
 <blockquote>
 <p><code>shutdown(wait=True)</code></p>
 <p>告诉执行器，当当前阻塞的 futures 执行完了以后，它应该释放所有它使用的资源。在<code>shutdown</code>函数之后再来调用<code>Executor.submit()</code>和<code>Executor.map()</code>将会抛出<code>RuntimeError</code></p>
 <p>如果<code>wait</code>等于 True 的话，这个方法不会立即返回，而直到所有阻塞的 futures 都返回，而且和这个执行器所有相关的资源都被释放以后，这个函数才会返回。 如果<code>wait</code>设置为 False ，那么这个方法会立刻返回，而和这个执行器所有相关的资源只有等到所有阻塞的 futures 都执行完以后才会被释放。而无论<code>wait</code>参数的值是什么，整个 Python 程序都会等到所有阻塞的 futures 执行完毕以后才会退出。</p>
-<p>通过<code>with</code>语句，可以避免明确地来调用这个方法，它在执行完以后将会自动关闭<code>Executor</code>。(调用 Executor.shutdown() 时<code>wait</code>会被设置为True，这将会等待所有 future 执行完毕)</p>
-</blockquote>
+<p>通过<code>with</code>语句，可以避免明确地来调用这个方法，它在执行完以后将会自动关闭<code>Executor</code>。(调用 Executor.shutdown() 时<code>wait</code>会被设置为True，这将会等待所有 future 执行完毕)</p></blockquote>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">shutil</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">with</span> <span style="color:#000">ThreadPoolExecutor</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">max_workers</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">e</span><span style="color:#000;font-weight:bold">:</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#000">e</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">submit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">shutil</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">copy</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;src1.txt&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;dest1.txt&#39;</span><span style="color:#000;font-weight:bold">)</span>
@@ -927,14 +927,11 @@
 </span></span><span style="display:flex;"><span><span style="color:#000">executor</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ThreadPoolExecutor</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">max_workers</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">executor</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">submit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wait_on_future</span><span style="color:#000;font-weight:bold">)</span>
 </span></span></code></pre></div><blockquote>
-<p><code>class concurrent.futures.ThreadPoolExecutor(max_workers=None)</code></p>
-</blockquote>
+<p><code>class concurrent.futures.ThreadPoolExecutor(max_workers=None)</code></p></blockquote>
 <blockquote>
 <blockquote>
 <p>一个<code>Executor</code>的子类，使用线程池中最多<code>max_workers</code>个线程去异步地执行回调。
-Python 3.5中的改变：如果<code>max_workers</code>参数为None或者没有给定，那么它将会被默认设置成为机器的CPU核数乘5。这里假设<code>ThreadPoolExecutor</code>经常被用来执行IO密集型的工作而不是CPU密集型的工作，工作者的个数应该比<code>ProcessPoolExecutor</code>的工作者的个数要多。</p>
-</blockquote>
-</blockquote>
+Python 3.5中的改变：如果<code>max_workers</code>参数为None或者没有给定，那么它将会被默认设置成为机器的CPU核数乘5。这里假设<code>ThreadPoolExecutor</code>经常被用来执行IO密集型的工作而不是CPU密集型的工作，工作者的个数应该比<code>ProcessPoolExecutor</code>的工作者的个数要多。</p></blockquote></blockquote>
 <h3 id="threadpoolexecutor-例子">ThreadPoolExecutor 例子</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">concurrent.futures</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">urllib.request</span>
@@ -967,14 +964,11 @@ Python 3.5中的改变：如果<code>max_workers</code>参数为None或者没有
 <p><code>__main__</code>模块必须能够被作为工作者的子模块导入。这意味着<code>ProcessPoolExecutor</code>将不会在交互式的解释器中工作。</p>
 <p>从一个已添加到Executor中的可调用对象中调用<code>Executor</code>或者<code>Future</code>的方法将会导致死锁(TODO译者注：有待实践操作)。</p>
 <blockquote>
-<p><code>class concurrent.futures.ProcessPoolExecutor(max_workers=None)</code></p>
-</blockquote>
+<p><code>class concurrent.futures.ProcessPoolExecutor(max_workers=None)</code></p></blockquote>
 <blockquote>
 <blockquote>
 <p>一个<code>Executor</code>的子类来异步地执行调用，最多将会使用进程池中<code>max_workers</code>个工作进程。如果<code>max_workers</code>是<code>None</code>或者没有给出的话。它默认将会使用机器CPU的个数来作为最大进程数的值。如果<code>max_workers</code>小于或者等于0，那么将会抛出一个<code>ValueError</code>
-3.3版本中的改变：当一个工作进程被突然终止了后，将会抛出一个<code>BrokenProcessPool</code>的错误。以前的情况是，行为是未定义的但是 Executor 上的操作或者他自己的 future 将会被冻结或者导致死锁。</p>
-</blockquote>
-</blockquote>
+3.3版本中的改变：当一个工作进程被突然终止了后，将会抛出一个<code>BrokenProcessPool</code>的错误。以前的情况是，行为是未定义的但是 Executor 上的操作或者他自己的 future 将会被冻结或者导致死锁。</p></blockquote></blockquote>
 <h3 id="processpoolexecutor-的例子">ProcessPoolExecutor 的例子</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">concurrent.futures</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">math</span>
@@ -1018,190 +1012,134 @@ Python 3.5中的改变：如果<code>max_workers</code>参数为None或者没有
 </span></span></code></pre></div><h2 id="future-对象">Future 对象</h2>
 <p>Future 类封装了一个可调用对象的异步执行过程，Future 对象是通过<code>Executor.submit()</code>函数来创建的。</p>
 <blockquote>
-<p><code>class concurrent.futures.Future</code></p>
-</blockquote>
+<p><code>class concurrent.futures.Future</code></p></blockquote>
 <blockquote>
 <blockquote>
-<p>封装了一个可调用对象的异步执行过程。Future 实例是通过<code>Executor.submit()</code>方法来创建的，而且不应该被直接创建，除非用来测试。</p>
-</blockquote>
-</blockquote>
+<p>封装了一个可调用对象的异步执行过程。Future 实例是通过<code>Executor.submit()</code>方法来创建的，而且不应该被直接创建，除非用来测试。</p></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <p><code>cancel()</code></p>
 <blockquote>
-<p>尝试去取消相关回调，如果这个回调正在被执行，而且不能被取消，那么这个方法将会返回<code>False</code>，否则这个方法将会取消相应的回调并且返回<code>True</code></p>
-</blockquote>
-</blockquote>
-</blockquote>
+<p>尝试去取消相关回调，如果这个回调正在被执行，而且不能被取消，那么这个方法将会返回<code>False</code>，否则这个方法将会取消相应的回调并且返回<code>True</code></p></blockquote></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <p><code>cancelled()</code></p>
 <blockquote>
-<p>如果相关回调被成功取消了，那么这个方法将会返回<code>True</code></p>
-</blockquote>
-</blockquote>
-</blockquote>
+<p>如果相关回调被成功取消了，那么这个方法将会返回<code>True</code></p></blockquote></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <p><code>running()</code></p>
 <blockquote>
-<p>如果相关回调当前正在被执行而且无法取消，那么将会返回<code>True</code></p>
-</blockquote>
-</blockquote>
-</blockquote>
+<p>如果相关回调当前正在被执行而且无法取消，那么将会返回<code>True</code></p></blockquote></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <p><code>done()</code></p>
 <blockquote>
-<p>如果相关的回调被成功地取消或者已经运行完毕那么将返回<code>True</code></p>
-</blockquote>
-</blockquote>
-</blockquote>
+<p>如果相关的回调被成功地取消或者已经运行完毕那么将返回<code>True</code></p></blockquote></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <p><code>result(timeout=None)</code></p>
 <blockquote>
-<p>返回由相关回调产生的结果。如果这个回调还没有被完成那么这个方法将会等待<code>timeout</code>秒。如果这个回调在<code>timeout</code>秒内还没有返回，一个<code>concurrent.futures.TimeoutError</code>的异常将会被抛出。<code>timeout</code>能够被设置成一个整数或者一个浮点数。如果<code>timeout</code>没有被设置或者其值为<code>None</code>，那么等待时间将没有限制。</p>
-</blockquote>
-</blockquote>
-</blockquote>
+<p>返回由相关回调产生的结果。如果这个回调还没有被完成那么这个方法将会等待<code>timeout</code>秒。如果这个回调在<code>timeout</code>秒内还没有返回，一个<code>concurrent.futures.TimeoutError</code>的异常将会被抛出。<code>timeout</code>能够被设置成一个整数或者一个浮点数。如果<code>timeout</code>没有被设置或者其值为<code>None</code>，那么等待时间将没有限制。</p></blockquote></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <blockquote>
 <p>如果这个 future 在完成之前被取消了，那么将会抛出一个<code>CancelledError</code>的异常。
-如果相关的回调抛出了一个异常，那么这个方法也会相应地抛出这个异常。</p>
-</blockquote>
-</blockquote>
-</blockquote>
+如果相关的回调抛出了一个异常，那么这个方法也会相应地抛出这个异常。</p></blockquote></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <p><code>exception(timeout=None)</code></p>
 <blockquote>
-<p>返回由相关回调抛出的异常。如果相关回调还没有被完成那么这个方法将会等待<code>timeout</code>秒。如果相关回调在<code>timeout</code>秒内还没有被完成，那么将会抛出一个<code>concurrent.futures.TimeoutError</code>的异常。<code>timeout</code>能够被设置成一个整数或者一个浮点数。如果<code>timeout</code>没有被设置或者其值为<code>None</code>，那么等待时间将没有限制。</p>
-</blockquote>
-</blockquote>
-</blockquote>
+<p>返回由相关回调抛出的异常。如果相关回调还没有被完成那么这个方法将会等待<code>timeout</code>秒。如果相关回调在<code>timeout</code>秒内还没有被完成，那么将会抛出一个<code>concurrent.futures.TimeoutError</code>的异常。<code>timeout</code>能够被设置成一个整数或者一个浮点数。如果<code>timeout</code>没有被设置或者其值为<code>None</code>，那么等待时间将没有限制。</p></blockquote></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <blockquote>
 <p>如果这个 future 在完成之前被取消了，那么将会抛出一个<code>CancelledError</code>的异常。
-如果相关回调被完成了且没有抛出异常，None将会被返回。</p>
-</blockquote>
-</blockquote>
-</blockquote>
+如果相关回调被完成了且没有抛出异常，None将会被返回。</p></blockquote></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <p><code>add_done_callback(fn)</code></p>
 <blockquote>
 <p>将可调用对象<code>fn</code>连接到这个 future 上，<code>fn</code>将会在 future 被取消或者结束运行时被调用，而且仅有相关 future 这一个参数。
 添加的可调用对象将会以它们被添加的顺序来调用，而且总是在添加它们的那个进程的所属的线程中调用(译者注，可以参考<a href="https://gist.github.com/bwangel23/8c4bd585f6e54c6ec6de336dd73abbe3">这段代码</a>)。如果相关调用<code>fn</code>抛出了一个<code>Exception</code>子类的异常，它将会被记录和忽略。如果相关调用<code>fn</code>抛出了一个<code>BaseException</code>子类的异常，那么行为是未定义的。
-如果相关的 future 已经被完成了或者取消了，<code>fn</code>将会被立刻调用。</p>
-</blockquote>
-</blockquote>
-</blockquote>
+如果相关的 future 已经被完成了或者取消了，<code>fn</code>将会被立刻调用。</p></blockquote></blockquote></blockquote>
 <blockquote>
 <blockquote>
-<p>如下的<code>Future</code>方法意味着可以在单元测试或者<code>Exectuor</code>的实现中使用。</p>
-</blockquote>
-</blockquote>
+<p>如下的<code>Future</code>方法意味着可以在单元测试或者<code>Exectuor</code>的实现中使用。</p></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <p><code>set_running_or_notify_cancel()</code></p>
 <blockquote>
 <p>这个方法应该仅能够被<code>Exectuor</code>的实现(在执行和<code>Future</code>相关的工作之前调用)和单元测试调用。
 如果这个方法返回<code>False</code>，那么相关的Future被取消了。即<code>Future.cancel()</code>被调用了而且返回<code>True</code>。任何等待 Future 完成的线程(即通过<code>as_completed</code>或者<code>wait()</code>方法等待)都会被唤醒。
-这个方法仅能被调用一次，而且不能在<code>Future.set_result()</code>或者<code>Future.set_exception()</code>被调用了之后调用。</p>
-</blockquote>
-</blockquote>
-</blockquote>
+这个方法仅能被调用一次，而且不能在<code>Future.set_result()</code>或者<code>Future.set_exception()</code>被调用了之后调用。</p></blockquote></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <p><code>set_result(result)</code></p>
 <blockquote>
 <p>将 future 相关的工作的结果设置成<code>result</code>
-这个方法仅仅应该被<code>Exectuor</code>实现的时候和单元测试来调用。</p>
-</blockquote>
-</blockquote>
-</blockquote>
+这个方法仅仅应该被<code>Exectuor</code>实现的时候和单元测试来调用。</p></blockquote></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <p><code>set_exception(exception)</code></p>
 <blockquote>
 <p>将 future 相关的工作的结果设置成异常<code>exception</code>
-这个方法仅仅应该被<code>Exectuor</code>实现的时候和单元测试来调用。</p>
-</blockquote>
-</blockquote>
-</blockquote>
+这个方法仅仅应该被<code>Exectuor</code>实现的时候和单元测试来调用。</p></blockquote></blockquote></blockquote>
 <h2 id="模块方法">模块方法</h2>
 <blockquote>
 <p><code>concurrent.futures.wait(fs, timeout=None, return_when=ALL_COMPLETED)</code></p>
 <blockquote>
 <p>等待由<code>fs</code>(译者注：这里这个<code>fs</code>表示 futures 的意思)给出的 future 实例(可能由不同的 Exectuor 实例创建的)去完成。返回一个命名二元组的集合。在第一个集合元素中，命名为<code>done</code>，包含着那些在<code>wait</code>函数完成之前就已经完成(被完成或者被取消)的 future。第二个集合元素命名为<code>not_done</code>，包含那些未完成的 future。
 <code>timeout</code>用来控制<code>wait</code>函数在返回之前等待的最大秒数。<code>timeout</code>能够被设置成整数或者浮点数。如果<code>timeout</code>没有被设置或者值为<code>None</code>，那么等待时间将没有限制。
-<code>return_when</code>代表了函数应该在什么时候返回，它必须被设置成如下值中的一个：</p>
-</blockquote>
-</blockquote>
+<code>return_when</code>代表了函数应该在什么时候返回，它必须被设置成如下值中的一个：</p></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <table>
-<thead>
-<tr>
-<th>Constant</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>FIRST_COMPLETED</td>
-<td>当任何 future 结束或者被取消的时候，这个函数就会返回</td>
-</tr>
-<tr>
-<td>FIRST_EXCEPTION</td>
-<td>当任何 future 通过抛出异常来结束的时候，这个函数就会返回，如果没有任何函数抛出异常，那么它等价与<code>ALL_COMPLETED</code></td>
-</tr>
-<tr>
-<td>ALL_COMPLETED</td>
-<td>当所有的 future 都已结束或者被取消的时候，这个函数就会返回。</td>
-</tr>
-</tbody>
-</table>
-</blockquote>
-</blockquote>
+  <thead>
+      <tr>
+          <th>Constant</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>FIRST_COMPLETED</td>
+          <td>当任何 future 结束或者被取消的时候，这个函数就会返回</td>
+      </tr>
+      <tr>
+          <td>FIRST_EXCEPTION</td>
+          <td>当任何 future 通过抛出异常来结束的时候，这个函数就会返回，如果没有任何函数抛出异常，那么它等价与<code>ALL_COMPLETED</code></td>
+      </tr>
+      <tr>
+          <td>ALL_COMPLETED</td>
+          <td>当所有的 future 都已结束或者被取消的时候，这个函数就会返回。</td>
+      </tr>
+  </tbody>
+</table></blockquote></blockquote>
 <blockquote>
 <p><code>concurrent.futures.as_completed(fs, timeout=None)</code></p>
 <blockquote>
-<p>返回一个在由<code>fs</code>给出的 future 实例(可能由不同的Executor创建的)上的迭代器，当 future 完成的时候(结束或者被取消)，就把这个 future <code>yield</code>回去。如果<code>fs</code>中给出的 future 重复了，那么将仅会被返回一次。任何在<code>as_completed</code>函数调用之前就已经完成或者被取消的 future, 将会首先<code>yield</code>回来。如果<code>__next__()</code>被调用，在<code>timeout</code>秒后结果依然不可达，那么返回的迭代器将会从原始的调用向<code>as_completed</code>抛出一个<code>concurrent.futures.TimeoutError</code>异常。<code>timeout</code>可以被设置成整数或者浮点数。如果<code>timeout</code>没有被指定或者其值为<code>None</code>，那么等待的时间将没有限制。</p>
-</blockquote>
-</blockquote>
+<p>返回一个在由<code>fs</code>给出的 future 实例(可能由不同的Executor创建的)上的迭代器，当 future 完成的时候(结束或者被取消)，就把这个 future <code>yield</code>回去。如果<code>fs</code>中给出的 future 重复了，那么将仅会被返回一次。任何在<code>as_completed</code>函数调用之前就已经完成或者被取消的 future, 将会首先<code>yield</code>回来。如果<code>__next__()</code>被调用，在<code>timeout</code>秒后结果依然不可达，那么返回的迭代器将会从原始的调用向<code>as_completed</code>抛出一个<code>concurrent.futures.TimeoutError</code>异常。<code>timeout</code>可以被设置成整数或者浮点数。如果<code>timeout</code>没有被指定或者其值为<code>None</code>，那么等待的时间将没有限制。</p></blockquote></blockquote>
 <blockquote>
 <blockquote>
 <blockquote>
 <p>See also:
 <a href="https://www.python.org/dev/peps/pep-3148">PEP 3148</a> - futures - 执行异步计算
-这个提案描述了包含在 Python 标准库中的这个特性。</p>
-</blockquote>
-</blockquote>
-</blockquote>
+这个提案描述了包含在 Python 标准库中的这个特性。</p></blockquote></blockquote></blockquote>
 <h2 id="异常类">异常类</h2>
 <blockquote>
 <p>exception <code>concurrent.futures.CancelledError</code></p>
 <blockquote>
-<p>当 future 被取消的时候抛出这个异常。</p>
-</blockquote>
-</blockquote>
+<p>当 future 被取消的时候抛出这个异常。</p></blockquote></blockquote>
 <blockquote>
 <p>exception <code>concurrent.futures.TimeoutError</code></p>
 <blockquote>
-<p>当 future 的操作超出给定的<code>timeout</code>时间的时候抛出这个异常。</p>
-</blockquote>
-</blockquote>
+<p>当 future 的操作超出给定的<code>timeout</code>时间的时候抛出这个异常。</p></blockquote></blockquote>
 <blockquote>
 <p>exception <code>concurrent.futures.process.BrokenProcessPool</code></p>
 <blockquote>
 <p>派生自<code>RuntimeError</code>，当<code>ProcessPoolExecutor</code>中的一个工作进程以不干净的方式(例如，它是从外部被杀死的)结束的时候，这个异常将会抛出。
-Python 3.3 后的新特性</p>
-</blockquote>
-</blockquote>
+Python 3.3 后的新特性</p></blockquote></blockquote>
 	<div class="text-muted mt-5 pt-3 border-top">
    2016年09月23日 / 11:19</div>
 
@@ -1247,7 +1185,7 @@ Python 3.3 后的新特性</p>
        integrity="sha512-YJVxTjqttjsU3cSvaTRqsSl0wbRgZUNF+NGGCgto/MUbIvaLdXQzGTCQu4CvyJZbZctgflVB0PXw9LLmTWm5/w==" crossorigin="anonymous"
        onload='renderMathInElement(document.body, null);'>
 </script>
-<script src="/js/main.min.04ae8cb44cf587d6a2d6e50f7d0276bee94133052ab39f783da0b290f7986c6c.js" integrity="sha256-BK6MtEz1h9ai1uUPfQJ2vulBMwUqs594PaCykPeYbGw=" crossorigin="anonymous"></script>
+<script src="/js/main.min.85d1295e77b8cb64a3e7ac5b9239aa65c4410a289bbe21c0ae8359f1617c0461.js" integrity="sha256-hdEpXne4y2Sj56xbkjmqZcRBCiibviHAroNZ8WF8BGE=" crossorigin="anonymous"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 

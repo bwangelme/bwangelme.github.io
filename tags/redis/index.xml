@@ -4,80 +4,58 @@
     <title>Redis on 647 Universe</title>
     <link>https://bwangel.me/tags/redis/</link>
     <description>Recent content in Redis on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Sat, 23 Oct 2021 17:36:43 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Nov 2023 11:16:52 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/redis/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Redis 备份恢复的正确步骤</title>
       <link>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</link>
       <pubDate>Sat, 23 Oct 2021 17:36:43 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Redis 主从同步细节</title>
       <link>https://bwangel.me/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</link>
       <pubDate>Fri, 22 Oct 2021 21:57:55 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;介绍了 Redis 的主从同步流程及一些配置选项&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;介绍了 Redis 的主从同步流程及一些配置选项&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Redis 备份机制</title>
       <link>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</link>
       <pubDate>Fri, 22 Oct 2021 00:00:45 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/redis/redis%E5%A4%87%E4%BB%BD%E6%9C%BA%E5%88%B6/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Redis 集群简介</title>
       <link>https://bwangel.me/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Thu, 21 Oct 2021 23:40:12 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/redis/redis%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Review 《Using pipelining to speedup Redis queries》</title>
       <link>https://bwangel.me/docs/redis/redis-pipelining/</link>
       <pubDate>Sat, 22 Aug 2020 17:22:37 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/redis/redis-pipelining/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;原文地址: &lt;a href=&#34;https://redis.io/topics/pipelining&#34;&gt;https://redis.io/topics/pipelining&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://redis.io/topics/pipelining&#34;&gt;https://redis.io/topics/pipelining&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Redis 源码阅读之 dict </title>
       <link>https://bwangel.me/docs/redis/redis-source-dict/</link>
       <pubDate>Wed, 14 Mar 2018 00:14:32 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/redis/redis-source-dict/</guid>
-      <description>&lt;p&gt;本文主要介绍了 Redis 的基础数据结构 dict 的实现，并描述了其渐进式 rehash 的操作&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 本文基于 Redis 3.0.0 的代码进行分析的&lt;/p&gt;</description>
+      <description>&lt;p&gt;本文主要介绍了 Redis 的基础数据结构 dict 的实现，并描述了其渐进式 rehash 的操作&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 本文基于 Redis 3.0.0 的代码进行分析的&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Redis Sort 命令简介</title>
       <link>https://bwangel.me/docs/redis/redis-sort/</link>
       <pubDate>Wed, 21 Jun 2017 13:29:08 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/redis/redis-sort/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;sort&lt;/code&gt;命令是Redis中最强大的命令之一，本文试图通过一些例子来总结Redis Sort的常用方法。&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;code&gt;sort&lt;/code&gt;命令是Redis中最强大的命令之一，本文试图通过一些例子来总结Redis Sort的常用方法。&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

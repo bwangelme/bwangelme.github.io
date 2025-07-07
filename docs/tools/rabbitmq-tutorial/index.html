@@ -19,40 +19,35 @@
 
 <title>Rabbitmq Tutorial 学习笔记 | 647 Universe</title>
 <meta name="description" content=" RabbitMQ Tutorial 学习笔记 本文相关代码放在 Github@bwangelme/RabbitMQDemo 中 ">
-<meta property="og:title" content="Rabbitmq Tutorial 学习笔记" />
-<meta property="og:description" content="
+<meta property="og:url" content="https://bwangel.me/docs/tools/rabbitmq-tutorial/">
+  <meta property="og:site_name" content="647 Universe">
+  <meta property="og:title" content="Rabbitmq Tutorial 学习笔记">
+  <meta property="og:description" content="RabbitMQ Tutorial 学习笔记 本文相关代码放在 Github@bwangelme/RabbitMQDemo 中">
+  <meta property="og:locale" content="cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2019-12-21T21:49:45+08:00">
+    <meta property="article:modified_time" content="2023-10-18T09:36:48+08:00">
+    <meta property="article:tag" content="Go">
+    <meta property="article:tag" content="RabbitMQ">
+    <meta property="article:tag" content="Tutorial">
+    <meta property="article:tag" content="Blog">
 
-RabbitMQ Tutorial 学习笔记
-本文相关代码放在 Github@bwangelme/RabbitMQDemo 中
-
-" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://bwangel.me/docs/tools/rabbitmq-tutorial/" /><meta property="article:section" content="docs" />
-<meta property="article:published_time" content="2019-12-21T21:49:45+08:00" />
-<meta property="article:modified_time" content="2023-10-18T09:36:48+08:00" /><meta property="og:site_name" content="647号宇宙" />
-<meta itemprop="name" content="Rabbitmq Tutorial 学习笔记">
-<meta itemprop="description" content="
-
-RabbitMQ Tutorial 学习笔记
-本文相关代码放在 Github@bwangelme/RabbitMQDemo 中
-
-"><meta itemprop="datePublished" content="2019-12-21T21:49:45+08:00" />
-<meta itemprop="dateModified" content="2023-10-18T09:36:48+08:00" />
-<meta itemprop="wordCount" content="548">
-<meta itemprop="keywords" content="Go,RabbitMQ,Tutorial,blog," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Rabbitmq Tutorial 学习笔记"/>
-<meta name="twitter:description" content="
-
-RabbitMQ Tutorial 学习笔记
-本文相关代码放在 Github@bwangelme/RabbitMQDemo 中
-
-"/>
+  <meta itemprop="name" content="Rabbitmq Tutorial 学习笔记">
+  <meta itemprop="description" content="RabbitMQ Tutorial 学习笔记 本文相关代码放在 Github@bwangelme/RabbitMQDemo 中">
+  <meta itemprop="datePublished" content="2019-12-21T21:49:45+08:00">
+  <meta itemprop="dateModified" content="2023-10-18T09:36:48+08:00">
+  <meta itemprop="wordCount" content="548">
+  <meta itemprop="keywords" content="Go,RabbitMQ,Tutorial,Blog">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Rabbitmq Tutorial 学习笔记">
+  <meta name="twitter:description" content="RabbitMQ Tutorial 学习笔记 本文相关代码放在 Github@bwangelme/RabbitMQDemo 中">
 
 
 
 
-<link rel="preload" href="/scss/main.min.8f0c41d9c8b10a66c094aaa5e4f3dbc0297d5418757f7c4b3af70b2ec5959efd.css" as="style">
-<link href="/scss/main.min.8f0c41d9c8b10a66c094aaa5e4f3dbc0297d5418757f7c4b3af70b2ec5959efd.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" as="style">
+<link href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -267,7 +262,9 @@ RabbitMQ Tutorial 学习笔记
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsgolang-li">
   <a href="/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsgolang"><span class="">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggeneric-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
+  <a href="/docs/golang/go-inner/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggo-inner"><span class="">Go 内部实现</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggeneric-li">
   <a href="/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggeneric"><span class="">泛型</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolangyaml-li">
   <a href="/docs/golang/yaml/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolangyaml"><span class="">YAML</span></a>
@@ -733,103 +730,103 @@ RabbitMQ Tutorial 学习笔记
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/atomicinteger/" data-taxonomy-term="atomicinteger"><span class="taxonomy-label">AtomicInteger</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/bash/" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span><span class="taxonomy-count">93</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">buildkit</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">94</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">Buildkit</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/channel/" data-taxonomy-term="channel"><span class="taxonomy-label">Channel</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">chatgpt</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/clash/" data-taxonomy-term="clash"><span class="taxonomy-label">clash</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">cli</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cni/" data-taxonomy-term="cni"><span class="taxonomy-label">cni</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">Chatgpt</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/clash/" data-taxonomy-term="clash"><span class="taxonomy-label">Clash</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">Cli</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cni/" data-taxonomy-term="cni"><span class="taxonomy-label">Cni</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/concurrency/" data-taxonomy-term="concurrency"><span class="taxonomy-label">Concurrency</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/containerd/" data-taxonomy-term="containerd"><span class="taxonomy-label">containerd</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/crypto/" data-taxonomy-term="crypto"><span class="taxonomy-label">crypto</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/containerd/" data-taxonomy-term="containerd"><span class="taxonomy-label">Containerd</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/crypto/" data-taxonomy-term="crypto"><span class="taxonomy-label">Crypto</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/c%E8%AF%AD%E8%A8%80/" data-taxonomy-term="c%E8%AF%AD%E8%A8%80"><span class="taxonomy-label">C语言</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">datetime</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">dig</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">Datetime</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">Dig</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/django/" data-taxonomy-term="django"><span class="taxonomy-label">Django</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dlv/" data-taxonomy-term="dlv"><span class="taxonomy-label">dlv</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">dns</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">docker</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dlv/" data-taxonomy-term="dlv"><span class="taxonomy-label">Dlv</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">DNS</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">5</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/elasticsearch/" data-taxonomy-term="elasticsearch"><span class="taxonomy-label">ElasticSearch</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/envoy/" data-taxonomy-term="envoy"><span class="taxonomy-label">Envoy</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/flex/" data-taxonomy-term="flex"><span class="taxonomy-label">Flex</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/gevent/" data-taxonomy-term="gevent"><span class="taxonomy-label">Gevent</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gh/" data-taxonomy-term="gh"><span class="taxonomy-label">gh</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">git</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">glob</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span><span class="taxonomy-count">37</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">gomod</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gh/" data-taxonomy-term="gh"><span class="taxonomy-label">Gh</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">Git</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">Glob</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span><span class="taxonomy-count">37</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">Gomod</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">HTTP</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">httpie</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">Http</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">Httpie</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/intermediatepython/" data-taxonomy-term="intermediatepython"><span class="taxonomy-label">IntermediatePython</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">java</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">Java</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/json/" data-taxonomy-term="json"><span class="taxonomy-label">JSON</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">k8s</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">kafka</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">kubernetes</span><span class="taxonomy-count">8</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">language</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">13</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">K8s</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">Kafka</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">Kubernetes</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">Language</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">Leetcode</span><span class="taxonomy-count">13</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">life</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span><span class="taxonomy-count">9</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">lsof</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">makefile</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">mariadb</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">Life</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span><span class="taxonomy-count">9</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">Lsof</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">Makefile</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">Mariadb</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mongodb/" data-taxonomy-term="mongodb"><span class="taxonomy-label">MongoDB</span><span class="taxonomy-count">6</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">21</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">network</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">nfs</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">nginx</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">Network</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">Nfs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/node.js/" data-taxonomy-term="node.js"><span class="taxonomy-label">Node.js</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/notes/" data-taxonomy-term="notes"><span class="taxonomy-label">Notes</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nvim/" data-taxonomy-term="nvim"><span class="taxonomy-label">nvim</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/openssl/" data-taxonomy-term="openssl"><span class="taxonomy-label">openssl</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">performance</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/process/" data-taxonomy-term="process"><span class="taxonomy-label">process</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">prom</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">prometheus</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nvim/" data-taxonomy-term="nvim"><span class="taxonomy-label">Nvim</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/openssl/" data-taxonomy-term="openssl"><span class="taxonomy-label">Openssl</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">Performance</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/process/" data-taxonomy-term="process"><span class="taxonomy-label">Process</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">Prom</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">Prometheus</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/pubsub/" data-taxonomy-term="pubsub"><span class="taxonomy-label">PubSub</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/pytest/" data-taxonomy-term="pytest"><span class="taxonomy-label">pytest</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">24</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/pytest/" data-taxonomy-term="pytest"><span class="taxonomy-label">Pytest</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">24</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/python%E6%A0%87%E5%87%86%E5%BA%93/" data-taxonomy-term="python%E6%A0%87%E5%87%86%E5%BA%93"><span class="taxonomy-label">Python标准库</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/rabbitmq/" data-taxonomy-term="rabbitmq"><span class="taxonomy-label">RabbitMQ</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">re</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">Re</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/redis/" data-taxonomy-term="redis"><span class="taxonomy-label">Redis</span><span class="taxonomy-count">7</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/rsa/" data-taxonomy-term="rsa"><span class="taxonomy-label">rsa</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/shell/" data-taxonomy-term="shell"><span class="taxonomy-label">shell</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">stackoverflow</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">stty</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/rsa/" data-taxonomy-term="rsa"><span class="taxonomy-label">Rsa</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/shell/" data-taxonomy-term="shell"><span class="taxonomy-label">Shell</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">Stackoverflow</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">Stty</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tag1/" data-taxonomy-term="tag1"><span class="taxonomy-label">Tag1</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tag2/" data-taxonomy-term="tag2"><span class="taxonomy-label">Tag2</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">tcp</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">Tcp</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tdd/" data-taxonomy-term="tdd"><span class="taxonomy-label">TDD</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/template/" data-taxonomy-term="template"><span class="taxonomy-label">Template</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/test/" data-taxonomy-term="test"><span class="taxonomy-label">Test</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">6</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">42</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tls/" data-taxonomy-term="tls"><span class="taxonomy-label">tls</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">tombkeeper</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">tools</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">Thrift</span><span class="taxonomy-count">6</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">Tips</span><span class="taxonomy-count">42</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tls/" data-taxonomy-term="tls"><span class="taxonomy-label">Tls</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">Tombkeeper</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">5</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">ucs</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unicode/" data-taxonomy-term="unicode"><span class="taxonomy-label">unicode</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unittest/" data-taxonomy-term="unittest"><span class="taxonomy-label">unittest</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/utf-16/" data-taxonomy-term="utf-16"><span class="taxonomy-label">utf-16</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">vagrant</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">Ucs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unicode/" data-taxonomy-term="unicode"><span class="taxonomy-label">Unicode</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unittest/" data-taxonomy-term="unittest"><span class="taxonomy-label">Unittest</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/utf-16/" data-taxonomy-term="utf-16"><span class="taxonomy-label">Utf-16</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">Vagrant</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/vim/" data-taxonomy-term="vim"><span class="taxonomy-label">Vim</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">vimium-c</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">vscode</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">Vimium-C</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">Vscode</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/vue.js/" data-taxonomy-term="vue.js"><span class="taxonomy-label">Vue.js</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/web/" data-taxonomy-term="web"><span class="taxonomy-label">Web</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/web%E6%A1%86%E6%9E%B6/" data-taxonomy-term="web%E6%A1%86%E6%9E%B6"><span class="taxonomy-label">web框架</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/web%E6%A1%86%E6%9E%B6/" data-taxonomy-term="web%E6%A1%86%E6%9E%B6"><span class="taxonomy-label">Web框架</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/werkzeug/" data-taxonomy-term="werkzeug"><span class="taxonomy-label">Werkzeug</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">wireshark</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">zigzag</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">Wireshark</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">Zigzag</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83/" data-taxonomy-term="%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83"><span class="taxonomy-label">人生思考</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0/" data-taxonomy-term="%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0"><span class="taxonomy-label">制药基地</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E5%93%A8%E5%85%B5/" data-taxonomy-term="%E5%93%A8%E5%85%B5"><span class="taxonomy-label">哨兵</span><span class="taxonomy-count">1</span></a></li>
@@ -878,10 +875,10 @@ RabbitMQ Tutorial 学习笔记
 		<div class="taxonomy taxonomy-terms-article taxo-tags">
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span></a></li>
     <li><a class="taxonomy-term" href="https://bwangel.me/tags/rabbitmq/" data-taxonomy-term="rabbitmq"><span class="taxonomy-label">RabbitMQ</span></a></li>
     <li><a class="taxonomy-term" href="https://bwangel.me/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
     </ul>
 </div>
 
@@ -890,8 +887,7 @@ RabbitMQ Tutorial 学习笔记
 <ul>
 <li><a href="https://www.rabbitmq.com/getstarted.html">RabbitMQ Tutorial</a> 学习笔记</li>
 <li>本文相关代码放在 <a href="https://github.com/bwangelme/RabbitMQDemo">Github@bwangelme/RabbitMQDemo</a> 中</li>
-</ul>
-</blockquote>
+</ul></blockquote>
 <hr>
 <h1 id="rabbitmq-基础概念介绍">RabbitMQ 基础概念介绍</h1>
 <p><img src="https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-01-07-152647.jpg" alt=""></p>
@@ -900,11 +896,11 @@ RabbitMQ Tutorial 学习笔记
 <h2 id="publish">Publish</h2>
 <p>生产者将消息发送到交换机的过程称为<code>Publish</code>，下面是<code>Publish</code>的示例代码:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>    <span style="color:#000">err</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">ch</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Publish</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// exchange
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#4e9a06">&#34;abcd&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// Route key
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// mandatory 强制的
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// immediate 即时的
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000">amqp</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Publishing</span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// exchange</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">&#34;abcd&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// Route key</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// mandatory 强制的</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// immediate 即时的</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">amqp</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Publishing</span><span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#000">DeliveryMode</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">amqp</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Persistent</span><span style="color:#000;font-weight:bold">,</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#000">ContentType</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#4e9a06">&#34;text/plain&#34;</span><span style="color:#000;font-weight:bold">,</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#000">Body</span><span style="color:#000;font-weight:bold">:</span>         <span style="color:#000;font-weight:bold">[]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">body</span><span style="color:#000;font-weight:bold">),</span>
@@ -919,13 +915,13 @@ RabbitMQ Tutorial 学习笔记
 <h3 id="创建临时队列">创建临时队列</h3>
 <p>当我们需要创建一个只用一次的队列时，可以通过指定<code>exclusive=true</code>参数来实现:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#000">q</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">ch</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">QueueDeclare</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>    <span style="color:#8f5902;font-style:italic">// name
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// durable
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// delete when unused
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#204a87;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// exclusive
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// no-wait
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// arguments
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>    <span style="color:#8f5902;font-style:italic">// name</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// durable</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// delete when unused</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// exclusive</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// no-wait</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// arguments</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
 </span></span></code></pre></div><p>上述代码创建了一个临时队列，在 <code>Channel</code>（客户端和 RabbitMQ 交互的中介）关闭之后，该队列就会被自动删除，注意指定了三个参数，<code>name=&quot;&quot;</code>, <code>durable=false</code>(不进行持久化存储), <code>exclusive=true</code>(只使用一次)。</p>
 <p>上述代码会返回一个临时队列，队列的名字类似于这样: <code>amq.gen-JzTY20BRgKO-HjmUJj0wLg</code>。想要了解 Exclusive 队列的更多信息，请参考文档 <a href="https://www.rabbitmq.com/queues.html">Guide on Queues</a></p>
 <p>通过<code>rabbitmqctl list_queues</code> 可以查看我们创建的所有队列。</p>
@@ -940,10 +936,10 @@ RabbitMQ Tutorial 学习笔记
 </span></span></code></pre></div><h3 id="创建和查看-binding">创建和查看 Binding</h3>
 <p>将队列绑定到交换机的代码如下，前三个参数分别是<code>队列名称</code>，<code>Bind Key</code>，和<code>交换机名称</code>。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#000">err</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">ch</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">QueueBind</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000">q</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// queue name
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// bind key
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#4e9a06">&#34;logs&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// exchange name
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">q</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// queue name</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// bind key</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;logs&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// exchange name</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>
 </span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
 </span></span></code></pre></div><p>通过 <code>rabbitmqctl list_bindgs</code> 命令我们可以查看 RabbitMQ 中所有的 Binding。</p>
@@ -951,14 +947,14 @@ RabbitMQ Tutorial 学习笔记
 <p>消费者从队列中读取消息的过程称为<code>Consume</code></p>
 <p>下面是<code>Consume</code>的示例代码，返回值<code>msgs</code>是Go语言中的 channel 类型，消费者可以从中读取队列返回的的消息。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#000">msgs</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">ch</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Consume</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">q</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// name
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// consumer
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// auto ack
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// exclusive
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// no-local
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// no-wait
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>    <span style="color:#8f5902;font-style:italic">// args
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">q</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// name</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// consumer</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// auto ack</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// exclusive</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// no-local</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// no-wait</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>    <span style="color:#8f5902;font-style:italic">// args</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
 </span></span></code></pre></div><h1 id="交换机的类型与特性">交换机的类型与特性</h1>
 <p>交换机一端接收消息，另外一端发送消息到队列中。</p>
 <p>交换机处理消息的方式是由它的类型决定的，交换机共有这么几种类型: <code>direct</code>, <code>topic</code>, <code>headers</code>, <code>fanout</code>。</p>
@@ -1023,12 +1019,12 @@ RabbitMQ Tutorial 学习笔记
 <p><strong>该示例的代码详见 <a href="https://github.com/bwangelme/RabbitMQDemo/tree/14a0414">Github@14a0414</a></strong></p>
 <p>为了避免这种极端情况的发生，我们可以设置预取值(<code>prefetch count</code>)为1。这样的话，相当于告诉 RabbitMQ，在 Worker 消费完一个消息之前，不要再给他分发新的消息了，这样的话随后的消息就会被分发给其他的空闲的 Worker 了。</p>
 <p>在具体代码如下:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 在 Worker 的代码中设置
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">err</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">ch</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Qos</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// prefetch count
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// prefetch size
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// global
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">)</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 在 Worker 的代码中设置</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">err</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">ch</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Qos</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// prefetch count</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// prefetch size</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// global</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
 </span></span></code></pre></div><p>运行效果如下:</p>
 <p><img src="https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-01-08-150016.png" alt=""></p>
 <p><strong>该示例的代码详见<a href="https://github.com/bwangelme/RabbitMQDemo/tree/ad5507e">Github@ad5507e</a></strong></p>
@@ -1043,16 +1039,16 @@ RabbitMQ Tutorial 学习笔记
 <p>使用了消息确认机制后，我们就可以确保即使存在消费者偶尔崩溃的情况，我们的消息也不会丢失。</p>
 <p>在消息确认机制中，没有任何的超时限制，所以即使客户端花费很长的时间去处理消息，也不用担心消息会被误重发。</p>
 <p>具体代码如下，我们在消费者订阅的时候将<code>auto_ack</code>选项关掉，然后再在消费完消息后手动发送 Ack</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// 消费者从队列订阅消息
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">msgs</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">ch</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Consume</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">q</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// name
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// consumer
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// 关闭掉 autoack
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// exclusive
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// no-local
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// no-wait
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>    <span style="color:#8f5902;font-style:italic">// args
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000;font-weight:bold">)</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// 消费者从队列订阅消息</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">msgs</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">ch</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Consume</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">q</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// consumer</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// 关闭掉 autoack</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// exclusive</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// no-local</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// no-wait</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>    <span style="color:#8f5902;font-style:italic">// args</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">go</span> <span style="color:#204a87;font-weight:bold">func</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">d</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87;font-weight:bold">range</span> <span style="color:#000">msgs</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Printf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Received a message: %s&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">d</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Body</span><span style="color:#000;font-weight:bold">)</span>
@@ -1060,8 +1056,8 @@ RabbitMQ Tutorial 学习笔记
 </span></span><span style="display:flex;"><span>            <span style="color:#000">t</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">time</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Duration</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dot_count</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#000">time</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Sleep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">time</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Second</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Printf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Done&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">d</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Ack</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#8f5902;font-style:italic">// 手动发送 ack
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">d</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Ack</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#8f5902;font-style:italic">// 手动发送 ack</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}()</span>
 </span></span></code></pre></div><p>示例如下，3号消费者在 <code>23:08:54</code> 收到消息后，还没有确认(确认后会打印 Done )，就被我们 kill 掉了。2号消费者在<code>23:08:55</code>重新收到了这条消息。</p>
 <p><img src="https://passage-1253400711.cos-website.ap-beijing.myqcloud.com/2020-01-08-151127.png" alt=""></p>
@@ -1072,24 +1068,24 @@ RabbitMQ Tutorial 学习笔记
 <h2 id="声明队列持久化">声明队列持久化</h2>
 <p>声明队列持久化的代码如下:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>    <span style="color:#000">q</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">ch</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">QueueDeclare</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">&#34;task_queue&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// Queue name
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// durable  持久性
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// delete when unused
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// exclusive 独占
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// no-wait
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// arguments
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">&#34;task_queue&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// Queue name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// durable  持久性</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// delete when unused</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// exclusive 独占</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>   <span style="color:#8f5902;font-style:italic">// no-wait</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">// arguments</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">)</span>
 </span></span></code></pre></div><p><strong>注意:</strong> 在声明队列时，如果我们声明一个已经存在的队列，但是初始化参数不同的时候，<code>QueueDeclare</code>会失败并返回一个 err。</p>
 <h2 id="声明消息持久化">声明消息持久化</h2>
 <p>在发送消息的时候，我们可以设置一个 <code>amqp.Persistent</code> 选项，来表明这个消息应该被持久化。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>    <span style="color:#000">err</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">ch</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Publish</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">//exchange
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000">q</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// route key
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// mandatory 强制的
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// immediate 即时的
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000">amqp</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Publishing</span><span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">DeliveryMode</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">amqp</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Persistent</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// 声明消息持久化
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>            <span style="color:#000">ContentType</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;text/plain&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#8f5902;font-style:italic">//exchange</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">q</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// route key</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// mandatory 强制的</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">false</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// immediate 即时的</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">amqp</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Publishing</span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">DeliveryMode</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000">amqp</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Persistent</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// 声明消息持久化</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">ContentType</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;text/plain&#34;</span><span style="color:#000;font-weight:bold">,</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#000">Body</span><span style="color:#000;font-weight:bold">:</span>        <span style="color:#000;font-weight:bold">[]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">body</span><span style="color:#000;font-weight:bold">),</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">},</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">)</span>
@@ -1145,7 +1141,7 @@ RabbitMQ Tutorial 学习笔记
        integrity="sha512-YJVxTjqttjsU3cSvaTRqsSl0wbRgZUNF+NGGCgto/MUbIvaLdXQzGTCQu4CvyJZbZctgflVB0PXw9LLmTWm5/w==" crossorigin="anonymous"
        onload='renderMathInElement(document.body, null);'>
 </script>
-<script src="/js/main.min.04ae8cb44cf587d6a2d6e50f7d0276bee94133052ab39f783da0b290f7986c6c.js" integrity="sha256-BK6MtEz1h9ai1uUPfQJ2vulBMwUqs594PaCykPeYbGw=" crossorigin="anonymous"></script>
+<script src="/js/main.min.85d1295e77b8cb64a3e7ac5b9239aa65c4410a289bbe21c0ae8359f1617c0461.js" integrity="sha256-hdEpXne4y2Sj56xbkjmqZcRBCiibviHAroNZ8WF8BGE=" crossorigin="anonymous"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 

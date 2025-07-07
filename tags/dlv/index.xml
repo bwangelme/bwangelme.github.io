@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>dlv on 647 Universe</title>
+    <title>Dlv on 647 Universe</title>
     <link>https://bwangel.me/tags/dlv/</link>
-    <description>Recent content in dlv on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Dlv on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 12 Jan 2022 17:56:10 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/dlv/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Sep 2023 10:02:01 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/dlv/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go gcflags/ldflags 的说明</title>
       <link>https://bwangel.me/docs/golang/go_gcflags/</link>
       <pubDate>Wed, 12 Jan 2022 17:56:10 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/golang/go_gcflags/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;Go 链接选项和编译选项的说明&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Go 链接选项和编译选项的说明&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

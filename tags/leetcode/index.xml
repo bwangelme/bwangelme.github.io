@@ -1,183 +1,103 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>LeetCode on 647 Universe</title>
+    <title>Leetcode on 647 Universe</title>
     <link>https://bwangel.me/tags/leetcode/</link>
-    <description>Recent content in LeetCode on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Leetcode on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Fri, 03 Nov 2023 08:45:11 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/leetcode/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 May 2024 23:35:45 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/leetcode/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Leetcode第96题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-96/</link>
       <pubDate>Fri, 03 Nov 2023 08:45:11 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-96/</guid>
-      <description>题目 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。
-示例 1：
-输入：n = 3 输出：5
-示例 2：
-输入：n = 1 输出：1
-提示：
-1 &amp;lt;= n &amp;lt;= 19 解题思路 这个题目主要的难度在公式推导上，我们可以用动态规划的思路来求解。
-令 \( G(N) \) 表示 n 互不相同的整数组成的二叉搜索树的数量。 \( F(i, N) \) 表示由 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量 可得, \( G(N) \) 是由每个 i 作为根节点的互不相同的二叉搜索树的数量的总和，此公式记做公式(1) $$G(N) = \sum_{i=1}^{N} F(i, N) \tag{1}$$接着，我们需要再推导出 \( F(i, N) \) 和 \( G(N) \) 的关系，就可以得到我们的递推公式了。
-要想求 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量，我们可以先求出左右两个子树的数量，左右两个子树相乘，即是总的数量。</description>
+      <description>&lt;h2 id=&#34;题目&#34;&gt;题目&lt;/h2&gt;&#xA;&lt;p&gt;给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-11-03-084706.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;示例 1：&lt;/p&gt;&#xA;&lt;p&gt;输入：n = 3&#xA;输出：5&lt;/p&gt;&#xA;&lt;p&gt;示例 2：&lt;/p&gt;&#xA;&lt;p&gt;输入：n = 1&#xA;输出：1&lt;/p&gt;&#xA;&lt;p&gt;提示：&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;1 &amp;lt;= n &amp;lt;= 19&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;h2 id=&#34;解题思路&#34;&gt;解题思路&lt;/h2&gt;&#xA;&lt;p&gt;这个题目主要的难度在公式推导上，我们可以用动态规划的思路来求解。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;令 \( G(N) \) 表示 n 互不相同的整数组成的二叉搜索树的数量。&lt;/li&gt;&#xA;&lt;li&gt;\( F(i, N) \) 表示由 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量&lt;/li&gt;&#xA;&lt;li&gt;可得, \( G(N) \) 是由每个 i 作为根节点的互不相同的二叉搜索树的数量的总和，此公式记做公式(1)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&#xA;&lt;div class=&#34;math&#34;&gt;$$G(N) = \sum_{i=1}^{N} F(i, N) \tag{1}$$&lt;/div&gt;&lt;p&gt;接着，我们需要再推导出 \( F(i, N) \) 和 \( G(N) \) 的关系，就可以得到我们的递推公式了。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Leetcode 第343题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-343/</link>
       <pubDate>Tue, 14 Apr 2020 23:43:14 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-343/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/integer-break/&#34;&gt;LeetCode 343题&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/integer-break/&#34;&gt;LeetCode 343题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Leetcode 第342题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-342/</link>
       <pubDate>Tue, 07 Apr 2020 18:14:41 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-342/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/power-of-four/&#34;&gt;LeetCode 342题&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/power-of-four/&#34;&gt;LeetCode 342题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Leetcode 第65题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-65/</link>
       <pubDate>Fri, 03 Apr 2020 12:37:29 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-65/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/valid-number/&#34;&gt;LeetCode 65题&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/valid-number/&#34;&gt;LeetCode 65题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Leetcode 第2题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-2/</link>
       <pubDate>Wed, 19 Jun 2019 23:10:11 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-2/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/add-two-numbers/&#34;&gt;LeetCode 2题&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/add-two-numbers/&#34;&gt;LeetCode 2题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>3: 无重复字符的最长子串</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-3/</link>
       <pubDate>Wed, 19 Jun 2019 23:03:47 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-3/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/longest-substring-without-repeating-characters/&#34;&gt;LeetCode 3题&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/longest-substring-without-repeating-characters/&#34;&gt;LeetCode 3题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Leetcode 第29题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-29/</link>
       <pubDate>Mon, 13 May 2019 23:27:08 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-29/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problemset/all/&#34;&gt;LeetCode 29题&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problemset/all/&#34;&gt;LeetCode 29题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Leetcode 第191题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-191/</link>
       <pubDate>Tue, 30 Apr 2019 13:21:59 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-191/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/number-of-1-bits/&#34;&gt;LeetCode 191题&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/number-of-1-bits/&#34;&gt;LeetCode 191题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Leetcode 第338题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-338/</link>
       <pubDate>Sun, 21 Apr 2019 23:37:34 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-338/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/reverse-words-in-a-string/&#34;&gt;LeetCode 338题&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/reverse-words-in-a-string/&#34;&gt;LeetCode 338题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Leetcode 第151题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-151/</link>
       <pubDate>Sun, 14 Apr 2019 20:44:04 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-151/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/reverse-words-in-a-string/&#34;&gt;LeetCode 151题&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/reverse-words-in-a-string/&#34;&gt;LeetCode 151题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>258: 各位相加</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-258/</link>
       <pubDate>Tue, 09 Apr 2019 00:28:55 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-258/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/add-digits/&#34;&gt;LeetCode 258题&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/add-digits/&#34;&gt;LeetCode 258题&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Leetcode 第8题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-8/</link>
       <pubDate>Tue, 02 Apr 2019 21:51:28 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-8/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;https://leetcode.com/problems/string-to-integer-atoi/submissions/&#34;&gt;https://leetcode.com/problems/string-to-integer-atoi/submissions/&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://leetcode.com/problems/string-to-integer-atoi/submissions/&#34;&gt;https://leetcode.com/problems/string-to-integer-atoi/submissions/&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Leetcode 661题</title>
       <link>https://bwangel.me/docs/algo/leetcode/leetcode-661/</link>
       <pubDate>Sun, 24 Mar 2019 19:58:39 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/algo/leetcode/leetcode-661/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;LeetCode 661题&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/non-decreasing-array/&#34;&gt;https://leetcode.com/problems/non-decreasing-array/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;LeetCode 661题&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.com/problems/non-decreasing-array/&#34;&gt;https://leetcode.com/problems/non-decreasing-array/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

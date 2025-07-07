@@ -1,31 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>life on 647 Universe</title>
+    <title>Life on 647 Universe</title>
     <link>https://bwangel.me/tags/life/</link>
-    <description>Recent content in life on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Life on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Sat, 26 Feb 2022 17:19:24 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/life/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 Dec 2023 19:16:20 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/life/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如何阅读网络上的小作文</title>
       <link>https://bwangel.me/docs/life/read/</link>
       <pubDate>Sat, 26 Feb 2022 17:19:24 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/life/read/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>关于学习内容的思考</title>
       <link>https://bwangel.me/docs/life/%E5%85%B3%E4%BA%8E%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9%E7%9A%84%E6%80%9D%E8%80%83/</link>
       <pubDate>Wed, 14 Aug 2019 23:21:52 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/life/%E5%85%B3%E4%BA%8E%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9%E7%9A%84%E6%80%9D%E8%80%83/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;关于学什么的一点杂想&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;关于学什么的一点杂想&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

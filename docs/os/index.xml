@@ -4,21 +4,16 @@
     <title>操作系统 on 647 Universe</title>
     <link>https://bwangel.me/docs/os/</link>
     <description>Recent content in 操作系统 on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 06 Nov 2023 11:14:49 +0800</lastBuildDate><atom:link href="https://bwangel.me/docs/os/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Nov 2023 11:16:52 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/docs/os/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Review 《Memory Consistency Models: A Tutorial》</title>
       <link>https://bwangel.me/docs/os/review-memory-consistency-models/</link>
       <pubDate>Sat, 16 Jan 2021 13:34:40 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/os/review-memory-consistency-models/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;原文地址: &lt;a href=&#34;https://www.cs.utexas.edu/~bornholt/post/memory-models.html&#34;&gt;https://www.cs.utexas.edu/~bornholt/post/memory-models.html&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://www.cs.utexas.edu/~bornholt/post/memory-models.html&#34;&gt;https://www.cs.utexas.edu/~bornholt/post/memory-models.html&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,93 +1,68 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>kubernetes on 647 Universe</title>
+    <title>Kubernetes on 647 Universe</title>
     <link>https://bwangel.me/tags/kubernetes/</link>
-    <description>Recent content in kubernetes on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Kubernetes on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 16 Aug 2022 23:14:25 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 28 Sep 2023 11:11:53 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>K8S 中观察 CPU Throttling 情况的指标</title>
       <link>https://bwangel.me/docs/k8s/k8s-cpu-throttle-prom-metric/</link>
       <pubDate>Tue, 16 Aug 2022 23:14:25 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/k8s/k8s-cpu-throttle-prom-metric/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;解释了一下观察 CPU Throttling 情况的指标&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;解释了一下观察 CPU Throttling 情况的指标&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>11-architecture</title>
       <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-11/</link>
       <pubDate>Wed, 26 Jan 2022 23:08:47 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-11/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>10-statefulset</title>
       <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-10/</link>
       <pubDate>Tue, 18 Jan 2022 10:11:27 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-10/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>7-configmap-secert</title>
       <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-7/</link>
       <pubDate>Fri, 08 Jan 2021 07:51:51 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-7/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;ConfigMap 和 Secret 配置应用程序&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;ConfigMap 和 Secret 配置应用程序&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>6-volume</title>
       <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-6/</link>
       <pubDate>Sun, 11 Oct 2020 14:47:13 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-6/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;卷: 将磁盘挂载到容器&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;卷: 将磁盘挂载到容器&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>5-service</title>
       <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-5/</link>
       <pubDate>Wed, 22 Apr 2020 21:44:44 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-5/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;服务：让客户端发现 Pod 并与之通信&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;服务：让客户端发现 Pod 并与之通信&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>4-pod-replicaset</title>
       <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-4/</link>
       <pubDate>Wed, 01 Apr 2020 21:21:52 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-4/</guid>
       <description>&lt;p&gt;副本机制和其他控制器 &amp;ndash; 部署托管的 Pod&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>3-Pod</title>
       <link>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-3/</link>
       <pubDate>Thu, 19 Mar 2020 00:03:01 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/k8s/k8s-in-actions/k8s-in-actions-3/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;Pod - 运行于 Kubernetes 中的容器&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Pod - 运行于 Kubernetes 中的容器&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

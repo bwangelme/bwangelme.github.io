@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tools on 647 Universe</title>
+    <title>Tools on 647 Universe</title>
     <link>https://bwangel.me/tags/tools/</link>
-    <description>Recent content in tools on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Tools on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 27 Nov 2024 16:50:23 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 27 Nov 2024 16:55:55 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>httpie</title>
       <link>https://bwangel.me/docs/tools/httpie/</link>
       <pubDate>Wed, 27 Nov 2024 16:50:23 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/tools/httpie/</guid>
-      <description>httpie 使用 jq 解析 JSON 响应 http -v -o - -d https://api.github.com/users/bwangelme | jq &amp;#39;.bio&amp;#39; 命令中选项的说明
--v 输出请求体，请求 header，响应 header
--o - 将 response body 输出到 stdout 中
--d 当 -d 选项开启时，-o 会只将 response body 输出到 stdout 中，其他部分(header, 请求体)会输出到 stderr 中
-| jq &#39;.bio&#39; 输出响应体中的 bio 字段
-ø&amp;gt; http -v -o - -d https://api.github.com/users/bwangelme | jq &amp;#39;.bio&amp;#39; GET /users/bwangelme HTTP/1.1 Accept: */* Accept-Encoding: identity Connection: keep-alive Host: api.github.com User-Agent: HTTPie/3.2.3 HTTP/1.</description>
+      <description>&lt;h2 id=&#34;httpie-使用-jq-解析-json-响应&#34;&gt;httpie 使用 jq 解析 JSON 响应&lt;/h2&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;http -v -o - -d https://api.github.com/users/bwangelme | jq &amp;#39;.bio&amp;#39;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;命令中选项的说明&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;code&gt;-v&lt;/code&gt; 输出请求体，请求 header，响应 header&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;code&gt;-o -&lt;/code&gt; 将 response body 输出到 stdout 中&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;code&gt;-d&lt;/code&gt; 当 &lt;code&gt;-d&lt;/code&gt; 选项开启时，&lt;code&gt;-o&lt;/code&gt; 会只将 response body 输出到 stdout 中，其他部分(header, 请求体)会输出到 stderr 中&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;code&gt;| jq &#39;.bio&#39;&lt;/code&gt; 输出响应体中的 &lt;code&gt;bio&lt;/code&gt; 字段&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ø&amp;gt; http -v -o - -d https://api.github.com/users/bwangelme | jq &amp;#39;.bio&amp;#39;&#xA;GET /users/bwangelme HTTP/1.1&#xA;Accept: */*&#xA;Accept-Encoding: identity&#xA;Connection: keep-alive&#xA;Host: api.github.com&#xA;User-Agent: HTTPie/3.2.3&#xA;&#xA;&#xA;&#xA;HTTP/1.1 200 OK&#xA;Accept-Ranges: bytes&#xA;Access-Control-Allow-Origin: *&#xA;Access-Control-Expose-Headers: ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset&#xA;Cache-Control: public, max-age=60, s-maxage=60&#xA;Content-Length: 1254&#xA;Content-Security-Policy: default-src &amp;#39;none&amp;#39;&#xA;Content-Type: application/json; charset=utf-8&#xA;Date: Wed, 27 Nov 2024 08:48:31 GMT&#xA;ETag: W/&amp;#34;602829689b0bfe6dd876cdac25d7bb03b2366b7c52c3c65cfb461b4664ba1743&amp;#34;&#xA;Last-Modified: Tue, 05 Nov 2024 07:45:58 GMT&#xA;Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin&#xA;Server: github.com&#xA;Strict-Transport-Security: max-age=31536000; includeSubdomains; preload&#xA;Vary: Accept,Accept-Encoding, Accept, X-Requested-With&#xA;X-Content-Type-Options: nosniff&#xA;X-Frame-Options: deny&#xA;X-GitHub-Media-Type: github.v3; format=json&#xA;X-GitHub-Request-Id: DC16:22CCB7:6C77CC:7A9813:6746DCE6&#xA;X-RateLimit-Limit: 60&#xA;X-RateLimit-Remaining: 53&#xA;X-RateLimit-Reset: 1732699633&#xA;X-RateLimit-Resource: core&#xA;X-RateLimit-Used: 7&#xA;X-XSS-Protection: 0&#xA;x-github-api-version-selected: 2022-11-28&#xA;&#xA;Downloading to &amp;lt;stdout&amp;gt;&#xA;Done. 1.3 kB in 00:0.04114 (30.5 kB/s)&#xA;&amp;#34;不念过去，不畏将来&amp;#34;&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
-    
   </channel>
 </rss>

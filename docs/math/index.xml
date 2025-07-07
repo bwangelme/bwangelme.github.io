@@ -4,17 +4,16 @@
     <title>Math on 647 Universe</title>
     <link>https://bwangel.me/docs/math/</link>
     <description>Recent content in Math on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 12 Jun 2024 18:46:01 +0800</lastBuildDate><atom:link href="https://bwangel.me/docs/math/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Jun 2024 18:51:37 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/docs/math/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Calculus(微积分)</title>
       <link>https://bwangel.me/docs/math/calculus/</link>
       <pubDate>Wed, 12 Jun 2024 18:46:48 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/math/calculus/</guid>
-      <description>复合函数定义域 \( f(g(x)) \) 的定义域, 是 \( g \) 的 定义域中那些使 \( g(x) \) 处于 \( f \) 的定义域中的数 \( x \) 的集合.</description>
+      <description>&lt;h2 id=&#34;复合函数定义域&#34;&gt;复合函数定义域&lt;/h2&gt;&#xA;&lt;p&gt;\( f(g(x)) \) 的定义域, 是 \( g \) 的 定义域中那些使 \( g(x) \) 处于 \( f \) 的定义域中的数 \( x \) 的集合.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

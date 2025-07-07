@@ -1,338 +1,180 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>python on 647 Universe</title>
+    <title>Python on 647 Universe</title>
     <link>https://bwangel.me/tags/python/</link>
-    <description>Recent content in python on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Python on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Thu, 13 Jun 2024 15:40:02 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Jun 2024 15:45:16 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Pytest Tips</title>
       <link>https://bwangel.me/docs/python/pytest/</link>
       <pubDate>Thu, 13 Jun 2024 15:40:02 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/python/pytest/</guid>
-      <description>pytest 启动 pdb 调试 安装 ipython
-在想要打断点的地方, 写入语句 import pdb; pdb.set_trace()
-执行 pytest 测试函数
-pytest dir/test_files --pdb --pdbcls=IPython.terminal.debugger:TerminalPdb Pytest 开启日志记录 在根目录中创建 conftest.py 文件 在 conftest.py 文件中写入以下函数 def pytest_configure(config): logger = logging.getLogger(&amp;#39;&amp;#39;) logger.setLevel(logging.DEBUG) 这将会将所有 logger 的级别设置为 debug, pytest 执行测试的过程中,在 ---Captured log call--- 章节中将会看到捕获的日志输出</description>
+      <description>&lt;h2 id=&#34;pytest-启动-pdb-调试&#34;&gt;pytest 启动 pdb 调试&lt;/h2&gt;&#xA;&lt;ol start=&#34;0&#34;&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;安装 ipython&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;在想要打断点的地方, 写入语句 &lt;code&gt;import pdb; pdb.set_trace()&lt;/code&gt;&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;执行 pytest 测试函数&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pytest dir/test_files --pdb --pdbcls=IPython.terminal.debugger:TerminalPdb&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;pytest-开启日志记录&#34;&gt;Pytest 开启日志记录&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;在根目录中创建 &lt;code&gt;conftest.py&lt;/code&gt; 文件&lt;/li&gt;&#xA;&lt;li&gt;在 &lt;code&gt;conftest.py&lt;/code&gt; 文件中写入以下函数&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;def pytest_configure(config):&#xA;    logger = logging.getLogger(&amp;#39;&amp;#39;)&#xA;    logger.setLevel(logging.DEBUG)&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这将会将所有 logger 的级别设置为 debug, pytest 执行测试的过程中,在 &lt;code&gt;---Captured log call---&lt;/code&gt; 章节中将会看到捕获的日志输出&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>利用 Python 处理字符串</title>
       <link>https://bwangel.me/docs/linux/python-shell/</link>
       <pubDate>Thu, 14 Dec 2023 12:06:58 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/linux/python-shell/</guid>
-      <description>/tmp/abc.md 中的内容如下
-subject/music antispam/karazhan 我想输出成
-Repo(dir=&amp;#39;music&amp;#39;, name=&amp;#39;subject/music&amp;#39;), Repo(dir=&amp;#39;karazhan&amp;#39;, name=&amp;#39;antispam/karazhan&amp;#39;), 可以利用 Python 来做解析重组字符串的工作, sys.argv[1] 就是每行想要解析的字符串
-parse.py import sys dir_=sys.argv[1].split(&amp;#39;/&amp;#39;)[1] name=sys.argv[1] print(&amp;#34;Repo(dir=&amp;#39;%s&amp;#39;, name=&amp;#39;%s&amp;#39;),&amp;#34; % (dir_, name)) 如果 xargs 不加 -I 那就是将多行内容聚合到一行解析。
-cat /tmp/abc.md | rg -v &amp;#39;^#&amp;#39; | xargs -I{} python3 /tmp/parse.py {} </description>
+      <description>&lt;p&gt;/tmp/abc.md 中的内容如下&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;subject/music&#xA;antispam/karazhan&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我想输出成&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Repo(dir=&amp;#39;music&amp;#39;, name=&amp;#39;subject/music&amp;#39;),&#xA;Repo(dir=&amp;#39;karazhan&amp;#39;, name=&amp;#39;antispam/karazhan&amp;#39;),&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以利用 Python 来做解析重组字符串的工作, &lt;code&gt;sys.argv[1]&lt;/code&gt; 就是每行想要解析的字符串&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;parse.py&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;sys&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;dir_&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sys&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;argv&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;split&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)[&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sys&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;argv&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Repo(dir=&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;%s&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;, name=&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;%s&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;),&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;dir_&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果 xargs 不加 -I 那就是将多行内容聚合到一行解析。&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat /tmp/abc.md | rg -v &amp;#39;^#&amp;#39; | xargs -I{} python3 /tmp/parse.py {}&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
-    
     <item>
       <title>Python2 的正则在 Mac 和 Linux 上的不同表现</title>
       <link>https://bwangel.me/docs/python/unicode-re/</link>
       <pubDate>Wed, 06 Dec 2023 12:20:47 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/python/unicode-re/</guid>
-      <description>表现 s = u&amp;#39;玛丽黛佳眉笔只-需-18,冲p腹t製o2𝒂I5EfW4xPmTq𝒃o2打🤔开桃o寶&amp;#39; 这个字符串 s 是一段淘口令，核心内容就是 𝒂 和 𝒃 之间的 ID I5EfW4xPmTq, 我们想用一个正则表达式将 ID 捕获出来。
-𝒂 和 𝒃 的 unicode 码点不在基本平面内，在1号平面内。Unicode 各个平面的字符范围参考 维基百科
-在 MacOS 的 Python2 上，可以用下面这段正则捕获
-ur&amp;#34;[\uD800-\uDBFF][\uDC00-\uDFFF]([a-zA-Z0-9]{11})[\uD800-\uDBFF][\uDC00-\uDFFF]&amp;#34; D800-DBFF, DC00-DFFF 表示非基本平面的字符，用 utf-16 编码后，生成的两个字节。
-MacOS 的 Python2 中，编译的时候默认使用了 UCS2 作为 Unicode 的编码实现，sys.maxunicode == 65535， 它不支持展示非基本平面外的 unicode 字符，所以只能用这种办法来绕过。
-在 Linux 的 Python2 中，上述正则就失效了，需要用另外一个正则
-ur&amp;#34;[\U00010000-\U0001FFFF]([a-zA-Z0-9]{11})[\U00010000-\U0001FFFF]&amp;#34; 00010000-0001FFFF 表示1号平面内的所有字符。
-Linux 的 Python2 中，Unicode 的编码实现使用的是 UCS4，sys.maxunicode == 1114111, 它可以展示 Unicode 17 个平面中的所有字符，所以在正则中可以直接写非基本平面的码点
-如何开启 UCS4 编译 Python 的时候，指定 --enable-unicode=ucs4 即可指定 unicode 的编码实现是 UCS4, 从而支持展示所有平面的 Unicode 码点。</description>
+      <description>&lt;h2 id=&#34;表现&#34;&gt;表现&lt;/h2&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;s = u&amp;#39;玛丽黛佳眉笔只-需-18,冲p腹t製o2𝒂I5EfW4xPmTq𝒃o2打🤔开桃o寶&amp;#39;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个字符串 s 是一段淘口令，核心内容就是 𝒂 和 𝒃 之间的 ID &lt;code&gt;I5EfW4xPmTq&lt;/code&gt;, 我们想用一个正则表达式将 ID 捕获出来。&lt;/p&gt;&#xA;&lt;p&gt;𝒂 和 𝒃 的 unicode 码点不在基本平面内，在1号平面内。Unicode 各个平面的字符范围参考 &lt;a href=&#34;https://zh.wikipedia.org/wiki/Unicode%E5%AD%97%E7%AC%A6%E5%B9%B3%E9%9D%A2%E6%98%A0%E5%B0%84&#34;&gt;维基百科&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;在 MacOS 的 Python2 上，可以用下面这段正则捕获&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ur&amp;#34;[\uD800-\uDBFF][\uDC00-\uDFFF]([a-zA-Z0-9]{11})[\uD800-\uDBFF][\uDC00-\uDFFF]&amp;#34;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;D800-DBFF&lt;/code&gt;, &lt;code&gt;DC00-DFFF&lt;/code&gt; 表示非基本平面的字符，用 utf-16 编码后，生成的两个字节。&lt;/p&gt;&#xA;&lt;p&gt;MacOS 的 Python2 中，编译的时候默认使用了 UCS2 作为 Unicode 的编码实现，&lt;code&gt;sys.maxunicode == 65535&lt;/code&gt;， 它不支持展示非基本平面外的 unicode 字符，所以只能用这种办法来绕过。&lt;/p&gt;&#xA;&lt;p&gt;在 Linux 的 Python2 中，上述正则就失效了，需要用另外一个正则&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ur&amp;#34;[\U00010000-\U0001FFFF]([a-zA-Z0-9]{11})[\U00010000-\U0001FFFF]&amp;#34;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;00010000-0001FFFF&lt;/code&gt; 表示1号平面内的所有字符。&lt;/p&gt;&#xA;&lt;p&gt;Linux 的 Python2 中，Unicode 的编码实现使用的是 UCS4，&lt;code&gt;sys.maxunicode == 1114111&lt;/code&gt;, 它可以展示 Unicode 17 个平面中的所有字符，所以在正则中可以直接写非基本平面的码点&lt;/p&gt;&#xA;&lt;h2 id=&#34;如何开启-ucs4&#34;&gt;如何开启 UCS4&lt;/h2&gt;&#xA;&lt;p&gt;编译 Python 的时候，指定 &lt;code&gt;--enable-unicode=ucs4&lt;/code&gt; 即可指定 unicode 的编码实现是 UCS4, 从而支持展示所有平面的 Unicode 码点。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Thrift Python Client 解析负数 field id 失败</title>
       <link>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</link>
       <pubDate>Thu, 23 Nov 2023 17:27:03 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/thrift/python-fastbinary-negative-field-id-error/</guid>
-      <description>thrift python 的 fastbinary 是什么 thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。
-序列化的方式有多种，JSON, Binary, Compact。
-Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实现。C++ 实现的这份我们叫做 fastbinary。
-使用 TBinaryProtocol 初始化 protocol ，调用的是纯 Python 实现。TBinaryProtocolAccelerated 调用的是 C++ 实现。
-问题描述 Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。
-我们创建一个 thrift 服务，它的 idl 文件定义如下 service Service { string hello(1: string name) i64 add(i64 a, i64 b) } hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)</description>
+      <description>&lt;h2 id=&#34;thrift-python-的-fastbinary-是什么&#34;&gt;thrift python 的 fastbinary 是什么&lt;/h2&gt;&#xA;&lt;p&gt;thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。&lt;/p&gt;&#xA;&lt;p&gt;序列化的方式有多种，JSON, Binary, Compact。&lt;/p&gt;&#xA;&lt;p&gt;Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实现。C++ 实现的这份我们叫做 fastbinary。&lt;/p&gt;&#xA;&lt;p&gt;使用 &lt;code&gt;TBinaryProtocol&lt;/code&gt; 初始化 protocol ，调用的是纯 Python 实现。&lt;code&gt;TBinaryProtocolAccelerated&lt;/code&gt; 调用的是 C++ 实现。&lt;/p&gt;&#xA;&lt;h2 id=&#34;问题描述&#34;&gt;问题描述&lt;/h2&gt;&#xA;&lt;p&gt;Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;我们创建一个 thrift 服务，它的 idl 文件定义如下&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;service Service {&#xA;   string hello(1: string name)&#xA;   i64 add(i64 a, i64 b)&#xA;}&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Python2 使用 Thrift 为什么会出现 EINTR 错误</title>
       <link>https://bwangel.me/docs/python/thrift-eintr/</link>
       <pubDate>Fri, 27 Oct 2023 09:22:30 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/python/thrift-eintr/</guid>
-      <description>EINTR 错误是什么 在 man 7 signal 中写到，
-If a signal handler is invoked while a system call or library function call is blocked, then either:
-• the call is automatically restarted after the signal handler returns; or
-• the call fails with the error EINTR.
-如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况
-在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。
-例如
-read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?</description>
+      <description>&lt;h2 id=&#34;eintr-错误是什么&#34;&gt;EINTR 错误是什么&lt;/h2&gt;&#xA;&lt;p&gt;在 &lt;a href=&#34;https://man7.org/linux/man-pages/man7/signal.7.html&#34;&gt;man 7 signal&lt;/a&gt; 中写到，&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;If a signal handler is invoked while a system call or library&#xA;function call is blocked, then either:&lt;/p&gt;&#xA;&lt;p&gt;•  the call is automatically restarted after the signal handler&#xA;returns; or&lt;/p&gt;&#xA;&lt;p&gt;•  the call fails with the error EINTR.&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;在信号处理函数执行完以后，系统调用或库函数调用继续执行&lt;/li&gt;&#xA;&lt;li&gt;系统调用或库函数调用失败，返回错误码 EINTR&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;具体会发生哪种情况，取决于具体的系统调用接口和是否通过 &lt;a href=&#34;https://man7.org/linux/man-pages/man7/signal.7.html&#34;&gt;sigaction&lt;/a&gt; 设置了 &lt;code&gt;SA_RESTART&lt;/code&gt; 标记。&lt;/p&gt;&#xA;&lt;p&gt;例如&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;read&lt;/code&gt;, &lt;code&gt;readv&lt;/code&gt;, &lt;code&gt;wait&lt;/code&gt;, 没有设置超时的 &lt;code&gt;recv&lt;/code&gt; 和 &lt;code&gt;send&lt;/code&gt; 等调用会受到 &lt;code&gt;SA_RESTART&lt;/code&gt; 标记的控制，继续执行或返回 EINTR 错误&lt;/li&gt;&#xA;&lt;li&gt;设置了超时的 &lt;code&gt;send&lt;/code&gt; 和 &lt;code&gt;recv&lt;/code&gt;, &lt;code&gt;epoll_wait&lt;/code&gt;, &lt;code&gt;poll&lt;/code&gt; 等接口不会受到 &lt;code&gt;SA_RESTART&lt;/code&gt; 的影响，都是直接返回 EINTR 错误码&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;为什么要有-eintr-错误&#34;&gt;为什么要有 EINTR 错误&lt;/h2&gt;&#xA;&lt;p&gt;从上面的 man 文档中可知，&lt;code&gt;EINTR&lt;/code&gt; 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>从源码安装 confluent-kafka-python</title>
       <link>https://bwangel.me/docs/kafka/confluent_python.md/</link>
       <pubDate>Fri, 11 Mar 2022 14:34:44 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/kafka/confluent_python.md/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Python 面试题汇总</title>
       <link>https://bwangel.me/docs/python/python-interview/</link>
       <pubDate>Wed, 14 Mar 2018 09:00:03 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/python/python-interview/</guid>
       <description>&lt;p&gt;Python 面试题集合&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Django get_or_create 执行过程</title>
       <link>https://bwangel.me/docs/python/django_get_or_create/</link>
       <pubDate>Wed, 03 Jan 2018 22:31:01 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/python/django_get_or_create/</guid>
       <description>&lt;p&gt;关于 Django 文档&lt;code&gt;get_or_create&lt;/code&gt;的解释&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Python Upgrade Importerror</title>
       <link>https://bwangel.me/docs/python/python-upgrade-importerror/</link>
       <pubDate>Tue, 05 Dec 2017 22:33:57 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/python/python-upgrade-importerror/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;记一次因 Python 升级导致的 ImportError&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;记一次因 Python 升级导致的 ImportError&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Python的collections模块小结</title>
       <link>https://bwangel.me/docs/python/python-collections/</link>
       <pubDate>Sun, 13 Aug 2017 14:06:24 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/python-collections/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;本文章的目标是逐步总结Python中&lt;a href=&#34;http://devdocs.io/python~3.6/library/collections&#34;&gt;collection&lt;/a&gt;模块的用法，会不定期进行更新。&lt;/li&gt;
-&lt;li&gt;目前总结了Counter类的用法&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;本文章的目标是逐步总结Python中&lt;a href=&#34;http://devdocs.io/python~3.6/library/collections&#34;&gt;collection&lt;/a&gt;模块的用法，会不定期进行更新。&lt;/li&gt;&#xA;&lt;li&gt;目前总结了Counter类的用法&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Django的override_settings修饰器浅析</title>
       <link>https://bwangel.me/docs/python/django-override-settings/</link>
       <pubDate>Sun, 25 Jun 2017 20:17:07 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/django-override-settings/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;Django的Settings模块代码说明&lt;/li&gt;
-&lt;li&gt;Django的&lt;code&gt;override_settings&lt;/code&gt;修饰器分析&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Django的Settings模块代码说明&lt;/li&gt;&#xA;&lt;li&gt;Django的&lt;code&gt;override_settings&lt;/code&gt;修饰器分析&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Django中import_string的实现</title>
       <link>https://bwangel.me/docs/python/django-import-string/</link>
       <pubDate>Thu, 08 Jun 2017 07:17:28 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/django-import-string/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;importlib.import_module 函数的功能&lt;/li&gt;
-&lt;li&gt;import_string 函数的实现&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;importlib.import_module 函数的功能&lt;/li&gt;&#xA;&lt;li&gt;import_string 函数的实现&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>简单聊聊Python中的wraps修饰器</title>
       <link>https://bwangel.me/docs/python/python-wraps/</link>
       <pubDate>Tue, 09 May 2017 10:40:54 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/python-wraps/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Python 中的wraps修饰器分析&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Python 中的wraps修饰器分析&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Werkzeug 的 wsgi-app 说明</title>
       <link>https://bwangel.me/docs/python/wsgi-app-example/</link>
       <pubDate>Mon, 23 Jan 2017 17:31:00 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/wsgi-app-example/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;简要说明了一下WSGI&lt;/li&gt;
-&lt;li&gt;分析了Werkzeug的一个官方例子&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;简要说明了一下WSGI&lt;/li&gt;&#xA;&lt;li&gt;分析了Werkzeug的一个官方例子&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>说说 Python2 中的字符串编码</title>
       <link>https://bwangel.me/docs/python/python-string-encoding/</link>
       <pubDate>Wed, 09 Nov 2016 07:39:38 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/python-string-encoding/</guid>
-      <description>摘要:
-Python2 中 Str 和 Unicode 分别存了什么 raw_unicode_escape 编码的作用 Python2 中的一个经典编码问题 Python2 中 Str 和 Unicode 分别存了什么 在 Python2 中，str 存储的是字节流，unicode 存储的是 Unicode 码点
-In [1]: &amp;#39;中&amp;#39; Out[1]: &amp;#39;\xe4\xb8\xad&amp;#39; In [2]: u&amp;#39;中&amp;#39; Out[2]: u&amp;#39;\u4e2d&amp;#39; 例如上面的例子，我们分别输入了一个汉字 中，str(&#39;中&#39;) 显示的是 \xe4\xb8\xad，unicode(&#39;中&#39;) 显示的是 \u4e2d。
-当我们用 str 存储汉字，在终端中输入时，Python 会根据我们系统的编码(通过 locale.getdefaultlocale() 获取)，将其自动 encode 成字节流。
-我系统的编码是 utf-8，所以 str(&#39;中&#39;) 显示的就是 中 经过 utf-8 编码后的内容 \xe4\xb8\xad。
-当我们用 unicode 存储汉字时，Python 会存储这个汉字对应的码点。所以 unicode(&#39;中&#39;) 显示的是 \u4e2d。
-raw_unicode_escape 编码是什么 raw_unicode_escape 编码的作用是将 unicode 码点变成 \uxxxx 形式的字节流。或者将 \uxxx 形式的字节流转换成 unicode 码点。</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Python2 中 Str 和 Unicode 分别存了什么&lt;/li&gt;&#xA;&lt;li&gt;raw_unicode_escape 编码的作用&lt;/li&gt;&#xA;&lt;li&gt;Python2 中的一个经典编码问题&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;&#xA;&lt;!-- more --&gt;&#xA;&lt;h2 id=&#34;python2-中-str-和-unicode-分别存了什么&#34;&gt;Python2 中 Str 和 Unicode 分别存了什么&lt;/h2&gt;&#xA;&lt;p&gt;在 Python2 中，str 存储的是字节流，unicode 存储的是 Unicode 码点&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;In&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;中&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;Out&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;\xe4\xb8\xad&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;In&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;中&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;Out&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]:&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;\u4e2d&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;例如上面的例子，我们分别输入了一个汉字 &lt;code&gt;中&lt;/code&gt;，&lt;code&gt;str(&#39;中&#39;)&lt;/code&gt; 显示的是 &lt;code&gt;\xe4\xb8\xad&lt;/code&gt;，&lt;code&gt;unicode(&#39;中&#39;)&lt;/code&gt; 显示的是 &lt;code&gt;\u4e2d&lt;/code&gt;。&lt;/p&gt;&#xA;&lt;p&gt;当我们用 str 存储汉字，在终端中输入时，Python 会根据我们系统的编码(通过 &lt;code&gt;locale.getdefaultlocale()&lt;/code&gt; 获取)，将其自动 encode 成字节流。&lt;/p&gt;&#xA;&lt;p&gt;我系统的编码是 &lt;code&gt;utf-8&lt;/code&gt;，所以 &lt;code&gt;str(&#39;中&#39;)&lt;/code&gt; 显示的就是 &lt;code&gt;中&lt;/code&gt; 经过 utf-8 编码后的内容 &lt;code&gt;\xe4\xb8\xad&lt;/code&gt;。&lt;/p&gt;&#xA;&lt;p&gt;当我们用 unicode 存储汉字时，Python 会存储这个汉字对应的码点。所以 &lt;code&gt;unicode(&#39;中&#39;)&lt;/code&gt; 显示的是 &lt;code&gt;\u4e2d&lt;/code&gt;。&lt;/p&gt;&#xA;&lt;h2 id=&#34;raw_unicode_escape-编码是什么&#34;&gt;raw_unicode_escape 编码是什么&lt;/h2&gt;&#xA;&lt;p&gt;raw_unicode_escape 编码的作用是将 unicode 码点变成 &lt;code&gt;\uxxxx&lt;/code&gt; 形式的字节流。或者将 &lt;code&gt;\uxxx&lt;/code&gt; 形式的字节流转换成 unicode 码点。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Python concurrent.futures 文档翻译</title>
       <link>https://bwangel.me/docs/python/concurrent-futures/</link>
       <pubDate>Fri, 23 Sep 2016 11:19:16 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/concurrent-futures/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;本文主要是对 Python3 标准库 &lt;a href=&#34;https://docs.python.org/3/library/concurrent.futures.html&#34;&gt;concurrent.futures&lt;/a&gt; 文档的翻译&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;本文主要是对 Python3 标准库 &lt;a href=&#34;https://docs.python.org/3/library/concurrent.futures.html&#34;&gt;concurrent.futures&lt;/a&gt; 文档的翻译&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Gevent 的 KeyError</title>
       <link>https://bwangel.me/docs/python/gevent-keyerror/</link>
       <pubDate>Wed, 14 Sep 2016 15:21:40 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/gevent-keyerror/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;本文翻译自 StackOverFlow 上的一篇&lt;a href=&#34;http://stackoverflow.com/questions/8774958/keyerror-in-module-threading-after-a-successful-py-test-run&#34;&gt;答案&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;本文主要解释了&lt;code&gt;gevent&lt;/code&gt;的猴子补丁和一个&lt;code&gt;KeyError&lt;/code&gt;之间的关系&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;本文翻译自 StackOverFlow 上的一篇&lt;a href=&#34;http://stackoverflow.com/questions/8774958/keyerror-in-module-threading-after-a-successful-py-test-run&#34;&gt;答案&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;本文主要解释了&lt;code&gt;gevent&lt;/code&gt;的猴子补丁和一个&lt;code&gt;KeyError&lt;/code&gt;之间的关系&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Python unittesting: run tests in another module</title>
       <link>https://bwangel.me/docs/python/python_unittesting_run_tests_in_another_module/</link>
       <pubDate>Sun, 11 Sep 2016 11:46:43 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/python_unittesting_run_tests_in_another_module/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;记录一次解决问题的过程。&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;记录一次解决问题的过程。&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Python字符串Format方法示例</title>
       <link>https://bwangel.me/docs/python/string-format-example/</link>
       <pubDate>Wed, 31 Aug 2016 15:45:41 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/string-format-example/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;本文翻译自Python3文档&lt;a href=&#34;https://docs.python.org/3/library/string.html#format-examples&#34;&gt;6.1.3.2. Format examples&lt;/a&gt;
-主要讲述了Python&lt;code&gt;str.format()&lt;/code&gt;的一些使用方法&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;本文翻译自Python3文档&lt;a href=&#34;https://docs.python.org/3/library/string.html#format-examples&#34;&gt;6.1.3.2. Format examples&lt;/a&gt;&#xA;主要讲述了Python&lt;code&gt;str.format()&lt;/code&gt;的一些使用方法&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Python中的生成器和协程</title>
       <link>https://bwangel.me/docs/python/python%E4%B8%AD%E7%9A%84%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E5%8D%8F%E7%A8%8B/</link>
       <pubDate>Fri, 05 Aug 2016 21:37:41 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/python%E4%B8%AD%E7%9A%84%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E5%8D%8F%E7%A8%8B/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;今天读了《A Curious Course on Coroutines and Concurrency》的第一部分，以下为我的碎碎念。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;生成器和协程的异同&lt;/li&gt;
-&lt;li&gt;协程的一些特性&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;今天读了《A Curious Course on Coroutines and Concurrency》的第一部分，以下为我的碎碎念。&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;生成器和协程的异同&lt;/li&gt;&#xA;&lt;li&gt;协程的一些特性&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Python的命名空间解析</title>
       <link>https://bwangel.me/docs/python/python%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E8%A7%A3%E6%9E%90/</link>
       <pubDate>Wed, 03 Aug 2016 22:29:41 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/python%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E8%A7%A3%E6%9E%90/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;什么是命名空间&lt;/li&gt;
-&lt;li&gt;命名空间有哪些&lt;/li&gt;
-&lt;li&gt;变量查找原则&lt;/li&gt;
-&lt;li&gt;分析一个UnboundLocalError的例子&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;什么是命名空间&lt;/li&gt;&#xA;&lt;li&gt;命名空间有哪些&lt;/li&gt;&#xA;&lt;li&gt;变量查找原则&lt;/li&gt;&#xA;&lt;li&gt;分析一个UnboundLocalError的例子&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>PEP 343: Python的with语句</title>
       <link>https://bwangel.me/docs/python/python%E7%9A%84with%E8%AF%AD%E5%8F%A5/</link>
       <pubDate>Mon, 25 Apr 2016 21:04:33 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/python%E7%9A%84with%E8%AF%AD%E5%8F%A5/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;Python的with语句用法以及相关的上下文管理协议&lt;/li&gt;
-&lt;li&gt;如何自己写一个上下文管理器对象，如何利用&lt;code&gt;contextlib&lt;/code&gt;来写一个上下文管理器对象&lt;/li&gt;
-&lt;li&gt;原文地址: &lt;a href=&#34;https://docs.python.org/release/2.5/whatsnew/pep-343.html&#34;&gt;PEP 343: The &amp;lsquo;with&amp;rsquo; statement&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Python的with语句用法以及相关的上下文管理协议&lt;/li&gt;&#xA;&lt;li&gt;如何自己写一个上下文管理器对象，如何利用&lt;code&gt;contextlib&lt;/code&gt;来写一个上下文管理器对象&lt;/li&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://docs.python.org/release/2.5/whatsnew/pep-343.html&#34;&gt;PEP 343: The &amp;lsquo;with&amp;rsquo; statement&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Python参数</title>
       <link>https://bwangel.me/docs/python/python%E5%8F%82%E6%95%B0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/python%E5%8F%82%E6%95%B0/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;IntermediatePython的学习笔记&lt;/li&gt;
-&lt;li&gt;Python的三种参数&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;IntermediatePython的学习笔记&lt;/li&gt;&#xA;&lt;li&gt;Python的三种参数&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>TDD with python 第六章笔记</title>
       <link>https://bwangel.me/docs/python/tdd_with_python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/python/tdd_with_python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Python Web开发测试驱动方法第六章的笔记&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Python Web开发测试驱动方法第六章的笔记&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

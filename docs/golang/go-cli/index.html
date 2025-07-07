@@ -19,37 +19,35 @@
 
 <title>urfave/cli 学习笔记 | 647 Universe</title>
 <meta name="description" content=" 原文地址: https://github.com/urfave/cli/tree/v1.20.0#overview ">
-<meta property="og:title" content="urfave/cli 学习笔记" />
-<meta property="og:description" content="
+<meta property="og:url" content="https://bwangel.me/docs/golang/go-cli/">
+  <meta property="og:site_name" content="647 Universe">
+  <meta property="og:title" content="urfave/cli 学习笔记">
+  <meta property="og:description" content="原文地址: https://github.com/urfave/cli/tree/v1.20.0#overview">
+  <meta property="og:locale" content="cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2019-04-21T18:23:00+08:00">
+    <meta property="article:modified_time" content="2023-10-18T09:36:48+08:00">
+    <meta property="article:tag" content="Go">
+    <meta property="article:tag" content="Cli">
+    <meta property="article:tag" content="ARTS">
+    <meta property="article:tag" content="Blog">
 
-原文地址: https://github.com/urfave/cli/tree/v1.20.0#overview
-
-" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://bwangel.me/docs/golang/go-cli/" /><meta property="article:section" content="docs" />
-<meta property="article:published_time" content="2019-04-21T18:23:00+08:00" />
-<meta property="article:modified_time" content="2023-10-18T09:36:48+08:00" /><meta property="og:site_name" content="647号宇宙" />
-<meta itemprop="name" content="urfave/cli 学习笔记">
-<meta itemprop="description" content="
-
-原文地址: https://github.com/urfave/cli/tree/v1.20.0#overview
-
-"><meta itemprop="datePublished" content="2019-04-21T18:23:00+08:00" />
-<meta itemprop="dateModified" content="2023-10-18T09:36:48+08:00" />
-<meta itemprop="wordCount" content="1790">
-<meta itemprop="keywords" content="Go,cli,ARTS,blog," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="urfave/cli 学习笔记"/>
-<meta name="twitter:description" content="
-
-原文地址: https://github.com/urfave/cli/tree/v1.20.0#overview
-
-"/>
+  <meta itemprop="name" content="urfave/cli 学习笔记">
+  <meta itemprop="description" content="原文地址: https://github.com/urfave/cli/tree/v1.20.0#overview">
+  <meta itemprop="datePublished" content="2019-04-21T18:23:00+08:00">
+  <meta itemprop="dateModified" content="2023-10-18T09:36:48+08:00">
+  <meta itemprop="wordCount" content="1790">
+  <meta itemprop="keywords" content="Go,Cli,ARTS,Blog">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="urfave/cli 学习笔记">
+  <meta name="twitter:description" content="原文地址: https://github.com/urfave/cli/tree/v1.20.0#overview">
 
 
 
 
-<link rel="preload" href="/scss/main.min.8f0c41d9c8b10a66c094aaa5e4f3dbc0297d5418757f7c4b3af70b2ec5959efd.css" as="style">
-<link href="/scss/main.min.8f0c41d9c8b10a66c094aaa5e4f3dbc0297d5418757f7c4b3af70b2ec5959efd.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" as="style">
+<link href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -264,7 +262,9 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-docsgolang-li">
   <a href="/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsgolang"><span class="">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsgolanggeneric-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsgolanggo-inner-li">
+  <a href="/docs/golang/go-inner/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggo-inner"><span class="">Go 内部实现</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsgolanggeneric-li">
   <a href="/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggeneric"><span class="">泛型</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsgolangyaml-li">
   <a href="/docs/golang/yaml/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolangyaml"><span class="">YAML</span></a>
@@ -715,103 +715,103 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/atomicinteger/" data-taxonomy-term="atomicinteger"><span class="taxonomy-label">AtomicInteger</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/bash/" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span><span class="taxonomy-count">93</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">buildkit</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">94</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">Buildkit</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/channel/" data-taxonomy-term="channel"><span class="taxonomy-label">Channel</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">chatgpt</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/clash/" data-taxonomy-term="clash"><span class="taxonomy-label">clash</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">cli</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cni/" data-taxonomy-term="cni"><span class="taxonomy-label">cni</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">Chatgpt</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/clash/" data-taxonomy-term="clash"><span class="taxonomy-label">Clash</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">Cli</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cni/" data-taxonomy-term="cni"><span class="taxonomy-label">Cni</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/concurrency/" data-taxonomy-term="concurrency"><span class="taxonomy-label">Concurrency</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/containerd/" data-taxonomy-term="containerd"><span class="taxonomy-label">containerd</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/crypto/" data-taxonomy-term="crypto"><span class="taxonomy-label">crypto</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/containerd/" data-taxonomy-term="containerd"><span class="taxonomy-label">Containerd</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/crypto/" data-taxonomy-term="crypto"><span class="taxonomy-label">Crypto</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/c%E8%AF%AD%E8%A8%80/" data-taxonomy-term="c%E8%AF%AD%E8%A8%80"><span class="taxonomy-label">C语言</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">datetime</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">dig</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">Datetime</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">Dig</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/django/" data-taxonomy-term="django"><span class="taxonomy-label">Django</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dlv/" data-taxonomy-term="dlv"><span class="taxonomy-label">dlv</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">dns</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">docker</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dlv/" data-taxonomy-term="dlv"><span class="taxonomy-label">Dlv</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">DNS</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">5</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/elasticsearch/" data-taxonomy-term="elasticsearch"><span class="taxonomy-label">ElasticSearch</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/envoy/" data-taxonomy-term="envoy"><span class="taxonomy-label">Envoy</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/flex/" data-taxonomy-term="flex"><span class="taxonomy-label">Flex</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/gevent/" data-taxonomy-term="gevent"><span class="taxonomy-label">Gevent</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gh/" data-taxonomy-term="gh"><span class="taxonomy-label">gh</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">git</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">glob</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span><span class="taxonomy-count">37</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">gomod</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gh/" data-taxonomy-term="gh"><span class="taxonomy-label">Gh</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">Git</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">Glob</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span><span class="taxonomy-count">37</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">Gomod</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">HTTP</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">httpie</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">Http</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">Httpie</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/intermediatepython/" data-taxonomy-term="intermediatepython"><span class="taxonomy-label">IntermediatePython</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">java</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">Java</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/json/" data-taxonomy-term="json"><span class="taxonomy-label">JSON</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">k8s</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">kafka</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">kubernetes</span><span class="taxonomy-count">8</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">language</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">13</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">K8s</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">Kafka</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">Kubernetes</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">Language</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">Leetcode</span><span class="taxonomy-count">13</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">life</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span><span class="taxonomy-count">9</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">lsof</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">makefile</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">mariadb</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">Life</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span><span class="taxonomy-count">9</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">Lsof</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">Makefile</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">Mariadb</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mongodb/" data-taxonomy-term="mongodb"><span class="taxonomy-label">MongoDB</span><span class="taxonomy-count">6</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">21</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">network</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">nfs</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">nginx</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">Network</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">Nfs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/node.js/" data-taxonomy-term="node.js"><span class="taxonomy-label">Node.js</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/notes/" data-taxonomy-term="notes"><span class="taxonomy-label">Notes</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nvim/" data-taxonomy-term="nvim"><span class="taxonomy-label">nvim</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/openssl/" data-taxonomy-term="openssl"><span class="taxonomy-label">openssl</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">performance</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/process/" data-taxonomy-term="process"><span class="taxonomy-label">process</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">prom</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">prometheus</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nvim/" data-taxonomy-term="nvim"><span class="taxonomy-label">Nvim</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/openssl/" data-taxonomy-term="openssl"><span class="taxonomy-label">Openssl</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">Performance</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/process/" data-taxonomy-term="process"><span class="taxonomy-label">Process</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">Prom</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">Prometheus</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/pubsub/" data-taxonomy-term="pubsub"><span class="taxonomy-label">PubSub</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/pytest/" data-taxonomy-term="pytest"><span class="taxonomy-label">pytest</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">24</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/pytest/" data-taxonomy-term="pytest"><span class="taxonomy-label">Pytest</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">24</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/python%E6%A0%87%E5%87%86%E5%BA%93/" data-taxonomy-term="python%E6%A0%87%E5%87%86%E5%BA%93"><span class="taxonomy-label">Python标准库</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/rabbitmq/" data-taxonomy-term="rabbitmq"><span class="taxonomy-label">RabbitMQ</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">re</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">Re</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/redis/" data-taxonomy-term="redis"><span class="taxonomy-label">Redis</span><span class="taxonomy-count">7</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/rsa/" data-taxonomy-term="rsa"><span class="taxonomy-label">rsa</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/shell/" data-taxonomy-term="shell"><span class="taxonomy-label">shell</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">stackoverflow</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">stty</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/rsa/" data-taxonomy-term="rsa"><span class="taxonomy-label">Rsa</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/shell/" data-taxonomy-term="shell"><span class="taxonomy-label">Shell</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">Stackoverflow</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">Stty</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tag1/" data-taxonomy-term="tag1"><span class="taxonomy-label">Tag1</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tag2/" data-taxonomy-term="tag2"><span class="taxonomy-label">Tag2</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">tcp</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">Tcp</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tdd/" data-taxonomy-term="tdd"><span class="taxonomy-label">TDD</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/template/" data-taxonomy-term="template"><span class="taxonomy-label">Template</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/test/" data-taxonomy-term="test"><span class="taxonomy-label">Test</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">6</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">42</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tls/" data-taxonomy-term="tls"><span class="taxonomy-label">tls</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">tombkeeper</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">tools</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">Thrift</span><span class="taxonomy-count">6</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">Tips</span><span class="taxonomy-count">42</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tls/" data-taxonomy-term="tls"><span class="taxonomy-label">Tls</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">Tombkeeper</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">5</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">ucs</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unicode/" data-taxonomy-term="unicode"><span class="taxonomy-label">unicode</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unittest/" data-taxonomy-term="unittest"><span class="taxonomy-label">unittest</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/utf-16/" data-taxonomy-term="utf-16"><span class="taxonomy-label">utf-16</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">vagrant</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">Ucs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unicode/" data-taxonomy-term="unicode"><span class="taxonomy-label">Unicode</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unittest/" data-taxonomy-term="unittest"><span class="taxonomy-label">Unittest</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/utf-16/" data-taxonomy-term="utf-16"><span class="taxonomy-label">Utf-16</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">Vagrant</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/vim/" data-taxonomy-term="vim"><span class="taxonomy-label">Vim</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">vimium-c</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">vscode</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">Vimium-C</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">Vscode</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/vue.js/" data-taxonomy-term="vue.js"><span class="taxonomy-label">Vue.js</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/web/" data-taxonomy-term="web"><span class="taxonomy-label">Web</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/web%E6%A1%86%E6%9E%B6/" data-taxonomy-term="web%E6%A1%86%E6%9E%B6"><span class="taxonomy-label">web框架</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/web%E6%A1%86%E6%9E%B6/" data-taxonomy-term="web%E6%A1%86%E6%9E%B6"><span class="taxonomy-label">Web框架</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/werkzeug/" data-taxonomy-term="werkzeug"><span class="taxonomy-label">Werkzeug</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">wireshark</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">zigzag</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">Wireshark</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">Zigzag</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83/" data-taxonomy-term="%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83"><span class="taxonomy-label">人生思考</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0/" data-taxonomy-term="%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0"><span class="taxonomy-label">制药基地</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E5%93%A8%E5%85%B5/" data-taxonomy-term="%E5%93%A8%E5%85%B5"><span class="taxonomy-label">哨兵</span><span class="taxonomy-count">1</span></a></li>
@@ -860,10 +860,10 @@
 		<div class="taxonomy taxonomy-terms-article taxo-tags">
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">cli</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">Cli</span></a></li>
     <li><a class="taxonomy-term" href="https://bwangel.me/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
     </ul>
 </div>
 
@@ -871,30 +871,29 @@
 	<blockquote>
 <ul>
 <li>原文地址: <a href="https://github.com/urfave/cli/tree/v1.20.0#overview">https://github.com/urfave/cli/tree/v1.20.0#overview</a></li>
-</ul>
-</blockquote>
+</ul></blockquote>
 <h2 id="环境说明">环境说明</h2>
 <table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cli 版本</td>
-<td>v1.20.0</td>
-</tr>
-<tr>
-<td>cli Git Commit</td>
-<td><a href="https://github.com/urfave/cli/commit/cfb38830724cc34fedffe9a2a29fb54fa9169cd1">cfb38830724cc34fedffe9a2a29fb54fa9169cd1</a></td>
-</tr>
-<tr>
-<td>Go 版本</td>
-<td>go version go1.11.5 darwin/amd64</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Key</th>
+          <th>Value</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>cli 版本</td>
+          <td>v1.20.0</td>
+      </tr>
+      <tr>
+          <td>cli Git Commit</td>
+          <td><a href="https://github.com/urfave/cli/commit/cfb38830724cc34fedffe9a2a29fb54fa9169cd1">cfb38830724cc34fedffe9a2a29fb54fa9169cd1</a></td>
+      </tr>
+      <tr>
+          <td>Go 版本</td>
+          <td>go version go1.11.5 darwin/amd64</td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="指定版本">指定版本</h2>
 <ul>
@@ -903,8 +902,8 @@
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ go get gopkg.in/urfave/cli.v2
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">...</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;gopkg.in/urfave/cli.v2&#34;</span> <span style="color:#8f5902;font-style:italic">// imports as package &#34;cli&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;gopkg.in/urfave/cli.v2&#34;</span> <span style="color:#8f5902;font-style:italic">// imports as package &#34;cli&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">...</span>
 </span></span></code></pre></div><ul>
 <li>指定<code>V1</code>版本</li>
@@ -912,8 +911,8 @@
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ go get gopkg.in/urfave/cli.v1
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">...</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;gopkg.in/urfave/cli.v1&#34;</span> <span style="color:#8f5902;font-style:italic">// imports as package &#34;cli&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;gopkg.in/urfave/cli.v1&#34;</span> <span style="color:#8f5902;font-style:italic">// imports as package &#34;cli&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">...</span>
 </span></span></code></pre></div><h2 id="基本用法">基本用法</h2>
 <ul>
@@ -977,8 +976,8 @@
 </span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">NArg</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>			<span style="color:#000">name</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Args</span><span style="color:#000;font-weight:bold">().</span><span style="color:#000">Get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// if c.String(&#34;lang&#34;) == &#34;chinese&#34; {
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">language</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;chinese&#34;</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// if c.String(&#34;lang&#34;) == &#34;chinese&#34; {</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">language</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;chinese&#34;</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>			<span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;你好&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">name</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>			<span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Hello&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">name</span><span style="color:#000;font-weight:bold">)</span>
@@ -1054,11 +1053,11 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Fatalln</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//GLOBAL OPTIONS:
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//--language value, --lang value, -l value  language for greeting (default: &#34;english&#34;)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//--help, -h                                show help
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//--version, -v                             print the version
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//GLOBAL OPTIONS:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//--language value, --lang value, -l value  language for greeting (default: &#34;english&#34;)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//--help, -h                                show help</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//--version, -v                             print the version</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
 </span></span></code></pre></div><ul>
 <li>注意，__同一个命令中的 flag 名称__不能被定义两次，否则将会导致 panic</li>
 </ul>
@@ -1093,31 +1092,31 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Fatalln</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//Out
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	&gt;&gt;&gt; go build &amp;&amp; ./watcher
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	greet flag redefined: l
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	panic: greet flag redefined: l
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	goroutine 1 [running]:
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	flag.(*FlagSet).Var(0xc000084180, 0x1175d40, 0xc000074018, 0x1153226, 0x1, 0x1153f78, 0xf)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	/usr/local/opt/go/libexec/src/flag/flag.go:805 +0x529
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	flag.(*FlagSet).Int64Var(0xc000084180, 0xc000074018, 0x1153226, 0x1, 0x0, 0x1153f78, 0xf)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	/usr/local/opt/go/libexec/src/flag/flag.go:630 +0x71
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	flag.(*FlagSet).Int64(0xc000084180, 0x1153226, 0x1, 0x0, 0x1153f78, 0xf, 0x1)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	/usr/local/opt/go/libexec/src/flag/flag.go:643 +0x77
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	gopkg.in/urfave/cli.v1.Int64Flag.ApplyWithError.func1(0x1153226, 0x1)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/go/pkg/mod/gopkg.in/urfave/cli.v1@v1.20.0/flag.go:488 +0xad
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	gopkg.in/urfave/cli.v1.eachName(0x115321e, 0x9, 0xc0000a7b88)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/go/pkg/mod/gopkg.in/urfave/cli.v1@v1.20.0/flag.go:94 +0xc6
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	gopkg.in/urfave/cli.v1.Int64Flag.ApplyWithError(0x115321e, 0x9, 0x1153f78, 0xf, 0x0, 0x0, 0x0, 0x0, 0x0, 0xc000084180, ...)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/go/pkg/mod/gopkg.in/urfave/cli.v1@v1.20.0/flag.go:483 +0x113
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	gopkg.in/urfave/cli.v1.flagSet(0x115293c, 0x5, 0xc000076080, 0x4, 0x4, 0xc000062190, 0x1, 0x1)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/go/pkg/mod/gopkg.in/urfave/cli.v1@v1.20.0/flag.go:80 +0x128
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	gopkg.in/urfave/cli.v1.(*App).Run(0xc000078340, 0xc000062190, 0x1, 0x1, 0x0, 0x0)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/go/pkg/mod/gopkg.in/urfave/cli.v1@v1.20.0/app.go:187 +0xfa
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	main.main()
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/Github/Golang/watcher/main.go:28 +0x22d
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//Out</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	&gt;&gt;&gt; go build &amp;&amp; ./watcher</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	greet flag redefined: l</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	panic: greet flag redefined: l</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	goroutine 1 [running]:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	flag.(*FlagSet).Var(0xc000084180, 0x1175d40, 0xc000074018, 0x1153226, 0x1, 0x1153f78, 0xf)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	/usr/local/opt/go/libexec/src/flag/flag.go:805 +0x529</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	flag.(*FlagSet).Int64Var(0xc000084180, 0xc000074018, 0x1153226, 0x1, 0x0, 0x1153f78, 0xf)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	/usr/local/opt/go/libexec/src/flag/flag.go:630 +0x71</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	flag.(*FlagSet).Int64(0xc000084180, 0x1153226, 0x1, 0x0, 0x1153f78, 0xf, 0x1)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	/usr/local/opt/go/libexec/src/flag/flag.go:643 +0x77</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	gopkg.in/urfave/cli.v1.Int64Flag.ApplyWithError.func1(0x1153226, 0x1)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/go/pkg/mod/gopkg.in/urfave/cli.v1@v1.20.0/flag.go:488 +0xad</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	gopkg.in/urfave/cli.v1.eachName(0x115321e, 0x9, 0xc0000a7b88)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/go/pkg/mod/gopkg.in/urfave/cli.v1@v1.20.0/flag.go:94 +0xc6</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	gopkg.in/urfave/cli.v1.Int64Flag.ApplyWithError(0x115321e, 0x9, 0x1153f78, 0xf, 0x0, 0x0, 0x0, 0x0, 0x0, 0xc000084180, ...)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/go/pkg/mod/gopkg.in/urfave/cli.v1@v1.20.0/flag.go:483 +0x113</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	gopkg.in/urfave/cli.v1.flagSet(0x115293c, 0x5, 0xc000076080, 0x4, 0x4, 0xc000062190, 0x1, 0x1)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/go/pkg/mod/gopkg.in/urfave/cli.v1@v1.20.0/flag.go:80 +0x128</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	gopkg.in/urfave/cli.v1.(*App).Run(0xc000078340, 0xc000062190, 0x1, 0x1, 0x0, 0x0)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/go/pkg/mod/gopkg.in/urfave/cli.v1@v1.20.0/app.go:187 +0xfa</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	main.main()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//	/Users/michaeltsui/Github/Golang/watcher/main.go:28 +0x22d</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
 </span></span></code></pre></div><h2 id="排序">排序</h2>
 <p><code>flags</code>和<code>commands</code>默认是根据定义的顺序展示的，但是如果让他们按照字母顺序输出，可以使用<code>FlagsByName</code>和<code>CommandsByName</code>和<code>sort</code>来排序。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">package</span> <span style="color:#000">main</span>
@@ -1174,18 +1173,18 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Fatalln</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//Out
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//COMMANDS:
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//add, a       add a task to the list
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//complete, c  complete a task on the list
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//help, h      Shows a list of commands or help for one command
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//GLOBAL OPTIONS:
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//--config FILE, -c FILE  Load configuration from FILE
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//--lang value, -l value  Language for the greeting (default: &#34;english&#34;)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//--help, -h              show help
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//--version, -v           print the version
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//Out</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//COMMANDS:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//add, a       add a task to the list</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//complete, c  complete a task on the list</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//help, h      Shows a list of commands or help for one command</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//GLOBAL OPTIONS:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//--config FILE, -c FILE  Load configuration from FILE</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//--lang value, -l value  Language for the greeting (default: &#34;english&#34;)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//--help, -h              show help</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//--version, -v           print the version</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
 </span></span></code></pre></div><h2 id="从环境变量中获取值">从环境变量中获取值</h2>
 <ul>
 <li>也可以通过<code>EnvVar</code>从环境变量中获取默认的值，可以使用<code>,</code>分割的方式匹配多个环境变量:</li>
@@ -1210,8 +1209,8 @@
 </span></span><span style="display:flex;"><span>			<span style="color:#000">Name</span><span style="color:#000;font-weight:bold">:</span>   <span style="color:#4e9a06">&#34;lang, l&#34;</span><span style="color:#000;font-weight:bold">,</span>
 </span></span><span style="display:flex;"><span>			<span style="color:#000">Value</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#4e9a06">&#34;english&#34;</span><span style="color:#000;font-weight:bold">,</span>
 </span></span><span style="display:flex;"><span>			<span style="color:#000">Usage</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#4e9a06">&#34;Language for the greeting&#34;</span><span style="color:#000;font-weight:bold">,</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#8f5902;font-style:italic">// 可以使用,分割多个环境变量，变量会按照从前往后的顺序匹配
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>			<span style="color:#000">EnvVar</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;APP_LANG,LANG&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#8f5902;font-style:italic">// 可以使用,分割多个环境变量，变量会按照从前往后的顺序匹配</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">EnvVar</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;APP_LANG,LANG&#34;</span><span style="color:#000;font-weight:bold">,</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">},</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
 </span></span><span style="display:flex;"><span>
@@ -1227,15 +1226,15 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">nil</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000">log</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Fatalln</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//Out
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//$ make bin &amp;&amp; APP_LANG=english ./bin/watcher # 这里优先匹配 APP_LANG 而非 LANG
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//go build -o bin/watcher
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//Hello, Engineer
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
-</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//$ make bin &amp;&amp; ./bin/watcher
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//go build -o bin/watcher
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//你好，工程师
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//Out</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//$ make bin &amp;&amp; APP_LANG=english ./bin/watcher # 这里优先匹配 APP_LANG 而非 LANG</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//go build -o bin/watcher</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//Hello, Engineer</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//$ make bin &amp;&amp; ./bin/watcher</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//go build -o bin/watcher</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//你好，工程师</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
 </span></span></code></pre></div><h2 id="从文件中读取配置项">从文件中读取配置项</h2>
 <ul>
 <li>引入<code>gopkg.in/urfave/cli.v1/altsrc</code>即可从文件中读取配置项</li>
@@ -1243,16 +1242,16 @@
 <li><strong>注意</strong>: <code>altsrc</code>依赖于<code>gopkg.in/urfave/cli.v1</code>，所以使用<code>altsrc</code>的时候，要执行如下的<code>import</code>:</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000">cli</span> <span style="color:#4e9a06">&#34;gopkg.in/urfave/cli.v1&#34;</span> <span style="color:#8f5902;font-style:italic">// 从gopkg.in 引入 cli 而非从 GitHub 引入
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#4e9a06">&#34;gopkg.in/urfave/cli.v1/altsrc&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">cli</span> <span style="color:#4e9a06">&#34;gopkg.in/urfave/cli.v1&#34;</span> <span style="color:#8f5902;font-style:italic">// 从gopkg.in 引入 cli 而非从 GitHub 引入</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;gopkg.in/urfave/cli.v1/altsrc&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
 </span></span></code></pre></div><ul>
 <li>支持从配置文件读取的配置项需要使用<code>altsrc.NewXXXFlag</code>包裹</li>
 <li>配置文件也要当做一个配置项写入到<code>app.Flags</code>中</li>
 <li>从配置文件添加配置项，需要使用<code>InitInputSourceWithContext</code>进行初始化</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// config 表示配置文件的配置项名称
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">app</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Before</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">altsrc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">InitInputSourceWithContext</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">flags</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">altsrc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">NewYamlSourceFromFlagFunc</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;config&#34;</span><span style="color:#000;font-weight:bold">))</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// config 表示配置文件的配置项名称</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">app</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Before</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">altsrc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">InitInputSourceWithContext</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">flags</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">altsrc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">NewYamlSourceFromFlagFunc</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;config&#34;</span><span style="color:#000;font-weight:bold">))</span>
 </span></span></code></pre></div><ul>
 <li>
 <p>目前<code>altsrc</code>仅支持<code>TOML</code>, <code>YAML</code>配置文件，如需要其他格式的配置文件，可自行实现<code>altsrc.InputSourceContext</code></p>
@@ -1718,7 +1717,7 @@ func main() {
        integrity="sha512-YJVxTjqttjsU3cSvaTRqsSl0wbRgZUNF+NGGCgto/MUbIvaLdXQzGTCQu4CvyJZbZctgflVB0PXw9LLmTWm5/w==" crossorigin="anonymous"
        onload='renderMathInElement(document.body, null);'>
 </script>
-<script src="/js/main.min.04ae8cb44cf587d6a2d6e50f7d0276bee94133052ab39f783da0b290f7986c6c.js" integrity="sha256-BK6MtEz1h9ai1uUPfQJ2vulBMwUqs594PaCykPeYbGw=" crossorigin="anonymous"></script>
+<script src="/js/main.min.85d1295e77b8cb64a3e7ac5b9239aa65c4410a289bbe21c0ae8359f1617c0461.js" integrity="sha256-hdEpXne4y2Sj56xbkjmqZcRBCiibviHAroNZ8WF8BGE=" crossorigin="anonymous"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 

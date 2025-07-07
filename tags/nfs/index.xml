@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>nfs on 647 Universe</title>
+    <title>Nfs on 647 Universe</title>
     <link>https://bwangel.me/tags/nfs/</link>
-    <description>Recent content in nfs on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Nfs on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 06 Sep 2023 08:51:39 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/nfs/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Sep 2023 09:33:57 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/nfs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>在 Ubuntu 22.04 上搭建 NFS Server</title>
       <link>https://bwangel.me/docs/linux/nfs-server/</link>
       <pubDate>Wed, 06 Sep 2023 08:51:39 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/linux/nfs-server/</guid>
-      <description>环境准备 我准备了两台机器
-name ip user user_id server 191.168.58.11 vagrant 1000 client 192.168.58.1 xuyundong 1000 安装组件 服务端安装 nfs server sudo apt update sudo apt install nfs-kernel-server 客户端安装 nfs-common sudo apt update sudo apt install nfs-common 服务端创建目录并导出 在服务端上创建挂载目录，并设置权限 sudo mkdir -p /mnt/share sudo chown vagrant:vagrant /mnt/share sudo chmod 755 /mnt/share 服务端上配置 nfs export 目录 修改 /etc/exports 文件, 加入以下内容
-/mnt/share *(rw,async,no_subtree_check) 关于 export 选项的解释
-rw: 客户端具有读和写的权限 sync: 强制 nfs 在回复 client 之前将更改写入磁盘，这保证了 nfs server 的可靠性，但也降低了写入速度 no_subtree_check: 此选项可防止子树检查，在子树检查过程中，主机必须为每个请求检查文件在导出的树中是否仍然可用。当客户端打开文件时重命名文件时，这可能会导致许多问题。通常建议禁用子树检查。 no_root_squash: 当客户端以 root 权限写入文件时，nfs server 会将文件 owner 改成普通用户，当此选项开启时，nfs server 不修改 root 写入文件的 woner 修改完以后执行以下命令载入配置</description>
+      <description>&lt;h2 id=&#34;环境准备&#34;&gt;环境准备&lt;/h2&gt;&#xA;&lt;p&gt;我准备了两台机器&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;name&lt;/th&gt;&#xA;          &lt;th&gt;ip&lt;/th&gt;&#xA;          &lt;th&gt;user&lt;/th&gt;&#xA;          &lt;th&gt;user_id&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;server&lt;/td&gt;&#xA;          &lt;td&gt;191.168.58.11&lt;/td&gt;&#xA;          &lt;td&gt;vagrant&lt;/td&gt;&#xA;          &lt;td&gt;1000&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;client&lt;/td&gt;&#xA;          &lt;td&gt;192.168.58.1&lt;/td&gt;&#xA;          &lt;td&gt;xuyundong&lt;/td&gt;&#xA;          &lt;td&gt;1000&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;安装组件&#34;&gt;安装组件&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;服务端安装 nfs server&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo apt update&#xA;sudo apt install nfs-kernel-server&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;客户端安装 nfs-common&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo apt update&#xA;sudo apt install nfs-common&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;服务端创建目录并导出&#34;&gt;服务端创建目录并导出&lt;/h2&gt;&#xA;&lt;h3 id=&#34;在服务端上创建挂载目录并设置权限&#34;&gt;在服务端上创建挂载目录，并设置权限&lt;/h3&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mkdir -p /mnt/share&#xA;sudo chown vagrant:vagrant /mnt/share&#xA;sudo chmod 755 /mnt/share&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;服务端上配置-nfs-export-目录&#34;&gt;服务端上配置 nfs export 目录&lt;/h3&gt;&#xA;&lt;p&gt;修改 &lt;code&gt;/etc/exports&lt;/code&gt; 文件, 加入以下内容&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/mnt/share       *(rw,async,no_subtree_check)&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;关于 export 选项的解释&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;rw&lt;/code&gt;: 客户端具有读和写的权限&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;sync&lt;/code&gt;: 强制 nfs 在回复 client 之前将更改写入磁盘，这保证了 nfs server 的可靠性，但也降低了写入速度&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;no_subtree_check&lt;/code&gt;: 此选项可防止子树检查，在子树检查过程中，主机必须为每个请求检查文件在导出的树中是否仍然可用。当客户端打开文件时重命名文件时，这可能会导致许多问题。&lt;strong&gt;通常建议禁用子树检查&lt;/strong&gt;。&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;no_root_squash&lt;/code&gt;: 当客户端以 root 权限写入文件时，nfs server 会将文件 owner 改成普通用户，当此选项开启时，nfs server 不修改 root 写入文件的 woner&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;修改完以后执行以下命令载入配置&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

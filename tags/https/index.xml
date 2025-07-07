@@ -4,17 +4,16 @@
     <title>HTTPS on 647 Universe</title>
     <link>https://bwangel.me/tags/https/</link>
     <description>Recent content in HTTPS on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Sun, 29 Nov 2020 13:25:07 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/https/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Oct 2023 09:36:48 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/https/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如何生成自签名 HTTPS 证书</title>
       <link>https://bwangel.me/docs/http/https-generate-cert/</link>
       <pubDate>Sun, 29 Nov 2020 13:25:07 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/http/https-generate-cert/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

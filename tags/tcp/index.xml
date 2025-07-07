@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tcp on 647 Universe</title>
+    <title>Tcp on 647 Universe</title>
     <link>https://bwangel.me/tags/tcp/</link>
-    <description>Recent content in tcp on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Tcp on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 18 Oct 2021 23:54:13 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/tcp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 29 Sep 2023 11:10:24 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/tcp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>TCP Naggle 算法</title>
       <link>https://bwangel.me/docs/tcp_ip/tcp-naggle/</link>
       <pubDate>Mon, 18 Oct 2021 23:54:13 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/tcp_ip/tcp-naggle/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

@@ -19,37 +19,35 @@
 
 <title>Review 《JSON and Go》 | 647 Universe</title>
 <meta name="description" content=" 原文地址: https://blog.golang.org/json-and-go ">
-<meta property="og:title" content="Review 《JSON and Go》" />
-<meta property="og:description" content="
+<meta property="og:url" content="https://bwangel.me/docs/golang/review-json-and-go/">
+  <meta property="og:site_name" content="647 Universe">
+  <meta property="og:title" content="Review 《JSON and Go》">
+  <meta property="og:description" content="原文地址: https://blog.golang.org/json-and-go">
+  <meta property="og:locale" content="cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2019-05-21T21:40:40+08:00">
+    <meta property="article:modified_time" content="2023-11-06T11:16:52+08:00">
+    <meta property="article:tag" content="翻译">
+    <meta property="article:tag" content="Go">
+    <meta property="article:tag" content="JSON">
+    <meta property="article:tag" content="Blog">
 
-原文地址: https://blog.golang.org/json-and-go
-
-" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://bwangel.me/docs/golang/review-json-and-go/" /><meta property="article:section" content="docs" />
-<meta property="article:published_time" content="2019-05-21T21:40:40+08:00" />
-<meta property="article:modified_time" content="2023-11-06T11:16:52+08:00" /><meta property="og:site_name" content="647号宇宙" />
-<meta itemprop="name" content="Review 《JSON and Go》">
-<meta itemprop="description" content="
-
-原文地址: https://blog.golang.org/json-and-go
-
-"><meta itemprop="datePublished" content="2019-05-21T21:40:40+08:00" />
-<meta itemprop="dateModified" content="2023-11-06T11:16:52+08:00" />
-<meta itemprop="wordCount" content="1220">
-<meta itemprop="keywords" content="翻译,Go,JSON,blog," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Review 《JSON and Go》"/>
-<meta name="twitter:description" content="
-
-原文地址: https://blog.golang.org/json-and-go
-
-"/>
+  <meta itemprop="name" content="Review 《JSON and Go》">
+  <meta itemprop="description" content="原文地址: https://blog.golang.org/json-and-go">
+  <meta itemprop="datePublished" content="2019-05-21T21:40:40+08:00">
+  <meta itemprop="dateModified" content="2023-11-06T11:16:52+08:00">
+  <meta itemprop="wordCount" content="1220">
+  <meta itemprop="keywords" content="翻译,Go,JSON,Blog">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Review 《JSON and Go》">
+  <meta name="twitter:description" content="原文地址: https://blog.golang.org/json-and-go">
 
 
 
 
-<link rel="preload" href="/scss/main.min.8f0c41d9c8b10a66c094aaa5e4f3dbc0297d5418757f7c4b3af70b2ec5959efd.css" as="style">
-<link href="/scss/main.min.8f0c41d9c8b10a66c094aaa5e4f3dbc0297d5418757f7c4b3af70b2ec5959efd.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" as="style">
+<link href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" rel="stylesheet" integrity="">
 
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -264,7 +262,9 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-docsgolang-li">
   <a href="/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsgolang"><span class="">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsgolanggeneric-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsgolanggo-inner-li">
+  <a href="/docs/golang/go-inner/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggo-inner"><span class="">Go 内部实现</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsgolanggeneric-li">
   <a href="/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggeneric"><span class="">泛型</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsgolangyaml-li">
   <a href="/docs/golang/yaml/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolangyaml"><span class="">YAML</span></a>
@@ -709,103 +709,103 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/atomicinteger/" data-taxonomy-term="atomicinteger"><span class="taxonomy-label">AtomicInteger</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/bash/" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span><span class="taxonomy-count">93</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">buildkit</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">94</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">Buildkit</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/channel/" data-taxonomy-term="channel"><span class="taxonomy-label">Channel</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">chatgpt</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/clash/" data-taxonomy-term="clash"><span class="taxonomy-label">clash</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">cli</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cni/" data-taxonomy-term="cni"><span class="taxonomy-label">cni</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">Chatgpt</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/clash/" data-taxonomy-term="clash"><span class="taxonomy-label">Clash</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cli/" data-taxonomy-term="cli"><span class="taxonomy-label">Cli</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/cni/" data-taxonomy-term="cni"><span class="taxonomy-label">Cni</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/concurrency/" data-taxonomy-term="concurrency"><span class="taxonomy-label">Concurrency</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/containerd/" data-taxonomy-term="containerd"><span class="taxonomy-label">containerd</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/crypto/" data-taxonomy-term="crypto"><span class="taxonomy-label">crypto</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/containerd/" data-taxonomy-term="containerd"><span class="taxonomy-label">Containerd</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/crypto/" data-taxonomy-term="crypto"><span class="taxonomy-label">Crypto</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/c%E8%AF%AD%E8%A8%80/" data-taxonomy-term="c%E8%AF%AD%E8%A8%80"><span class="taxonomy-label">C语言</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">datetime</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">dig</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/datetime/" data-taxonomy-term="datetime"><span class="taxonomy-label">Datetime</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dig/" data-taxonomy-term="dig"><span class="taxonomy-label">Dig</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/django/" data-taxonomy-term="django"><span class="taxonomy-label">Django</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dlv/" data-taxonomy-term="dlv"><span class="taxonomy-label">dlv</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">dns</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">docker</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dlv/" data-taxonomy-term="dlv"><span class="taxonomy-label">Dlv</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/dns/" data-taxonomy-term="dns"><span class="taxonomy-label">DNS</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">5</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/elasticsearch/" data-taxonomy-term="elasticsearch"><span class="taxonomy-label">ElasticSearch</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/envoy/" data-taxonomy-term="envoy"><span class="taxonomy-label">Envoy</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/flex/" data-taxonomy-term="flex"><span class="taxonomy-label">Flex</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/gevent/" data-taxonomy-term="gevent"><span class="taxonomy-label">Gevent</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gh/" data-taxonomy-term="gh"><span class="taxonomy-label">gh</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">git</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">glob</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span><span class="taxonomy-count">37</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">gomod</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gh/" data-taxonomy-term="gh"><span class="taxonomy-label">Gh</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">Git</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">Glob</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span><span class="taxonomy-count">37</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">Gomod</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">HTTP</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">httpie</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">Http</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">Httpie</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/intermediatepython/" data-taxonomy-term="intermediatepython"><span class="taxonomy-label">IntermediatePython</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">java</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">Java</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/json/" data-taxonomy-term="json"><span class="taxonomy-label">JSON</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">k8s</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">kafka</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">kubernetes</span><span class="taxonomy-count">8</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">language</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">13</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">K8s</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">Kafka</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">Kubernetes</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">Language</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">Leetcode</span><span class="taxonomy-count">13</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">life</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">linux</span><span class="taxonomy-count">9</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">lsof</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">makefile</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">mariadb</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">Life</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span><span class="taxonomy-count">9</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/lsof/" data-taxonomy-term="lsof"><span class="taxonomy-label">Lsof</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">Makefile</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">Mariadb</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mongodb/" data-taxonomy-term="mongodb"><span class="taxonomy-label">MongoDB</span><span class="taxonomy-count">6</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">21</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">network</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">nfs</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">nginx</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">Network</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">Nfs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/node.js/" data-taxonomy-term="node.js"><span class="taxonomy-label">Node.js</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/notes/" data-taxonomy-term="notes"><span class="taxonomy-label">Notes</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nvim/" data-taxonomy-term="nvim"><span class="taxonomy-label">nvim</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/openssl/" data-taxonomy-term="openssl"><span class="taxonomy-label">openssl</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">performance</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/process/" data-taxonomy-term="process"><span class="taxonomy-label">process</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">prom</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">prometheus</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/nvim/" data-taxonomy-term="nvim"><span class="taxonomy-label">Nvim</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/openssl/" data-taxonomy-term="openssl"><span class="taxonomy-label">Openssl</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">Performance</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/process/" data-taxonomy-term="process"><span class="taxonomy-label">Process</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prom/" data-taxonomy-term="prom"><span class="taxonomy-label">Prom</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/prometheus/" data-taxonomy-term="prometheus"><span class="taxonomy-label">Prometheus</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/pubsub/" data-taxonomy-term="pubsub"><span class="taxonomy-label">PubSub</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/pytest/" data-taxonomy-term="pytest"><span class="taxonomy-label">pytest</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">24</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/pytest/" data-taxonomy-term="pytest"><span class="taxonomy-label">Pytest</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">24</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/python%E6%A0%87%E5%87%86%E5%BA%93/" data-taxonomy-term="python%E6%A0%87%E5%87%86%E5%BA%93"><span class="taxonomy-label">Python标准库</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/rabbitmq/" data-taxonomy-term="rabbitmq"><span class="taxonomy-label">RabbitMQ</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">re</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/re/" data-taxonomy-term="re"><span class="taxonomy-label">Re</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/redis/" data-taxonomy-term="redis"><span class="taxonomy-label">Redis</span><span class="taxonomy-count">7</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/rsa/" data-taxonomy-term="rsa"><span class="taxonomy-label">rsa</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/shell/" data-taxonomy-term="shell"><span class="taxonomy-label">shell</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">stackoverflow</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">stty</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/rsa/" data-taxonomy-term="rsa"><span class="taxonomy-label">Rsa</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/shell/" data-taxonomy-term="shell"><span class="taxonomy-label">Shell</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stackoverflow/" data-taxonomy-term="stackoverflow"><span class="taxonomy-label">Stackoverflow</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/stty/" data-taxonomy-term="stty"><span class="taxonomy-label">Stty</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tag1/" data-taxonomy-term="tag1"><span class="taxonomy-label">Tag1</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tag2/" data-taxonomy-term="tag2"><span class="taxonomy-label">Tag2</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">tcp</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tcp/" data-taxonomy-term="tcp"><span class="taxonomy-label">Tcp</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tdd/" data-taxonomy-term="tdd"><span class="taxonomy-label">TDD</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/template/" data-taxonomy-term="template"><span class="taxonomy-label">Template</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/test/" data-taxonomy-term="test"><span class="taxonomy-label">Test</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">thrift</span><span class="taxonomy-count">6</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">tips</span><span class="taxonomy-count">42</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tls/" data-taxonomy-term="tls"><span class="taxonomy-label">tls</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">tombkeeper</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">tools</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/thrift/" data-taxonomy-term="thrift"><span class="taxonomy-label">Thrift</span><span class="taxonomy-count">6</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tips/" data-taxonomy-term="tips"><span class="taxonomy-label">Tips</span><span class="taxonomy-count">42</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tls/" data-taxonomy-term="tls"><span class="taxonomy-label">Tls</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tombkeeper/" data-taxonomy-term="tombkeeper"><span class="taxonomy-label">Tombkeeper</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">5</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">ucs</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unicode/" data-taxonomy-term="unicode"><span class="taxonomy-label">unicode</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unittest/" data-taxonomy-term="unittest"><span class="taxonomy-label">unittest</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/utf-16/" data-taxonomy-term="utf-16"><span class="taxonomy-label">utf-16</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">vagrant</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/ucs/" data-taxonomy-term="ucs"><span class="taxonomy-label">Ucs</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unicode/" data-taxonomy-term="unicode"><span class="taxonomy-label">Unicode</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/unittest/" data-taxonomy-term="unittest"><span class="taxonomy-label">Unittest</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/utf-16/" data-taxonomy-term="utf-16"><span class="taxonomy-label">Utf-16</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vagrant/" data-taxonomy-term="vagrant"><span class="taxonomy-label">Vagrant</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/vim/" data-taxonomy-term="vim"><span class="taxonomy-label">Vim</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">vimium-c</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">vscode</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vimium-c/" data-taxonomy-term="vimium-c"><span class="taxonomy-label">Vimium-C</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">Vscode</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/vue.js/" data-taxonomy-term="vue.js"><span class="taxonomy-label">Vue.js</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/web/" data-taxonomy-term="web"><span class="taxonomy-label">Web</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/web%E6%A1%86%E6%9E%B6/" data-taxonomy-term="web%E6%A1%86%E6%9E%B6"><span class="taxonomy-label">web框架</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/web%E6%A1%86%E6%9E%B6/" data-taxonomy-term="web%E6%A1%86%E6%9E%B6"><span class="taxonomy-label">Web框架</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/werkzeug/" data-taxonomy-term="werkzeug"><span class="taxonomy-label">Werkzeug</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">wireshark</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">zigzag</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/wireshark/" data-taxonomy-term="wireshark"><span class="taxonomy-label">Wireshark</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/zigzag/" data-taxonomy-term="zigzag"><span class="taxonomy-label">Zigzag</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83/" data-taxonomy-term="%E4%BA%BA%E7%94%9F%E6%80%9D%E8%80%83"><span class="taxonomy-label">人生思考</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0/" data-taxonomy-term="%E5%88%B6%E8%8D%AF%E5%9F%BA%E5%9C%B0"><span class="taxonomy-label">制药基地</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E5%93%A8%E5%85%B5/" data-taxonomy-term="%E5%93%A8%E5%85%B5"><span class="taxonomy-label">哨兵</span><span class="taxonomy-count">1</span></a></li>
@@ -855,9 +855,9 @@
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
     <li><a class="taxonomy-term" href="https://bwangel.me/tags/%E7%BF%BB%E8%AF%91/" data-taxonomy-term="%E7%BF%BB%E8%AF%91"><span class="taxonomy-label">翻译</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">go</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span></a></li>
     <li><a class="taxonomy-term" href="https://bwangel.me/tags/json/" data-taxonomy-term="json"><span class="taxonomy-label">JSON</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">blog</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
     </ul>
 </div>
 
@@ -865,8 +865,7 @@
 	<blockquote>
 <ul>
 <li>原文地址: <a href="https://blog.golang.org/json-and-go">https://blog.golang.org/json-and-go</a></li>
-</ul>
-</blockquote>
+</ul></blockquote>
 <hr>
 <h2 id="引言">引言</h2>
 <p>JSON (JavaScript Object Notation) 是一种简单的数据交换格式。语法上它很像 JavaScript 的对象和数组。它最常用的场景是 Web 浏览器上的 JavaScript 程序和 Web 后端进行通信。
@@ -975,8 +974,8 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#000">h</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">v</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;i swapped by halves is&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">v</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">h</span><span style="color:#000;font-weight:bold">:]</span><span style="color:#ce5c00;font-weight:bold">+</span><span style="color:#000">v</span><span style="color:#000;font-weight:bold">[:</span><span style="color:#000">h</span><span style="color:#000;font-weight:bold">])</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">default</span><span style="color:#000;font-weight:bold">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// i isn&#39;t one of the types above
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// i isn&#39;t one of the types above</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
 </span></span></code></pre></div><p><code>json</code> 包将会使用<code>map[string]interface{}</code>和<code>[]interface{}</code>值来存储任意类型的 JSON 对象和数组。
 它将会正确地解析有效的 JSON 数据到 <code>interface {}</code> 类型变量中。默认的具体 Go 类型是：</p>
 <ul>
@@ -1093,8 +1092,7 @@
 <h2 id="参考">参考</h2>
 <p>想要了解更多信息请参考 <a href="https://golang.org/pkg/encoding/json/">json 包的文档</a>。示例用法请参考 <a href="https://golang.org/pkg/net/rpc/jsonrpc/">jsonrpc 包的源代码</a> 。</p>
 <blockquote>
-<p>作者: Andrew Gerrand</p>
-</blockquote>
+<p>作者: Andrew Gerrand</p></blockquote>
 <h2 id="补充-jsonmarshal">补充 json.Marshal</h2>
 <ul>
 <li>原文地址: <a href="https://golang.org/pkg/encoding/json/#Marshal">https://golang.org/pkg/encoding/json/#Marshal</a></li>
@@ -1134,8 +1132,8 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">enc</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Encode</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Nil</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 注意 JSON 输出最后有个换行，所以 Expected 值中也应该加上换行
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">data</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Bytes</span><span style="color:#000;font-weight:bold">(),</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">`{&#34;string&#34;:&#34;\u003cp\u003e文本\u0026文本\u003c/p\u003e&#34;}
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 注意 JSON 输出最后有个换行，所以 Expected 值中也应该加上换行</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">data</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Bytes</span><span style="color:#000;font-weight:bold">(),</span> <span style="color:#000;font-weight:bold">[]</span><span style="color:#204a87">byte</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">`{&#34;string&#34;:&#34;\u003cp\u003e文本\u0026文本\u003c/p\u003e&#34;}
 </span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">`</span><span style="color:#000;font-weight:bold">))</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000">data</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Reset</span><span style="color:#000;font-weight:bold">()</span>
@@ -1171,22 +1169,22 @@
 <li>编码标签的示例代码:</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">TestMarshalStructFieldTag</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">testing</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 注意，首先要让字段名称为导出名称（即以大写字母开头，struct field tag 才会生效）
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">val</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 指定 JSON 对象中的 key 为 myName1
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#000">F1</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#4e9a06">`json:&#34;myName1&#34;`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 注意，首先要让字段名称为导出名称（即以大写字母开头，struct field tag 才会生效）</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">val</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 指定 JSON 对象中的 key 为 myName1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">F1</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#4e9a06">`json:&#34;myName1&#34;`</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 指定 JSON 对象中的 key 为 myName2，且为空值时会被忽略
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#000">F2</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#4e9a06">`json:&#34;myName2,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 指定 JSON 对象中的 key 为 myName2，且为空值时会被忽略</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">F2</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#4e9a06">`json:&#34;myName2,omitempty&#34;`</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 未指定 JSON 对象的 key 名称，所以它是 F3,指定编码选项，为空值时将会被忽略
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#000">F3</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#4e9a06">`json:&#34;,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 未指定 JSON 对象的 key 名称，所以它是 F3,指定编码选项，为空值时将会被忽略</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">F3</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#4e9a06">`json:&#34;,omitempty&#34;`</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 这个字段将会被忽略
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#000">F4</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#4e9a06">`json:&#34;-&#34;`</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 这个字段将会被忽略</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">F4</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#4e9a06">`json:&#34;-&#34;`</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 将字段名指定成 -
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#000">F5</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#4e9a06">`json:&#34;-,&#34;`</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8f5902;font-style:italic">// 将字段名指定成 -</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">F5</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#4e9a06">`json:&#34;-,&#34;`</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000">F1</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000">F2</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span>
@@ -1206,8 +1204,8 @@
 <li>&ldquo;string&rdquo; 编码标签的示例代码:</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">TestMarshalStringTag</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">testing</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">T</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 注意 struct field tag 定义出错的时候(例如字段名称重复)，Marshal 的 err 返回的仍然是空值，但data为`{}`
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">val</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// 注意 struct field tag 定义出错的时候(例如字段名称重复)，Marshal 的 err 返回的仍然是空值，但data为`{}`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">val</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000">B1</span> <span style="color:#204a87;font-weight:bold">bool</span> <span style="color:#4e9a06">`json:&#34;boolVal1,string&#34;`</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000">B2</span> <span style="color:#204a87;font-weight:bold">bool</span> <span style="color:#4e9a06">`json:&#34;boolVal2&#34;`</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}{</span>
@@ -1241,10 +1239,10 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">type</span> <span style="color:#000">Bar</span> <span style="color:#204a87;font-weight:bold">interface</span> <span style="color:#000;font-weight:bold">{}</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">val</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#000">Engine</span> <span style="color:#8f5902;font-style:italic">// 匿名结构体字段的名称会被忽略，将其内部的导出字段放到外部结构体中
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#000">Tires</span> <span style="color:#4e9a06">`json:&#34;Tires&#34;`</span>  <span style="color:#8f5902;font-style:italic">// 通过 JSON tag 指定了名称的匿名结构体字段，在编码时会使用其名称，不再按匿名来处理
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>		<span style="color:#000">Bar</span>  <span style="color:#8f5902;font-style:italic">// 空接口类型的匿名结构体字段，会使用类型名当做其名称，而不是当做匿名结构体字段来处理
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#000;font-weight:bold">}{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">Engine</span> <span style="color:#8f5902;font-style:italic">// 匿名结构体字段的名称会被忽略，将其内部的导出字段放到外部结构体中</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">Tires</span> <span style="color:#4e9a06">`json:&#34;Tires&#34;`</span>  <span style="color:#8f5902;font-style:italic">// 通过 JSON tag 指定了名称的匿名结构体字段，在编码时会使用其名称，不再按匿名来处理</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">Bar</span>  <span style="color:#8f5902;font-style:italic">// 空接口类型的匿名结构体字段，会使用类型名当做其名称，而不是当做匿名结构体字段来处理</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}{</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000">Engine</span><span style="color:#000;font-weight:bold">{</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">},</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#000">Tires</span><span style="color:#000;font-weight:bold">{</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">},</span>
 </span></span><span style="display:flex;"><span>		<span style="color:#0000cf;font-weight:bold">233</span><span style="color:#000;font-weight:bold">,</span>
@@ -1269,8 +1267,7 @@
 <li>字符串值将会直接使用</li>
 <li><code>encoding.TextMarshalers</code>接口将会在 Marshal 时使用</li>
 <li>整数值将会被转换成字符串</li>
-</ul>
-</blockquote>
+</ul></blockquote>
 <p>指针值将会被编码成其所指向的值，空指针将会被编码成空 JSON 值<code>null</code>。</p>
 <p>接口值将会被编码成接口中所包含的值，<code>nil</code>接口值将会被编码成空 JSON 值<code>null</code>。</p>
 <p>Channel，复数和函数类型值不能在 JSON 中编码。尝试去编码这些值将会导致<code>Marshal</code>函数返回<code>UnsupportedTypeError</code>。</p>
@@ -1293,46 +1290,46 @@
 </span></span><span style="display:flex;"><span>	<span style="color:#000">data</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">json</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Marshal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Nil</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">err</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#000">assert</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Equal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">t</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">data</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">``</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// &gt;&gt;&gt; go test json_example
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// # json_example [json_example.test]
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//panic: runtime error: invalid memory address or nil pointer dereference
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// [signal SIGSEGV: segmentation violation code=0x1 addr=0x70 pc=0x17e3d29]
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">//
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// goroutine 1 [running]:
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.dowidth(0xc0004cf920)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:175 +0xa9
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.widstruct(0xc0004cf860, 0xc0004cf860, 0x0, 0x1, 0x3)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:95 +0xc6
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.dowidth(0xc0004cf860)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:340 +0x5e9
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.widstruct(0xc0004cf920, 0xc0004cf920, 0x0, 0x1, 0xc000448d01)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:95 +0xc6
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.dowidth(0xc0004cf920)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:340 +0x5e9
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.widstruct(0xc0004cf8c0, 0xc0004cf8c0, 0x0, 0x1, 0xc0004cf8c0)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:95 +0xc6
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.dowidth(0xc0004cf8c0)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:340 +0x5e9
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.resumecheckwidth()
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:450 +0x51
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheckdef(0xc00042fe00)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:3927 +0x8e3
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheck1(0xc00042fe00, 0x4, 0x0)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:376 +0xc387
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheck(0xc00042fe00, 0x4, 0x0)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:299 +0x6f2
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheck1(0xc000437480, 0x1, 0x0)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:2204 +0x5446
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheck(0xc000437480, 0x1, 0x0)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:299 +0x6f2
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheckslice(0xc000424480, 0x6, 0x8, 0x1)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:117 +0x50
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.Main(0x1a73428)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/main.go:545 +0x29a5
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// main.main()
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/main.go:51 +0xad
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>	<span style="color:#8f5902;font-style:italic">// FAIL    json_example [build failed]
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// &gt;&gt;&gt; go test json_example</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// # json_example [json_example.test]</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//panic: runtime error: invalid memory address or nil pointer dereference</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// [signal SIGSEGV: segmentation violation code=0x1 addr=0x70 pc=0x17e3d29]</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">//</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// goroutine 1 [running]:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.dowidth(0xc0004cf920)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:175 +0xa9</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.widstruct(0xc0004cf860, 0xc0004cf860, 0x0, 0x1, 0x3)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:95 +0xc6</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.dowidth(0xc0004cf860)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:340 +0x5e9</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.widstruct(0xc0004cf920, 0xc0004cf920, 0x0, 0x1, 0xc000448d01)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:95 +0xc6</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.dowidth(0xc0004cf920)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:340 +0x5e9</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.widstruct(0xc0004cf8c0, 0xc0004cf8c0, 0x0, 0x1, 0xc0004cf8c0)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:95 +0xc6</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.dowidth(0xc0004cf8c0)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:340 +0x5e9</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.resumecheckwidth()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/align.go:450 +0x51</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheckdef(0xc00042fe00)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:3927 +0x8e3</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheck1(0xc00042fe00, 0x4, 0x0)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:376 +0xc387</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheck(0xc00042fe00, 0x4, 0x0)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:299 +0x6f2</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheck1(0xc000437480, 0x1, 0x0)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:2204 +0x5446</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheck(0xc000437480, 0x1, 0x0)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:299 +0x6f2</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.typecheckslice(0xc000424480, 0x6, 0x8, 0x1)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/typecheck.go:117 +0x50</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// cmd/compile/internal/gc.Main(0x1a73428)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/internal/gc/main.go:545 +0x29a5</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// main.main()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// /usr/local/Cellar/go/1.12.4/libexec/src/cmd/compile/main.go:51 +0xad</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">// FAIL    json_example [build failed]</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
 </span></span></code></pre></div><p>Marshal的示例代码:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">package</span> <span style="color:#000">main</span>
 </span></span><span style="display:flex;"><span>
@@ -1405,7 +1402,7 @@
        integrity="sha512-YJVxTjqttjsU3cSvaTRqsSl0wbRgZUNF+NGGCgto/MUbIvaLdXQzGTCQu4CvyJZbZctgflVB0PXw9LLmTWm5/w==" crossorigin="anonymous"
        onload='renderMathInElement(document.body, null);'>
 </script>
-<script src="/js/main.min.04ae8cb44cf587d6a2d6e50f7d0276bee94133052ab39f783da0b290f7986c6c.js" integrity="sha256-BK6MtEz1h9ai1uUPfQJ2vulBMwUqs594PaCykPeYbGw=" crossorigin="anonymous"></script>
+<script src="/js/main.min.85d1295e77b8cb64a3e7ac5b9239aa65c4410a289bbe21c0ae8359f1617c0461.js" integrity="sha256-hdEpXne4y2Sj56xbkjmqZcRBCiibviHAroNZ8WF8BGE=" crossorigin="anonymous"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 

@@ -4,7 +4,8 @@
     <title>Categories on 647 Universe</title>
     <link>https://bwangel.me/categories/</link>
     <description>Recent content in Categories on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>cn</language><atom:link href="https://bwangel.me/categories/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>cn</language>
+    <atom:link href="https://bwangel.me/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

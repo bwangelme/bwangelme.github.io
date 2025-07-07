@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>wireshark on 647 Universe</title>
+    <title>Wireshark on 647 Universe</title>
     <link>https://bwangel.me/tags/wireshark/</link>
-    <description>Recent content in wireshark on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Wireshark on 647 Universe</description>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Wed, 23 Aug 2023 10:07:25 +0800</lastBuildDate><atom:link href="https://bwangel.me/tags/wireshark/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Dec 2023 13:25:27 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/tags/wireshark/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>利用 VirtualBox 和 Ubuntu 22 重现抓包实验</title>
       <link>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</link>
       <pubDate>Wed, 23 Aug 2023 10:07:25 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/wireshark/vbox-linux-wireshark/</guid>
-      <description>实验介绍 在 《Wireshark网络分析就这么简单》 第一章，讲述了一道面试题。
-HostA 和 HostB 在同一个局域网中，它们的 IP 配置如下，请问这两台机器能否 ping 通?
-HostA: IP: 192.168.26.129/24 Gateway: 192.168.26.2 HostB: IP: 192.168.26.3/27 Gateway: 192.168.26.2 答案是能够 ping 通，HostA 和 HostB 连同网关最终会形成一个奇怪的网络
-具体通信过程如下:
-HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 的 IP 和自己的掩码计算，发现 192.168.26.3 和自己是处于同一子网 HostA 通过 ARP 协议广播寻找 192.168.26.3 的 MAC 地址，由于 192.168.26.3 和它在同一局域网中，192.168.26.3 会应答自己的 MAC 地址 HostA 将 ping 请求直接发送给 192.168.26.3, 目的 MAC 地址使用的就是 192.168.26.3 的地址 HostB(192.168.26.3) 收到 ping 请求，给 HostA 发送 ping 响应 HostB 将 HostA 的 IP 和自己的掩码计算，发现 192.</description>
+      <description>&lt;h2 id=&#34;实验介绍&#34;&gt;实验介绍&lt;/h2&gt;&#xA;&lt;p&gt;在 &lt;a href=&#34;https://book.douban.com/subject/26268767/&#34;&gt;《Wireshark网络分析就这么简单》&lt;/a&gt; 第一章，讲述了一道面试题。&lt;/p&gt;&#xA;&lt;p&gt;HostA 和 HostB 在同一个局域网中，它们的 IP 配置如下，请问这两台机器能否 ping 通?&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HostA: &#xA;    IP: 192.168.26.129/24&#xA;    Gateway: 192.168.26.2&#xA;HostB: &#xA;    IP: 192.168.26.3/27&#xA;    Gateway: 192.168.26.2&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;答案是能够 ping 通，HostA 和 HostB 连同网关最终会形成一个奇怪的网络&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-08-23-103426.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;具体通信过程如下:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;HostA(&lt;code&gt;192.168.26.129&lt;/code&gt;) 发送 ping 请求给 HostB(&lt;code&gt;192.168.26.3&lt;/code&gt;)&#xA;&lt;ul&gt;&#xA;&lt;li&gt;HostA 将 HostB 的 IP 和自己的掩码计算，发现 &lt;code&gt;192.168.26.3&lt;/code&gt; 和自己是处于同一子网&lt;/li&gt;&#xA;&lt;li&gt;HostA 通过 ARP 协议广播寻找 &lt;code&gt;192.168.26.3&lt;/code&gt; 的 MAC 地址，由于 &lt;code&gt;192.168.26.3&lt;/code&gt; 和它在同一局域网中，&lt;code&gt;192.168.26.3&lt;/code&gt; 会应答自己的 MAC 地址&lt;/li&gt;&#xA;&lt;li&gt;HostA 将 ping 请求直接发送给 &lt;code&gt;192.168.26.3&lt;/code&gt;, 目的 MAC 地址使用的就是 &lt;code&gt;192.168.26.3&lt;/code&gt; 的地址&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;HostB(&lt;code&gt;192.168.26.3&lt;/code&gt;) 收到 ping 请求，给 HostA 发送 ping 响应&#xA;&lt;ul&gt;&#xA;&lt;li&gt;HostB 将 HostA 的 IP 和自己的掩码计算，发现 &lt;code&gt;192.168.26.129&lt;/code&gt; 和自己不是同一子网&#xA;&lt;ul&gt;&#xA;&lt;li&gt;192.168.26.3 &amp;amp; 255.255.255.224 == 192.168.26.0&lt;/li&gt;&#xA;&lt;li&gt;192.168.26.129 &amp;amp; 255.255.255.224 == 192.168.26.128&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;HostB 将 ping 响应发送给网关，由网关进行路由发送&#xA;&lt;ul&gt;&#xA;&lt;li&gt;HostB 通过 APR 协议广播寻找网关 &lt;code&gt;192.168.26.2&lt;/code&gt; 的 MAC 地址，网关 &lt;code&gt;192.168.26.2&lt;/code&gt; 告诉 HostB 自己的 MAC&lt;/li&gt;&#xA;&lt;li&gt;HostB 发送 ping 响应包，目的 IP 是 &lt;code&gt;192.168.26.129&lt;/code&gt;, 目的 MAC 是网关的 MAC 地址&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;网关将 ping 响应发送给了 HostA&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;开始实验&#34;&gt;开始实验&lt;/h2&gt;&#xA;&lt;p&gt;读完以后，感觉这个测试挺好玩，就尝试在本地复现了一下。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -4,61 +4,44 @@
     <title>Ubuntu on 647 Universe</title>
     <link>https://bwangel.me/docs/ubuntu/</link>
     <description>Recent content in Ubuntu on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Fri, 29 Sep 2023 10:16:25 +0800</lastBuildDate><atom:link href="https://bwangel.me/docs/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Dec 2023 10:41:59 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/docs/ubuntu/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ubuntu 下 alacritty 终端中安装 nvim-tree 插件</title>
       <link>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</link>
       <pubDate>Fri, 21 Oct 2022 15:43:43 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/ubuntu/nvim-web-devicons/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Ubuntu 初始化</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu-init/</link>
       <pubDate>Sun, 08 May 2022 10:42:22 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu-init/</guid>
-      <description>安装软件 sed -i &amp;#39;s/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g&amp;#39; /etc/apt/sources.list sudo apt update sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa github cli vagrant google chrome chrome download alacritty gvm rustup nerdfont DejaVuSansMono font Ubuntu 将 capslock 映射成 esc sudo apt-get install dconf-cli # 使 caps 成为 esc 按键 dconf write /org/gnome/desktop/input-sources/xkb-options &amp;#34;[&amp;#39;caps:escape&amp;#39;]&amp;#34; # 交换 caps 和 esc 按键 dconf write &amp;#34;/org/gnome/desktop/input-sources/xkb-options&amp;#34; &amp;#34;[&amp;#39;caps:swapescape&amp;#39;]&amp;#34; caps 配置的说明 Caps Lock behavior ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐ │Option Description │ ├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤ │caps:internal Caps Lock uses internal capitalization; Shift &amp;#34;pauses&amp;#34; Caps Lock │ │caps:internal_nocancel Caps Lock uses internal capitalization; Shift does not affect Caps Lock │ │caps:shift Caps Lock acts as Shift with locking; Shift &amp;#34;pauses&amp;#34; Caps Lock │ │caps:shift_nocancel Caps Lock acts as Shift with locking; Shift does not affect Caps Lock │ │caps:capslock Caps Lock toggles normal capitalization of alphabetic characters │ │caps:shiftlock Caps Lock toggles Shift Lock (affects all keys) │ │caps:swapescape Swap Esc and Caps Lock │ │caps:escape Make Caps Lock an additional Esc │ │caps:escape_shifted_capslock Make Caps Lock an additional Esc, but Shift + Caps Lock is the regular Caps Lock │ │caps:backspace Make Caps Lock an additional Backspace │ │caps:super Make Caps Lock an additional Super │ │caps:hyper Make Caps Lock an additional Hyper │ │caps:menu Make Caps Lock an additional Menu key │ │caps:numlock Make Caps Lock an additional Num Lock │ │caps:ctrl_modifier Make Caps Lock an additional Ctrl │ │caps:none Caps Lock is disabled │ │ │ └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘ 参考链接 How to permanently switch Caps Lock and Esc jammy 22.</description>
+      <description>&lt;h2 id=&#34;安装软件&#34;&gt;安装软件&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s/http:\/\/cn.archive.ubuntu.com/https:\/\/mirrors.ustc.edu.cn/g&amp;#39;&lt;/span&gt; /etc/apt/sources.list&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt update&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install zsh git ripgrep vim curl build-essential fd-find autojump exa&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://github.com/cli/cli/blob/trunk/docs/install_linux.md&#34;&gt;github cli&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.vagrantup.com/downloads&#34;&gt;vagrant&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.google.com/chrome/&#34;&gt;google chrome&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb&#34;&gt;chrome download&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://github.com/alacritty/alacritty/blob/master/INSTALL.md&#34;&gt;alacritty&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://github.com/moovweb/gvm&#34;&gt;gvm&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://rustup.rs/&#34;&gt;rustup&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/DejaVuSansMono.zip&#34;&gt;nerdfont DejaVuSansMono&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://bwangel.me/647/docs/ubuntu/nvim-web-devicons/&#34;&gt;font&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;ubuntu-将-capslock-映射成-esc&#34;&gt;Ubuntu 将 capslock 映射成 esc&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install dconf-cli&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 使 caps 成为 esc 按键&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dconf write /org/gnome/desktop/input-sources/xkb-options &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;[&amp;#39;caps:escape&amp;#39;]&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 交换 caps 和 esc 按键&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dconf write &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/org/gnome/desktop/input-sources/xkb-options&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;[&amp;#39;caps:swapescape&amp;#39;]&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;&#xA;&lt;li&gt;caps 配置的说明&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Caps Lock behavior&#xA;&#xA;┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐&#xA;│Option                         Description                                                                          │&#xA;├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤&#xA;│caps:internal                  Caps Lock uses internal capitalization; Shift &amp;#34;pauses&amp;#34; Caps Lock                     │&#xA;│caps:internal_nocancel         Caps Lock uses internal capitalization; Shift does not affect Caps Lock              │&#xA;│caps:shift                     Caps Lock acts as Shift with locking; Shift &amp;#34;pauses&amp;#34; Caps Lock                       │&#xA;│caps:shift_nocancel            Caps Lock acts as Shift with locking; Shift does not affect Caps Lock                │&#xA;│caps:capslock                  Caps Lock toggles normal capitalization of alphabetic characters                     │&#xA;│caps:shiftlock                 Caps Lock toggles Shift Lock (affects all keys)                                      │&#xA;│caps:swapescape                Swap Esc and Caps Lock                                                               │&#xA;│caps:escape                    Make Caps Lock an additional Esc                                                     │&#xA;│caps:escape_shifted_capslock   Make Caps Lock an additional Esc, but Shift + Caps Lock is the regular Caps Lock     │&#xA;│caps:backspace                 Make Caps Lock an additional Backspace                                               │&#xA;│caps:super                     Make Caps Lock an additional Super                                                   │&#xA;│caps:hyper                     Make Caps Lock an additional Hyper                                                   │&#xA;│caps:menu                      Make Caps Lock an additional Menu key                                                │&#xA;│caps:numlock                   Make Caps Lock an additional Num Lock                                                │&#xA;│caps:ctrl_modifier             Make Caps Lock an additional Ctrl                                                    │&#xA;│caps:none                      Caps Lock is disabled                                                                │&#xA;│                                                                                                                    │&#xA;└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;参考链接&#34;&gt;参考链接&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://askubuntu.com/a/365701/581894&#34;&gt;How to permanently switch Caps Lock and Esc&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://askubuntu.com/a/1415659/581894&#34;&gt;jammy 22.04: how to map Capslock to ctrl and esc&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;man 7 xkeyboard-config&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
     </item>
-    
     <item>
       <title>Ubuntu 使用默认的 DNS Server 配置</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu-dns/</link>
       <pubDate>Wed, 20 Apr 2022 02:07:00 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu-dns/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>修复 Ubuntu 中 chrome vimium-c 插件失效的问题</title>
       <link>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</link>
       <pubDate>Thu, 24 Feb 2022 22:20:23 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/ubuntu/chrome_key_event_missing/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;记录一次折腾 Ubuntu 的经历&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;记录一次折腾 Ubuntu 的经历&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Ubuntu缩小磁盘分区大小</title>
       <link>https://bwangel.me/docs/ubuntu/ubuntu%E7%BC%A9%E5%B0%8F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F/</link>
       <pubDate>Sun, 17 Jul 2016 16:38:06 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/ubuntu/ubuntu%E7%BC%A9%E5%B0%8F%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;通过resize2fs调整文件系统大小&lt;/li&gt;
-&lt;li&gt;通过parted调整磁盘分区大小&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;通过resize2fs调整文件系统大小&lt;/li&gt;&#xA;&lt;li&gt;通过parted调整磁盘分区大小&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

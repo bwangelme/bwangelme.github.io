@@ -4,60 +4,37 @@
     <title>NodeJS on 647 Universe</title>
     <link>https://bwangel.me/docs/nodejs/</link>
     <description>Recent content in NodeJS on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 06 Nov 2023 10:50:58 +0800</lastBuildDate><atom:link href="https://bwangel.me/docs/nodejs/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Nov 2023 11:03:48 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/docs/nodejs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>简单聊聊HTML 5中的Web Storage</title>
       <link>https://bwangel.me/docs/nodejs/web-storage-api/</link>
       <pubDate>Sat, 06 May 2017 02:34:14 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/nodejs/web-storage-api/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;针对HTML5中的 Web Storage进行了介绍&lt;/li&gt;
-&lt;li&gt;主要介绍了存取API，有效周期，可用性检测等&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;针对HTML5中的 Web Storage进行了介绍&lt;/li&gt;&#xA;&lt;li&gt;主要介绍了存取API，有效周期，可用性检测等&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>npm小记</title>
       <link>https://bwangel.me/docs/nodejs/npm%E5%B0%8F%E8%AE%B0/</link>
       <pubDate>Fri, 06 May 2016 15:10:25 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/nodejs/npm%E5%B0%8F%E8%AE%B0/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;关于npm的小记，记录自己平常学习到的零碎知识点&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;关于npm的小记，记录自己平常学习到的零碎知识点&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>NodeJS 笔记</title>
       <link>https://bwangel.me/docs/nodejs/note/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/nodejs/note/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;阮一峰的&lt;a href=&#34;http://javascript.ruanyifeng.com/#toc10&#34;&gt;Node.js&lt;/a&gt;教程笔记&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;阮一峰的&lt;a href=&#34;http://javascript.ruanyifeng.com/#toc10&#34;&gt;Node.js&lt;/a&gt;教程笔记&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Vue.js关于组件的笔记</title>
       <link>https://bwangel.me/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
-      
       <guid>https://bwangel.me/docs/nodejs/vuejs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;学习Vue.js官方教程的笔记&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;学习Vue.js官方教程的笔记&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

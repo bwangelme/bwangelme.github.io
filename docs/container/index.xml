@@ -4,69 +4,51 @@
     <title>Container on 647 Universe</title>
     <link>https://bwangel.me/docs/container/</link>
     <description>Recent content in Container on 647 Universe</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 11 Sep 2023 10:34:11 +0800</lastBuildDate><atom:link href="https://bwangel.me/docs/container/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 Jan 2024 17:50:56 +0800</lastBuildDate>
+    <atom:link href="https://bwangel.me/docs/container/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Docker Cli</title>
       <link>https://bwangel.me/docs/container/docker-cli/</link>
       <pubDate>Thu, 04 Jan 2024 16:53:10 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/container/docker-cli/</guid>
-      <description>docker cli 获取所有容器的 IP docker ps -q | xargs docker inspect -f &amp;#39;{{.Name}}{{&amp;#34;\t&amp;#34;}}{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}&amp;#39; </description>
+      <description>&lt;h2 id=&#34;docker-cli-获取所有容器的-ip&#34;&gt;docker cli 获取所有容器的 IP&lt;/h2&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker ps -q | xargs docker inspect -f &amp;#39;{{.Name}}{{&amp;#34;\t&amp;#34;}}{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}&amp;#39;&#xA;&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
-    
     <item>
       <title>Ubuntu 中 Docker 设置容器中 DNS 服务器的地址</title>
       <link>https://bwangel.me/docs/container/docker-dns/</link>
       <pubDate>Mon, 20 Mar 2023 18:28:08 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/container/docker-dns/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>从 none 开始，用网桥模式启动容器的网络</title>
       <link>https://bwangel.me/docs/container/docker-none-network/</link>
       <pubDate>Fri, 20 Jan 2023 10:15:48 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/container/docker-none-network/</guid>
       <description>&lt;p&gt;用 none 网络模式启动的容器，创建一个可以对外通信的网络&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Ubuntu 下安装 Containerd 及配置代理</title>
       <link>https://bwangel.me/docs/container/install-containerd/</link>
       <pubDate>Tue, 23 Aug 2022 08:17:21 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/container/install-containerd/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;介绍了安装 containerd 的方法&lt;/p&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;介绍了安装 containerd 的方法&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>Ubuntu 下 Docker 设置 Registry</title>
       <link>https://bwangel.me/docs/container/docker-registry/</link>
       <pubDate>Tue, 09 Aug 2022 21:14:49 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/container/docker-registry/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Docker 客户端连接远程 Docker Daemon</title>
       <link>https://bwangel.me/docs/container/docker-client-remote-server/</link>
       <pubDate>Sat, 22 May 2021 11:41:46 +0800</pubDate>
-      
       <guid>https://bwangel.me/docs/container/docker-client-remote-server/</guid>
-      <description>&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;Docker 客户端连接远程 Docker Daemon&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://dockerlabs.collabnix.com/beginners/components/daemon/access-daemon-externally.html&#34;&gt;参考链接 How to Connect to a Remote Docker Daemon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Docker 客户端连接远程 Docker Daemon&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://dockerlabs.collabnix.com/beginners/components/daemon/access-daemon-externally.html&#34;&gt;参考链接 How to Connect to a Remote Docker Daemon&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>
