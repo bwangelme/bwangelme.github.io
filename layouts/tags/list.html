@@ -1,0 +1,46 @@
+{{ define "main" }}
+<div class="td-content td-taxonomy">
+    <div class="lead">
+        <h1>{{ .Title }}</h1>
+        {{ if .Params.subtitle }}
+        <p class="subtitle">{{ .Params.subtitle }}</p>
+        {{ end }}
+        {{ if .Content }}
+        <div class="content">
+            {{ .Content }}
+        </div>
+        {{ end }}
+    </div>
+    
+    <div class="td-page-meta">
+        <p>{{ .Title }} {{ printf (i18n "tag_posts_count") (len .Pages) }}</p>
+    </div>
+    
+    <div class="section-index">
+        {{ range .Pages }}
+        <div class="entry">
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <div class="meta">
+                <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}" class="text-muted">
+                    {{ .Date.Format (.Site.Params.time_format_default | default "2006-01-02 15:04") }}
+                </time>
+                {{ if .Params.author }}
+                <span class="text-muted"> • {{ .Params.author }}</span>
+                {{ end }}
+                {{ if .Params.tags }}
+                <span class="text-muted"> • </span>
+                {{ range $i, $tag := .Params.tags }}
+                    <a href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}/" class="badge badge-secondary">{{ $tag }}</a>
+                {{ end }}
+                {{ end }}
+            </div>
+            {{ if .Summary }}
+            <div class="summary">
+                {{ .Summary | truncate 200 }}
+            </div>
+            {{ end }}
+        </div>
+        {{ end }}
+    </div>
+</div>
+{{ end }} 

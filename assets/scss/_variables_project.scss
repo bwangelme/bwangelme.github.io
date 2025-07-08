@@ -7,8 +7,8 @@ Add styles or override variables from the theme here.
 // disable Google Fonts and use a system font,
 $td-enable-google-fonts: false;
 
-/* Custom styles for taxonomy pages */
-.td-content {
+/* Custom styles for taxonomy pages only */
+.td-content.td-taxonomy {
     max-width: 800px;
     margin: 0 auto;
 }
