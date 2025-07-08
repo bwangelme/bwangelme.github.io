@@ -72,8 +72,8 @@ func InsertSortWithSentinel[T ttypes.Number](arr []T) []T { res := make([]T, len
 每次开始遍历前，它将当前需要插入的元素放到数组头部(res[0])。这样就算 1-i 中没有比 res[i] 小的元素，但循环到最后还是会触发条件 not (res[0] &gt; current), 达到跳出循环的目的。
 在哨兵模式的插入排序中，我们利用一个元素的内存，省去 j&gt;0 这个判断条件。
 func InsertSortWithSentinel[T ttypes.Number](arr []T) []T { res := make([]T, len(arr)) copy(res, arr) res = append([]T{0}, res...) for i := 2; i &lt; len(res); i&#43;&#43; { j := i current := res[i] res[0] = current // 和无哨兵相比，省略掉了 j &gt; 0 这个比较条件 for res[j-1] &gt; current { res[j] = res[j-1] j-- } res[j] = current } return res[1:] } 链表 链表节点的定义如下">
-<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
-<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

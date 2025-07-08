@@ -60,8 +60,8 @@ consumer.commitAsync 是异步提交的，它相对 consumer.commitSync 会有�
 consumer.commitAsync 是异步提交的，它相对 consumer.commitSync 会有一定的性能提升。consumer.commitAsync 还有一个回调函数参数，让开发者设定在提交失败时做什么。
 一般在 broker 正常时，提交失败的情况很少发生。开发者不需要做提交失败后重试的逻辑。 参考链接 https://github.com/edenhill/librdkafka/blob/4992b3db321befa04ece3027f3c79f3557684db9/CONFIGURATION.md https://docs.confluent.io/platform/current/clients/consumer.html#id1 offset kafka 的消息以 group 为单位给 Consumer 发送。Consumer Group 在 topic 中的 offset 存储在 broker 的 __consumer_offsets topic 中。
 新加入的 consumer group 默认从最新位置读取 message。可以通过修改 Consumer 的auto.offset.reset=smallest 选项，让 consumer 从头开始读取 message.">
-<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
-<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

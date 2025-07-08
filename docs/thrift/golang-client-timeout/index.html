@@ -65,8 +65,8 @@ ConnectTimeout 表示建立 TCP 连接的超时时间 SocketTimeout 表示读写
 rawTransport := thrift.NewTSocketConf(net.JoinHostPort(&#34;localhost&#34;, &#34;7303&#34;), &amp;thrift.TConfiguration{ SocketTimeout: 5 * time.Second, ConnectTimeout: 5 * time.Second, }) context timeout 在调用 thrift 函数时，需要传入 context 参数，我们可以在 ctx 参数中加上超时
 ctx, cancel := context.WithTimeout(context.Background(), 1 * time.Second) res, err = client.Triple(ctx, 27) // thrift 调用 cancel() 根据 context 的工作原理，
 cancel 函数被调用 到了设置的超时时间，golang context 内部的的 goroutine 会调用 cancel 函数 当上述两个条件满足其一时，会触发两个函数">
-<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
-<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

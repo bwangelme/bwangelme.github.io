@@ -39,8 +39,8 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="泛型">
   <meta name="twitter:description" content="利用泛型实现的语法糖 // Cond // 条件表达式的简单实现，支持任意类型 func Cond[T any](val bool, a, b T) T { if val { return a } return b } // Or // 返回 vals 中第一个不是对应类型0值的参数，如果没有，则返回对应类型的0值 func Or[T comparable](vals ...T) T { for _, val := range vals { if val != *new(T) { return val } } return *new(T) } 用法 func TestCond(t *testing.T) { assert.Equal(t, 1, Cond(true, 1, 2)) assert.Equal(t, 2, Cond(false, 1, 2)) var req *http.Request assert.Equal(t, http.MethodGet, Cond(req == nil, http.MethodGet, http.MethodPost)) } func TestOr(t *testing.T) { // 范型函数可以不传类型参数 // 我在 1.18, 1.19, 1.20 上测试均可以工作 assert.Equal(t, 0, Or[int]()) assert.Equal(t, 0, Or(0)) assert.Equal(t, 1, Or(1)) assert.Equal(t, 2, Or(0, 2)) assert.Equal(t, 3, Or(0, 0, 3)) }">
-<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
-<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

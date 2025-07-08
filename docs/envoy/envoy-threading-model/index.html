@@ -84,8 +84,8 @@ file flush thread Envoy 写的每个文件(主要是 access-log)都有一个独�
 现代内核在连接的负载均衡方面表现得非常出色。 它们采用诸如IO优先级提升( IO priority boosting)之类的功能，试图在开始使用其他正在监听相同套接字的线程之前，填充一个线程的工作。同时，它们也不使用单个自旋锁来处理每个 accpet 操作。
 连接一旦创建，IO 读写一般是绑定在一个线程。
 Envoy 中每个工作线程都会创建一个连接池，因此尽管 HTTP2 会在一个连接上使用多个 Stream, 但是 Envoy 的每个线程还是会针对每个 Upstream 创建一个 TCP 连接。">
-<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
-<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

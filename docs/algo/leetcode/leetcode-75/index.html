@@ -80,8 +80,8 @@ n == nums.length 1 &lt;= n &lt;= 300 nums[i] 为 0、1 或 2 进阶：
 遍历一遍数组，遇到数字 0 放到 0 区域尾部, 遇到数字2放到 2 区域头部，遍历完成后，数组中的数字也自动分好区了
 注意:
 2 区域中的数字不需要再移动了 ，因此我们遍历时，遍历到2区域的头部就跳出循环。 循环跳出的条件是 i &lt;= p_two， 要遍历数组中每一个数字，因此要遍历到 p_two 代码 func sortColors(nums []int) { var ( p_zero = 0 i = 0 p_two = len(nums) - 1 ) // 注意，这里的条件是 i &lt;= p_two, 必须要比较数组中的所有元素 for i &lt;= p_two { if nums[i] == 0 { swap(nums, i, p_zero) p_zero&#43;&#43; // 当前数字被交换到后面了，当前数字一定是0,因此 i 可以往后移动一位 i&#43;&#43; } else if nums[i] == 1 { // 当前数字是1的时候，不交换 i&#43;&#43; } else { // 当前数字是2的时候，将当前数字交换到数组尾部 swap(nums, i, p_two) // 当前交换过来的数字是从数组后面交换过来的，不确定值，因此 i 不能 &#43;&#43; p_two-- } } } func swap(nums []int, x, y int) { tmp := nums[x] nums[x] = nums[y] nums[y] = tmp } 复杂度分析 N == len(nums) 时间复杂度: O(N), 数组只遍历了一遍 空间复杂度: O(1), 没有额外申请其他的数据结构">
-<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
-<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

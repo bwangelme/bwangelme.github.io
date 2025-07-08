@@ -56,8 +56,8 @@ MySQL索引 1. 索引简介 索引在MySQL中也叫作键，是存储引擎用�
 索引优化应该是对查询性能优化最有效的手段了
 相当于字典中的音序表，如果没有音序表，则需要一页一页去查
 2. 索引分类 说明 普通索引 唯一索引 全文索引 单列索引 多列索引 空间索引 存储引擎 所有存储引擎支持(同样的索引，不同存储类型，实现不同) 只有Memory支持 5.5及之前前仅MyISAM支持 特点 允许字段重复 不允许字段重复 针对varchar类型支持 select语句条件有第一个字段时才会使用多列索引 3. 测试 利用存储过程插入数据 mysql&gt; delimiter $$ --设置分隔符为$$ -- 定义一个存储过程 mysql&gt; create procedure autoinsert1() -&gt; BEGIN -&gt; declare i int default 1; -&gt; while(i&lt;20000)do -&gt; insert into school.t2 values(i, &#39;xff&#39;); -&gt; set i=i&#43;1 -&gt; end while; -&gt; END$$ mysql&gt; delimiter ; --还原分隔符为; mysql&gt; call autoinsert1(); --调用存储过程 创建存储过程要选择对应数据库，否则可能会报错">
-<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
-<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

@@ -48,8 +48,8 @@ SIGNAL=${SIGNAL:-TERM} OSNAME=$(uname -s) if [[ &#34;$OSNAME&#34; == &#34;OS/390
   <meta name="twitter:description" content="优雅地关闭 Kafka Broker 向进程发送 TERM 信号就可以优雅地关闭 Kafka Broker
 这是 bin/kafka-server-stop.sh 的内容，他的思路就是通过 ps 查找 cmd 中包括 kafka.Kafka 的进程，来寻找进程 ID
 SIGNAL=${SIGNAL:-TERM} OSNAME=$(uname -s) if [[ &#34;$OSNAME&#34; == &#34;OS/390&#34; ]]; then if [ -z $JOBNAME ]; then JOBNAME=&#34;KAFKSTRT&#34; fi PIDS=$(ps -A -o pid,jobname,comm | grep -i $JOBNAME | grep java | grep -v grep | awk &#39;{print $1}&#39;) elif [[ &#34;$OSNAME&#34; == &#34;OS400&#34; ]]; then PIDS=$(ps -Af | grep -i &#39;kafka\.Kafka&#39; | grep java | grep -v grep | awk &#39;{print $2}&#39;) else PIDS=$(ps ax | grep &#39; kafka\.Kafka &#39; | grep java | grep -v grep | awk &#39;{print $1}&#39;) fi if [ -z &#34;$PIDS&#34; ]; then echo &#34;No kafka server to stop&#34; exit 1 else kill -s $SIGNAL $PIDS fi 但是 Linux 内核有限制，ps 输出的一行内容不能超过页大小 PAGE_SIZE (4096)，所以如果 kafka 进程的 cmd 过长，可能会导致 ps &#43; grep 失败。">
-<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
-<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

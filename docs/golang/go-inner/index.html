@@ -47,8 +47,8 @@ uintptr(0) 表示将0转换成无符号整数类型
   <meta name="twitter:description" content="Golang 中计算指针长度 // PtrSize is the size of a pointer in bytes - unsafe.Sizeof(uintptr(0)) but as an ideal constant. // It is also the size of the machine&#39;s native word size (that is, 4 on 32-bit systems, 8 on 64-bit). const PtrSize = 4 &lt;&lt; (^uintptr(0) &gt;&gt; 63) 这是 Golang 中计算指针长度的方式。
 uintptr(0) 表示将0转换成无符号整数类型
 执行步骤 32位系统的值 64位系统的值 uintptr(0) 0x00000000 0x0000000000000000 ^uintptr(0) 0xFFFFFFFF 0xFFFFFFFFFFFFFFFF ^uintptr(0) &gt;&gt; 63 0x00000000 0x0000000000000001 4 &lt;&lt; (^uintptr(0) &gt;&gt; 63) 4 &lt;&lt; 0 = 4 4 &lt;&lt; 1 =8 通过以上步骤，会计算出不同平台中，指针的字节长度(4 或 8)。">
-<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
-<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

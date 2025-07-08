@@ -69,8 +69,8 @@ If a signal handler is invoked while a system call or library function call is b
 在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。
 例如
 read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?">
-<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
-<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

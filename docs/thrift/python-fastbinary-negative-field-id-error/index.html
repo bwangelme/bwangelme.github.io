@@ -61,8 +61,8 @@ Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C&#4
 使用 TBinaryProtocol 初始化 protocol ，调用的是纯 Python 实现。TBinaryProtocolAccelerated 调用的是 C&#43;&#43; 实现。
 问题描述 Python Client 调用 Python Server, 当 idl 中定义的方法是非 strict 的话(即没有在参数或结构体中声明序号)。使用 fastbinary 调用 server 会出错，我们可以用以下的代码来复现问题。
 我们创建一个 thrift 服务，它的 idl 文件定义如下 service Service { string hello(1: string name) i64 add(i64 a, i64 b) } hello 方法是符合 strict 定义的，add 方法没有写序号，thrift 默认会使用负数序号。(a: -1, b: -2)">
-<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
-<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
