@@ -40,13 +40,8 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="排序">
   <meta name="twitter:description" content="归并排序 思路 mergeSortC 对数组的子数组进行排序，当 len(子数组) == 1 的时候，这个数组就是有序的，此时就是递归出口 merge 对有序的子数组进行合并。 0. left, right 两个子数组内部的元素是有序的 就像交换需要创建 tmp 变量。merge 时 先创建 tmp 数组 将 left, right 两个子数组的元素 有序 放入 tmp 中 将子数组中剩余的部分放入到 tmp 中 将 tmp 更新到 arr 的对应位置 特性 无论数据源是什么，归并排序的时间复杂度固定是 O(nlogn) 归并排序的空间复杂度是 O(1) ，因为每次只有一个函数会申请一个临时数组 归并排序是稳定性排序，两个相同的元素，排序之后它们的顺序不会变 代码 func MergeSort(arr []int64) []int64 { mergeSortC(arr, 0, len(arr)-1) return arr } func mergeSortC(arr []int64, start, end int) { if start &gt;= end { return } q := (start &#43; end) / 2 mergeSortC(arr, start, q) mergeSortC(arr, q&#43;1, end) merge(arr, start, q, q&#43;1, end) } func merge(arr []int64, leftStart, leftEnd int, rightStart, rightEnd int) { var tmp = make([]int64, 0) var leftIdx, rightIdx = leftStart, rightStart for leftIdx &lt;= leftEnd &amp;&amp; rightIdx &lt;= rightEnd { if arr[leftIdx] &lt;= arr[rightIdx] { tmp = append(tmp, arr[leftIdx]) leftIdx&#43;&#43; } else { tmp = append(tmp, arr[rightIdx]) rightIdx&#43;&#43; } } // 将子数组剩余部分放入到 tmp 中 var ( remainStart = leftIdx remainEnd = leftEnd ) if leftIdx &gt; leftEnd { remainStart = rightIdx remainEnd = rightEnd } for remainStart &lt;= remainEnd { tmp = append(tmp, arr[remainStart]) remainStart&#43;&#43; } // 将 tmp 的元素放入 arr 对应位置中 for idx := 0; idx &lt;= (rightEnd - leftStart); idx&#43;&#43; { arr[leftStart&#43;idx] = tmp[idx] } } 时间复杂度 N 等于数组长度">
-
-
-
-
-<link rel="preload" href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" as="style">
-<link href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" rel="stylesheet" integrity="">
-
+<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -853,7 +848,6 @@
     排序</li>
   </ol>
 </nav>
-            
 <div class="td-content">
 	<h1>排序</h1>
 	
@@ -1051,7 +1045,7 @@ T(n) = C + 2 + 3 +4 + .. n = C + (1+n)*n/2 - 1
 <p>快速排序没有申请新数组空间，它的空间复杂度是 \( O(1) \)</p>
 
 	<div class="text-muted mt-5 pt-3 border-top">
-   2024年05月02日 / 11:39</div>
+  Last modified 2024年05月02日 / 11:39</div>
 
 </div>
 
@@ -1078,24 +1072,22 @@ T(n) = C + 2 + 3 +4 + .. n = C + (1+n)*n/2 - 1
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
     2025
-    <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener"></a></span>
+    <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
   </div>
 </footer>
 
     </div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"
-      integrity="sha512-r2+FkHzf1u0+SQbZOoIz2RxWOIWfdEzRuYybGjzKq18jG9zaSfEy9s3+jMqG/zPtRor/q4qaUCYQpmSjTw8M+g==" crossorigin="anonymous">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"
-        integrity="sha512-INps9zQ2GUEMCQD7xiZQbGUVnqnzEvlynVy6eqcTcHN4+aQiLo9/uaQqckDpdJ8Zm3M0QBs+Pktg4pz0kEklUg=="
-        crossorigin="anonymous">
+    
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+    
+      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+    
+      <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
+onload='renderMathInElement(document.body, null);'>
 </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
-       integrity="sha512-YJVxTjqttjsU3cSvaTRqsSl0wbRgZUNF+NGGCgto/MUbIvaLdXQzGTCQu4CvyJZbZctgflVB0PXw9LLmTWm5/w==" crossorigin="anonymous"
-       onload='renderMathInElement(document.body, null);'>
-</script>
-<script src="/js/main.min.85d1295e77b8cb64a3e7ac5b9239aa65c4410a289bbe21c0ae8359f1617c0461.js" integrity="sha256-hdEpXne4y2Sj56xbkjmqZcRBCiibviHAroNZ8WF8BGE=" crossorigin="anonymous"></script>
+    <script src="/js/main.min.01e3887158ff39b7320c4ef8f3f6f98e9eb61480b8825339575168b106b662c9.js" integrity="sha256-AeOIcVj/ObcyDE748/b5jp62FIC4glM5V1FosQa2Ysk=" crossorigin="anonymous"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 

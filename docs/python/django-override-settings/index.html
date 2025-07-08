@@ -18,7 +18,7 @@
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
 <title>Django的override_settings修饰器浅析 | 647 Universe</title>
-<meta name="description" content=" Django的Settings模块代码说明 Django的override_settings修饰器分析 ">
+<meta name="description" content="Django的Settings模块代码说明 Django的override_settings修饰器分析">
 <meta property="og:url" content="https://bwangel.me/docs/python/django-override-settings/">
   <meta property="og:site_name" content="647 Universe">
   <meta property="og:title" content="Django的override_settings修饰器浅析">
@@ -41,13 +41,8 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Django的override_settings修饰器浅析">
   <meta name="twitter:description" content="Django的Settings模块代码说明 Django的override_settings修饰器分析">
-
-
-
-
-<link rel="preload" href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" as="style">
-<link href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" rel="stylesheet" integrity="">
-
+<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -851,7 +846,6 @@
     Django的override_settings修饰器浅析</li>
   </ol>
 </nav>
-            
 <div class="td-content">
 	<h1>Django的override_settings修饰器浅析</h1>
 	
@@ -995,7 +989,7 @@
 <h2 id="总结">总结</h2>
 <p>OK，至此，对于<code>override_settings</code>的分析就结束了，它的功能也比较简单，就是在一个作用域中修改配置，并在这个作用域结束的时候将配置还原，如果它修饰的作用域是一个函数的话，由于函数不像类有构造和析构函数，它就使用Python的上下文管理器来实现类的构造和析构函数的功能。</p>
 	<div class="text-muted mt-5 pt-3 border-top">
-   2017年06月25日 / 20:17</div>
+  Last modified 2017年06月25日 / 20:17</div>
 
 </div>
 
@@ -1022,24 +1016,22 @@
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
     2025
-    <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener"></a></span>
+    <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
   </div>
 </footer>
 
     </div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"
-      integrity="sha512-r2+FkHzf1u0+SQbZOoIz2RxWOIWfdEzRuYybGjzKq18jG9zaSfEy9s3+jMqG/zPtRor/q4qaUCYQpmSjTw8M+g==" crossorigin="anonymous">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"
-        integrity="sha512-INps9zQ2GUEMCQD7xiZQbGUVnqnzEvlynVy6eqcTcHN4+aQiLo9/uaQqckDpdJ8Zm3M0QBs+Pktg4pz0kEklUg=="
-        crossorigin="anonymous">
+    
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+    
+      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+    
+      <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
+onload='renderMathInElement(document.body, null);'>
 </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
-       integrity="sha512-YJVxTjqttjsU3cSvaTRqsSl0wbRgZUNF+NGGCgto/MUbIvaLdXQzGTCQu4CvyJZbZctgflVB0PXw9LLmTWm5/w==" crossorigin="anonymous"
-       onload='renderMathInElement(document.body, null);'>
-</script>
-<script src="/js/main.min.85d1295e77b8cb64a3e7ac5b9239aa65c4410a289bbe21c0ae8359f1617c0461.js" integrity="sha256-hdEpXne4y2Sj56xbkjmqZcRBCiibviHAroNZ8WF8BGE=" crossorigin="anonymous"></script>
+    <script src="/js/main.min.01e3887158ff39b7320c4ef8f3f6f98e9eb61480b8825339575168b106b662c9.js" integrity="sha256-AeOIcVj/ObcyDE748/b5jp62FIC4glM5V1FosQa2Ysk=" crossorigin="anonymous"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 

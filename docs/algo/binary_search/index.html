@@ -18,7 +18,7 @@
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
 <title>二分查找 | 647 Universe</title>
-<meta name="description" content="二分查找的注意点 循环的条件: left &lt;= right mid 计算方法: # 用移位预算速度更快 mid = left &#43; ((right-left) &gt;&gt; 1)) left 和 right 的更新方法 left = mid &#43; 1 right = mid - 1 // BinarySearchLastV2 /** ## 功能 返回 arr 中最后一个 == num 的数字的索引 **/ func BinarySearchLastV2(arr []int64, num int64) int { var ( low = 0 n = len(arr) high = n - 1 ) /** 1. for 循环结束后, low &gt; high 2. 由于 midNum &lt;= num 条件先执行，for 结束后, low 指向第一个 &gt; n 的数，high 指向 low 的前一位 3. 如果 high 的索引在数组中，且 arr[high] == num, 那么 high 就是 num 在数组中最后一位 */ for low &lt;= high { mid := low &#43; ((high - low) &gt;&gt; 1) midNum := arr[mid] if midNum &lt;= num { low = mid &#43; 1 } else { high = mid - 1 } } if high &gt; 0 &amp;&amp; arr[high] == num { return high } return -1 } // BinarySearchFirstV2 /** ## 功能 返回 arr 中第一个 == num 的数字的索引 **/ func BinarySearchFirstV2(arr []int64, num int64) int { var ( low = 0 n = len(arr) high = n - 1 ) /** ## 对于 num 存在的情况 1. for 循环结束后，low &gt; high 2. 由于判断条件 midNum &gt;= num 先检查，所以循环结束后， arr[high] != num 3. low &gt; high, arr[high] != num, 所以 arr[low] 是第一个 num ## 对于 arr 所有数比 num 小的情况 1. for 循环结束后，low &gt; high 2. high 一次也没移动，low = n 3. 此时 low 超出数组长度，arr[low] 会异常，所以要先判断 low &lt; n ## 对于 arr 所有数比 num 大的情况 1. for 循环结束后，low &gt; high 2. low 一次也没移动，low = 0, high = -1 3. 此时 arr[low] != num 不存在 ## 对于 num 处于 arr 中部但不存在的情况 1. for 循环结束后，low &gt; high 2. low &lt; n, arr[low] != num, return -1 */ for low &lt;= high { mid := low &#43; ((high - low) &gt;&gt; 1) midNum := arr[mid] if midNum &gt;= num { high = mid - 1 } else { low = mid &#43; 1 } } if low &lt; n &amp;&amp; arr[low] == num { return low } return -1 } ">
+<meta name="description" content="二分查找的注意点 循环的条件: left &lt;= right mid 计算方法: # 用移位预算速度更快 mid = left &#43; ((right-left) &gt;&gt; 1)) left 和 right 的更新方法 left = mid &#43; 1 right = mid - 1 // BinarySearchLastV2 /** ## 功能 返回 arr 中最后一个 == num 的数字的索引 **/ func BinarySearchLastV2(arr []int64, num int64) int { var ( low = 0 n = len(arr) high = n - 1 ) /** 1. for 循环结束后, low &gt; high 2. 由于 midNum &lt;= num 条件先执行，for 结束后, low 指向第一个 &gt; n 的数，high 指向 low 的前一位 3. 如果 high 的索引在数组中，且 arr[high] == num, 那么 high 就是 num 在数组中最后一位 */ for low &lt;= high { mid := low &#43; ((high - low) &gt;&gt; 1) midNum := arr[mid] if midNum &lt;= num { low = mid &#43; 1 } else { high = mid - 1 } } if high &gt; 0 &amp;&amp; arr[high] == num { return high } return -1 } // BinarySearchFirstV2 /** ## 功能 返回 arr 中第一个 == num 的数字的索引 **/ func BinarySearchFirstV2(arr []int64, num int64) int { var ( low = 0 n = len(arr) high = n - 1 ) /** ## 对于 num 存在的情况 1. for 循环结束后，low &gt; high 2. 由于判断条件 midNum &gt;= num 先检查，所以循环结束后， arr[high] != num 3. low &gt; high, arr[high] != num, 所以 arr[low] 是第一个 num ## 对于 arr 所有数比 num 小的情况 1. for 循环结束后，low &gt; high 2. high 一次也没移动，low = n 3. 此时 low 超出数组长度，arr[low] 会异常，所以要先判断 low &lt; n ## 对于 arr 所有数比 num 大的情况 1. for 循环结束后，low &gt; high 2. low 一次也没移动，low = 0, high = -1 3. 此时 arr[low] != num 不存在 ## 对于 num 处于 arr 中部但不存在的情况 1. for 循环结束后，low &gt; high 2. low &lt; n, arr[low] != num, return -1 */ for low &lt;= high { mid := low &#43; ((high - low) &gt;&gt; 1) midNum := arr[mid] if midNum &gt;= num { high = mid - 1 } else { low = mid &#43; 1 } } if low &lt; n &amp;&amp; arr[low] == num { return low } return -1 }">
 <meta property="og:url" content="https://bwangel.me/docs/algo/binary_search/">
   <meta property="og:site_name" content="647 Universe">
   <meta property="og:title" content="二分查找">
@@ -40,13 +40,8 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="二分查找">
   <meta name="twitter:description" content="二分查找的注意点 循环的条件: left &lt;= right mid 计算方法: # 用移位预算速度更快 mid = left &#43; ((right-left) &gt;&gt; 1)) left 和 right 的更新方法 left = mid &#43; 1 right = mid - 1 // BinarySearchLastV2 /** ## 功能 返回 arr 中最后一个 == num 的数字的索引 **/ func BinarySearchLastV2(arr []int64, num int64) int { var ( low = 0 n = len(arr) high = n - 1 ) /** 1. for 循环结束后, low &gt; high 2. 由于 midNum &lt;= num 条件先执行，for 结束后, low 指向第一个 &gt; n 的数，high 指向 low 的前一位 3. 如果 high 的索引在数组中，且 arr[high] == num, 那么 high 就是 num 在数组中最后一位 */ for low &lt;= high { mid := low &#43; ((high - low) &gt;&gt; 1) midNum := arr[mid] if midNum &lt;= num { low = mid &#43; 1 } else { high = mid - 1 } } if high &gt; 0 &amp;&amp; arr[high] == num { return high } return -1 } // BinarySearchFirstV2 /** ## 功能 返回 arr 中第一个 == num 的数字的索引 **/ func BinarySearchFirstV2(arr []int64, num int64) int { var ( low = 0 n = len(arr) high = n - 1 ) /** ## 对于 num 存在的情况 1. for 循环结束后，low &gt; high 2. 由于判断条件 midNum &gt;= num 先检查，所以循环结束后， arr[high] != num 3. low &gt; high, arr[high] != num, 所以 arr[low] 是第一个 num ## 对于 arr 所有数比 num 小的情况 1. for 循环结束后，low &gt; high 2. high 一次也没移动，low = n 3. 此时 low 超出数组长度，arr[low] 会异常，所以要先判断 low &lt; n ## 对于 arr 所有数比 num 大的情况 1. for 循环结束后，low &gt; high 2. low 一次也没移动，low = 0, high = -1 3. 此时 arr[low] != num 不存在 ## 对于 num 处于 arr 中部但不存在的情况 1. for 循环结束后，low &gt; high 2. low &lt; n, arr[low] != num, return -1 */ for low &lt;= high { mid := low &#43; ((high - low) &gt;&gt; 1) midNum := arr[mid] if midNum &gt;= num { high = mid - 1 } else { low = mid &#43; 1 } } if low &lt; n &amp;&amp; arr[low] == num { return low } return -1 }">
-
-
-
-
-<link rel="preload" href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" as="style">
-<link href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" rel="stylesheet" integrity="">
-
+<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -836,7 +831,6 @@
     二分查找</li>
   </ol>
 </nav>
-            
 <div class="td-content">
 	<h1>二分查找</h1>
 	
@@ -951,7 +945,7 @@ right = mid - 1
 </span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
 </span></span></code></pre></div>
 	<div class="text-muted mt-5 pt-3 border-top">
-   2023年10月10日 / 09:31</div>
+  Last modified 2023年10月10日 / 09:31</div>
 
 </div>
 
@@ -978,24 +972,22 @@ right = mid - 1
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
     2025
-    <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener"></a></span>
+    <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
   </div>
 </footer>
 
     </div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"
-      integrity="sha512-r2+FkHzf1u0+SQbZOoIz2RxWOIWfdEzRuYybGjzKq18jG9zaSfEy9s3+jMqG/zPtRor/q4qaUCYQpmSjTw8M+g==" crossorigin="anonymous">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"
-        integrity="sha512-INps9zQ2GUEMCQD7xiZQbGUVnqnzEvlynVy6eqcTcHN4+aQiLo9/uaQqckDpdJ8Zm3M0QBs+Pktg4pz0kEklUg=="
-        crossorigin="anonymous">
+    
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+    
+      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+    
+      <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
+onload='renderMathInElement(document.body, null);'>
 </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
-       integrity="sha512-YJVxTjqttjsU3cSvaTRqsSl0wbRgZUNF+NGGCgto/MUbIvaLdXQzGTCQu4CvyJZbZctgflVB0PXw9LLmTWm5/w==" crossorigin="anonymous"
-       onload='renderMathInElement(document.body, null);'>
-</script>
-<script src="/js/main.min.85d1295e77b8cb64a3e7ac5b9239aa65c4410a289bbe21c0ae8359f1617c0461.js" integrity="sha256-hdEpXne4y2Sj56xbkjmqZcRBCiibviHAroNZ8WF8BGE=" crossorigin="anonymous"></script>
+    <script src="/js/main.min.01e3887158ff39b7320c4ef8f3f6f98e9eb61480b8825339575168b106b662c9.js" integrity="sha256-AeOIcVj/ObcyDE748/b5jp62FIC4glM5V1FosQa2Ysk=" crossorigin="anonymous"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 

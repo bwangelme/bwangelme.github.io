@@ -23,7 +23,7 @@
 Unicode与ISO 10646 全世界很多个国家都在为自己的文字编码，并且互不相通，不同的语言字符编码值相同却代表不同的符号（例如：韩文编码 EUC-KR 中 “한국어” 的编码值正好是汉字编码GBK中的“茄惫绢”）。
 因此，同一份文档，拷贝至不同语言的机器，就可能成了乱码，于是人们就想：我们能不能定义一个超大的字符集，它可以容纳全世界所有的文字字符，再对它们统一进行编码，让每一个字符都对应一个不同的编码值，从而就不会再有乱码了。
 如果说“各个国家都在为自己文字独立编码”是百家争鸣，那么“建立世界统一的字符编码”则是一统江湖，谁都想来做这个武林盟主。早前就有两个机构试图来做这个事：
-国际标准化组织（ISO），他们于1984年创建ISO/IEC JTC1/SC2/WG2工作组，试图制定一份“通用字符集”（Universal Character Set，简称UCS），并最终制定了ISO 10646标准。 统一码联盟，他们由Xerox、Apple等软件制造商于1988年组成，并且开发了Unicode标准（The Unicode Standard，这个前缀Uni很牛逼哦 &mdash; Unique, Universal, and Uniform）。 1991年前后，两个项目的参与者都认识到，世界不需要两个不兼容的字符集。于是，它们开始合并双方的工作成果，并为创立一个单一编码表而协同工作。从Unicode 2.0开始，Unicode采用了与ISO 10646-1相同的字库和字码；
+国际标准化组织（ISO），他们于1984年创建ISO/IEC JTC1/SC2/WG2工作组，试图制定一份“通用字符集”（Universal Character Set，简称UCS），并最终制定了ISO 10646标准。 统一码联盟，他们由Xerox、Apple等软件制造商于1988年组成，并且开发了Unicode标准（The Unicode Standard，这个前缀Uni很牛逼哦 — Unique, Universal, and Uniform）。 1991年前后，两个项目的参与者都认识到，世界不需要两个不兼容的字符集。于是，它们开始合并双方的工作成果，并为创立一个单一编码表而协同工作。从Unicode 2.0开始，Unicode采用了与ISO 10646-1相同的字库和字码；
 ISO也承诺，ISO 10646将不会替超出U&#43;10FFFF的UCS-4编码赋值，以使得两者保持一致。两个项目仍都独立存在，并独立地公布各自的标准。不过由于Unicode这一名字比较好记，因而它使用更为广泛。
 Unicode编码点分为17个平面（plane），每个平面包含 \( 2^{16} \)（即65536）个码点（code point）。17个平面的码点可表示为从 U&#43;xx0000 到 U&#43;xxFFFF，其中xx表示十六进制值从 0x00 到 0x10，共计17个平面。
 UTF-32 与 UCS-4 在 Unicode 与 ISO 10646 合并之前，ISO 10646标准为 通用字符集（UCS）定义了一种31位的编码形式（即UCS-4），其编码固定占用4个字节，编码空间为 0x00000000~0x7FFFFFFF（可以编码20多亿个字符）。
@@ -82,13 +82,8 @@ Unicode编码点分为17个平面（plane），每个平面包含 \( 2^{16} \)�
 UTF-32 与 UCS-4 在 Unicode 与 ISO 10646 合并之前，ISO 10646标准为 通用字符集（UCS）定义了一种31位的编码形式（即UCS-4），其编码固定占用4个字节，编码空间为 0x00000000~0x7FFFFFFF（可以编码20多亿个字符）。
 UCS-4有20多亿个编码空间，但实际使用范围并不超过 0x10FFFF，并且为了兼容Unicode标准，ISO也承诺将不会为超出 0x10FFFF 的 UCS-4 编码赋值。由此 UTF-32 编码被提出来了，它的编码值与UCS-4相同，只不过其编码空间被限定在了 0~0x10FFFF 之间。因此也可以说：UTF-32是UCS-4的一个子集。
 UTF-16与UCS-2 除了UCS-4，ISO 10646 标准为 “通用字符集”（UCS）定义了一种16位的编码形式（即UCS-2），其编码固定占用2个字节，它包含65536个编码空间（可以为全世界最常用的63K字符编码，为了兼容Unicode，0xD800-0xDFFF 之间的码点未使用）。例：“汉” 的UCS-2编码为6C49。">
-
-
-
-
-<link rel="preload" href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" as="style">
-<link href="/scss/main.min.b65e08dcc097940fb12657897aa6923abc2182c8d86df64f5e95e755b58b0448.css" rel="stylesheet" integrity="">
-
+<link rel="preload" href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" as="style" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
+<link href="/scss/main.min.d949c36558d4bcb37b24de99a47df4c306aa8089c7c14d705964dde53b249460.css" rel="stylesheet" integrity="sha256-2UnDZVjUvLN7JN6ZpH30wwaqgInHwU1wWWTd5TsklGA=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -883,7 +878,6 @@ UTF-16与UCS-2 除了UCS-4，ISO 10646 标准为 “通用字符集”（UCS）�
     细说：Unicode, UTF-8, UTF-16, UTF-32, UCS-2, UCS-4</li>
   </ol>
 </nav>
-            
 <div class="td-content">
 	<h1>细说：Unicode, UTF-8, UTF-16, UTF-32, UCS-2, UCS-4</h1>
 	
@@ -1045,7 +1039,7 @@ UTF-16与UCS-2 除了UCS-4，ISO 10646 标准为 “通用字符集”（UCS）�
 </ul>
 
 	<div class="text-muted mt-5 pt-3 border-top">
-   2023年12月05日 / 19:18</div>
+  Last modified 2023年12月05日 / 19:18</div>
 
 </div>
 
@@ -1072,24 +1066,22 @@ UTF-16与UCS-2 除了UCS-4，ISO 10646 标准为 “通用字符集”（UCS）�
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
     2025
-    <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener"></a></span>
+    <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
   </div>
 </footer>
 
     </div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"
-      integrity="sha512-r2+FkHzf1u0+SQbZOoIz2RxWOIWfdEzRuYybGjzKq18jG9zaSfEy9s3+jMqG/zPtRor/q4qaUCYQpmSjTw8M+g==" crossorigin="anonymous">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"
-        integrity="sha512-INps9zQ2GUEMCQD7xiZQbGUVnqnzEvlynVy6eqcTcHN4+aQiLo9/uaQqckDpdJ8Zm3M0QBs+Pktg4pz0kEklUg=="
-        crossorigin="anonymous">
+    
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+    
+      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+    
+      <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
+onload='renderMathInElement(document.body, null);'>
 </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
-       integrity="sha512-YJVxTjqttjsU3cSvaTRqsSl0wbRgZUNF+NGGCgto/MUbIvaLdXQzGTCQu4CvyJZbZctgflVB0PXw9LLmTWm5/w==" crossorigin="anonymous"
-       onload='renderMathInElement(document.body, null);'>
-</script>
-<script src="/js/main.min.85d1295e77b8cb64a3e7ac5b9239aa65c4410a289bbe21c0ae8359f1617c0461.js" integrity="sha256-hdEpXne4y2Sj56xbkjmqZcRBCiibviHAroNZ8WF8BGE=" crossorigin="anonymous"></script>
+    <script src="/js/main.min.01e3887158ff39b7320c4ef8f3f6f98e9eb61480b8825339575168b106b662c9.js" integrity="sha256-AeOIcVj/ObcyDE748/b5jp62FIC4glM5V1FosQa2Ysk=" crossorigin="anonymous"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 
