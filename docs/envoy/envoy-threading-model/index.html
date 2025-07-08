@@ -49,7 +49,7 @@ Envoy 中每个工作线程都会创建一个连接池，因此尽管 HTTP2 会�
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
     <meta property="article:published_time" content="2023-12-13T13:17:28+08:00">
-    <meta property="article:modified_time" content="2023-12-13T13:25:27+08:00">
+    <meta property="article:modified_time" content="2025-07-08T19:53:20+08:00">
     <meta property="article:tag" content="Envoy">
     <meta property="article:tag" content="Blog">
 
@@ -67,7 +67,7 @@ file flush thread Envoy 写的每个文件(主要是 access-log)都有一个独�
 连接一旦创建，IO 读写一般是绑定在一个线程。
 Envoy 中每个工作线程都会创建一个连接池，因此尽管 HTTP2 会在一个连接上使用多个 Stream, 但是 Envoy 的每个线程还是会针对每个 Upstream 创建一个 TCP 连接。">
   <meta itemprop="datePublished" content="2023-12-13T13:17:28+08:00">
-  <meta itemprop="dateModified" content="2023-12-13T13:25:27+08:00">
+  <meta itemprop="dateModified" content="2025-07-08T19:53:20+08:00">
   <meta itemprop="wordCount" content="201">
   <meta itemprop="keywords" content="Envoy,Blog">
   <meta name="twitter:card" content="summary">
@@ -918,7 +918,7 @@ Envoy 中每个工作线程都会创建一个连接池，因此尽管 HTTP2 会�
 它们采用诸如IO优先级提升( IO priority boosting)之类的功能，试图在开始使用其他正在监听相同套接字的线程之前，填充一个线程的工作。同时，它们也不使用单个自旋锁来处理每个 accpet 操作。</p>
 <p>连接一旦创建，IO 读写一般是绑定在一个线程。</p>
 <p>Envoy 中每个工作线程都会创建一个连接池，因此尽管 HTTP2 会在一个连接上使用多个 Stream, 但是 Envoy 的每个线程还是会针对每个 Upstream 创建一个 TCP 连接。</p>
-<p><code>--concurrency</code> 默认太大了，除了边缘代理外，大部分代理可以将这个数字设置地小一点。</p>
+<p><code>--concurrency</code> 默认等于机器的CPU核数，在高配置的服务器上默认太大了，除了边缘代理外，大部分代理可以将这个数字设置地小一点。</p>
 <h2 id="线程间通信的-tls">线程间通信的 TLS</h2>
 <p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2023-12-13-125138.png" alt=""></p>
 <p>主线程从 xDS 获取到配置信息后，使用 TLS (Thread local storage) 功能将配置发送给工作线程。</p>
