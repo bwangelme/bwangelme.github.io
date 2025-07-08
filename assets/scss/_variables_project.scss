@@ -8,6 +8,31 @@ Add styles or override variables from the theme here.
 $td-enable-google-fonts: false;
 
 /* Custom styles for taxonomy pages */
+.td-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.td-page-meta {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid var(--bs-primary);
+    
+    p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #6c757d;
+        font-weight: 500;
+        
+        &:before {
+            content: "📝 ";
+            margin-right: 0.5rem;
+        }
+    }
+}
+
 .section-index {
     .entry {
         padding: 1.5rem 0;
@@ -47,6 +72,11 @@ $td-enable-google-fonts: false;
             .badge {
                 font-size: 0.75rem;
                 margin-right: 0.25rem;
+                background-color: #6c757d;
+                color: white;
+                text-decoration: none;
+                padding: 0.25rem 0.5rem;
+                border-radius: 0.25rem;
 
                 &:hover {
                     background-color: var(--bs-primary);
