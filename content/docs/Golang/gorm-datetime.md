@@ -2,7 +2,7 @@
 title: "MySQL + GORM 如何设置创建时间和更新时间"
 date: 2026-02-09T10:21:07+08:00
 lastmod: 2026-02-09T10:21:07+08:00
-tags: [Golang, GORM, MySQL]
+tags: [Golang, GORM, MySQL, Blog]
 author: "bwangel"
 ---
 
