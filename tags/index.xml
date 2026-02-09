@@ -6,20 +6,34 @@
     <description>Recent content in Tags on 647 Universe</description>
     <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Tue, 08 Jul 2025 19:53:20 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Feb 2026 11:20:09 +0800</lastBuildDate>
     <atom:link href="https://bwangel.me/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blog</title>
+      <link>https://bwangel.me/tags/blog/</link>
+      <pubDate>Mon, 09 Feb 2026 10:21:07 +0800</pubDate>
+      <guid>https://bwangel.me/tags/blog/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Golang</title>
       <link>https://bwangel.me/tags/golang/</link>
-      <pubDate>Thu, 17 Apr 2025 22:43:37 +0800</pubDate>
+      <pubDate>Mon, 09 Feb 2026 10:21:07 +0800</pubDate>
       <guid>https://bwangel.me/tags/golang/</guid>
       <description></description>
     </item>
     <item>
-      <title>Blog</title>
-      <link>https://bwangel.me/tags/blog/</link>
-      <pubDate>Wed, 08 Jan 2025 14:25:11 +0800</pubDate>
-      <guid>https://bwangel.me/tags/blog/</guid>
+      <title>GORM</title>
+      <link>https://bwangel.me/tags/gorm/</link>
+      <pubDate>Mon, 09 Feb 2026 10:21:07 +0800</pubDate>
+      <guid>https://bwangel.me/tags/gorm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MySQL</title>
+      <link>https://bwangel.me/tags/mysql/</link>
+      <pubDate>Mon, 09 Feb 2026 10:21:07 +0800</pubDate>
+      <guid>https://bwangel.me/tags/mysql/</guid>
       <description></description>
     </item>
     <item>
@@ -219,13 +233,6 @@
       <description></description>
     </item>
     <item>
-      <title>MySQL</title>
-      <link>https://bwangel.me/tags/mysql/</link>
-      <pubDate>Tue, 28 Nov 2023 22:10:53 +0800</pubDate>
-      <guid>https://bwangel.me/tags/mysql/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Tips</title>
       <link>https://bwangel.me/tags/tips/</link>
       <pubDate>Tue, 28 Nov 2023 22:10:53 +0800</pubDate>
@@ -240,7 +247,7 @@
       <description></description>
     </item>
     <item>
-      <title>Leetcode</title>
+      <title>LeetCode</title>
       <link>https://bwangel.me/tags/leetcode/</link>
       <pubDate>Fri, 03 Nov 2023 08:45:11 +0800</pubDate>
       <guid>https://bwangel.me/tags/leetcode/</guid>
@@ -303,7 +310,7 @@
       <description></description>
     </item>
     <item>
-      <title>Http</title>
+      <title>HTTP</title>
       <link>https://bwangel.me/tags/http/</link>
       <pubDate>Tue, 09 May 2023 22:40:29 +0800</pubDate>
       <guid>https://bwangel.me/tags/http/</guid>

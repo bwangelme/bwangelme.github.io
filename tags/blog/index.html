@@ -29,13 +29,13 @@
 
   <meta itemprop="name" content="Blog">
   <meta itemprop="description" content="宇宙很大，生活更大，也许以后还有缘相见">
-  <meta itemprop="datePublished" content="2025-01-08T14:25:11+08:00">
-  <meta itemprop="dateModified" content="2025-07-08T19:53:20+08:00">
+  <meta itemprop="datePublished" content="2026-02-09T10:21:07+08:00">
+  <meta itemprop="dateModified" content="2026-02-09T11:20:09+08:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Blog">
   <meta name="twitter:description" content="宇宙很大，生活更大，也许以后还有缘相见">
-<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
-<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" as="style" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
+<link href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" rel="stylesheet" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -72,10 +72,45 @@
     </div>
     
     <div class="td-page-meta">
-        <p>Blog 标签下共有 94 篇文章</p>
+        <p>Blog 标签下共有 95 篇文章</p>
     </div>
     
     <div class="section-index">
+        
+        <div class="entry">
+            <h3><a href="/docs/golang/gorm-datetime/">MySQL &#43; GORM 如何设置创建时间和更新时间</a></h3>
+            <div class="meta">
+                <time datetime="2026-02-09T10:21:07&#43;08:00" class="text-muted">
+                    2026年02月09日 / 10:21
+                </time>
+                
+                <span class="text-muted"> • bwangel</span>
+                
+                
+                <span class="text-muted"> • </span>
+                
+                    <a href="/tags/golang/" class="badge badge-secondary">Golang</a>
+                
+                    <a href="/tags/gorm/" class="badge badge-secondary">GORM</a>
+                
+                    <a href="/tags/mysql/" class="badge badge-secondary">MySQL</a>
+                
+                    <a href="/tags/blog/" class="badge badge-secondary">Blog</a>
+                
+                
+            </div>
+            
+            <div class="summary">
+                <h2 id="目标">目标</h2>
+<p>正确配置 MySQL 表中的 create_time 和 update_time，自动记录行的创建时间和更新时间，精度为<strong>微秒</strong>。</p>
+<h2 id="如何正确配置-create_time-和-update_time-how">如何正确配置 create_time 和 update_time (How)</h2>
+<h3 id="一mysql-ddl">一、MySQL DDL</h3>
+<p>建表时将 create_time、update_time 设为<strong>微秒</strong>精度：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">CREATE</span><span style="color:#f8f8f8"> </span><span style="color:#204a87;font-weight:bold">TABLE</span><span style="color:#f8f8f8"> </span><span style="color:#ce5c00;font-weight:bold">`</span><span style="color:#000">item</span><span style="color:#ce5c00;font-weight:bold">`</span><span style="color:#f8f8f8"> </span><span style="color:#000;font-weight:bold">(</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">  </span><span style="color:#ce5c00;font-weight:bold">`</span><span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">`</span><span style="color:#f8f8f8"> </span><span style="color:#204a87">int</span><span style="color:#f8f8f8"> </span><span style="color:#204a87;font-weight:bold">NOT</span><span style="color:#f8f8f8"> </span><span style="color:#204a87;font-weight:bold">NULL …</span></span></span></span></span></code></pre></div>
+            </div>
+            
+        </div>
         
         <div class="entry">
             <h3><a href="/docs/crypto/rsa/">Rsa 使用公钥进行解密</a></h3>
@@ -136,7 +171,7 @@
 <p>main thread 负责进程的管理，和 xDS Server 的通信，统计信息 stat 刷新，admin 设置。</p>
 <p>main 线程中所有的工作都是异步 &amp; 非阻塞的， 而且它负责的重要功能通常都不会用到大量的 CPU，所以它可以以单线程的模式运行。</p>
 <h3 id="worker-thread">worker thread</h3>
-<p>worker …</p>
+<p>worker 线程可以通过 …</p>
             </div>
             
         </div>
@@ -169,7 +204,7 @@
 <pre tabindex="0"><code>s = u&#39;玛丽黛佳眉笔只-需-18,冲p腹t製o2𝒂I5EfW4xPmTq𝒃o2打🤔开桃o寶&#39;
 </code></pre><p>这个字符串 s 是一段淘口令，核心内容就是 𝒂 和 𝒃 之间的 ID <code>I5EfW4xPmTq</code>, 我们想用一个正则表达式将 ID 捕获出来。</p>
 <p>𝒂 和 𝒃 的 unicode 码点不在基本平面内，在1号平面内。Unicode 各个平面的字符范围参考 <a href="https://zh.wikipedia.org/wiki/Unicode%E5%AD%97%E7%AC%A6%E5%B9%B3%E9%9D%A2%E6%98%A0%E5%B0%84">维基百科</a></p>
-<p>在 MacOS …</p>
+<p>在 MacOS 的 …</p>
             </div>
             
         </div>
@@ -232,7 +267,7 @@
                 <h2 id="thrift-python-的-fastbinary-是什么">thrift python 的 fastbinary 是什么</h2>
 <p>thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。</p>
 <p>序列化的方式有多种，JSON, Binary, Compact。</p>
-<p>Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实 …</p>
+<p>Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实现 …</p>
             </div>
             
         </div>
@@ -467,7 +502,7 @@ HostB:
             
             <div class="summary">
                 <h2 id="按照网络状态筛选进程的-fd">按照网络状态筛选进程的 fd</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo lsof -i -sTCP:LISTEN -a -p &lt;pid&gt;
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo lsof -i -sTCP:LISTEN -a -p &lt;pid&gt;
 </span></span></code></pre></div><ul>
 <li>
 <p><code>-a</code> 表示 and, 前后两个条件要一起生效</p>
@@ -479,7 +514,7 @@ HostB:
 <p>列出进程 <code>&lt;pid&gt;</code> 建立的所有 TCP 连接</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo lsof -i -sTCP:ESTABLISHED -a -p …</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo lsof -i -sTCP:ESTABLISHED -a -p …</span></span></code></pre></div>
             </div>
             
         </div>
@@ -580,7 +615,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>介绍了安装 containerd 的方法</p></blockquote>
+<p>介绍了安装 containerd 的方法</p>
+</blockquote>
             </div>
             
         </div>
@@ -608,7 +644,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>解释了一下观察 CPU Throttling 情况的指标</p></blockquote>
+<p>解释了一下观察 CPU Throttling 情况的指标</p>
+</blockquote>
             </div>
             
         </div>
@@ -636,7 +673,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>变长整数编码的实现</p></blockquote>
+<p>变长整数编码的实现</p>
+</blockquote>
             </div>
             
         </div>
@@ -664,7 +702,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>记录一次折腾 Ubuntu 的经历</p></blockquote>
+<p>记录一次折腾 Ubuntu 的经历</p>
+</blockquote>
             </div>
             
         </div>
@@ -692,7 +731,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>Go 链接选项和编译选项的说明</p></blockquote>
+<p>Go 链接选项和编译选项的说明</p>
+</blockquote>
             </div>
             
         </div>
@@ -724,7 +764,8 @@ HostB:
                 <blockquote>
 <ul>
 <li>原文地址: <a href="https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779">https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779</a></li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -752,7 +793,8 @@ HostB:
                 <blockquote>
 <ul>
 <li>原文地址: <a href="https://isovalent.com/blog/post/2021-12-08-ebpf-servicemesh">https://isovalent.com/blog/post/2021-12-08-ebpf-servicemesh</a></li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -783,7 +825,8 @@ HostB:
 <ul>
 <li><strong>使用 Unix 域套接字传输文件描述符</strong></li>
 <li>原文地址: <a href="https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec">https://copyconstruct.medium.com/file-descriptor-transfer-over-unix-domain-sockets-dcbbf5b3b6ec</a></li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -809,7 +852,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>介绍了 Redis 的主从同步流程及一些配置选项</p></blockquote>
+<p>介绍了 Redis 的主从同步流程及一些配置选项</p>
+</blockquote>
             </div>
             
         </div>
@@ -838,7 +882,8 @@ HostB:
 <ul>
 <li>Docker 客户端连接远程 Docker Daemon</li>
 <li><a href="https://dockerlabs.collabnix.com/beginners/components/daemon/access-daemon-externally.html">参考链接 How to Connect to a Remote Docker Daemon</a></li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -864,7 +909,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>Go 编译器注入 git 版本，时间等信息到可执行文件中</p></blockquote>
+<p>Go 编译器注入 git 版本，时间等信息到可执行文件中</p>
+</blockquote>
             </div>
             
         </div>
@@ -892,7 +938,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>Golang Error 学习笔记</p></blockquote>
+<p>Golang Error 学习笔记</p>
+</blockquote>
             </div>
             
         </div>
@@ -943,7 +990,8 @@ HostB:
                 <blockquote>
 <ul>
 <li>原文地址: <a href="https://redis.io/topics/pipelining">https://redis.io/topics/pipelining</a></li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -971,7 +1019,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>阅读 <a href="https://wudaijun.com/2018/01/go-scheduler/">Go 调度模型</a> 后记的笔记</p></blockquote>
+<p>阅读 <a href="https://wudaijun.com/2018/01/go-scheduler/">Go 调度模型</a> 后记的笔记</p>
+</blockquote>
             </div>
             
         </div>
@@ -1004,7 +1053,8 @@ HostB:
 <ul>
 <li><a href="https://www.rabbitmq.com/getstarted.html">RabbitMQ Tutorial</a> 学习笔记</li>
 <li>本文相关代码放在 <a href="https://github.com/bwangelme/RabbitMQDemo">Github@bwangelme/RabbitMQDemo</a> 中</li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -1032,7 +1082,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>结合例子简单介绍了Lex 程序和 Lex 工具的用法</p></blockquote>
+<p>结合例子简单介绍了Lex 程序和 Lex 工具的用法</p>
+</blockquote>
             </div>
             
         </div>
@@ -1060,7 +1111,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>简单介绍了一下 Golang 中 ServeMux 的功能以及路由方式。</p></blockquote>
+<p>简单介绍了一下 Golang 中 ServeMux 的功能以及路由方式。</p>
+</blockquote>
             </div>
             
         </div>
@@ -1090,7 +1142,8 @@ HostB:
                 <blockquote>
 <ul>
 <li>原文地址: <a href="https://github.com/stretchr/testify">https://github.com/stretchr/testify</a></li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -1120,7 +1173,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>发布订阅模型的一个简易单机实现</p></blockquote>
+<p>发布订阅模型的一个简易单机实现</p>
+</blockquote>
             </div>
             
         </div>
@@ -1152,7 +1206,8 @@ HostB:
                 <blockquote>
 <ul>
 <li>原文地址: <a href="https://blog.golang.org/json-and-go">https://blog.golang.org/json-and-go</a></li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -1210,7 +1265,8 @@ HostB:
                 <blockquote>
 <ul>
 <li>原文地址: <a href="https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd">https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd</a></li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -1242,7 +1298,8 @@ HostB:
                 <blockquote>
 <ul>
 <li>原文地址: <a href="https://github.com/urfave/cli/tree/v1.20.0#overview">https://github.com/urfave/cli/tree/v1.20.0#overview</a></li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -1272,7 +1329,8 @@ HostB:
                 <blockquote>
 <ul>
 <li>【<a href="https://blog.golang.org/pipelines">Go Concurrency Patterns: Pipelines and cancellation</a>】笔记</li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -1323,7 +1381,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p><strong>注意</strong>: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 <a href="/2019/04/13/go-sync-channel/">关于线程同步操作的一道面试题</a></p></blockquote>
+<p><strong>注意</strong>: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 <a href="/2019/04/13/go-sync-channel/">关于线程同步操作的一道面试题</a></p>
+</blockquote>
             </div>
             
         </div>
@@ -1355,7 +1414,8 @@ HostB:
 <li>Panic 过程</li>
 <li>recover 函数</li>
 <li>defer 函数</li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -1385,7 +1445,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p><strong>注意</strong>: 这篇文章的思路是不正确的，正确的思路请参考 <a href="/2019/04/13/go-sync-channel/">关于线程同步操作的一道面试题</a></p></blockquote>
+<p><strong>注意</strong>: 这篇文章的思路是不正确的，正确的思路请参考 <a href="/2019/04/13/go-sync-channel/">关于线程同步操作的一道面试题</a></p>
+</blockquote>
             </div>
             
         </div>
@@ -1415,7 +1476,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p>主要讲了 Go 相关的测试</p></blockquote>
+<p>主要讲了 Go 相关的测试</p>
+</blockquote>
             </div>
             
         </div>
@@ -1778,7 +1840,8 @@ HostB:
                 <blockquote>
 <ul>
 <li>记一次因 Python 升级导致的 ImportError</li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -1878,7 +1941,8 @@ HostB:
 <p><strong>摘要</strong>:</p>
 <ol>
 <li>Golang的基础语法学习</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -1904,12 +1968,14 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p><strong>摘要</strong>:</p></blockquote>
+<p><strong>摘要</strong>:</p>
+</blockquote>
 <blockquote>
 <ol>
 <li>本文章的目标是逐步总结Python中<a href="http://devdocs.io/python~3.6/library/collections">collection</a>模块的用法，会不定期进行更新。</li>
 <li>目前总结了Counter类的用法</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -1936,7 +2002,8 @@ HostB:
 <p><strong>摘要</strong>:</p>
 <ol>
 <li>Letsencrypt 通过dns记录来验证域名</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -1965,7 +2032,8 @@ HostB:
 <ol>
 <li>Django的Settings模块代码说明</li>
 <li>Django的<code>override_settings</code>修饰器分析</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -1994,7 +2062,8 @@ HostB:
 <blockquote>
 <ol>
 <li>本文是对MySQL文档 <a href="https://dev.mysql.com/doc/refman/5.7/en/charset.html">Character Set Support</a> 的翻译</li>
-</ol></blockquote>
+</ol>
+</blockquote>
 <!-- more -->
 <h2 id="字符集character-set和排序规则collation概要">字符集(character set)和排序规则(collation)概要</h2>
 <p>一个字符集是一组符号和编码的集合。一个排序规则是一组字符集中用来比较字符的规则的集合。让我们使用一个假想的字符集的例子来分别区分它们。</p>
@@ -2022,7 +2091,8 @@ HostB:
             
             <div class="summary">
                 <blockquote>
-<p><code>sort</code>命令是Redis中最强大的命令之一，本文试图通过一些例子来总结Redis Sort的常用方法。</p></blockquote>
+<p><code>sort</code>命令是Redis中最强大的命令之一，本文试图通过一些例子来总结Redis Sort的常用方法。</p>
+</blockquote>
             </div>
             
         </div>
@@ -2052,7 +2122,8 @@ HostB:
 <ol>
 <li>importlib.import_module 函数的功能</li>
 <li>import_string 函数的实现</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -2077,7 +2148,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>Python 中的wraps修饰器分析</p></blockquote>
+<p>Python 中的wraps修饰器分析</p>
+</blockquote>
             </div>
             
         </div>
@@ -2138,7 +2210,8 @@ HostB:
 <ol>
 <li>折腾 ThinkPad E430 在 Arch WiFi 自动断开的问题</li>
 <li>无线网卡型号推荐</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -2167,11 +2240,12 @@ HostB:
 <li>Python2 中 Str 和 Unicode 分别存了什么</li>
 <li>raw_unicode_escape 编码的作用</li>
 <li>Python2 中的一个经典编码问题</li>
-</ul></blockquote>
+</ul>
+</blockquote>
 <!-- more -->
 <h2 id="python2-中-str-和-unicode-分别存了什么">Python2 中 Str 和 Unicode 分别存了什么</h2>
 <p>在 Python2 中，str 存储的是字节流，unicode 存储的是 Unicode 码点</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#000">In</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]:</span> <span style="color:#4e9a06">&#39;中&#39;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#000">In</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]:</span> <span style="color:#4e9a06">&#39;中&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">Out</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]:</span> <span style="color:#4e9a06">&#39; …</span></span></span></span></span></code></pre></div></!-->
             </div>
             
@@ -2199,7 +2273,8 @@ HostB:
 <blockquote>
 <ol>
 <li>MySQL 语句中 from 部分的子查询</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -2226,7 +2301,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>本文主要是对 Python3 标准库 <a href="https://docs.python.org/3/library/concurrent.futures.html">concurrent.futures</a> 文档的翻译</p></blockquote>
+<p>本文主要是对 Python3 标准库 <a href="https://docs.python.org/3/library/concurrent.futures.html">concurrent.futures</a> 文档的翻译</p>
+</blockquote>
             </div>
             
         </div>
@@ -2260,7 +2336,8 @@ HostB:
 <ol>
 <li>本文翻译自 StackOverFlow 上的一篇<a href="http://stackoverflow.com/questions/8774958/keyerror-in-module-threading-after-a-successful-py-test-run">答案</a></li>
 <li>本文主要解释了<code>gevent</code>的猴子补丁和一个<code>KeyError</code>之间的关系</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -2287,7 +2364,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>记录一次解决问题的过程。</p></blockquote>
+<p>记录一次解决问题的过程。</p>
+</blockquote>
             </div>
             
         </div>
@@ -2315,7 +2393,8 @@ HostB:
                 <p><strong>摘要</strong>:</p>
 <blockquote>
 <p>本文翻译自Python3文档<a href="https://docs.python.org/3/library/string.html#format-examples">6.1.3.2. Format examples</a>
-主要讲述了Python<code>str.format()</code>的一些使用方法</p></blockquote>
+主要讲述了Python<code>str.format()</code>的一些使用方法</p>
+</blockquote>
             </div>
             
         </div>
@@ -2344,7 +2423,8 @@ HostB:
 <ol>
 <li>生成器和协程的异同</li>
 <li>协程的一些特性</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -2374,7 +2454,8 @@ HostB:
 <li>命名空间有哪些</li>
 <li>变量查找原则</li>
 <li>分析一个UnboundLocalError的例子</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -2404,7 +2485,8 @@ HostB:
 <ol>
 <li>通过resize2fs调整文件系统大小</li>
 <li>通过parted调整磁盘分区大小</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -2437,7 +2519,8 @@ HostB:
 <li>Python的with语句用法以及相关的上下文管理协议</li>
 <li>如何自己写一个上下文管理器对象，如何利用<code>contextlib</code>来写一个上下文管理器对象</li>
 <li>原文地址: <a href="https://docs.python.org/release/2.5/whatsnew/pep-343.html">PEP 343: The &lsquo;with&rsquo; statement</a></li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -2462,7 +2545,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍MySQL单表查询</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍MySQL单表查询</p>
+</blockquote>
             </div>
             
         </div>
@@ -2487,7 +2571,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍11. MySQL多表查询</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍11. MySQL多表查询</p>
+</blockquote>
             </div>
             
         </div>
@@ -2512,7 +2597,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍 MySQL 存储过程</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍 MySQL 存储过程</p>
+</blockquote>
             </div>
             
         </div>
@@ -2537,7 +2623,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍 MySQL 安全机制</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍 MySQL 安全机制</p>
+</blockquote>
             </div>
             
         </div>
@@ -2562,7 +2649,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍 MySQL 常用函数</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍 MySQL 常用函数</p>
+</blockquote>
             </div>
             
         </div>
@@ -2587,7 +2675,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍MySQL数据类型_数值类型</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍MySQL数据类型_数值类型</p>
+</blockquote>
             </div>
             
         </div>
@@ -2612,7 +2701,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍MySQL数据类型-字符串类型</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍MySQL数据类型-字符串类型</p>
+</blockquote>
             </div>
             
         </div>
@@ -2641,7 +2731,15 @@ HostB:
 <p>索引在MySQL中也叫作键，是存储引擎用于快速找到记录的一种数据结构</p>
 <p>索引优化应该是对查询性能优化最有效的手段了</p>
 <p>相当于字典中的音序表，如果没有音序表，则需要一页一页去查</p>
-<h2 id="2-索引分类">2. …</h2>
+<h2 id="2-索引分类">2. 索引分类</h2>
+<table>
+  <thead>
+      <tr>
+          <th>说明</th>
+          <th>普通索引</th>
+          <th>唯一索引</th>
+          <th>全文索引</th>
+          <th>单列索引 …</th></tr></thead></table>
             </div>
             
         </div>
@@ -2666,7 +2764,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍MySQL视图</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍MySQL视图</p>
+</blockquote>
             </div>
             
         </div>
@@ -2691,7 +2790,8 @@ HostB:
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍9. MySQL触发器</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍9. MySQL触发器</p>
+</blockquote>
             </div>
             
         </div>
@@ -2721,7 +2821,8 @@ HostB:
 <ol>
 <li>IntermediatePython的学习笔记</li>
 <li>Python的三种参数</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -2748,7 +2849,7 @@ HostB:
 
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
-    2025
+    2026
     <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
@@ -2757,9 +2858,9 @@ HostB:
 
     </div>
     
-      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-gWUQDU5B22UGz/rEIQJe68dlZB1yHK/SKBTU8R3R2lHb32tt5W1fmG6yFdtxwyAZouax6qDVfGGW0j2mzP1lnA==" crossorigin="anonymous">
     
-      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+      <script defer src="/js/katex.min.js" integrity="sha512-m8QbF5NJpwQFtXxb1nOaP1tnz/8iWl42W9DOh7LCj/dL9y10eo2qdT9DUSfIGejWtcavplHzUH1krSUE&#43;7AZPQ==" crossorigin="anonymous" ></script>
     
       <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
 onload='renderMathInElement(document.body, null);'>

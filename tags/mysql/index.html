@@ -29,13 +29,13 @@
 
   <meta itemprop="name" content="MySQL">
   <meta itemprop="description" content="宇宙很大，生活更大，也许以后还有缘相见">
-  <meta itemprop="datePublished" content="2023-11-28T22:10:53+08:00">
-  <meta itemprop="dateModified" content="2025-02-25T17:45:51+08:00">
+  <meta itemprop="datePublished" content="2026-02-09T10:21:07+08:00">
+  <meta itemprop="dateModified" content="2026-02-09T11:20:09+08:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="MySQL">
   <meta name="twitter:description" content="宇宙很大，生活更大，也许以后还有缘相见">
-<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
-<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" as="style" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
+<link href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" rel="stylesheet" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -72,10 +72,45 @@
     </div>
     
     <div class="td-page-meta">
-        <p>MySQL 标签下共有 21 篇文章</p>
+        <p>MySQL 标签下共有 22 篇文章</p>
     </div>
     
     <div class="section-index">
+        
+        <div class="entry">
+            <h3><a href="/docs/golang/gorm-datetime/">MySQL &#43; GORM 如何设置创建时间和更新时间</a></h3>
+            <div class="meta">
+                <time datetime="2026-02-09T10:21:07&#43;08:00" class="text-muted">
+                    2026年02月09日 / 10:21
+                </time>
+                
+                <span class="text-muted"> • bwangel</span>
+                
+                
+                <span class="text-muted"> • </span>
+                
+                    <a href="/tags/golang/" class="badge badge-secondary">Golang</a>
+                
+                    <a href="/tags/gorm/" class="badge badge-secondary">GORM</a>
+                
+                    <a href="/tags/mysql/" class="badge badge-secondary">MySQL</a>
+                
+                    <a href="/tags/blog/" class="badge badge-secondary">Blog</a>
+                
+                
+            </div>
+            
+            <div class="summary">
+                <h2 id="目标">目标</h2>
+<p>正确配置 MySQL 表中的 create_time 和 update_time，自动记录行的创建时间和更新时间，精度为<strong>微秒</strong>。</p>
+<h2 id="如何正确配置-create_time-和-update_time-how">如何正确配置 create_time 和 update_time (How)</h2>
+<h3 id="一mysql-ddl">一、MySQL DDL</h3>
+<p>建表时将 create_time、update_time 设为<strong>微秒</strong>精度：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">CREATE</span><span style="color:#f8f8f8"> </span><span style="color:#204a87;font-weight:bold">TABLE</span><span style="color:#f8f8f8"> </span><span style="color:#ce5c00;font-weight:bold">`</span><span style="color:#000">item</span><span style="color:#ce5c00;font-weight:bold">`</span><span style="color:#f8f8f8"> </span><span style="color:#000;font-weight:bold">(</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">  </span><span style="color:#ce5c00;font-weight:bold">`</span><span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">`</span><span style="color:#f8f8f8"> </span><span style="color:#204a87">int</span><span style="color:#f8f8f8"> </span><span style="color:#204a87;font-weight:bold">NOT</span><span style="color:#f8f8f8"> </span><span style="color:#204a87;font-weight:bold">NULL …</span></span></span></span></span></code></pre></div>
+            </div>
+            
+        </div>
         
         <div class="entry">
             <h3><a href="/docs/mysql/transaction/">MySQL 事务</a></h3>
@@ -98,10 +133,10 @@
             
             <div class="summary">
                 <h2 id="查询持续时间超过-60s-的事务">查询持续时间超过 60s 的事务</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">select</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">from</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">information_schema</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">innodb_trx</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#204a87;font-weight:bold">where</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">TIME_TO_SEC</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">timediff</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">now</span><span style="color:#000;font-weight:bold">(),</span><span style="color:#000">trx_started</span><span style="color:#000;font-weight:bold">))</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">60</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#8f5902;font-style:italic">-- innodb_trx 存储了数据库的所有事务
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">select</span><span style="color:#f8f8f8"> </span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#f8f8f8"> </span><span style="color:#204a87;font-weight:bold">from</span><span style="color:#f8f8f8"> </span><span style="color:#000">information_schema</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">innodb_trx</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8"> </span><span style="color:#204a87;font-weight:bold">where</span><span style="color:#f8f8f8"> </span><span style="color:#000">TIME_TO_SEC</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">timediff</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">now</span><span style="color:#000;font-weight:bold">(),</span><span style="color:#000">trx_started</span><span style="color:#000;font-weight:bold">))</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">60</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">-- innodb_trx 存储了数据库的所有事务
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">-- trx_started 表示事务的开始时间
 </span></span></span></code></pre></div>
             </div>
@@ -224,7 +259,8 @@
 <blockquote>
 <ol>
 <li>本文是对MySQL文档 <a href="https://dev.mysql.com/doc/refman/5.7/en/charset.html">Character Set Support</a> 的翻译</li>
-</ol></blockquote>
+</ol>
+</blockquote>
 <!-- more -->
 <h2 id="字符集character-set和排序规则collation概要">字符集(character set)和排序规则(collation)概要</h2>
 <p>一个字符集是一组符号和编码的集合。一个排序规则是一组字符集中用来比较字符的规则的集合。让我们使用一个假想的字符集的例子来分别区分它们。</p>
@@ -255,7 +291,8 @@
 <blockquote>
 <ol>
 <li>MySQL 语句中 from 部分的子查询</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -280,7 +317,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍MySQL单表查询</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍MySQL单表查询</p>
+</blockquote>
             </div>
             
         </div>
@@ -305,7 +343,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍11. MySQL多表查询</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍11. MySQL多表查询</p>
+</blockquote>
             </div>
             
         </div>
@@ -330,7 +369,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍 MySQL 存储过程</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍 MySQL 存储过程</p>
+</blockquote>
             </div>
             
         </div>
@@ -355,7 +395,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍 MySQL 安全机制</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍 MySQL 安全机制</p>
+</blockquote>
             </div>
             
         </div>
@@ -380,7 +421,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍 MySQL 常用函数</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍 MySQL 常用函数</p>
+</blockquote>
             </div>
             
         </div>
@@ -404,7 +446,8 @@
                 <p><strong>摘要</strong>:</p>
 <blockquote>
 <p>学习 MySQL 课程时的相关笔记
-仅仅对 MySQL 的整体做的大概介绍</p></blockquote>
+仅仅对 MySQL 的整体做的大概介绍</p>
+</blockquote>
             </div>
             
         </div>
@@ -429,7 +472,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍MySQL数据类型_数值类型</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍MySQL数据类型_数值类型</p>
+</blockquote>
             </div>
             
         </div>
@@ -454,7 +498,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍MySQL数据类型-字符串类型</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍MySQL数据类型-字符串类型</p>
+</blockquote>
             </div>
             
         </div>
@@ -483,7 +528,15 @@
 <p>索引在MySQL中也叫作键，是存储引擎用于快速找到记录的一种数据结构</p>
 <p>索引优化应该是对查询性能优化最有效的手段了</p>
 <p>相当于字典中的音序表，如果没有音序表，则需要一页一页去查</p>
-<h2 id="2-索引分类">2. …</h2>
+<h2 id="2-索引分类">2. 索引分类</h2>
+<table>
+  <thead>
+      <tr>
+          <th>说明</th>
+          <th>普通索引</th>
+          <th>唯一索引</th>
+          <th>全文索引</th>
+          <th>单列索引 …</th></tr></thead></table>
             </div>
             
         </div>
@@ -506,7 +559,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍 MySQL 编译安装</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍 MySQL 编译安装</p>
+</blockquote>
             </div>
             
         </div>
@@ -529,7 +583,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍MySQL表的操作和约束</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍MySQL表的操作和约束</p>
+</blockquote>
             </div>
             
         </div>
@@ -554,7 +609,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍MySQL视图</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍MySQL视图</p>
+</blockquote>
             </div>
             
         </div>
@@ -579,7 +635,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍9. MySQL触发器</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍9. MySQL触发器</p>
+</blockquote>
             </div>
             
         </div>
@@ -602,7 +659,8 @@
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>这是一篇关于MySQL的文章，主要介绍 MySQL 运算符的使用</p></blockquote>
+<p>这是一篇关于MySQL的文章，主要介绍 MySQL 运算符的使用</p>
+</blockquote>
             </div>
             
         </div>
@@ -629,7 +687,7 @@
 
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
-    2025
+    2026
     <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
@@ -638,9 +696,9 @@
 
     </div>
     
-      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-gWUQDU5B22UGz/rEIQJe68dlZB1yHK/SKBTU8R3R2lHb32tt5W1fmG6yFdtxwyAZouax6qDVfGGW0j2mzP1lnA==" crossorigin="anonymous">
     
-      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+      <script defer src="/js/katex.min.js" integrity="sha512-m8QbF5NJpwQFtXxb1nOaP1tnz/8iWl42W9DOh7LCj/dL9y10eo2qdT9DUSfIGejWtcavplHzUH1krSUE&#43;7AZPQ==" crossorigin="anonymous" ></script>
     
       <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
 onload='renderMathInElement(document.body, null);'>

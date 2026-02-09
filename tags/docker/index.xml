@@ -41,7 +41,7 @@
       <link>https://bwangel.me/docs/container/docker-client-remote-server/</link>
       <pubDate>Sat, 22 May 2021 11:41:46 +0800</pubDate>
       <guid>https://bwangel.me/docs/container/docker-client-remote-server/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Docker 客户端连接远程 Docker Daemon&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://dockerlabs.collabnix.com/beginners/components/daemon/access-daemon-externally.html&#34;&gt;参考链接 How to Connect to a Remote Docker Daemon&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Docker 客户端连接远程 Docker Daemon&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://dockerlabs.collabnix.com/beginners/components/daemon/access-daemon-externally.html&#34;&gt;参考链接 How to Connect to a Remote Docker Daemon&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
   </channel>
 </rss>

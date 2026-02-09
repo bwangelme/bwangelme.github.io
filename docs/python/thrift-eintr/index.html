@@ -69,8 +69,8 @@ If a signal handler is invoked while a system call or library function call is b
 在信号处理函数执行完以后，系统调用或库函数调用继续执行 系统调用或库函数调用失败，返回错误码 EINTR 具体会发生哪种情况，取决于具体的系统调用接口和是否通过 sigaction 设置了 SA_RESTART 标记。
 例如
 read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RESTART 标记的控制，继续执行或返回 EINTR 错误 设置了超时的 send 和 recv, epoll_wait, poll 等接口不会受到 SA_RESTART 的影响，都是直接返回 EINTR 错误码 为什么要有 EINTR 错误 从上面的 man 文档中可知，EINTR 其实并不是一个错误，只是程序被信号中断了而已。Unix/Linux 系统要设计成中断系统调用，并返回一个错误码呢?">
-<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
-<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" as="style" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
+<link href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" rel="stylesheet" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -284,7 +284,9 @@ read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RES
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsgolang-li">
   <a href="/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsgolang"><span class="">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggorm-datetime-li">
+  <a href="/docs/golang/gorm-datetime/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggorm-datetime"><span class="">MySQL &#43; GORM 如何设置创建时间和更新时间</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
   <a href="/docs/golang/go-inner/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggo-inner"><span class="">Go 内部实现</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggeneric-li">
   <a href="/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggeneric"><span class="">泛型</span></a>
@@ -559,8 +561,8 @@ read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RES
   <a href="/docs/kafka/consumer/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconsumer"><span class="">Consumer</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkabroker-li">
   <a href="/docs/kafka/broker/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkabroker"><span class="">Broker</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkaconfluent_pythonmd-li">
-  <a href="/docs/kafka/confluent_python.md/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconfluent_pythonmd"><span class="">从源码安装 confluent-kafka-python</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkaconfluent_python-li">
+  <a href="/docs/kafka/confluent_python/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconfluent_python"><span class="">从源码安装 confluent-kafka-python</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsk8s-li">
@@ -739,7 +741,7 @@ read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RES
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/atomicinteger/" data-taxonomy-term="atomicinteger"><span class="taxonomy-label">AtomicInteger</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/bash/" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">94</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">95</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">Buildkit</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/channel/" data-taxonomy-term="channel"><span class="taxonomy-label">Channel</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">Chatgpt</span><span class="taxonomy-count">1</span></a></li>
@@ -764,10 +766,11 @@ read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RES
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">Git</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">Glob</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span><span class="taxonomy-count">37</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">Gomod</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gorm/" data-taxonomy-term="gorm"><span class="taxonomy-label">GORM</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">Http</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">HTTP</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">Httpie</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
@@ -778,7 +781,7 @@ read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RES
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">Kafka</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">Kubernetes</span><span class="taxonomy-count">8</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">Language</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">Leetcode</span><span class="taxonomy-count">13</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">13</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">Life</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span><span class="taxonomy-count">9</span></a></li>
@@ -786,7 +789,7 @@ read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RES
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">Makefile</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">Mariadb</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mongodb/" data-taxonomy-term="mongodb"><span class="taxonomy-label">MongoDB</span><span class="taxonomy-count">6</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">21</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">22</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">Network</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">Nfs</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span><span class="taxonomy-count">3</span></a></li>
@@ -897,7 +900,8 @@ read, readv, wait, 没有设置超时的 recv 和 send 等调用会受到 SA_RES
 function call is blocked, then either:</p>
 <p>•  the call is automatically restarted after the signal handler
 returns; or</p>
-<p>•  the call fails with the error EINTR.</p></blockquote>
+<p>•  the call fails with the error EINTR.</p>
+</blockquote>
 <p>如果一些阻塞的系统调用或库函数调用被信号中断了，会发生以下任一情况</p>
 <ol>
 <li>在信号处理函数执行完以后，系统调用或库函数调用继续执行</li>
@@ -914,7 +918,8 @@ returns; or</p>
 <p>在 <a href="https://peps.python.org/pep-0475/">PEP 475</a> 中说</p>
 <blockquote>
 <p>Therefore, when a signal is received by a process during the execution of a system call,
-the system call can fail with the EINTR error to give the program an opportunity to handle the signal without the restriction on signal-safe functions.</p></blockquote>
+the system call can fail with the EINTR error to give the program an opportunity to handle the signal without the restriction on signal-safe functions.</p>
+</blockquote>
 <p>系统调用返回 <code>EINTR</code> 的设计，让信号处理函数有机会能在不考虑信号安全的情况下编写。</p>
 <p>光看这句话看不太明白，后来我又搜索了一下，看到了 StackOverflow 上的一篇回答。</p>
 <ul>
@@ -940,7 +945,7 @@ the system call can fail with the EINTR error to give the program an opportunity
 <li>处理 SIGUSR1 信号</li>
 <li>调用 get_image 接口获取文件</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">signal_handler</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">signum</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">frame</span><span style="color:#000;font-weight:bold">):</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">signal_handler</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">signum</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">frame</span><span style="color:#000;font-weight:bold">):</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Receive sig </span><span style="color:#4e9a06">%s</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">%</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">signum</span><span style="color:#000;font-weight:bold">,))</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
@@ -988,7 +993,7 @@ qdisc netem 8001: dev lo root refcnt 2 limit 1000 delay 1s
 </code></pre><ol start="2">
 <li>首先使用 <code>./venv2/bin/python server.py</code> 启动 server,</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ø&gt; python server.py
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ø&gt; python server.py
 </span></span><span style="display:flex;"><span>Starting the server...
 </span></span></code></pre></div><p>然后再启动 client</p>
 <pre tabindex="0"><code>ø&gt; ./venv2/bin/python client.py
@@ -1027,7 +1032,7 @@ Traceback (most recent call last):
           raise TTransportException(message=&#34;unexpected exception&#34;, inner=e)
       TTransportException: unexpected exception
 </code></pre><p>从栈信息我们可以知道，抛出异常的位置是 <code>thrift/transport/TSocket.py:164</code>，它的代码如下</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">read</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sz</span><span style="color:#000;font-weight:bold">):</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">read</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sz</span><span style="color:#000;font-weight:bold">):</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">try</span><span style="color:#000;font-weight:bold">:</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#000">buff</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">handle</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">recv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sz</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">except</span> <span style="color:#000">socket</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">error</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">e</span><span style="color:#000;font-weight:bold">:</span>
@@ -1085,10 +1090,10 @@ get 2745109 bytes in 16.005424737930298
 <p>PEP 475 只管 Python3, thrift 没有针对 Python2 做特殊处理，这就导致了上述错误只会在 Python 2 出现，Python 3 不会出现。</p>
 <h2 id="thrift-在-python2-环境中忽略-eintr">thrift 在 Python2 环境中忽略 EINTR</h2>
 <p>目前 Python 和 Thrift 官方都无意去处理这个问题，我们可以修改一下 thrift 代码，手动处理 EINTR 错误。我的处理办法很简单，遇到 EINTR 错误，直接重试即可。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#a40000">--- a/lib/py/src/transport/TSocket.py
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#00a000">+++ b/lib/py/src/transport/TSocket.py
-</span></span></span><span style="display:flex;"><span><span style="color:#00a000"></span><span style="color:#800080;font-weight:bold">@@ -149,22 +149,26 @@ class TSocket(TSocketBase):
-</span></span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold"></span>         raise TTransportException(type=TTransportException.NOT_OPEN, message=msg)
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#a40000">--- a/lib/py/src/transport/TSocket.py
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+++ b/lib/py/src/transport/TSocket.py
+</span></span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold">@@ -149,22 +149,26 @@ class TSocket(TSocketBase):
+</span></span></span><span style="display:flex;"><span>         raise TTransportException(type=TTransportException.NOT_OPEN, message=msg)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>     def read(self, sz):
 </span></span><span style="display:flex;"><span><span style="color:#a40000">-        try:
@@ -1107,7 +1112,7 @@ get 2745109 bytes in 16.005424737930298
 </span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                raise TTransportException(type=TTransportException.TIMED_OUT, message=&#34;read timeout&#34;, inner=e)
 </span></span></span><span style="display:flex;"><span><span style="color:#a40000">-            else:
 </span></span></span><span style="display:flex;"><span><span style="color:#a40000">-                raise TTransportException(message=&#34;unexpected exception&#34;, inner=e)
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#00a000">+        while True:
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+        while True:
 </span></span></span><span style="display:flex;"><span><span style="color:#00a000">+            try:
 </span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                buff = self.handle.recv(sz)
 </span></span></span><span style="display:flex;"><span><span style="color:#00a000">+            except socket.error as e:
@@ -1127,17 +1132,17 @@ get 2745109 bytes in 16.005424737930298
 </span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                else:
 </span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    raise TTransportException(message=&#34;unexpected exception&#34;, inner=e)
 </span></span></span><span style="display:flex;"><span><span style="color:#00a000">+
-</span></span></span><span style="display:flex;"><span><span style="color:#00a000"></span>         if len(buff) == 0:
+</span></span></span><span style="display:flex;"><span>         if len(buff) == 0:
 </span></span><span style="display:flex;"><span>             raise TTransportException(type=TTransportException.END_OF_FILE,
 </span></span><span style="display:flex;"><span>                                       message=&#39;TSocket read 0 bytes&#39;)
 </span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold">@@ -185,7 +189,8 @@ class TSocket(TSocketBase):
-</span></span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold"></span>                 sent += plus
+</span></span></span><span style="display:flex;"><span>                 sent += plus
 </span></span><span style="display:flex;"><span>                 buff = buff[plus:]
 </span></span><span style="display:flex;"><span>             except socket.error as e:
 </span></span><span style="display:flex;"><span><span style="color:#a40000">-                raise TTransportException(message=&#34;unexpected exception&#34;, inner=e)
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#00a000">+                if e.args[0] != errno.EINTR:
+</span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                if e.args[0] != errno.EINTR:
 </span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                    raise TTransportException(message=&#34;unexpected exception&#34;, inner=e)
-</span></span></span><span style="display:flex;"><span><span style="color:#00a000"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>     def flush(self):
 </span></span><span style="display:flex;"><span>         pass
 </span></span></code></pre></div><h2 id="吐槽">吐槽</h2>
@@ -1173,7 +1178,7 @@ get 2745109 bytes in 16.005424737930298
 
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
-    2025
+    2026
     <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
@@ -1182,9 +1187,9 @@ get 2745109 bytes in 16.005424737930298
 
     </div>
     
-      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-gWUQDU5B22UGz/rEIQJe68dlZB1yHK/SKBTU8R3R2lHb32tt5W1fmG6yFdtxwyAZouax6qDVfGGW0j2mzP1lnA==" crossorigin="anonymous">
     
-      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+      <script defer src="/js/katex.min.js" integrity="sha512-m8QbF5NJpwQFtXxb1nOaP1tnz/8iWl42W9DOh7LCj/dL9y10eo2qdT9DUSfIGejWtcavplHzUH1krSUE&#43;7AZPQ==" crossorigin="anonymous" ></script>
     
       <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
 onload='renderMathInElement(document.body, null);'>

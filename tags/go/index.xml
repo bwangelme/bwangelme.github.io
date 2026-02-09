@@ -55,14 +55,14 @@
       <link>https://bwangel.me/docs/golang/go_gcflags/</link>
       <pubDate>Wed, 12 Jan 2022 17:56:10 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/go_gcflags/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Go 链接选项和编译选项的说明&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Go 链接选项和编译选项的说明&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Review 《Don’t use Go’s default HTTP client (in production)》</title>
       <link>https://bwangel.me/docs/golang/go-http-client/</link>
       <pubDate>Fri, 31 Dec 2021 11:01:25 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/go-http-client/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&#34;&gt;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&#34;&gt;https://medium.com/@nate510/don-t-use-go-s-default-http-client-4804cb19f779&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Go proxy 的说明</title>
@@ -83,63 +83,63 @@
       <link>https://bwangel.me/docs/golang/go-build-variable/</link>
       <pubDate>Fri, 07 May 2021 17:04:21 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/go-build-variable/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Go 编译器注入 git 版本，时间等信息到可执行文件中&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Go 编译器注入 git 版本，时间等信息到可执行文件中&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Review 《Memory Consistency Models: A Tutorial》</title>
       <link>https://bwangel.me/docs/os/review-memory-consistency-models/</link>
       <pubDate>Sat, 16 Jan 2021 13:34:40 +0800</pubDate>
       <guid>https://bwangel.me/docs/os/review-memory-consistency-models/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://www.cs.utexas.edu/~bornholt/post/memory-models.html&#34;&gt;https://www.cs.utexas.edu/~bornholt/post/memory-models.html&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://www.cs.utexas.edu/~bornholt/post/memory-models.html&#34;&gt;https://www.cs.utexas.edu/~bornholt/post/memory-models.html&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>《Golang Error》学习笔记</title>
       <link>https://bwangel.me/docs/golang/golang_error/</link>
       <pubDate>Wed, 30 Dec 2020 22:28:45 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/golang_error/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Golang Error 学习笔记&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Golang Error 学习笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Go 的调度模型学习笔记</title>
       <link>https://bwangel.me/docs/golang/go-schedule/</link>
       <pubDate>Mon, 16 Mar 2020 01:18:03 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/go-schedule/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;阅读 &lt;a href=&#34;https://wudaijun.com/2018/01/go-scheduler/&#34;&gt;Go 调度模型&lt;/a&gt; 后记的笔记&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;阅读 &lt;a href=&#34;https://wudaijun.com/2018/01/go-scheduler/&#34;&gt;Go 调度模型&lt;/a&gt; 后记的笔记&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Rabbitmq Tutorial 学习笔记</title>
       <link>https://bwangel.me/docs/tools/rabbitmq-tutorial/</link>
       <pubDate>Sat, 21 Dec 2019 21:49:45 +0800</pubDate>
       <guid>https://bwangel.me/docs/tools/rabbitmq-tutorial/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.rabbitmq.com/getstarted.html&#34;&gt;RabbitMQ Tutorial&lt;/a&gt; 学习笔记&lt;/li&gt;&#xA;&lt;li&gt;本文相关代码放在 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo&#34;&gt;Github@bwangelme/RabbitMQDemo&lt;/a&gt; 中&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.rabbitmq.com/getstarted.html&#34;&gt;RabbitMQ Tutorial&lt;/a&gt; 学习笔记&lt;/li&gt;&#xA;&lt;li&gt;本文相关代码放在 &lt;a href=&#34;https://github.com/bwangelme/RabbitMQDemo&#34;&gt;Github@bwangelme/RabbitMQDemo&lt;/a&gt; 中&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Golang 中的 ServeMux 路由简介</title>
       <link>https://bwangel.me/docs/golang/intro-servemux/</link>
       <pubDate>Sat, 30 Nov 2019 18:35:05 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/intro-servemux/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;简单介绍了一下 Golang 中 ServeMux 的功能以及路由方式。&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;简单介绍了一下 Golang 中 ServeMux 的功能以及路由方式。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Review 《github.com/stretchr/testify》</title>
       <link>https://bwangel.me/docs/golang/review-testify/</link>
       <pubDate>Sun, 02 Jun 2019 22:41:59 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/review-testify/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://github.com/stretchr/testify&#34;&gt;https://github.com/stretchr/testify&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://github.com/stretchr/testify&#34;&gt;https://github.com/stretchr/testify&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Go 并发模式之发布订阅模型</title>
       <link>https://bwangel.me/docs/golang/go-pubsub/</link>
       <pubDate>Thu, 30 May 2019 07:29:04 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/go-pubsub/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;发布订阅模型的一个简易单机实现&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;发布订阅模型的一个简易单机实现&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Review 《JSON and Go》</title>
       <link>https://bwangel.me/docs/golang/review-json-and-go/</link>
       <pubDate>Tue, 21 May 2019 21:40:40 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/review-json-and-go/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://blog.golang.org/json-and-go&#34;&gt;https://blog.golang.org/json-and-go&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://blog.golang.org/json-and-go&#34;&gt;https://blog.golang.org/json-and-go&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>strings.Builder 转换字符串的时候为什么比 bytes.Buffer 要快</title>
@@ -153,21 +153,21 @@
       <link>https://bwangel.me/docs/golang/golang-trick-export-for-test/</link>
       <pubDate>Sat, 27 Apr 2019 17:33:52 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/golang-trick-export-for-test/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&#34;&gt;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&#34;&gt;https://medium.com/@robiplus/golang-trick-export-for-test-aa16cbd7b8cd&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>urfave/cli 学习笔记</title>
       <link>https://bwangel.me/docs/golang/go-cli/</link>
       <pubDate>Sun, 21 Apr 2019 18:23:00 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/go-cli/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://github.com/urfave/cli/tree/v1.20.0#overview&#34;&gt;https://github.com/urfave/cli/tree/v1.20.0#overview&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://github.com/urfave/cli/tree/v1.20.0#overview&#34;&gt;https://github.com/urfave/cli/tree/v1.20.0#overview&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Review 《Go Concurrency Patterns: Pipelines and cancellation》</title>
       <link>https://bwangel.me/docs/golang/review-go-pipelines/</link>
       <pubDate>Mon, 15 Apr 2019 22:35:48 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/review-go-pipelines/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;【&lt;a href=&#34;https://blog.golang.org/pipelines&#34;&gt;Go Concurrency Patterns: Pipelines and cancellation&lt;/a&gt;】笔记&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;【&lt;a href=&#34;https://blog.golang.org/pipelines&#34;&gt;Go Concurrency Patterns: Pipelines and cancellation&lt;/a&gt;】笔记&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>关于线程同步操作的一道面试题</title>
@@ -181,35 +181,35 @@
       <link>https://bwangel.me/docs/golang/go-scheduler-pitfall/</link>
       <pubDate>Wed, 10 Apr 2019 22:18:53 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/go-scheduler-pitfall/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的答案可以有正确的结果，但解题思路是不对的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Go Panic 的触发及恢复过程</title>
       <link>https://bwangel.me/docs/golang/go-panic/</link>
       <pubDate>Mon, 08 Apr 2019 22:14:43 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/go-panic/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Panic 过程&lt;/li&gt;&#xA;&lt;li&gt;recover 函数&lt;/li&gt;&#xA;&lt;li&gt;defer 函数&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Panic 过程&lt;/li&gt;&#xA;&lt;li&gt;recover 函数&lt;/li&gt;&#xA;&lt;li&gt;defer 函数&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>线程同步操作面试题使用锁的解法</title>
       <link>https://bwangel.me/docs/golang/go-lock/</link>
       <pubDate>Tue, 26 Mar 2019 21:56:43 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/go-lock/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: 这篇文章的思路是不正确的，正确的思路请参考 &lt;a href=&#34;https://bwangel.me/2019/04/13/go-sync-channel/&#34;&gt;关于线程同步操作的一道面试题&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Go 的测试</title>
       <link>https://bwangel.me/docs/golang/go-test/</link>
       <pubDate>Sun, 24 Mar 2019 19:40:53 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/go-test/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;主要讲了 Go 相关的测试&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;主要讲了 Go 相关的测试&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Dependency injection in Golang using higher order functions</title>
       <link>https://bwangel.me/docs/golang/go-dep-inject/</link>
       <pubDate>Sun, 24 Mar 2019 18:37:43 +0800</pubDate>
       <guid>https://bwangel.me/docs/golang/go-dep-inject/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://stein.wtf/posts/2019-03-12/inject/&#34;&gt;https://stein.wtf/posts/2019-03-12/inject/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;相关代码: &lt;a href=&#34;https://github.com/steinfletcher/func-dependency-injection-go&#34;&gt;https://github.com/steinfletcher/func-dependency-injection-go&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://stein.wtf/posts/2019-03-12/inject/&#34;&gt;https://stein.wtf/posts/2019-03-12/inject/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;相关代码: &lt;a href=&#34;https://github.com/steinfletcher/func-dependency-injection-go&#34;&gt;https://github.com/steinfletcher/func-dependency-injection-go&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Go 模板</title>
@@ -265,7 +265,7 @@
       <link>https://bwangel.me/docs/golang/gotour-notes/</link>
       <pubDate>Tue, 29 Aug 2017 08:32:02 +0000</pubDate>
       <guid>https://bwangel.me/docs/golang/gotour-notes/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Golang的基础语法学习&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Golang的基础语法学习&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
   </channel>
 </rss>

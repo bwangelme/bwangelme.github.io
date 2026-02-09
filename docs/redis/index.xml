@@ -20,7 +20,7 @@
       <link>https://bwangel.me/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</link>
       <pubDate>Fri, 22 Oct 2021 21:57:55 +0800</pubDate>
       <guid>https://bwangel.me/docs/redis/redis%E5%90%8C%E6%AD%A5%E7%BB%86%E8%8A%82/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;介绍了 Redis 的主从同步流程及一些配置选项&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;介绍了 Redis 的主从同步流程及一些配置选项&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Redis 备份机制</title>
@@ -41,7 +41,7 @@
       <link>https://bwangel.me/docs/redis/redis-pipelining/</link>
       <pubDate>Sat, 22 Aug 2020 17:22:37 +0800</pubDate>
       <guid>https://bwangel.me/docs/redis/redis-pipelining/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://redis.io/topics/pipelining&#34;&gt;https://redis.io/topics/pipelining&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;原文地址: &lt;a href=&#34;https://redis.io/topics/pipelining&#34;&gt;https://redis.io/topics/pipelining&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>Redis 源码阅读之 dict </title>
@@ -55,7 +55,7 @@
       <link>https://bwangel.me/docs/redis/redis-sort/</link>
       <pubDate>Wed, 21 Jun 2017 13:29:08 +0000</pubDate>
       <guid>https://bwangel.me/docs/redis/redis-sort/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;code&gt;sort&lt;/code&gt;命令是Redis中最强大的命令之一，本文试图通过一些例子来总结Redis Sort的常用方法。&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;code&gt;sort&lt;/code&gt;命令是Redis中最强大的命令之一，本文试图通过一些例子来总结Redis Sort的常用方法。&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
   </channel>
 </rss>

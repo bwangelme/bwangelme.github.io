@@ -56,8 +56,8 @@ HostA 和 HostB 在同一个局域网中，它们的 IP 配置如下，请问这
 HostA: IP: 192.168.26.129/24 Gateway: 192.168.26.2 HostB: IP: 192.168.26.3/27 Gateway: 192.168.26.2 答案是能够 ping 通，HostA 和 HostB 连同网关最终会形成一个奇怪的网络
 具体通信过程如下:
 HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 的 IP 和自己的掩码计算，发现 192.168.26.3 和自己是处于同一子网 HostA 通过 ARP 协议广播寻找 192.168.26.3 的 MAC 地址，由于 192.168.26.3 和它在同一局域网中，192.168.26.3 会应答自己的 MAC 地址 HostA 将 ping 请求直接发送给 192.168.26.3, 目的 MAC 地址使用的就是 192.168.26.3 的地址 HostB(192.168.26.3) 收到 ping 请求，给 HostA 发送 ping 响应 HostB 将 HostA 的 IP 和自己的掩码计算，发现 192.168.26.129 和自己不是同一子网 192.168.26.3 &amp; 255.255.255.224 == 192.168.26.0 192.168.26.129 &amp; 255.255.255.224 == 192.168.26.128 HostB 将 ping 响应发送给网关，由网关进行路由发送 HostB 通过 APR 协议广播寻找网关 192.168.26.2 的 MAC 地址，网关 192.168.26.2 告诉 HostB 自己的 MAC HostB 发送 ping 响应包，目的 IP 是 192.168.26.129, 目的 MAC 是网关的 MAC 地址 网关将 ping 响应发送给了 HostA 开始实验 读完以后，感觉这个测试挺好玩，就尝试在本地复现了一下。">
-<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
-<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" as="style" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
+<link href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" rel="stylesheet" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -271,7 +271,9 @@ HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsgolang-li">
   <a href="/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsgolang"><span class="">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggorm-datetime-li">
+  <a href="/docs/golang/gorm-datetime/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggorm-datetime"><span class="">MySQL &#43; GORM 如何设置创建时间和更新时间</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
   <a href="/docs/golang/go-inner/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggo-inner"><span class="">Go 内部实现</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggeneric-li">
   <a href="/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggeneric"><span class="">泛型</span></a>
@@ -546,8 +548,8 @@ HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 
   <a href="/docs/kafka/consumer/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconsumer"><span class="">Consumer</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkabroker-li">
   <a href="/docs/kafka/broker/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkabroker"><span class="">Broker</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkaconfluent_pythonmd-li">
-  <a href="/docs/kafka/confluent_python.md/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconfluent_pythonmd"><span class="">从源码安装 confluent-kafka-python</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkaconfluent_python-li">
+  <a href="/docs/kafka/confluent_python/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconfluent_python"><span class="">从源码安装 confluent-kafka-python</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsk8s-li">
@@ -721,7 +723,7 @@ HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/atomicinteger/" data-taxonomy-term="atomicinteger"><span class="taxonomy-label">AtomicInteger</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/bash/" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">94</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">95</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">Buildkit</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/channel/" data-taxonomy-term="channel"><span class="taxonomy-label">Channel</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">Chatgpt</span><span class="taxonomy-count">1</span></a></li>
@@ -746,10 +748,11 @@ HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">Git</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">Glob</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span><span class="taxonomy-count">37</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">Gomod</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gorm/" data-taxonomy-term="gorm"><span class="taxonomy-label">GORM</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">Http</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">HTTP</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">Httpie</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
@@ -760,7 +763,7 @@ HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">Kafka</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">Kubernetes</span><span class="taxonomy-count">8</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">Language</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">Leetcode</span><span class="taxonomy-count">13</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">13</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">Life</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span><span class="taxonomy-count">9</span></a></li>
@@ -768,7 +771,7 @@ HostA(192.168.26.129) 发送 ping 请求给 HostB(192.168.26.3) HostA 将 HostB 
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">Makefile</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">Mariadb</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mongodb/" data-taxonomy-term="mongodb"><span class="taxonomy-label">MongoDB</span><span class="taxonomy-count">6</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">21</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">22</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">Network</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">Nfs</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span><span class="taxonomy-count">3</span></a></li>
@@ -925,11 +928,11 @@ HostB:
 <ul>
 <li>接着我们再来安装 <code>vagrant-disksize</code> 插件</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 建议在执行命令前挂上 http 代理</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># 建议在执行命令前挂上 http 代理</span>
 </span></span><span style="display:flex;"><span>vagrant plugin install vagrant-disksize
 </span></span></code></pre></div><h3 id="启动并配置-vbox">启动并配置 VBox</h3>
 <p>这是我的 Vagrantfile, 它启动了三个 virtualbox 虚拟机，分别命名为 vbox1, vbox2, vbox3。完整代码见 <a href="https://github.com/bwangelme/DockerVbox.git">github/bwangelme/DockerVbox.git</a></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># -*- mode: ruby -*-</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># -*- mode: ruby -*-</span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># vi: set ft=ruby :</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Verify whether required plugins are installed.</span>
@@ -982,7 +985,7 @@ HostB:
 <p>虚拟机启动后，使用如下命令可以登陆到对应的虚机上</p>
 <pre tabindex="0"><code>vagrant ssh vbox1
 </code></pre><p>接着我们修改 <code>/etc/netplan/50-cloud-init.yaml</code> 文件，加入我们 Nat 网卡 <code>enp0s8</code> 的配置</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span> vagrant@vbox1:~$ cat /etc/netplan/50-cloud-init.yaml
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span> vagrant@vbox1:~$ cat /etc/netplan/50-cloud-init.yaml
 </span></span><span style="display:flex;"><span> # This file is generated from information provided by the datasource.  Changes
 </span></span><span style="display:flex;"><span> # to it will not persist across an instance reboot.  To disable cloud-init&#39;s
 </span></span><span style="display:flex;"><span> # network configuration capabilities, write a file
@@ -1002,7 +1005,7 @@ HostB:
 </span></span></span><span style="display:flex;"><span><span style="color:#00a000">+            gateway4: 192.168.26.2
 </span></span></span><span style="display:flex;"><span><span style="color:#00a000">+            nameservers:
 </span></span></span><span style="display:flex;"><span><span style="color:#00a000">+                addresses: [223.5.5.5]
-</span></span></span><span style="display:flex;"><span><span style="color:#00a000"></span>     version: 2
+</span></span></span><span style="display:flex;"><span>     version: 2
 </span></span></code></pre></div><p>三台主机的配置如下</p>
 <table>
   <thead>
@@ -1074,7 +1077,8 @@ tcpdump: listening on enp0s8, link-type EN10MB (Ethernet), snapshot length 26214
 <p>我用关键字 <code>vbox nat network gateway</code> 在 Google 中搜索，找到了 vbox 的一篇文档: <a href="https://www.virtualbox.org/manual/ch06.html#network_nat_service">6.4. Network Address Translation Service</a></p>
 <p>文档中创建了一个 <code>192.168.15.0/24</code> 的 Nat 网络， 并说静态设置的网关默认被赋予地址 <code>192.168.15.1</code></p>
 <blockquote>
-<p>Here, natnet1 is the name of the internal network to be used and 192.168.15.0/24 is the network address and mask of the NAT service interface. By default in this static configuration the gateway will be assigned the address 192.168.15.1, the address following the interface address, though this is subject to change. To attach a DHCP server to the internal network, modify the example command as follows:</p></blockquote>
+<p>Here, natnet1 is the name of the internal network to be used and 192.168.15.0/24 is the network address and mask of the NAT service interface. By default in this static configuration the gateway will be assigned the address 192.168.15.1, the address following the interface address, though this is subject to change. To attach a DHCP server to the internal network, modify the example command as follows:</p>
+</blockquote>
 <p>这下我就明白了，<code>192.168.26.1</code>, <code>192.168.26.2</code>, <code>192.168.26.3</code> 是 Vbox Nat 网络的保留地址，<code>192.168.26.1</code> 是默认网关，<code>192.168.26.3</code> 是 DNS Server 的地址(因为它的 53 端口能用 UDP 连上), <code>192.168.26.2</code> 是干嘛的还没搞明白</p>
 <p>为了不冲突，我们改一下我们三台机器的地址，新地址如下</p>
 <table>
@@ -1181,7 +1185,7 @@ route -n
 
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
-    2025
+    2026
     <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
@@ -1190,9 +1194,9 @@ route -n
 
     </div>
     
-      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-gWUQDU5B22UGz/rEIQJe68dlZB1yHK/SKBTU8R3R2lHb32tt5W1fmG6yFdtxwyAZouax6qDVfGGW0j2mzP1lnA==" crossorigin="anonymous">
     
-      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+      <script defer src="/js/katex.min.js" integrity="sha512-m8QbF5NJpwQFtXxb1nOaP1tnz/8iWl42W9DOh7LCj/dL9y10eo2qdT9DUSfIGejWtcavplHzUH1krSUE&#43;7AZPQ==" crossorigin="anonymous" ></script>
     
       <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
 onload='renderMathInElement(document.body, null);'>

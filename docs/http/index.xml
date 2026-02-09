@@ -41,14 +41,14 @@
       <link>https://bwangel.me/docs/http/letsencrypt-dns-txt/</link>
       <pubDate>Sun, 13 Aug 2017 14:04:06 +0000</pubDate>
       <guid>https://bwangel.me/docs/http/letsencrypt-dns-txt/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Letsencrypt 通过dns记录来验证域名&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Letsencrypt 通过dns记录来验证域名&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>CentOS 下编译安装 Nginx</title>
       <link>https://bwangel.me/docs/http/nginx_install/</link>
       <pubDate>Sun, 10 Apr 2016 10:56:54 +0000</pubDate>
       <guid>https://bwangel.me/docs/http/nginx_install/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;主要讲述了编译安装 Nginx&lt;/p&gt;&lt;/blockquote&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;主要讲述了编译安装 Nginx&lt;/p&gt;&#xA;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>web框架要素</title>

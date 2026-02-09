@@ -30,12 +30,12 @@
   <meta itemprop="name" content="Python">
   <meta itemprop="description" content="宇宙很大，生活更大，也许以后还有缘相见">
   <meta itemprop="datePublished" content="2024-06-13T15:40:02+08:00">
-  <meta itemprop="dateModified" content="2025-07-08T19:41:14+08:00">
+  <meta itemprop="dateModified" content="2025-10-11T16:57:22+08:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Python">
   <meta name="twitter:description" content="宇宙很大，生活更大，也许以后还有缘相见">
-<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
-<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" as="style" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
+<link href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" rel="stylesheet" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -110,7 +110,9 @@
 </li>
 </ol>
 <pre tabindex="0"><code>pytest dir/test_files --pdb --pdbcls=IPython.terminal.debugger:TerminalPdb
-</code></pre><h2 id="pytest-开启日志记录">Pytest …</h2>
+</code></pre><h2 id="pytest-开启日志记录">Pytest 开启日志记录</h2>
+<ol>
+<li>在根目录中创建 …</li></ol>
             </div>
             
         </div>
@@ -174,7 +176,7 @@ Repo(dir=&#39;karazhan&#39;, name=&#39;antispam/karazhan&#39;),
 <pre tabindex="0"><code>s = u&#39;玛丽黛佳眉笔只-需-18,冲p腹t製o2𝒂I5EfW4xPmTq𝒃o2打🤔开桃o寶&#39;
 </code></pre><p>这个字符串 s 是一段淘口令，核心内容就是 𝒂 和 𝒃 之间的 ID <code>I5EfW4xPmTq</code>, 我们想用一个正则表达式将 ID 捕获出来。</p>
 <p>𝒂 和 𝒃 的 unicode 码点不在基本平面内，在1号平面内。Unicode 各个平面的字符范围参考 <a href="https://zh.wikipedia.org/wiki/Unicode%E5%AD%97%E7%AC%A6%E5%B9%B3%E9%9D%A2%E6%98%A0%E5%B0%84">维基百科</a></p>
-<p>在 MacOS …</p>
+<p>在 MacOS 的 …</p>
             </div>
             
         </div>
@@ -204,7 +206,7 @@ Repo(dir=&#39;karazhan&#39;, name=&#39;antispam/karazhan&#39;),
                 <h2 id="thrift-python-的-fastbinary-是什么">thrift python 的 fastbinary 是什么</h2>
 <p>thrift 在进行通信的时候，Python client 需要将 idl 中定义的方法参数，结构体序列化成字节流。这是在 thrift 的 Protocol 层实现的。</p>
 <p>序列化的方式有多种，JSON, Binary, Compact。</p>
-<p>Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实 …</p>
+<p>Binary 和 Compact 协议的实现有两种，分别是纯 Python 实现和 C++ 实现 …</p>
             </div>
             
         </div>
@@ -242,7 +244,7 @@ function call is blocked, then either:</p>
         </div>
         
         <div class="entry">
-            <h3><a href="/docs/kafka/confluent_python.md/">从源码安装 confluent-kafka-python</a></h3>
+            <h3><a href="/docs/kafka/confluent_python/">从源码安装 confluent-kafka-python</a></h3>
             <div class="meta">
                 <time datetime="2022-03-11T14:34:44&#43;08:00" class="text-muted">
                     2022年03月11日 / 14:34
@@ -333,7 +335,8 @@ function call is blocked, then either:</p>
                 <blockquote>
 <ul>
 <li>记一次因 Python 升级导致的 ImportError</li>
-</ul></blockquote>
+</ul>
+</blockquote>
             </div>
             
         </div>
@@ -359,12 +362,14 @@ function call is blocked, then either:</p>
             
             <div class="summary">
                 <blockquote>
-<p><strong>摘要</strong>:</p></blockquote>
+<p><strong>摘要</strong>:</p>
+</blockquote>
 <blockquote>
 <ol>
 <li>本文章的目标是逐步总结Python中<a href="http://devdocs.io/python~3.6/library/collections">collection</a>模块的用法，会不定期进行更新。</li>
 <li>目前总结了Counter类的用法</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -393,7 +398,8 @@ function call is blocked, then either:</p>
 <ol>
 <li>Django的Settings模块代码说明</li>
 <li>Django的<code>override_settings</code>修饰器分析</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -423,7 +429,8 @@ function call is blocked, then either:</p>
 <ol>
 <li>importlib.import_module 函数的功能</li>
 <li>import_string 函数的实现</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -448,7 +455,8 @@ function call is blocked, then either:</p>
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>Python 中的wraps修饰器分析</p></blockquote>
+<p>Python 中的wraps修饰器分析</p>
+</blockquote>
             </div>
             
         </div>
@@ -475,7 +483,8 @@ function call is blocked, then either:</p>
 <ol>
 <li>简要说明了一下WSGI</li>
 <li>分析了Werkzeug的一个官方例子</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -504,11 +513,12 @@ function call is blocked, then either:</p>
 <li>Python2 中 Str 和 Unicode 分别存了什么</li>
 <li>raw_unicode_escape 编码的作用</li>
 <li>Python2 中的一个经典编码问题</li>
-</ul></blockquote>
+</ul>
+</blockquote>
 <!-- more -->
 <h2 id="python2-中-str-和-unicode-分别存了什么">Python2 中 Str 和 Unicode 分别存了什么</h2>
 <p>在 Python2 中，str 存储的是字节流，unicode 存储的是 Unicode 码点</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#000">In</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]:</span> <span style="color:#4e9a06">&#39;中&#39;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#000">In</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]:</span> <span style="color:#4e9a06">&#39;中&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">Out</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]:</span> <span style="color:#4e9a06">&#39; …</span></span></span></span></span></code></pre></div></!-->
             </div>
             
@@ -536,7 +546,8 @@ function call is blocked, then either:</p>
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>本文主要是对 Python3 标准库 <a href="https://docs.python.org/3/library/concurrent.futures.html">concurrent.futures</a> 文档的翻译</p></blockquote>
+<p>本文主要是对 Python3 标准库 <a href="https://docs.python.org/3/library/concurrent.futures.html">concurrent.futures</a> 文档的翻译</p>
+</blockquote>
             </div>
             
         </div>
@@ -570,7 +581,8 @@ function call is blocked, then either:</p>
 <ol>
 <li>本文翻译自 StackOverFlow 上的一篇<a href="http://stackoverflow.com/questions/8774958/keyerror-in-module-threading-after-a-successful-py-test-run">答案</a></li>
 <li>本文主要解释了<code>gevent</code>的猴子补丁和一个<code>KeyError</code>之间的关系</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -597,7 +609,8 @@ function call is blocked, then either:</p>
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>记录一次解决问题的过程。</p></blockquote>
+<p>记录一次解决问题的过程。</p>
+</blockquote>
             </div>
             
         </div>
@@ -625,7 +638,8 @@ function call is blocked, then either:</p>
                 <p><strong>摘要</strong>:</p>
 <blockquote>
 <p>本文翻译自Python3文档<a href="https://docs.python.org/3/library/string.html#format-examples">6.1.3.2. Format examples</a>
-主要讲述了Python<code>str.format()</code>的一些使用方法</p></blockquote>
+主要讲述了Python<code>str.format()</code>的一些使用方法</p>
+</blockquote>
             </div>
             
         </div>
@@ -654,7 +668,8 @@ function call is blocked, then either:</p>
 <ol>
 <li>生成器和协程的异同</li>
 <li>协程的一些特性</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -684,7 +699,8 @@ function call is blocked, then either:</p>
 <li>命名空间有哪些</li>
 <li>变量查找原则</li>
 <li>分析一个UnboundLocalError的例子</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -717,7 +733,8 @@ function call is blocked, then either:</p>
 <li>Python的with语句用法以及相关的上下文管理协议</li>
 <li>如何自己写一个上下文管理器对象，如何利用<code>contextlib</code>来写一个上下文管理器对象</li>
 <li>原文地址: <a href="https://docs.python.org/release/2.5/whatsnew/pep-343.html">PEP 343: The &lsquo;with&rsquo; statement</a></li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -747,7 +764,8 @@ function call is blocked, then either:</p>
 <ol>
 <li>IntermediatePython的学习笔记</li>
 <li>Python的三种参数</li>
-</ol></blockquote>
+</ol>
+</blockquote>
             </div>
             
         </div>
@@ -772,7 +790,8 @@ function call is blocked, then either:</p>
             <div class="summary">
                 <p><strong>摘要</strong>:</p>
 <blockquote>
-<p>Python Web开发测试驱动方法第六章的笔记</p></blockquote>
+<p>Python Web开发测试驱动方法第六章的笔记</p>
+</blockquote>
             </div>
             
         </div>
@@ -799,7 +818,7 @@ function call is blocked, then either:</p>
 
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
-    2025
+    2026
     <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
@@ -808,9 +827,9 @@ function call is blocked, then either:</p>
 
     </div>
     
-      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-gWUQDU5B22UGz/rEIQJe68dlZB1yHK/SKBTU8R3R2lHb32tt5W1fmG6yFdtxwyAZouax6qDVfGGW0j2mzP1lnA==" crossorigin="anonymous">
     
-      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+      <script defer src="/js/katex.min.js" integrity="sha512-m8QbF5NJpwQFtXxb1nOaP1tnz/8iWl42W9DOh7LCj/dL9y10eo2qdT9DUSfIGejWtcavplHzUH1krSUE&#43;7AZPQ==" crossorigin="anonymous" ></script>
     
       <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
 onload='renderMathInElement(document.body, null);'>

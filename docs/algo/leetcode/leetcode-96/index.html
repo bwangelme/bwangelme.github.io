@@ -43,7 +43,7 @@
     <meta property="article:published_time" content="2023-11-03T08:45:11+08:00">
     <meta property="article:modified_time" content="2023-11-03T09:10:28+08:00">
     <meta property="article:tag" content="Algo">
-    <meta property="article:tag" content="Leetcode">
+    <meta property="article:tag" content="LeetCode">
     <meta property="article:tag" content="Blog">
 
   <meta itemprop="name" content="Leetcode第96题">
@@ -58,7 +58,7 @@
   <meta itemprop="datePublished" content="2023-11-03T08:45:11+08:00">
   <meta itemprop="dateModified" content="2023-11-03T09:10:28+08:00">
   <meta itemprop="wordCount" content="193">
-  <meta itemprop="keywords" content="Algo,Leetcode,Blog">
+  <meta itemprop="keywords" content="Algo,LeetCode,Blog">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Leetcode第96题">
   <meta name="twitter:description" content="题目 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。
@@ -69,8 +69,8 @@
 提示：
 1 &lt;= n &lt;= 19 解题思路 这个题目主要的难度在公式推导上，我们可以用动态规划的思路来求解。
 令 \( G(N) \) 表示 n 互不相同的整数组成的二叉搜索树的数量。 \( F(i, N) \) 表示由 i 作为根节点，N 个互补相同的整数组成的二叉搜索树的数量 可得, \( G(N) \) 是由每个 i 作为根节点的互不相同的二叉搜索树的数量的总和，此公式记做公式(1) $$G(N) = \sum_{i=1}^{N} F(i, N) \tag{1}$$接着，我们需要再推导出 \( F(i, N) \) 和 \( G(N) \) 的关系，就可以得到我们的递推公式了。">
-<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
-<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" as="style" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
+<link href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" rel="stylesheet" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -284,7 +284,9 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsgolang-li">
   <a href="/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsgolang"><span class="">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggorm-datetime-li">
+  <a href="/docs/golang/gorm-datetime/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggorm-datetime"><span class="">MySQL &#43; GORM 如何设置创建时间和更新时间</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
   <a href="/docs/golang/go-inner/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggo-inner"><span class="">Go 内部实现</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggeneric-li">
   <a href="/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggeneric"><span class="">泛型</span></a>
@@ -559,8 +561,8 @@
   <a href="/docs/kafka/consumer/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconsumer"><span class="">Consumer</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkabroker-li">
   <a href="/docs/kafka/broker/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkabroker"><span class="">Broker</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkaconfluent_pythonmd-li">
-  <a href="/docs/kafka/confluent_python.md/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconfluent_pythonmd"><span class="">从源码安装 confluent-kafka-python</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkaconfluent_python-li">
+  <a href="/docs/kafka/confluent_python/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconfluent_python"><span class="">从源码安装 confluent-kafka-python</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsk8s-li">
@@ -725,7 +727,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/atomicinteger/" data-taxonomy-term="atomicinteger"><span class="taxonomy-label">AtomicInteger</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/bash/" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">94</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">95</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">Buildkit</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/channel/" data-taxonomy-term="channel"><span class="taxonomy-label">Channel</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">Chatgpt</span><span class="taxonomy-count">1</span></a></li>
@@ -750,10 +752,11 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">Git</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">Glob</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span><span class="taxonomy-count">37</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">Gomod</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gorm/" data-taxonomy-term="gorm"><span class="taxonomy-label">GORM</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">Http</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">HTTP</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">Httpie</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
@@ -764,7 +767,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">Kafka</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">Kubernetes</span><span class="taxonomy-count">8</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">Language</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">Leetcode</span><span class="taxonomy-count">13</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">13</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">Life</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span><span class="taxonomy-count">9</span></a></li>
@@ -772,7 +775,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">Makefile</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">Mariadb</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mongodb/" data-taxonomy-term="mongodb"><span class="taxonomy-label">MongoDB</span><span class="taxonomy-count">6</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">21</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">22</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">Network</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">Nfs</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span><span class="taxonomy-count">3</span></a></li>
@@ -872,7 +875,7 @@
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
     <li><a class="taxonomy-term" href="https://bwangel.me/tags/algo/" data-taxonomy-term="algo"><span class="taxonomy-label">Algo</span></a></li>
-    <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">Leetcode</span></a></li>
+    <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span></a></li>
     <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
     </ul>
 </div>
@@ -917,19 +920,19 @@
 G(1) = 1$$</div><p>题目要求的 <strong>由 n 个节点组成且节点值从 1 到 n 互不相同的二叉搜索树的数量</strong> 即是 \( G(N) \)</p>
 <h2 id="代码及复杂度">代码及复杂度</h2>
 <p>有了递推公式和递推出口之后，代码编写起来就非常容易了</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">numTrees</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span> <span style="color:#204a87;font-weight:bold">int</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000">G</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#204a87">make</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87;font-weight:bold">int</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">n</span><span style="color:#ce5c00;font-weight:bold">+</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">N</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">N</span> <span style="color:#ce5c00;font-weight:bold">&lt;=</span> <span style="color:#000">n</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">N</span><span style="color:#ce5c00;font-weight:bold">++</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">&lt;=</span> <span style="color:#000">N</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">i</span><span style="color:#ce5c00;font-weight:bold">++</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">N</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">+=</span> <span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">N</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">n</span><span style="color:#000;font-weight:bold">]</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><p>上述代码的复杂度也非常容易分析</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">func</span><span style="color:#f8f8f8"> </span><span style="color:#000">numTrees</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span><span style="color:#f8f8f8"> </span><span style="color:#204a87;font-weight:bold">int</span><span style="color:#000;font-weight:bold">)</span><span style="color:#f8f8f8"> </span><span style="color:#204a87;font-weight:bold">int</span><span style="color:#f8f8f8"> </span><span style="color:#000;font-weight:bold">{</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">	</span><span style="color:#000">G</span><span style="color:#f8f8f8"> </span><span style="color:#ce5c00;font-weight:bold">:=</span><span style="color:#f8f8f8"> </span><span style="color:#204a87">make</span><span style="color:#000;font-weight:bold">([]</span><span style="color:#204a87;font-weight:bold">int</span><span style="color:#000;font-weight:bold">,</span><span style="color:#f8f8f8"> </span><span style="color:#000">n</span><span style="color:#ce5c00;font-weight:bold">+</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">	</span><span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8"> </span><span style="color:#000;font-weight:bold">=</span><span style="color:#f8f8f8"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">	</span><span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8"> </span><span style="color:#000;font-weight:bold">=</span><span style="color:#f8f8f8"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">	</span><span style="color:#204a87;font-weight:bold">for</span><span style="color:#f8f8f8"> </span><span style="color:#000">N</span><span style="color:#f8f8f8"> </span><span style="color:#ce5c00;font-weight:bold">:=</span><span style="color:#f8f8f8"> </span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8"> </span><span style="color:#000">N</span><span style="color:#f8f8f8"> </span><span style="color:#ce5c00;font-weight:bold">&lt;=</span><span style="color:#f8f8f8"> </span><span style="color:#000">n</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8"> </span><span style="color:#000">N</span><span style="color:#ce5c00;font-weight:bold">++</span><span style="color:#f8f8f8"> </span><span style="color:#000;font-weight:bold">{</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">		</span><span style="color:#204a87;font-weight:bold">for</span><span style="color:#f8f8f8"> </span><span style="color:#000">i</span><span style="color:#f8f8f8"> </span><span style="color:#ce5c00;font-weight:bold">:=</span><span style="color:#f8f8f8"> </span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8"> </span><span style="color:#000">i</span><span style="color:#f8f8f8"> </span><span style="color:#ce5c00;font-weight:bold">&lt;=</span><span style="color:#f8f8f8"> </span><span style="color:#000">N</span><span style="color:#000;font-weight:bold">;</span><span style="color:#f8f8f8"> </span><span style="color:#000">i</span><span style="color:#ce5c00;font-weight:bold">++</span><span style="color:#f8f8f8"> </span><span style="color:#000;font-weight:bold">{</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">			</span><span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">N</span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8"> </span><span style="color:#ce5c00;font-weight:bold">+=</span><span style="color:#f8f8f8"> </span><span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8"> </span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#f8f8f8"> </span><span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">N</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">		</span><span style="color:#000;font-weight:bold">}</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">	</span><span style="color:#000;font-weight:bold">}</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">	</span><span style="color:#204a87;font-weight:bold">return</span><span style="color:#f8f8f8"> </span><span style="color:#000">G</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">n</span><span style="color:#000;font-weight:bold">]</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span><span style="color:#f8f8f8">
+</span></span></span></code></pre></div><p>上述代码的复杂度也非常容易分析</p>
 <ul>
 <li>N 表示输入的整数</li>
 <li><strong>时间复杂度</strong> 是看循环执行的次数，这是一个等差数列，所以时间复杂度是 \( O(N^2) \)</li>
@@ -963,7 +966,7 @@ G(1) = 1$$</div><p>题目要求的 <strong>由 n 个节点组成且节点值从 
 
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
-    2025
+    2026
     <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
@@ -972,9 +975,9 @@ G(1) = 1$$</div><p>题目要求的 <strong>由 n 个节点组成且节点值从 
 
     </div>
     
-      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-gWUQDU5B22UGz/rEIQJe68dlZB1yHK/SKBTU8R3R2lHb32tt5W1fmG6yFdtxwyAZouax6qDVfGGW0j2mzP1lnA==" crossorigin="anonymous">
     
-      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+      <script defer src="/js/katex.min.js" integrity="sha512-m8QbF5NJpwQFtXxb1nOaP1tnz/8iWl42W9DOh7LCj/dL9y10eo2qdT9DUSfIGejWtcavplHzUH1krSUE&#43;7AZPQ==" crossorigin="anonymous" ></script>
     
       <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
 onload='renderMathInElement(document.body, null);'>

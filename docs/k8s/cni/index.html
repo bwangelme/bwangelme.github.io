@@ -44,8 +44,8 @@
   <meta name="twitter:title" content="CNI">
   <meta name="twitter:description" content="CNI 要求 CNI 插件的要求可以被简述成两个
 连通性(Connectivity), 每个 Pod 通过默认的网卡接口 eth0 分配 IP 地址，并且这个 IP 地址，在节点的根网络空间上可达。 可达性(Reachability)，跨节点的 Pod 可以直接用 pod ip 通信（不需要经过 NAT）。 验证连通性 这是我用 kind 在本地搭建的一个三节点集群 kind: Cluster apiVersion: kind.x-k8s.io/v1alpha4 name: demo nodes: - role: control-plane image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f - role: worker image: kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f ø&gt; docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 3fdffdb2fa2d kindest/node:v1.26.3 &#34;/usr/local/bin/entr…&#34; About a minute ago Up About a minute 127.0.0.1:34309-&gt;6443/tcp demo-control-plane 646f93b78436 kindest/node:v1.26.3 &#34;/usr/local/bin/entr…&#34; About a minute ago Up About a minute demo-worker d5e20cd642fb kindest/node:v1.26.3 &#34;/usr/local/bin/entr…&#34; About a minute ago Up About a minute demo-worker2 646f93b78436 是 k8s 的工作节点 demo-worker，它的进程 ID 是 1568942 d5e20cd642fb 是 k8s 的工作节点 demo-worker2，它的进程 ID 是 1568954 ø&gt; docker inspect 646f93b78436 | rg -i &#39;&#34;pid&#34;&#39; &#34;Pid&#34;: 1568942, ø&gt; docker inspect d5e20cd642fb | rg -i &#39;&#34;pid&#34;&#39; &#34;Pid&#34;: 1568954, apple-app-ddb7b6f95-kz2w8 是集群中的一个 pod, 它运行在 demo-worker2 上, 它的 eth0 网卡的地址是 10.244.1.2 ø&gt; k -n qae get pod -o wide NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES apple-app-ddb7b6f95-kz2w8 1/1 Running 0 117s 10.244.1.2 demo-worker2 &lt;none&gt; &lt;none&gt; ø&gt; k -n qae exec -it apple-app-ddb7b6f95-kz2w8 ip addr show eth0 kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future version. Use kubectl exec [POD] -- [COMMAND] instead. 2: eth0@eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP link/ether 1e:a2:83:1b:93:92 brd ff:ff:ff:ff:ff:ff inet 10.244.1.2/24 brd 10.244.1.255 scope global eth0 valid_lft forever preferred_lft forever inet6 fe80::1ca2:83ff:fe1b:9392/64 scope link valid_lft forever preferred_lft forever 我进入 1568942 和 1568954 的网络空间，相当于登陆到了了 k8s 的 worker 节点上，ping pod 是可以 ping 通的。 # demo-worker 节点 ø&gt; sudo nsenter -n -t 1568942 ping -c 2 10.244.1.2 PING 10.244.1.2 (10.244.1.2) 56(84) bytes of data. 64 bytes from 10.244.1.2: icmp_seq=1 ttl=63 time=0.063 ms 64 bytes from 10.244.1.2: icmp_seq=2 ttl=63 time=0.057 ms --- 10.244.1.2 ping statistics --- 2 packets transmitted, 2 received, 0% packet loss, time 1011ms rtt min/avg/max/mdev = 0.057/0.060/0.063/0.003 ms # demo-worker2 节点 ø&gt; sudo nsenter -n -t 1568954 ping -c 2 10.244.1.2 PING 10.244.1.2 (10.244.1.2) 56(84) bytes of data. 64 bytes from 10.244.1.2: icmp_seq=1 ttl=64 time=0.059 ms 64 bytes from 10.244.1.2: icmp_seq=2 ttl=64 time=0.017 ms --- 10.244.1.2 ping statistics --- 2 packets transmitted, 2 received, 0% packet loss, time 1004ms rtt min/avg/max/mdev = 0.017/0.038/0.059/0.021 ms 验证可达性 这是集群中的所有 pod, 我在 apple-app-ddb7b6f95-kz2w8 上 ping local-path-provisioner-75f5b54ffd-slkv5，可以 ping 通">
-<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
-<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" as="style" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
+<link href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" rel="stylesheet" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -259,7 +259,9 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsgolang-li">
   <a href="/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsgolang"><span class="">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggorm-datetime-li">
+  <a href="/docs/golang/gorm-datetime/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggorm-datetime"><span class="">MySQL &#43; GORM 如何设置创建时间和更新时间</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
   <a href="/docs/golang/go-inner/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggo-inner"><span class="">Go 内部实现</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggeneric-li">
   <a href="/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggeneric"><span class="">泛型</span></a>
@@ -534,8 +536,8 @@
   <a href="/docs/kafka/consumer/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconsumer"><span class="">Consumer</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkabroker-li">
   <a href="/docs/kafka/broker/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkabroker"><span class="">Broker</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkaconfluent_pythonmd-li">
-  <a href="/docs/kafka/confluent_python.md/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconfluent_pythonmd"><span class="">从源码安装 confluent-kafka-python</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkaconfluent_python-li">
+  <a href="/docs/kafka/confluent_python/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconfluent_python"><span class="">从源码安装 confluent-kafka-python</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-docsk8s-li">
@@ -704,7 +706,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/atomicinteger/" data-taxonomy-term="atomicinteger"><span class="taxonomy-label">AtomicInteger</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/bash/" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">94</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">95</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">Buildkit</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/channel/" data-taxonomy-term="channel"><span class="taxonomy-label">Channel</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">Chatgpt</span><span class="taxonomy-count">1</span></a></li>
@@ -729,10 +731,11 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">Git</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">Glob</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span><span class="taxonomy-count">37</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">Gomod</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gorm/" data-taxonomy-term="gorm"><span class="taxonomy-label">GORM</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">Http</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">HTTP</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">Httpie</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
@@ -743,7 +746,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">Kafka</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">Kubernetes</span><span class="taxonomy-count">8</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">Language</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">Leetcode</span><span class="taxonomy-count">13</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">13</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">Life</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span><span class="taxonomy-count">9</span></a></li>
@@ -751,7 +754,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">Makefile</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">Mariadb</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mongodb/" data-taxonomy-term="mongodb"><span class="taxonomy-label">MongoDB</span><span class="taxonomy-count">6</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">21</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">22</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">Network</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">Nfs</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span><span class="taxonomy-count">3</span></a></li>
@@ -864,17 +867,17 @@
 <ul>
 <li>这是我用 kind 在本地搭建的一个三节点集群</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">kind</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">Cluster</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">apiVersion</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">kind.x-k8s.io/v1alpha4</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">demo</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline"></span><span style="color:#204a87;font-weight:bold">nodes</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">role</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">control-plane</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">role</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">worker</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">  </span>- <span style="color:#204a87;font-weight:bold">role</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">worker</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8;text-decoration:underline">    </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8;text-decoration:underline"> </span><span style="color:#000">kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f</span><span style="color:#f8f8f8;text-decoration:underline">
-</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ø&gt; docker ps
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">kind</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8"> </span><span style="color:#000">Cluster</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">apiVersion</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8"> </span><span style="color:#000">kind.x-k8s.io/v1alpha4</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">name</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8"> </span><span style="color:#000">demo</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">nodes</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">  </span>- <span style="color:#204a87;font-weight:bold">role</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8"> </span><span style="color:#000">control-plane</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">    </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8"> </span><span style="color:#000">kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">  </span>- <span style="color:#204a87;font-weight:bold">role</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8"> </span><span style="color:#000">worker</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">    </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8"> </span><span style="color:#000">kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">  </span>- <span style="color:#204a87;font-weight:bold">role</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8"> </span><span style="color:#000">worker</span><span style="color:#f8f8f8">
+</span></span></span><span style="display:flex;"><span><span style="color:#f8f8f8">    </span><span style="color:#204a87;font-weight:bold">image</span><span style="color:#000;font-weight:bold">:</span><span style="color:#f8f8f8"> </span><span style="color:#000">kindest/node:v1.26.3@sha256:61b92f38dff6ccc29969e7aa154d34e38b89443af1a2c14e6cfbd2df6419c66f</span><span style="color:#f8f8f8">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ø&gt; docker ps
 </span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                  COMMAND                   CREATED              STATUS              PORTS                       NAMES
 </span></span><span style="display:flex;"><span>3fdffdb2fa2d   kindest/node:v1.26.3   <span style="color:#4e9a06">&#34;/usr/local/bin/entr…&#34;</span>   About a minute ago   Up About a minute   127.0.0.1:34309-&gt;6443/tcp   demo-control-plane
 </span></span><span style="display:flex;"><span>646f93b78436   kindest/node:v1.26.3   <span style="color:#4e9a06">&#34;/usr/local/bin/entr…&#34;</span>   About a minute ago   Up About a minute                               demo-worker
@@ -883,14 +886,14 @@
 <li>646f93b78436 是 k8s 的工作节点 <code>demo-worker</code>，它的进程 ID 是 1568942</li>
 <li>d5e20cd642fb 是 k8s 的工作节点 <code>demo-worker2</code>，它的进程 ID 是 1568954</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ø&gt; docker inspect 646f93b78436 <span style="color:#000;font-weight:bold">|</span> rg -i <span style="color:#4e9a06">&#39;&#34;pid&#34;&#39;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ø&gt; docker inspect 646f93b78436 <span style="color:#000;font-weight:bold">|</span> rg -i <span style="color:#4e9a06">&#39;&#34;pid&#34;&#39;</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#4e9a06">&#34;Pid&#34;</span>: 1568942,
 </span></span><span style="display:flex;"><span>ø&gt; docker inspect d5e20cd642fb <span style="color:#000;font-weight:bold">|</span> rg -i <span style="color:#4e9a06">&#39;&#34;pid&#34;&#39;</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#4e9a06">&#34;Pid&#34;</span>: 1568954,
 </span></span></code></pre></div><ul>
 <li>apple-app-ddb7b6f95-kz2w8 是集群中的一个 pod, 它运行在 demo-worker2 上, 它的 eth0 网卡的地址是 10.244.1.2</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ø&gt; k -n qae get pod -o wide
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ø&gt; k -n qae get pod -o wide
 </span></span><span style="display:flex;"><span>NAME                        READY   STATUS    RESTARTS   AGE    IP           NODE           NOMINATED NODE   READINESS GATES
 </span></span><span style="display:flex;"><span>apple-app-ddb7b6f95-kz2w8   1/1     Running   <span style="color:#0000cf;font-weight:bold">0</span>          117s   10.244.1.2   demo-worker2   &lt;none&gt;           &lt;none&gt;
 </span></span><span style="display:flex;"><span>
@@ -905,7 +908,7 @@
 </span></span></code></pre></div><ul>
 <li>我进入 1568942 和 1568954 的网络空间，相当于登陆到了了 k8s 的 worker 节点上，ping pod 是可以 ping 通的。</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># demo-worker 节点</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># demo-worker 节点</span>
 </span></span><span style="display:flex;"><span>ø&gt; sudo nsenter -n -t <span style="color:#0000cf;font-weight:bold">1568942</span> ping -c <span style="color:#0000cf;font-weight:bold">2</span> 10.244.1.2
 </span></span><span style="display:flex;"><span>PING 10.244.1.2 <span style="color:#ce5c00;font-weight:bold">(</span>10.244.1.2<span style="color:#ce5c00;font-weight:bold">)</span> 56<span style="color:#ce5c00;font-weight:bold">(</span>84<span style="color:#ce5c00;font-weight:bold">)</span> bytes of data.
 </span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">64</span> bytes from 10.244.1.2: <span style="color:#000">icmp_seq</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#000">ttl</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">63</span> <span style="color:#000">time</span><span style="color:#ce5c00;font-weight:bold">=</span>0.063 ms
@@ -926,7 +929,7 @@
 </span></span><span style="display:flex;"><span>rtt min/avg/max/mdev <span style="color:#ce5c00;font-weight:bold">=</span> 0.017/0.038/0.059/0.021 ms
 </span></span></code></pre></div><h3 id="验证可达性">验证可达性</h3>
 <p>这是集群中的所有 pod, 我在 apple-app-ddb7b6f95-kz2w8 上 ping  local-path-provisioner-75f5b54ffd-slkv5，可以 ping 通</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ø&gt; k get pod --all-namespaces -o wide
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ø&gt; k get pod --all-namespaces -o wide
 </span></span><span style="display:flex;"><span>NAMESPACE            NAME                                         READY   STATUS    RESTARTS   AGE     IP           NODE                 NOMINATED NODE   READINESS GATES
 </span></span><span style="display:flex;"><span>kube-system          coredns-787d4945fb-2sdzq                     1/1     Running   <span style="color:#0000cf;font-weight:bold">0</span>          10m     10.244.0.3   demo-control-plane   &lt;none&gt;           &lt;none&gt;
 </span></span><span style="display:flex;"><span>kube-system          coredns-787d4945fb-kdmsd                     1/1     Running   <span style="color:#0000cf;font-weight:bold">0</span>          10m     10.244.0.2   demo-control-plane   &lt;none&gt;           &lt;none&gt;
@@ -982,7 +985,7 @@ round-trip min/avg/max = 0.056/0.059/0.063 ms
 
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
-    2025
+    2026
     <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
@@ -991,9 +994,9 @@ round-trip min/avg/max = 0.056/0.059/0.063 ms
 
     </div>
     
-      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-gWUQDU5B22UGz/rEIQJe68dlZB1yHK/SKBTU8R3R2lHb32tt5W1fmG6yFdtxwyAZouax6qDVfGGW0j2mzP1lnA==" crossorigin="anonymous">
     
-      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+      <script defer src="/js/katex.min.js" integrity="sha512-m8QbF5NJpwQFtXxb1nOaP1tnz/8iWl42W9DOh7LCj/dL9y10eo2qdT9DUSfIGejWtcavplHzUH1krSUE&#43;7AZPQ==" crossorigin="anonymous" ></script>
     
       <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
 onload='renderMathInElement(document.body, null);'>

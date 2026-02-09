@@ -45,8 +45,8 @@
   <meta name="twitter:title" content="Redis 源码阅读之 dict ">
   <meta name="twitter:description" content="本文主要介绍了 Redis 的基础数据结构 dict 的实现，并描述了其渐进式 rehash 的操作
 注意: 本文基于 Redis 3.0.0 的代码进行分析的">
-<link rel="preload" href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" as="style" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
-<link href="/scss/main.min.fb89d773a15e4a9674c2d8d8a2e2395eba4e1d9cbc37a647bc76ccd798248325.css" rel="stylesheet" integrity="sha256-&#43;4nXc6FeSpZ0wtjYouI5XrpOHZy8N6ZHvHbM15gkgyU=" crossorigin="anonymous">
+<link rel="preload" href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" as="style" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
+<link href="/scss/main.min.668a9ab7b6fddb23bea6dde9277e61861e171010cffdfb94eec4c49b8a545e22.css" rel="stylesheet" integrity="sha256-Zoqat7b92yO&#43;pt3pJ35hhh4XEBDP/fuU7sTEm4pUXiI=" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -260,7 +260,9 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsgolang-li">
   <a href="/docs/golang/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsgolang"><span class="">Golang</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggorm-datetime-li">
+  <a href="/docs/golang/gorm-datetime/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggorm-datetime"><span class="">MySQL &#43; GORM 如何设置创建时间和更新时间</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggo-inner-li">
   <a href="/docs/golang/go-inner/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggo-inner"><span class="">Go 内部实现</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docsgolanggeneric-li">
   <a href="/docs/golang/generic/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsgolanggeneric"><span class="">泛型</span></a>
@@ -535,8 +537,8 @@
   <a href="/docs/kafka/consumer/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconsumer"><span class="">Consumer</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkabroker-li">
   <a href="/docs/kafka/broker/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkabroker"><span class="">Broker</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkaconfluent_pythonmd-li">
-  <a href="/docs/kafka/confluent_python.md/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconfluent_pythonmd"><span class="">从源码安装 confluent-kafka-python</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-docskafkaconfluent_python-li">
+  <a href="/docs/kafka/confluent_python/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docskafkaconfluent_python"><span class="">从源码安装 confluent-kafka-python</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsk8s-li">
@@ -704,7 +706,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/arts/" data-taxonomy-term="arts"><span class="taxonomy-label">ARTS</span><span class="taxonomy-count">18</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/atomicinteger/" data-taxonomy-term="atomicinteger"><span class="taxonomy-label">AtomicInteger</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/bash/" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">94</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">95</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/buildkit/" data-taxonomy-term="buildkit"><span class="taxonomy-label">Buildkit</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/channel/" data-taxonomy-term="channel"><span class="taxonomy-label">Channel</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/chatgpt/" data-taxonomy-term="chatgpt"><span class="taxonomy-label">Chatgpt</span><span class="taxonomy-count">1</span></a></li>
@@ -729,10 +731,11 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/git/" data-taxonomy-term="git"><span class="taxonomy-label">Git</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/glob/" data-taxonomy-term="glob"><span class="taxonomy-label">Glob</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/go/" data-taxonomy-term="go"><span class="taxonomy-label">Go</span><span class="taxonomy-count">37</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/golang/" data-taxonomy-term="golang"><span class="taxonomy-label">Golang</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/gomod/" data-taxonomy-term="gomod"><span class="taxonomy-label">Gomod</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/gorm/" data-taxonomy-term="gorm"><span class="taxonomy-label">GORM</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">Http</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/http/" data-taxonomy-term="http"><span class="taxonomy-label">HTTP</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/httpie/" data-taxonomy-term="httpie"><span class="taxonomy-label">Httpie</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/https/" data-taxonomy-term="https"><span class="taxonomy-label">HTTPS</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/importerror/" data-taxonomy-term="importerror"><span class="taxonomy-label">ImportError</span><span class="taxonomy-count">1</span></a></li>
@@ -743,7 +746,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/kafka/" data-taxonomy-term="kafka"><span class="taxonomy-label">Kafka</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/kubernetes/" data-taxonomy-term="kubernetes"><span class="taxonomy-label">Kubernetes</span><span class="taxonomy-count">8</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/language/" data-taxonomy-term="language"><span class="taxonomy-label">Language</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">Leetcode</span><span class="taxonomy-count">13</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/leetcode/" data-taxonomy-term="leetcode"><span class="taxonomy-label">LeetCode</span><span class="taxonomy-count">13</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/letsencrypt/" data-taxonomy-term="letsencrypt"><span class="taxonomy-label">Letsencrypt</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/life/" data-taxonomy-term="life"><span class="taxonomy-label">Life</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span><span class="taxonomy-count">9</span></a></li>
@@ -751,7 +754,7 @@
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/makefile/" data-taxonomy-term="makefile"><span class="taxonomy-label">Makefile</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mariadb/" data-taxonomy-term="mariadb"><span class="taxonomy-label">Mariadb</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/mongodb/" data-taxonomy-term="mongodb"><span class="taxonomy-label">MongoDB</span><span class="taxonomy-count">6</span></a></li>
-        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">21</span></a></li>
+        <li><a class="taxonomy-term" href="https://bwangel.me/tags/mysql/" data-taxonomy-term="mysql"><span class="taxonomy-label">MySQL</span><span class="taxonomy-count">22</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/network/" data-taxonomy-term="network"><span class="taxonomy-label">Network</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/nfs/" data-taxonomy-term="nfs"><span class="taxonomy-label">Nfs</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://bwangel.me/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span><span class="taxonomy-count">3</span></a></li>
@@ -862,8 +865,8 @@
 <p>Redis 实现使用的C语言并没有内置 dict 这种数据类型，所以 Redis 实现了自己的 dict。dict 在 Redis 中有广泛的应用，Redis 数据库的底层就是使用字典来实现的，也就是说对数据库的增，删，改，查都是建立在字典之上的。同时，字典也是<code>hash</code>和<code>sorted set</code>等数据结构的底层实现之一。</p>
 <h2 id="dict-的实现">dict 的实现</h2>
 <p>在 Redis 中，dict 的代码存放在<code>src/dict.c</code>和<code>src/dict.h</code>两个文件中。在<code>src/dict.h</code>中定义了 dict 所用到的结构体，一共有四个:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 哈希表项
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">typedef</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">dictEntry</span> <span style="color:#000;font-weight:bold">{</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 哈希表项
+</span></span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">typedef</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">dictEntry</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">key</span><span style="color:#000;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">union</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">val</span><span style="color:#000;font-weight:bold">;</span>
@@ -872,10 +875,10 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">double</span> <span style="color:#000">d</span><span style="color:#000;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">v</span><span style="color:#000;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">dictEntry</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">next</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#8f5902;font-style:italic">// 哈希表中是通过单链表解决键索引冲突的，next用来指向同一个键索引下的下一个元素
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span> <span style="color:#000">dictEntry</span><span style="color:#000;font-weight:bold">;</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span> <span style="color:#000">dictEntry</span><span style="color:#000;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// 这里的思想类似于Go，使用函数来定义字典类型(接口)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">typedef</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">dictType</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">typedef</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">dictType</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">unsigned</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">hashFunction</span><span style="color:#000;font-weight:bold">)(</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">key</span><span style="color:#000;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">keyDup</span><span style="color:#000;font-weight:bold">)(</span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">privdata</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">key</span><span style="color:#000;font-weight:bold">);</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">valDup</span><span style="color:#000;font-weight:bold">)(</span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">privdata</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">obj</span><span style="color:#000;font-weight:bold">);</span>
@@ -887,19 +890,19 @@
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">/* 哈希表结构体，每个字典都有两个哈希表，其中多的一个用来做渐进式 rehash */</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">typedef</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">dictht</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#000">dictEntry</span> <span style="color:#ce5c00;font-weight:bold">**</span><span style="color:#000">table</span><span style="color:#000;font-weight:bold">;</span>       <span style="color:#8f5902;font-style:italic">// 哈希表项组成的数组
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">unsigned</span> <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">size</span><span style="color:#000;font-weight:bold">;</span>      <span style="color:#8f5902;font-style:italic">// 当前哈希表的大小
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">unsigned</span> <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">sizemask</span><span style="color:#000;font-weight:bold">;</span>  <span style="color:#8f5902;font-style:italic">// 哈希表大小的掩码，总是等于size - 1
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">unsigned</span> <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">used</span><span style="color:#000;font-weight:bold">;</span>      <span style="color:#8f5902;font-style:italic">// 哈希表中哈希表项的数目
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span> <span style="color:#000">dictht</span><span style="color:#000;font-weight:bold">;</span>
+</span></span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">unsigned</span> <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">size</span><span style="color:#000;font-weight:bold">;</span>      <span style="color:#8f5902;font-style:italic">// 当前哈希表的大小
+</span></span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">unsigned</span> <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">sizemask</span><span style="color:#000;font-weight:bold">;</span>  <span style="color:#8f5902;font-style:italic">// 哈希表大小的掩码，总是等于size - 1
+</span></span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">unsigned</span> <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">used</span><span style="color:#000;font-weight:bold">;</span>      <span style="color:#8f5902;font-style:italic">// 哈希表中哈希表项的数目
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span> <span style="color:#000">dictht</span><span style="color:#000;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">/* 字典的定义 */</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">typedef</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">dict</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#000">dictType</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">type</span><span style="color:#000;font-weight:bold">;</span>  <span style="color:#8f5902;font-style:italic">// 字典的类型
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">privdata</span><span style="color:#000;font-weight:bold">;</span>  <span style="color:#8f5902;font-style:italic">// 字典私有数据
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">dictht</span> <span style="color:#000">ht</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">];</span>    <span style="color:#8f5902;font-style:italic">// 字典中的哈希表
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">rehashidx</span><span style="color:#000;font-weight:bold">;</span>  <span style="color:#8f5902;font-style:italic">// rehashidx == -1 表示当前字典没有做 rehash，否则表示当前字典正在进行 rehash 操作
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">iterators</span><span style="color:#000;font-weight:bold">;</span>   <span style="color:#8f5902;font-style:italic">// 安全迭代器的数量
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span> <span style="color:#000">dict</span><span style="color:#000;font-weight:bold">;</span>
+</span></span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">privdata</span><span style="color:#000;font-weight:bold">;</span>  <span style="color:#8f5902;font-style:italic">// 字典私有数据
+</span></span></span><span style="display:flex;"><span>    <span style="color:#000">dictht</span> <span style="color:#000">ht</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">];</span>    <span style="color:#8f5902;font-style:italic">// 字典中的哈希表
+</span></span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">rehashidx</span><span style="color:#000;font-weight:bold">;</span>  <span style="color:#8f5902;font-style:italic">// rehashidx == -1 表示当前字典没有做 rehash，否则表示当前字典正在进行 rehash 操作
+</span></span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">iterators</span><span style="color:#000;font-weight:bold">;</span>   <span style="color:#8f5902;font-style:italic">// 安全迭代器的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span> <span style="color:#000">dict</span><span style="color:#000;font-weight:bold">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">/*
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> * 字典迭代器用来获取字典中所有的项，其中迭代器可以分为安全迭代器和非安全迭代器两种
@@ -908,12 +911,12 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> * */</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">typedef</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">dictIterator</span> <span style="color:#000;font-weight:bold">{</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#000">dict</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">d</span><span style="color:#000;font-weight:bold">;</span>             <span style="color:#8f5902;font-style:italic">// 迭代器所关联的字典
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">index</span><span style="color:#000;font-weight:bold">;</span>          <span style="color:#8f5902;font-style:italic">// 当前迭代器在字典中迭代的索引
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">table</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">safe</span><span style="color:#000;font-weight:bold">;</span>     <span style="color:#8f5902;font-style:italic">// 哈希表的索引，当前迭代器是否是安全迭代器
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">dictEntry</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">entry</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">nextEntry</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#8f5902;font-style:italic">// 当前迭代器所指向的哈希表项和下一个哈希表项
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#8f5902;font-style:italic">/* unsafe iterator fingerprint for misuse detection. */</span>
+</span></span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">index</span><span style="color:#000;font-weight:bold">;</span>          <span style="color:#8f5902;font-style:italic">// 当前迭代器在字典中迭代的索引
+</span></span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">table</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">safe</span><span style="color:#000;font-weight:bold">;</span>     <span style="color:#8f5902;font-style:italic">// 哈希表的索引，当前迭代器是否是安全迭代器
+</span></span></span><span style="display:flex;"><span>    <span style="color:#000">dictEntry</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">entry</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">nextEntry</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#8f5902;font-style:italic">// 当前迭代器所指向的哈希表项和下一个哈希表项
+</span></span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">/* unsafe iterator fingerprint for misuse detection. */</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">fingerprint</span><span style="color:#000;font-weight:bold">;</span>  <span style="color:#8f5902;font-style:italic">// 字典的指纹，非安全迭代器中用于鉴别字典是否被修改过
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span> <span style="color:#000">dictIterator</span><span style="color:#000;font-weight:bold">;</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span> <span style="color:#000">dictIterator</span><span style="color:#000;font-weight:bold">;</span>
 </span></span></code></pre></div><p>他们之间的关系如图1所示:</p>
 <p><img src="https://passage-1253400711.cos.ap-beijing.myqcloud.com/2018-03-10-054715.png" alt="图1"></p>
 <p><strong>图1</strong></p>
@@ -940,7 +943,7 @@ idx = hash &amp; d-&gt;ht[table].sizemask
 <p><strong>图2</strong></p>
 <p>其中k1和k2计算出来的索引值是相同的，他们被存放到哈希表的同一个索引下，然后通过单链表的形式组合起来。</p>
 <p>在 <code>src/dict.c</code>的<code>dictEntry *dictAddRaw(dict *d, void *key)</code>函数中，我们可以看到向单链表中添加元素的过程</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">/* 哈希表通过单链表来解决键冲突，下面的代码向单链表中添加了哈希表节点 */</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">/* 哈希表通过单链表来解决键冲突，下面的代码向单链表中添加了哈希表节点 */</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">entry</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">zmalloc</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">sizeof</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">entry</span><span style="color:#000;font-weight:bold">));</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">entry</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">next</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ht</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">table</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">index</span><span style="color:#000;font-weight:bold">];</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">ht</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">table</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">index</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">entry</span><span style="color:#000;font-weight:bold">;</span>
@@ -948,7 +951,7 @@ idx = hash &amp; d-&gt;ht[table].sizemask
 </span></span></code></pre></div><p>申请一个哈希表项之后，将它的地址存放在哈希表中，同时也使哈希表中原来存在的节点变成它的next节点，即新增元素在单链表的头部。</p>
 <h2 id="渐进式-rehash">渐进式 rehash</h2>
 <p>每个dict都有一个负载因子，计算方式如下：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#000">load_factor</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ht</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">].</span><span style="color:#000">used</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">ht</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">].</span><span style="color:#000">size</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#000">load_factor</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ht</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">].</span><span style="color:#000">used</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">ht</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">].</span><span style="color:#000">size</span>
 </span></span></code></pre></div><p>当 dict 的负载因子过大或过小的时候，Redis 需要为这个 dict 扩展或者收缩哈希表的大小，这个过程叫做 rehash。上文中我们提到每个 dict 都有两个哈希表, <code>ht0</code>和<code>ht1</code>，在这里它们就发挥作用了。rehash 的具体操作如下:</p>
 <ol>
 <li>
@@ -987,7 +990,7 @@ idx = hash &amp; d-&gt;ht[table].sizemask
 <h2 id="字典迭代器和-rehash-的关系">字典迭代器和 rehash 的关系</h2>
 <p>在渐进式 rehash 一小节中我们提到，当字典的安全迭代器的数量为0的时候，才会执行 rehash 操作，这是为什么呢？</p>
 <p>首先我们可以分析一下字典迭代器的迭代操作，它可以用如下的伪代码来表示:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">iter_dict</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">dict</span><span style="color:#000;font-weight:bold">):</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">iter_dict</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">dict</span><span style="color:#000;font-weight:bold">):</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># 迭代0号哈希表</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#000">iter_table</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ht</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">table</span><span style="color:#000;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span>
@@ -1035,7 +1038,7 @@ idx = hash &amp; d-&gt;ht[table].sizemask
 
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
-    2025
+    2026
     <span class="td-footer__authors">力行近乎仁，好问近乎智，知耻近乎勇</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></span>
       </div>
     </div>
@@ -1044,9 +1047,9 @@ idx = hash &amp; d-&gt;ht[table].sizemask
 
     </div>
     
-      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-gWUQDU5B22UGz/rEIQJe68dlZB1yHK/SKBTU8R3R2lHb32tt5W1fmG6yFdtxwyAZouax6qDVfGGW0j2mzP1lnA==" crossorigin="anonymous">
     
-      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+      <script defer src="/js/katex.min.js" integrity="sha512-m8QbF5NJpwQFtXxb1nOaP1tnz/8iWl42W9DOh7LCj/dL9y10eo2qdT9DUSfIGejWtcavplHzUH1krSUE&#43;7AZPQ==" crossorigin="anonymous" ></script>
     
       <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
 onload='renderMathInElement(document.body, null);'>
