@@ -19,12 +19,59 @@ $primary-tint-subtle: rgba(15, 118, 110, 0.04);
 $td-enable-google-fonts: false;
 
 /* =========================
+   1.5) Docs 左侧导航栏：默认折叠，可点击“目录”展开
+   ========================= */
+/* 左侧栏隐藏时：md～lg 主栏占满（右侧 TOC 本就不显示），xl 主栏占 10/12 以保留右侧 TOC */
+@media (min-width: 768px) {
+  body:not(.td-sidebar-open) .td-main .td-sidebar {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  body:not(.td-sidebar-open) .td-main main {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+@media (min-width: 1200px) {
+  body:not(.td-sidebar-open) .td-main main {
+    flex: 0 0 83.333333%;
+    max-width: 83.333333%;
+  }
+}
+
+/* “目录”按钮：固定在左侧，仅当侧栏默认隐藏时在 md+ 显示 */
+.td-sidebar-drawer-toggle {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1030;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.875rem;
+  color: var(--bs-primary);
+  background: $primary-tint-subtle;
+  border: 1px solid $primary-tint-border;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: color 0.15s ease, background-color 0.15s ease;
+  &:hover {
+    color: var(--bs-primary);
+    background: $primary-tint;
+  }
+}
+
+/* =========================
    2) Small global polish
    ========================= */
 
-/* 限制正文宽度：知识库阅读更舒服 */
+/* 限制正文宽度：知识库阅读更舒服，并居中展示 */
 .td-content {
   max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* 链接更像“笔记”而不是“官方文档” */

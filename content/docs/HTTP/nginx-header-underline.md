@@ -82,7 +82,7 @@ server {
 }
 ```
 
-![image](https://github.com/bwangelme/bwangelme.github.io/assets/11701497/419ee40b-ffc6-4c69-9955-4358d6e8ac36)
+![image](https://passage-1253400711.cos.ap-beijing.myqcloud.com/2026-02-25-155746.png)
 
 图中上半部分是 nc web server 输出的内容，可以看到 `Some_Header` 没有被 Nginx 传输给后端.
 
@@ -104,7 +104,7 @@ server {
 
 关闭了 `ignore_invalid_headers` 之后，无效的 header 也会被 Nginx 传输给后端了
 
-![image](https://github.com/bwangelme/bwangelme.github.io/assets/11701497/95b9f397-c1d7-4782-afd2-9971b45fa402)
+![image](https://passage-1253400711.cos.ap-beijing.myqcloud.com/2026-02-25-155820.png)
 
 上图中，可以看到 `Some_Header` 被 Nginx 传输给了后端
 
@@ -125,7 +125,7 @@ server {
 }
 ```
 
-![image](https://github.com/bwangelme/bwangelme.github.io/assets/11701497/2bfeda6c-0c4e-4bc9-a1d7-9eb00a15fa3c)
+![image](https://passage-1253400711.cos.ap-beijing.myqcloud.com/2026-02-25-155904.png)
 
 可以看到，开启了 `underscores_in_headers` 之后，带下划线的 header 就是有效的 header 了，就算开着 `ignore_invalid_headers`, nginx 也会将 `Some_Header` 传输给后端。
 

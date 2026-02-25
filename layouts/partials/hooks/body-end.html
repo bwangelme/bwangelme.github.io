@@ -1,0 +1,19 @@
+{{/* 仅在 Docs 页面显示“目录”切换按钮，用于展开/收起左侧导航栏（默认收起） */}}
+{{ if hasPrefix .Path "docs/" }}
+<button type="button" class="td-sidebar-drawer-toggle btn btn-link d-none d-md-inline-block" id="td-sidebar-drawer-toggle" aria-label="打开或关闭文档目录">
+  <span class="td-sidebar-drawer-toggle-icon" aria-hidden="true">目录</span>
+</button>
+<script>
+(function () {
+  var btn = document.getElementById('td-sidebar-drawer-toggle');
+  var body = document.body;
+  if (!btn || !body) return;
+  btn.addEventListener('click', function () {
+    body.classList.toggle('td-sidebar-open');
+    var isOpen = body.classList.contains('td-sidebar-open');
+    btn.setAttribute('aria-label', isOpen ? '关闭文档目录' : '打开文档目录');
+    btn.querySelector('.td-sidebar-drawer-toggle-icon').textContent = isOpen ? '收起' : '目录';
+  });
+})();
+</script>
+{{ end }}
