@@ -1,0 +1,18 @@
+{{/* 覆盖 Docsy：有 params.taxonomy 时只按 taxonomyCloud 列表渲染，taxonomyCloud = [] 则完全不显示标签云 */}}
+{{ $context := . -}}
+{{ $tax := .Site.Params.taxonomy -}}
+{{ if $tax -}}
+  {{ range $index, $taxo := $tax.taxonomyCloud -}}
+    {{ $title := "" -}}
+    {{ with $tax.taxonomyCloudTitle -}}
+      {{ $title = index . $index -}}
+    {{ else -}}
+      {{ $title = humanize $taxo -}}
+    {{ end -}}
+    {{ partial "taxonomy_terms_cloud.html" (dict "context" $context "taxo" $taxo "title" $title) -}}
+  {{ end -}}
+{{ else -}}
+  {{ range $taxo, $taxo_map := .Site.Taxonomies -}}
+    {{ partial "taxonomy_terms_cloud.html" (dict "context" $context "taxo" $taxo "title" (humanize $taxo)) -}}
+  {{ end }}
+{{ end -}}

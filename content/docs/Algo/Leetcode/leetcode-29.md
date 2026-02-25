@@ -56,7 +56,7 @@ The divisor will never be 0. Assume we are dealing with an environment which cou
 
 我们可以将除数不断乘二（`<<1`），同时也将商不断乘二，直到除数为小于被除数的最大数，然后再执行被除数减去除数的操作。
 
-在最好的情况下，上述优化可以将 $\frac{被除数}{除数}$ 次减法合并成 $log_2{\frac{被除数}{除数}}$ 次位运算。
+在最好的情况下，上述优化可以将「被除数 ÷ 除数」次减法合并成 $log_2\frac{\text{被除数}}{\text{除数}}$ 次位运算。
 
 ### 处理符号
 

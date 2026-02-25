@@ -67,20 +67,25 @@ $$
 哈希表大小为`ts`，我们向其中插入了两个冲突的元素x和y。这两个元素冲突重试的次数分别是`i`和`j`。其中：
 
 $$
-0 < i, j < \frac{ts}{2}  (小于 \frac{ts}{2} 意味着表中还有多余一半的空间可以使用)
+0 < i, j < \frac{ts}{2}
 $$
+（小于 $\frac{ts}{2}$ 意味着表中还有多余一半的空间可以使用）
+
 $$
-P_x = (Hash(x) + i^2) \mod ts (x位置)
+P_x = (Hash(x) + i^2) \mod ts
 $$
+（$x$ 位置）
+
 $$
-P_y = (Hash(y) + j^2) \mod ts (y位置)
+P_y = (Hash(y) + j^2) \mod ts
 $$
+（$y$ 位置）
+
 $$
 Hash(x) \mod {ts} = Hash(y) \mod {ts} => (Hash(x) - Hash(y)) \mod ts = 0
 $$
-$$
-ts 是素数
-$$
+
+其中 $ts$ 是素数。
 
 试证明，如果$i \neq j$，那么$P_x \neq P_y$
 

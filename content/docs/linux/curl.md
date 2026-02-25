@@ -8,7 +8,7 @@ weight: 4
 
 ## curl POST JSON 数据
 
-```sh
+```shell
 curl -X PUT -H "Content-Type: application/json" -d '@/tmp/demo.json' :9200/demo
 ø> cat /tmp/demo.json
 {
@@ -48,7 +48,7 @@ curl -X PUT -H "Content-Type: application/json" -d '@/tmp/demo.json' :9200/demo
 
 如果项目的代码变了，但是依赖并没有变，因为 docker build 的缓存原理，可以省去下载 go module 的步骤。
 
-```
+```dockerfile
 ...
 ARG app_repo
 ARG app_commit
