@@ -36,6 +36,7 @@ k = log_2{n+1}
 - 深度
 
 ```math
-log_2{n} + 1 向下取整
+\lfloor \log_2 n \rfloor + 1
 ```
+（向下取整）
 

@@ -1,0 +1,33 @@
+/*
+ * 统一顶部样式：导航栏与各页顶部区块使用同一套 primary 配色
+ */
+
+// 导航栏：全站统一为 primary 背景 + 浅色文字（首页与 /docs 一致）
+.td-navbar {
+  background: var(--bs-primary) !important;
+  color: #fff;
+
+  .navbar-brand {
+    color: rgba(255, 255, 255, 0.9) !important;
+    &:hover { color: #fff !important; }
+  }
+
+  .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    &:hover { color: #fff !important; }
+  }
+
+  .dropdown-menu {
+    background: var(--bs-primary);
+    border-color: rgba(255, 255, 255, 0.15);
+    .dropdown-item {
+      color: rgba(255, 255, 255, 0.9);
+      &:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+    }
+  }
+
+  // 避免透明覆盖导致与其它页不一致
+  &.navbar-translucent {
+    background: var(--bs-primary) !important;
+  }
+}

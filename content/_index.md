@@ -2,7 +2,7 @@
 title: 647号宇宙
 ---
 
-{{< blocks/cover title="Welcome to 647" image_anchor="top" height="full" >}}
+{{< blocks/cover title="Welcome to 647" image_anchor="top" height="full" color="primary" >}}
 
 <a class="btn btn-lg btn-primary me-3 mb-4" href="/tags/blog/">
   Blog <i class="fas fa-arrow-alt-circle-right ms-2"></i>

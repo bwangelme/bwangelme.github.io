@@ -6,7 +6,7 @@ weight: 20
 ---
 
 
-{{% blocks/section %}}
+{{% blocks/section color="primary" %}}
 
 宇宙很大，生活更大，也许以后还有缘相见
 {.h1 .text-center}
