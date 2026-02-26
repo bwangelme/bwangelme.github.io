@@ -6,7 +6,7 @@
     <description>Recent content in Tags on 647 Universe</description>
     <generator>Hugo</generator>
     <language>cn</language>
-    <lastBuildDate>Mon, 09 Feb 2026 11:20:09 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 26 Feb 2026 11:36:50 +0800</lastBuildDate>
     <atom:link href="https://bwangel.me/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blog</title>
@@ -100,17 +100,10 @@
       <description></description>
     </item>
     <item>
-      <title>Tag1</title>
-      <link>https://bwangel.me/tags/tag1/</link>
+      <title>Math</title>
+      <link>https://bwangel.me/tags/math/</link>
       <pubDate>Wed, 12 Jun 2024 18:46:48 +0800</pubDate>
-      <guid>https://bwangel.me/tags/tag1/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Tag2</title>
-      <link>https://bwangel.me/tags/tag2/</link>
-      <pubDate>Wed, 12 Jun 2024 18:46:48 +0800</pubDate>
-      <guid>https://bwangel.me/tags/tag2/</guid>
+      <guid>https://bwangel.me/tags/math/</guid>
       <description></description>
     </item>
     <item>
@@ -247,7 +240,7 @@
       <description></description>
     </item>
     <item>
-      <title>LeetCode</title>
+      <title>Leetcode</title>
       <link>https://bwangel.me/tags/leetcode/</link>
       <pubDate>Fri, 03 Nov 2023 08:45:11 +0800</pubDate>
       <guid>https://bwangel.me/tags/leetcode/</guid>
@@ -310,7 +303,7 @@
       <description></description>
     </item>
     <item>
-      <title>HTTP</title>
+      <title>Http</title>
       <link>https://bwangel.me/tags/http/</link>
       <pubDate>Tue, 09 May 2023 22:40:29 +0800</pubDate>
       <guid>https://bwangel.me/tags/http/</guid>
